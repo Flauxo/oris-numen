@@ -2,6 +2,7 @@ const OrisAudio = {
   ctx: null,
   masterGain: null,
   padOscillators: [],
+  padGainNode: null,
   isPlaying: false,
 
   init() {
@@ -34,7 +35,7 @@ const OrisAudio = {
 
     osc.type = 'sine';
     osc.frequency.setValueAtTime(120, t);
-    
+
     gain.gain.setValueAtTime(0, t);
     gain.gain.linearRampToValueAtTime(0.3, t + 0.01);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
@@ -45,7 +46,7 @@ const OrisAudio = {
     osc.start(t);
     osc.stop(t + 0.21);
 
-    // subtle reverb copy
+    // subtle reverb tail
     const delay = this.ctx.createDelay();
     delay.delayTime.value = 0.05;
     const delayGain = this.ctx.createGain();
@@ -81,7 +82,7 @@ const OrisAudio = {
   async startFrequencyPad(frequencyHz) {
     await this._ensureContext();
     if (!this.ctx) return;
-    this.stopFrequencyPad(); // clean up previous if any
+    this.stopFrequencyPad();
 
     this.isPlaying = true;
     const t = this.ctx.currentTime;
@@ -104,7 +105,7 @@ const OrisAudio = {
     osc1.connect(padGain);
     osc1.start(t);
 
-    // 2. Octave triangle
+    // 2. Octave triangle (quiet)
     const osc2 = this.ctx.createOscillator();
     osc2.type = 'triangle';
     osc2.frequency.value = frequencyHz * 2;
@@ -114,7 +115,7 @@ const OrisAudio = {
     gain2.connect(padGain);
     osc2.start(t);
 
-    // 3. Detuned sine
+    // 3. Detuned sine for chorus width
     const osc3 = this.ctx.createOscillator();
     osc3.type = 'sine';
     osc3.frequency.value = frequencyHz + 2;
@@ -125,16 +126,14 @@ const OrisAudio = {
     osc3.start(t);
 
     this.padOscillators = [
-      { osc: osc1, gain: null },
-      { osc: osc2, gain: gain2 },
-      { osc: osc3, gain: gain3 }
+      { osc: osc1 }, { osc: osc2 }, { osc: osc3 }
     ];
     this.padGainNode = padGain;
   },
 
   stopFrequencyPad() {
     if (!this.isPlaying || !this.ctx || !this.padGainNode) return;
-    
+
     const t = this.ctx.currentTime;
     this.padGainNode.gain.cancelScheduledValues(t);
     this.padGainNode.gain.setValueAtTime(this.padGainNode.gain.value, t);
@@ -151,34 +150,106 @@ const OrisAudio = {
     }, 2200);
   },
 
+  /**
+   * Success sound: Short 3-voice celestial choir
+   * Uses multiple oscillators with vibrato and formant filtering
+   * to simulate a brief angelic choir chord (C5-E5-G5)
+   */
   async playSuccessSound() {
     await this._ensureContext();
     if (!this.ctx) return;
 
     const t = this.ctx.currentTime;
-    
-    const playNote = (freq, startTime) => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      
-      gain.gain.setValueAtTime(0, startTime);
-      gain.gain.linearRampToValueAtTime(0.2, startTime + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.3);
-      
-      osc.connect(gain);
-      gain.connect(this.masterGain);
-      
-      osc.start(startTime);
-      osc.stop(startTime + 0.35);
-    };
 
-    // Root, Major Third, Fifth (assuming base around 440)
-    playNote(440, t);
-    playNote(554.37, t + 0.2);
-    playNote(659.25, t + 0.4);
+    // 3 choir voices forming a major chord
+    const voices = [
+      { freq: 523.25, detune: 3 },   // C5 - soprano
+      { freq: 659.25, detune: -2 },   // E5 - mezzo
+      { freq: 783.99, detune: 4 },    // G5 - alto
+    ];
+
+    // Master gain envelope: gentle swell in, sustain, graceful fade
+    const choirMaster = this.ctx.createGain();
+    choirMaster.gain.setValueAtTime(0, t);
+    choirMaster.gain.linearRampToValueAtTime(0.22, t + 0.4);
+    choirMaster.gain.setValueAtTime(0.22, t + 1.0);
+    choirMaster.gain.exponentialRampToValueAtTime(0.001, t + 2.8);
+    choirMaster.connect(this.masterGain);
+
+    // Reverb-like delay for spaciousness
+    const reverbDelay = this.ctx.createDelay();
+    reverbDelay.delayTime.value = 0.09;
+    const reverbGain = this.ctx.createGain();
+    reverbGain.gain.value = 0.25;
+    const reverbDelay2 = this.ctx.createDelay();
+    reverbDelay2.delayTime.value = 0.18;
+    const reverbGain2 = this.ctx.createGain();
+    reverbGain2.gain.value = 0.12;
+
+    choirMaster.connect(reverbDelay);
+    reverbDelay.connect(reverbGain);
+    reverbGain.connect(this.masterGain);
+    choirMaster.connect(reverbDelay2);
+    reverbDelay2.connect(reverbGain2);
+    reverbGain2.connect(this.masterGain);
+
+    voices.forEach(voice => {
+      // Main sine oscillator
+      const osc1 = this.ctx.createOscillator();
+      osc1.type = 'sine';
+      osc1.frequency.value = voice.freq;
+
+      // Detuned copy for width/chorus
+      const osc2 = this.ctx.createOscillator();
+      osc2.type = 'sine';
+      osc2.frequency.value = voice.freq + voice.detune;
+
+      // Sub-harmonic for warmth
+      const oscSub = this.ctx.createOscillator();
+      oscSub.type = 'triangle';
+      oscSub.frequency.value = voice.freq * 0.5;
+      const subGain = this.ctx.createGain();
+      subGain.gain.value = 0.06;
+
+      // Vibrato (natural voice wavering)
+      const vibrato = this.ctx.createOscillator();
+      vibrato.type = 'sine';
+      vibrato.frequency.value = 4.5 + Math.random() * 2; // 4.5-6.5 Hz
+      const vibratoDepth = this.ctx.createGain();
+      vibratoDepth.gain.value = 3; // ±3 Hz pitch deviation
+      vibrato.connect(vibratoDepth);
+      vibratoDepth.connect(osc1.frequency);
+      vibratoDepth.connect(osc2.frequency);
+
+      // Per-voice gain
+      const voiceGain = this.ctx.createGain();
+      voiceGain.gain.value = 0.45;
+
+      // Formant filter (bandpass to simulate vocal resonance)
+      const formant = this.ctx.createBiquadFilter();
+      formant.type = 'bandpass';
+      formant.frequency.value = 1200 + Math.random() * 600;
+      formant.Q.value = 1.2;
+
+      // Connect voice chain
+      osc1.connect(voiceGain);
+      osc2.connect(voiceGain);
+      oscSub.connect(subGain);
+      subGain.connect(voiceGain);
+      voiceGain.connect(formant);
+      formant.connect(choirMaster);
+
+      // Start and stop all oscillators
+      osc1.start(t);
+      osc2.start(t);
+      oscSub.start(t);
+      vibrato.start(t);
+
+      osc1.stop(t + 3);
+      osc2.stop(t + 3);
+      oscSub.stop(t + 3);
+      vibrato.stop(t + 3);
+    });
   },
 
   dispose() {
