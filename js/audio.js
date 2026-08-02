@@ -340,6 +340,58 @@ const OrisAudio = {
     });
   },
 
+  async playDestructionSound() {
+    await this._ensureContext();
+    if (!this.ctx) return;
+    
+    const t = this.ctx.currentTime;
+    const duration = 2.5; // Longer for a wave
+    
+    // Create white noise buffer
+    const bufferSize = this.ctx.sampleRate * duration; 
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    // Simple pink noise approximation for softer water sound
+    let b0, b1, b2, b3, b4, b5, b6;
+    b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+    for (let i = 0; i < bufferSize; i++) {
+        let white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        b3 = 0.86650 * b3 + white * 0.3104856;
+        b4 = 0.55000 * b4 + white * 0.5329522;
+        b5 = -0.7616 * b5 - white * 0.0168980;
+        data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+        b6 = white * 0.115926;
+    }
+    
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+    
+    // Lowpass filter to simulate water movement
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.Q.value = 0.8;
+    
+    // Filter frequency envelope (wave crashing)
+    filter.frequency.setValueAtTime(400, t);
+    filter.frequency.exponentialRampToValueAtTime(1500, t + 0.5); // Crash
+    filter.frequency.exponentialRampToValueAtTime(300, t + duration); // Recede
+    
+    // Gain envelope (fade in, peak, fade out)
+    const gain = this.ctx.createGain();
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(0.8, t + 0.5); // Crash volume
+    gain.gain.exponentialRampToValueAtTime(0.01, t + duration); // Recede
+    
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.masterGain);
+    
+    noise.start(t);
+  },
+
   dispose() {
     this.stopFrequencyPad();
     if (this.ctx) {
