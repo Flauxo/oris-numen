@@ -71,9 +71,10 @@ const OrisAudio = {
 
     // Master gain for the preview with envelope
     const previewGain = this.ctx.createGain();
+    const targetGain = frequencyHz < 100 ? 0.35 : 0.18; // Boost low frequencies
     previewGain.gain.setValueAtTime(0, t);
-    previewGain.gain.linearRampToValueAtTime(0.18, t + fadeIn);
-    previewGain.gain.setValueAtTime(0.18, t + duration - fadeOut);
+    previewGain.gain.linearRampToValueAtTime(targetGain, t + fadeIn);
+    previewGain.gain.setValueAtTime(targetGain, t + duration - fadeOut);
     previewGain.gain.linearRampToValueAtTime(0, t + duration);
 
     // Low-pass filter for warmth
@@ -108,11 +109,24 @@ const OrisAudio = {
     osc3.type = 'triangle';
     osc3.frequency.value = frequencyHz * 2;
     const g3 = this.ctx.createGain();
-    g3.gain.value = 0.04;
+    g3.gain.value = frequencyHz < 100 ? 0.12 : 0.04; // Boost harmonic for low freq
     osc3.connect(g3);
     g3.connect(previewGain);
     osc3.start(t);
     osc3.stop(t + duration + 0.1);
+
+    // Extra harmonic (fifth above octave) for very low bass translation on mobile
+    if (frequencyHz < 100) {
+      const osc4 = this.ctx.createOscillator();
+      osc4.type = 'triangle';
+      osc4.frequency.value = frequencyHz * 3;
+      const g4 = this.ctx.createGain();
+      g4.gain.value = 0.08;
+      osc4.connect(g4);
+      g4.connect(previewGain);
+      osc4.start(t);
+      osc4.stop(t + duration + 0.1);
+    }
   },
 
   async playSplashSound() {
@@ -147,8 +161,9 @@ const OrisAudio = {
     const t = this.ctx.currentTime;
 
     const padGain = this.ctx.createGain();
+    const targetGain = frequencyHz < 100 ? 0.4 : 0.2; // Boost low frequencies
     padGain.gain.setValueAtTime(0, t);
-    padGain.gain.linearRampToValueAtTime(0.2, t + 2.5);
+    padGain.gain.linearRampToValueAtTime(targetGain, t + 2.5);
 
     const filter = this.ctx.createBiquadFilter();
     filter.type = 'lowpass';
@@ -169,7 +184,7 @@ const OrisAudio = {
     osc2.type = 'triangle';
     osc2.frequency.value = frequencyHz * 2;
     const gain2 = this.ctx.createGain();
-    gain2.gain.value = 0.05;
+    gain2.gain.value = frequencyHz < 100 ? 0.15 : 0.05; // Boost harmonic for low freq
     osc2.connect(gain2);
     gain2.connect(padGain);
     osc2.start(t);
@@ -187,6 +202,20 @@ const OrisAudio = {
     this.padOscillators = [
       { osc: osc1 }, { osc: osc2 }, { osc: osc3 }
     ];
+
+    // Extra harmonic for very low bass translation on mobile speakers
+    if (frequencyHz < 100) {
+      const osc4 = this.ctx.createOscillator();
+      osc4.type = 'triangle';
+      osc4.frequency.value = frequencyHz * 3;
+      const gain4 = this.ctx.createGain();
+      gain4.gain.value = 0.1;
+      osc4.connect(gain4);
+      gain4.connect(padGain);
+      osc4.start(t);
+      this.padOscillators.push({ osc: osc4 });
+    }
+
     this.padGainNode = padGain;
   },
 
