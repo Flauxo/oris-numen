@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Oris Numen — Canaliza tus mensajes al divino a través de frecuencias sagradas. Plegarias, confesiones, perdón y agradecimiento.">
+    <title>Oris Numen</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- Screen 1: Splash Screen -->
+        <div id="splash-screen" class="screen active">
+            <div class="splash-content breathe-anim">
+                <div class="splash-cross">✟</div>
+                <h1 class="splash-title">ORIS<br>NUMEN</h1>
+                <p class="splash-subtitle">Eleva tu voz</p>
+            </div>
+        </div>
+
+        <!-- Screen 2: Home Screen -->
+        <div id="home-screen" class="screen">
+            <header class="home-header">
+                <h1 class="home-title">Oris Numen</h1>
+                <p class="home-subtitle">Canaliza tu mensaje al divino</p>
+            </header>
+
+            <div class="cards-container">
+                <!-- Card 1: Plegaria / Humilis -->
+                <div class="message-card" data-type="humilis" data-freq="88" data-color="#7B5EA7" style="--card-delay: 0s;">
+                    <div class="card-accent" style="background-color: #7B5EA7;"></div>
+                    <div class="card-content">
+                        <div class="card-icon-container">
+                            <img class="card-icon" src="assets/images/humilis.jpg" alt="Plegaria">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title">Plegaria</h3>
+                            <span class="card-freq">Frecuencia Humilis · 88 Hz</span>
+                            <p class="card-desc">Petición y Súplica</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Confesión / Revelatio -->
+                <div class="message-card" data-type="revelatio" data-freq="555" data-color="#D4845A" style="--card-delay: 0.1s;">
+                    <div class="card-accent" style="background-color: #D4845A;"></div>
+                    <div class="card-content">
+                        <div class="card-icon-container">
+                            <img class="card-icon" src="assets/images/revelatio.jpg" alt="Confesión">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title">Confesión</h3>
+                            <span class="card-freq">Frecuencia Revelatio · 555 Hz</span>
+                            <p class="card-desc">Confesión y Sinceridad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Perdón / Misericordia -->
+                <div class="message-card" data-type="misericordia" data-freq="777" data-color="#5A8BB5" style="--card-delay: 0.2s;">
+                    <div class="card-accent" style="background-color: #5A8BB5;"></div>
+                    <div class="card-content">
+                        <div class="card-icon-container">
+                            <img class="card-icon" src="assets/images/misericordia.jpg" alt="Perdón">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title">Perdón</h3>
+                            <span class="card-freq">Frecuencia Misericordia · 777 Hz</span>
+                            <p class="card-desc">Perdón y Reconciliación</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Agradecimiento / Gratia -->
+                <div class="message-card" data-type="gratia" data-freq="1012" data-color="#D4B85A" style="--card-delay: 0.3s;">
+                    <div class="card-accent" style="background-color: #D4B85A;"></div>
+                    <div class="card-content">
+                        <div class="card-icon-container">
+                            <img class="card-icon" src="assets/images/gratia.jpg" alt="Agradecimiento">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title">Agradecimiento</h3>
+                            <span class="card-freq">Frecuencia Gratia · 1012 Hz</span>
+                            <p class="card-desc">Agradecimiento y Alabanza</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Write Screen -->
+        <div id="write-screen" class="screen">
+            <div class="write-header">
+                <button id="btn-back" class="btn-back">← Volver</button>
+                <div class="freq-indicator-container">
+                    <div id="write-freq-dot" class="freq-dot shimmer-anim"></div>
+                    <div class="freq-titles">
+                        <span id="write-freq-name" class="freq-name">Frecuencia Humilis</span>
+                        <span id="write-freq-hz" class="freq-hz">88 Hz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="write-body">
+                <div class="freq-info">
+                    <p id="write-purpose" class="write-purpose">Plegaria</p>
+                    <p id="write-effect" class="write-effect">Eleva la voz del suplicante desde la humildad terrenal directamente hacia lo divino.</p>
+                </div>
+
+                <textarea id="message-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false"></textarea>
+
+                <div class="write-footer">
+                    <button id="btn-send" class="btn-send">Canalizar Mensaje ✟</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Channeling Screen -->
+        <div id="channeling-screen" class="screen">
+            <div class="channeling-content">
+                <div class="channeling-header">
+                    <p id="channeling-label" class="channeling-label">Canalizando a través de la Frecuencia...</p>
+                    <p id="channeling-sublabel" class="channeling-sublabel">para su transformación en energía</p>
+                </div>
+
+                <div id="timer-display" class="timer-display">15:00</div>
+
+                <div class="canvas-container">
+                    <canvas id="waveform-canvas"></canvas>
+                </div>
+
+                <div class="channeling-footer">
+                    <p class="channeling-info">Tu mensaje se transforma en energía</p>
+                    <button id="btn-cancel" class="btn-cancel">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5: Success Screen -->
+        <div id="success-screen" class="screen">
+            <div class="success-content">
+                <div class="success-icon pulse-glow">✟</div>
+                <h2 class="success-title">Mensaje canalizado<br>con éxito</h2>
+                <p class="success-subtitle">Tu mensaje ha sido elevado al divino</p>
+                <button id="btn-home" class="btn-home">Volver al inicio</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/waveform.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
