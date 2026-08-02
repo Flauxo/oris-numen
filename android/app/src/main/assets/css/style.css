@@ -131,13 +131,14 @@ body {
 
 /* Screen 2: Home Screen */
 #home-screen {
-    padding: 24px;
-    padding-top: calc(32px + env(safe-area-inset-top));
+    padding: 16px;
+    padding-top: calc(16px + env(safe-area-inset-top));
+    overflow: hidden;
 }
 
 .home-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .home-title {
@@ -157,13 +158,13 @@ body {
 .cards-container {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding-bottom: 24px;
+    gap: 10px;
+    padding-bottom: 12px;
 }
 
 .home-description {
     text-align: center;
-    padding: 8px 12px 40px;
+    padding: 0px 12px 12px;
 }
 
 .home-description p {
@@ -212,8 +213,8 @@ body {
 }
 
 .card-icon {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
@@ -273,11 +274,11 @@ body {
     color: var(--color-text-muted);
     cursor: pointer;
     position: absolute;
-    left: 24px;
-    top: calc(18px + env(safe-area-inset-top));
-    padding: 8px 0;
+    left: 16px;
+    top: 16px;
+    padding: 12px;
     transition: color 0.2s ease;
-    z-index: 10;
+    z-index: 20;
 }
 
 .btn-back:hover, .btn-back:active {

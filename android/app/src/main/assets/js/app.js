@@ -274,15 +274,13 @@ const OrisApp = {
   },
 
   /**
-   * Cancel channeling with confirmation
+   * Cancel channeling without confirmation
    */
   cancelChanneling() {
-    if (confirm('¿Estás seguro de que deseas interrumpir la canalización?')) {
-      ChannelTimer.reset();
-      OrisAudio.stopFrequencyPad();
-      WaveformRenderer.reset();
-      this.goHome();
-    }
+    ChannelTimer.reset();
+    OrisAudio.stopFrequencyPad();
+    WaveformRenderer.reset();
+    this.goHome();
   },
 
   /**
