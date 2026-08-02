@@ -274,6 +274,7 @@ body {
     cursor: pointer;
     position: absolute;
     left: 24px;
+    top: calc(18px + env(safe-area-inset-top));
     padding: 8px 0;
     transition: color 0.2s ease;
     z-index: 10;
@@ -401,7 +402,7 @@ body {
 
 /* Screen 4: Channeling Screen */
 #channeling-screen {
-    background-color: #EBE0D3; /* Slightly darker warm beige */
+    background-color: var(--color-bg); /* Same light beige as home */
     justify-content: space-between;
     padding: 40px 24px;
     padding-top: calc(60px + env(safe-area-inset-top));
