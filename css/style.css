@@ -360,7 +360,7 @@ body {
 .btn-send {
     width: 100%;
     padding: 18px;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
     border: none;
     color: white;
     font-family: var(--font-sans);
@@ -655,7 +655,7 @@ body {
     margin-top: 24px;
     width: 100%;
     padding: 16px;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
     border: none;
     color: white;
     font-family: var(--font-sans);
