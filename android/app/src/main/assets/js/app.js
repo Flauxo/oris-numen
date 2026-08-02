@@ -27,9 +27,9 @@ const OrisApp = {
       purpose: 'Canalizar confesiones honestas, desahogos íntimos y la verdad desnuda del corazón.',
       effect: 'Rompe las barreras del ego, permitiendo mostrar las debilidades humanas sin miedo al juicio.'
     },
-    misericordia: {
-      name: 'Misericordia',
-      fullName: 'Frecuencia Misericordia',
+    absolutio: {
+      name: 'Absolutio',
+      fullName: 'Frecuencia Absolutio',
       hz: 777,
       color: '#5A8BB5',
       colorRgb: '90, 139, 181',
