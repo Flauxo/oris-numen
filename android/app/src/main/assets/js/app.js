@@ -49,6 +49,37 @@ const OrisApp = {
     }
   },
 
+  PROVERBS: {
+    humilis: [
+      "En la debilidad, encontramos nuestra mayor fortaleza ante lo divino.",
+      "El que pide con un corazón sincero, ya ha sido escuchado.",
+      "No hay ruego pequeño cuando la fe que lo eleva es inmensa.",
+      "La plegaria es el puente invisible que une el suelo con el cielo.",
+      "Habla desde el vacío de tu ser, para que la gracia pueda llenarlo."
+    ],
+    revelatio: [
+      "La verdad te hará libre, pues no hay sombra que resista a la luz.",
+      "Desnudar el alma es el primer paso hacia su verdadera sanación.",
+      "Aquello que confiesas deja de ser un peso y se convierte en sabiduría.",
+      "En la vulnerabilidad de la confesión reside el coraje más puro.",
+      "Nombrar tus miedos ante el silencio es arrebatarles su poder."
+    ],
+    absolutio: [
+      "Perdonar es soltar a un prisionero y descubrir que el prisionero eras tú.",
+      "El agua borra la mancha, pero el perdón renueva todo el espíritu.",
+      "Aquel que busca misericordia, ya ha empezado a purificar su camino.",
+      "Donde abunda el error, sobreabunda la gracia que todo lo redime.",
+      "Suelta la carga de la culpa; el amanecer no castiga a la noche."
+    ],
+    gratia: [
+      "Un corazón agradecido es el altar más sublime para recibir bendiciones.",
+      "Dar gracias es reconocer que la vida misma es un regalo inmerecido.",
+      "En la gratitud, lo que tenemos se vuelve suficiente y se multiplica.",
+      "La alegría es el eco natural de un espíritu que sabe agradecer.",
+      "Alabar la luz es la mejor forma de asegurar que nunca nos falte."
+    ]
+  },
+
   init() {
     // Setup AudioContext on first user gesture
     const initAudio = () => {
@@ -192,6 +223,7 @@ const OrisApp = {
     if (effect) effect.textContent = freq.effect;
     if (messageInput) {
       messageInput.value = '';
+      messageInput.classList.remove('dissolve-anim'); // Ensure it's reset
       messageInput.style.borderBottomColor = freq.color;
     }
     if (btnSend) btnSend.style.backgroundColor = freq.color;
@@ -203,39 +235,52 @@ const OrisApp = {
   },
 
   /**
-   * Send message — start channeling process
+   * Send message — start channeling process with destruction animation
    */
   sendMessage() {
     const freq = this.FREQUENCIES[this.currentFrequency];
     if (!freq) return;
 
-    OrisAudio.playButtonSound();
+    // Apply destruction animation and sound
+    const messageInput = document.getElementById('message-input');
+    if (messageInput) {
+      messageInput.classList.add('dissolve-anim');
+    }
+    
+    if (OrisAudio.playDestructionSound) {
+        OrisAudio.playDestructionSound();
+    } else {
+        OrisAudio.playButtonSound();
+    }
 
-    // Update channeling screen
-    const label = document.getElementById('channeling-label');
-    const sublabel = document.getElementById('channeling-sublabel');
-    const timer = document.getElementById('timer-display');
-
-    if (label) label.textContent = `Canalizando a través de la ${freq.fullName}...`;
-    if (sublabel) sublabel.textContent = 'para su transformación en energía';
-    if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
-
-    this.showScreen('channeling');
-
-    // Start frequency pad audio
-    OrisAudio.startFrequencyPad(freq.hz);
-
-    // Start waveform animation
-    WaveformRenderer.setColor(freq.color);
-    WaveformRenderer.setProgress(0);
-    WaveformRenderer.start();
-
-    // Start countdown timer
-    ChannelTimer.reset();
-    ChannelTimer.start(
-      (remaining, progress) => this.onTimerTick(remaining, progress),
-      () => this.onTimerComplete()
-    );
+    // Wait 1 second for animation to finish before proceeding
+    setTimeout(() => {
+        // Update channeling screen
+        const label = document.getElementById('channeling-label');
+        const sublabel = document.getElementById('channeling-sublabel');
+        const timer = document.getElementById('timer-display');
+    
+        if (label) label.textContent = `Canalizando a través de la ${freq.fullName}...`;
+        if (sublabel) sublabel.textContent = 'para su transformación en energía';
+        if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
+    
+        this.showScreen('channeling');
+    
+        // Start frequency pad audio
+        OrisAudio.startFrequencyPad(freq.hz);
+    
+        // Start waveform animation
+        WaveformRenderer.setColor(freq.color);
+        WaveformRenderer.setProgress(0);
+        WaveformRenderer.start();
+    
+        // Start countdown timer
+        ChannelTimer.reset();
+        ChannelTimer.start(
+          (remaining, progress) => this.onTimerTick(remaining, progress),
+          () => this.onTimerComplete()
+        );
+    }, 1000);
   },
 
   /**
@@ -257,7 +302,7 @@ const OrisApp = {
     // Set waveform to full before stopping
     WaveformRenderer.setProgress(1);
 
-    // Brief delay to show completed waveform, then success
+      // Brief delay to show completed waveform, then success
     setTimeout(() => {
       WaveformRenderer.stop();
 
@@ -266,6 +311,15 @@ const OrisApp = {
       const successIcon = document.querySelector('.success-icon');
       if (freq && successIcon) {
         successIcon.style.color = freq.color;
+      }
+      
+      // Set random proverb
+      const proverbEl = document.getElementById('success-proverb');
+      const proverbs = this.PROVERBS[this.currentFrequency];
+      if (proverbEl && proverbs && proverbs.length > 0) {
+        const randomIndex = Math.floor(Math.random() * proverbs.length);
+        proverbEl.textContent = `"${proverbs[randomIndex]}"`;
+        proverbEl.style.color = freq ? freq.color : 'inherit';
       }
 
       OrisAudio.playSuccessSound();

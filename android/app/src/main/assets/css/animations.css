@@ -205,3 +205,23 @@
     animation: fadeIn 1.5s ease-out 0.5s forwards;
     opacity: 0;
 }
+
+/* --- Destruction Animation --- */
+@keyframes dissolveUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.1) skewX(2deg);
+        filter: blur(10px);
+    }
+}
+
+.dissolve-anim {
+    animation: dissolveUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+    pointer-events: none;
+}
+

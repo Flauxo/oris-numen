@@ -545,7 +545,23 @@ body {
 .success-subtitle {
     font-size: 1rem;
     color: var(--color-text-muted);
-    margin-bottom: 48px;
+    margin-bottom: 32px;
+}
+
+.success-proverb-container {
+    max-width: 80%;
+    margin: 0 auto 48px;
+    padding: 16px;
+    border-left: 2px solid currentColor;
+    text-align: left;
+}
+
+.success-proverb {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--color-text-dark); /* Will be updated via JS */
 }
 
 .btn-home {
