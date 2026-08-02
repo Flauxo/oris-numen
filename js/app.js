@@ -59,13 +59,24 @@ const OrisApp = {
     document.addEventListener('click', initAudio);
     document.addEventListener('touchstart', initAudio);
 
-    // Card click handlers
+    // Card click handlers → show info overlay
     document.querySelectorAll('.message-card').forEach(card => {
       card.addEventListener('click', () => {
         const type = card.dataset.type;
-        if (type) this.selectFrequency(type);
+        if (type) this.showFrequencyInfo(type);
       });
     });
+
+    // Overlay buttons
+    const btnCloseOverlay = document.getElementById('btn-close-overlay');
+    if (btnCloseOverlay) btnCloseOverlay.addEventListener('click', () => this.closeOverlay());
+
+    const btnWrite = document.getElementById('btn-write');
+    if (btnWrite) btnWrite.addEventListener('click', () => this.goToWriteScreen());
+
+    // Close overlay on backdrop click
+    const backdrop = document.querySelector('.overlay-backdrop');
+    if (backdrop) backdrop.addEventListener('click', () => this.closeOverlay());
 
     // Button handlers
     const btnBack = document.getElementById('btn-back');
@@ -100,8 +111,7 @@ const OrisApp = {
   },
 
   /**
-   * Switch between screens using IDs: splash-screen, home-screen, write-screen,
-   * channeling-screen, success-screen
+   * Switch between screens
    */
   showScreen(screenId) {
     const allScreens = document.querySelectorAll('.screen');
@@ -114,12 +124,57 @@ const OrisApp = {
   },
 
   /**
-   * Handle card click — set up write screen with frequency details
+   * Show frequency info overlay (new step: Card click → Overlay)
    */
-  selectFrequency(type) {
+  showFrequencyInfo(type) {
     this.currentFrequency = type;
     const freq = this.FREQUENCIES[type];
     if (!freq) return;
+
+    OrisAudio.playButtonSound();
+
+    // Populate overlay
+    const dot = document.getElementById('overlay-freq-dot');
+    const name = document.getElementById('overlay-freq-name');
+    const hz = document.getElementById('overlay-freq-hz');
+    const purpose = document.getElementById('overlay-purpose');
+    const effect = document.getElementById('overlay-effect');
+    const btnWrite = document.getElementById('btn-write');
+
+    if (dot) {
+      dot.style.color = freq.color;
+      dot.style.backgroundColor = freq.color;
+    }
+    if (name) name.textContent = freq.fullName;
+    if (hz) hz.textContent = `${freq.hz} Hz`;
+    if (purpose) purpose.textContent = freq.purpose;
+    if (effect) effect.textContent = freq.effect;
+    if (btnWrite) btnWrite.style.backgroundColor = freq.color;
+
+    // Show overlay
+    const overlay = document.getElementById('freq-info-overlay');
+    if (overlay) overlay.classList.add('active');
+  },
+
+  /**
+   * Close the frequency info overlay
+   */
+  closeOverlay() {
+    const overlay = document.getElementById('freq-info-overlay');
+    if (overlay) overlay.classList.remove('active');
+  },
+
+  /**
+   * Proceed from overlay to write screen
+   */
+  goToWriteScreen() {
+    const freq = this.FREQUENCIES[this.currentFrequency];
+    if (!freq) return;
+
+    OrisAudio.playButtonSound();
+
+    // Close overlay
+    this.closeOverlay();
 
     // Update write screen elements
     const freqName = document.getElementById('write-freq-name');
@@ -141,8 +196,10 @@ const OrisApp = {
     }
     if (btnSend) btnSend.style.backgroundColor = freq.color;
 
-    OrisAudio.playButtonSound();
-    this.showScreen('write');
+    // Small delay so the overlay closing animation plays first
+    setTimeout(() => {
+      this.showScreen('write');
+    }, 200);
   },
 
   /**
@@ -247,7 +304,6 @@ const OrisApp = {
 
   /**
    * Check for saved timer state and resume if found
-   * Returns true if state was restored
    */
   checkSavedState() {
     const savedState = ChannelTimer.restoreState();
@@ -256,7 +312,6 @@ const OrisApp = {
       const freq = this.FREQUENCIES[this.currentFrequency];
 
       if (freq) {
-        // Update channeling UI
         const label = document.getElementById('channeling-label');
         const timer = document.getElementById('timer-display');
         if (label) label.textContent = `Canalizando a través de la ${freq.fullName}...`;
@@ -273,9 +328,7 @@ const OrisApp = {
           () => this.onTimerComplete()
         );
 
-        // Try to start audio (may need user gesture on some browsers)
         OrisAudio.startFrequencyPad(freq.hz);
-
         return true;
       }
     }
@@ -283,12 +336,10 @@ const OrisApp = {
   },
 
   /**
-   * Splash screen sequence — show for 3 seconds then transition to home
+   * Splash screen sequence
    */
   startSplash() {
     this.showScreen('splash');
-
-    // Try playing splash sound (may fail without user gesture)
     try { OrisAudio.playSplashSound(); } catch (e) { /* silent */ }
 
     setTimeout(() => {

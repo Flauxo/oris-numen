@@ -97,6 +97,28 @@
             </div>
         </div>
 
+        <!-- Frequency Info Overlay -->
+        <div id="freq-info-overlay" class="overlay">
+            <div class="overlay-backdrop"></div>
+            <div class="overlay-card">
+                <button id="btn-close-overlay" class="btn-close-overlay">×</button>
+                <div id="overlay-freq-dot" class="overlay-freq-dot"></div>
+                <h2 id="overlay-freq-name" class="overlay-freq-name">Frecuencia Humilis</h2>
+                <span id="overlay-freq-hz" class="overlay-freq-hz">88 Hz</span>
+                <div class="overlay-divider"></div>
+                <div class="overlay-section">
+                    <h4 class="overlay-label">Propósito</h4>
+                    <p id="overlay-purpose" class="overlay-text"></p>
+                </div>
+                <div class="overlay-section">
+                    <h4 class="overlay-label">Efecto</h4>
+                    <p id="overlay-effect" class="overlay-text"></p>
+                </div>
+                <button id="btn-write" class="btn-write">Escribir Mensaje</button>
+            </div>
+        </div>
+
+
         <!-- Screen 3: Write Screen -->
         <div id="write-screen" class="screen">
             <div class="write-header">
@@ -119,7 +141,7 @@
                 <textarea id="message-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false"></textarea>
 
                 <div class="write-footer">
-                    <button id="btn-send" class="btn-send">Canalizar Mensaje ✟</button>
+                    <button id="btn-send" class="btn-send">Canalizar Mensaje</button>
                 </div>
             </div>
         </div>

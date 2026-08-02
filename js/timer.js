@@ -1,6 +1,6 @@
 const ChannelTimer = {
-  duration: 900,
-  remaining: 900,
+  duration: 15,        // 15 seconds for testing (change to 900 for production = 15 min)
+  remaining: 15,
   intervalId: null,
   isRunning: false,
   startTime: null,
