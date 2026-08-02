@@ -56,6 +56,65 @@ const OrisAudio = {
     delayGain.connect(this.masterGain);
   },
 
+  /**
+   * Play a 2-second preview of a frequency pad with fade in/out
+   * Used when tapping a card on the home screen
+   */
+  async playFrequencyPreview(frequencyHz) {
+    await this._ensureContext();
+    if (!this.ctx) return;
+
+    const t = this.ctx.currentTime;
+    const duration = 2.0;
+    const fadeIn = 0.4;
+    const fadeOut = 0.5;
+
+    // Master gain for the preview with envelope
+    const previewGain = this.ctx.createGain();
+    previewGain.gain.setValueAtTime(0, t);
+    previewGain.gain.linearRampToValueAtTime(0.18, t + fadeIn);
+    previewGain.gain.setValueAtTime(0.18, t + duration - fadeOut);
+    previewGain.gain.linearRampToValueAtTime(0, t + duration);
+
+    // Low-pass filter for warmth
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 2000;
+
+    previewGain.connect(filter);
+    filter.connect(this.masterGain);
+
+    // Main sine
+    const osc1 = this.ctx.createOscillator();
+    osc1.type = 'sine';
+    osc1.frequency.value = frequencyHz;
+    osc1.connect(previewGain);
+    osc1.start(t);
+    osc1.stop(t + duration + 0.1);
+
+    // Detuned sine for chorus width
+    const osc2 = this.ctx.createOscillator();
+    osc2.type = 'sine';
+    osc2.frequency.value = frequencyHz + 2;
+    const g2 = this.ctx.createGain();
+    g2.gain.value = 0.4;
+    osc2.connect(g2);
+    g2.connect(previewGain);
+    osc2.start(t);
+    osc2.stop(t + duration + 0.1);
+
+    // Quiet octave triangle for harmonics
+    const osc3 = this.ctx.createOscillator();
+    osc3.type = 'triangle';
+    osc3.frequency.value = frequencyHz * 2;
+    const g3 = this.ctx.createGain();
+    g3.gain.value = 0.04;
+    osc3.connect(g3);
+    g3.connect(previewGain);
+    osc3.start(t);
+    osc3.stop(t + duration + 0.1);
+  },
+
   async playSplashSound() {
     await this._ensureContext();
     if (!this.ctx) return;

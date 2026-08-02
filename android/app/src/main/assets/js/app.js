@@ -131,7 +131,7 @@ const OrisApp = {
     const freq = this.FREQUENCIES[type];
     if (!freq) return;
 
-    OrisAudio.playButtonSound();
+    OrisAudio.playFrequencyPreview(freq.hz);
 
     // Populate overlay
     const dot = document.getElementById('overlay-freq-dot');
