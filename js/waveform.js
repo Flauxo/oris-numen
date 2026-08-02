@@ -21,9 +21,9 @@ const WaveformRenderer = {
 
   setupWaves() {
     this.waves = [
-      { amplitude: 30, frequency: 0.02, speed: 0.03, phase: 0 },
-      { amplitude: 20, frequency: 0.015, speed: -0.02, phase: Math.PI / 3 },
-      { amplitude: 15, frequency: 0.025, speed: 0.04, phase: Math.PI * 2 / 3 }
+      { amplitude: 55, frequency: 0.012, speed: 0.025, phase: 0 },
+      { amplitude: 40, frequency: 0.008, speed: -0.018, phase: Math.PI / 3 },
+      { amplitude: 30, frequency: 0.015, speed: 0.035, phase: Math.PI * 2 / 3 }
     ];
   },
 

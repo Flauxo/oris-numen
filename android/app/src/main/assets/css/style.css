@@ -492,6 +492,7 @@ body {
     font-size: 0.95rem;
     color: var(--color-text-muted);
     font-weight: 400;
+    text-align: center;
 }
 
 .btn-cancel {
