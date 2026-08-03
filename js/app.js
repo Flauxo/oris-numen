@@ -1112,6 +1112,10 @@ const OrisApp = {
       if (overlay) {
           this.renderHistory();
           overlay.classList.add('active');
+          const listContainer = document.getElementById('history-list');
+          if (listContainer) {
+              listContainer.scrollTop = 0;
+          }
           if (typeof this.closeSidebar === 'function') this.closeSidebar();
           try { OrisAudio.playButtonSound(); } catch(e){}
       }
