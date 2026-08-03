@@ -267,22 +267,21 @@ const OrisApp = {
 
     // Evil mode logic
     const homeLogoCircle = document.querySelector('.home-logo-circle');
+    const homeLogo = document.querySelector('.home-logo');
     let evilClicks = 0;
     let evilClickTimer = null;
     
     const handleEvilClick = (e) => {
-        // Only run on click event or single touch end
-        if (e.type === 'touchstart') return; // let click handle it or handle click directly
+        // Only respond while in normal mode (not evil mode already)
+        if (document.body.classList.contains('evil-mode')) return;
 
         evilClicks++;
         if (evilClickTimer) clearTimeout(evilClickTimer);
         
-        // 3-second timeout window between clicks
         evilClickTimer = setTimeout(() => {
             evilClicks = 0;
-        }, 3000); 
+        }, 4000); 
 
-        // At 6 clicks or more (up to 19 clicks), show warning
         if (evilClicks >= 6 && evilClicks < 20) {
             const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.too_many_clicks']) 
                 || 'Por favor, no pulses más veces en el símbolo.';
@@ -298,21 +297,25 @@ const OrisApp = {
     if (homeLogoCircle) {
         homeLogoCircle.addEventListener('click', handleEvilClick);
     }
+    if (homeLogo) {
+        homeLogo.addEventListener('click', handleEvilClick);
+    }
 
     // Element buttons (aire, tierra, agua, fuego)
     document.querySelectorAll('.element-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const element = btn.getAttribute('data-element');
             
-            // In evil mode (pazuzu frequency or body has evil-mode class), only 'fuego' is allowed
+            // Check evil mode condition
             const isEvil = this.currentFrequency === 'pazuzu' || document.body.classList.contains('evil-mode');
             if (isEvil && element !== 'fuego') {
                 e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
                 const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.incompatible_element']) 
                     || 'Elemento incompatible en modo maligno';
                 this.showWarning(warningMsg);
-                return;
+                return false;
             }
 
             const color = btn.getAttribute('data-color');
