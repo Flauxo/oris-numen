@@ -76,7 +76,7 @@ const OrisAudio = {
 
     // Master gain for the preview with envelope
     const previewGain = this.ctx.createGain();
-    const targetGain = frequencyHz < 100 ? 1.5 : 0.18; // Massive boost for low frequencies (from 0.7 to 1.5)
+    const targetGain = frequencyHz < 100 ? 0.9 : 0.18; // Reduced Humilis volume
     previewGain.gain.setValueAtTime(0, t);
     previewGain.gain.linearRampToValueAtTime(targetGain, t + fadeIn);
     previewGain.gain.setValueAtTime(targetGain, t + duration - fadeOut);
@@ -185,7 +185,7 @@ const OrisAudio = {
     const t = this.ctx.currentTime;
 
     const padGain = this.ctx.createGain();
-    const targetGain = frequencyHz < 100 ? 1.8 : 0.2; // Massive boost for low frequencies (from 0.8 to 1.8)
+    const targetGain = frequencyHz < 100 ? 1.1 : 0.2; // Reduced Humilis volume
     padGain.gain.setValueAtTime(0, t);
     padGain.gain.linearRampToValueAtTime(targetGain, t + 2.5);
 
