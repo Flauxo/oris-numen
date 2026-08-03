@@ -255,6 +255,50 @@ const OrisAudio = {
       osc4.start(t);
       this.padOscillators.push({ osc: osc4 });
     }
+    
+    // Monster voices for Lucifer
+    if (frequencyHz === 666) {
+        const monsterOsc = this.ctx.createOscillator();
+        monsterOsc.type = 'sawtooth';
+        monsterOsc.frequency.value = 60; // Deep growl
+        
+        // Detune LFO for the monster (changing pitch and detuning)
+        const monsterLfo = this.ctx.createOscillator();
+        monsterLfo.type = 'sine';
+        monsterLfo.frequency.value = 0.3; // Slow sweep
+        const monsterLfoGain = this.ctx.createGain();
+        monsterLfoGain.gain.value = 40; // Wide detune range
+        monsterLfo.connect(monsterLfoGain);
+        monsterLfoGain.connect(monsterOsc.frequency);
+        monsterLfo.start(t);
+        
+        // Formant filter to simulate throat/voice
+        const monsterFilter = this.ctx.createBiquadFilter();
+        monsterFilter.type = 'bandpass';
+        monsterFilter.frequency.value = 350;
+        monsterFilter.Q.value = 4.0;
+        
+        // Second LFO to sweep the formant (changing vowels)
+        const vowelLfo = this.ctx.createOscillator();
+        vowelLfo.type = 'sine';
+        vowelLfo.frequency.value = 0.15;
+        const vowelGain = this.ctx.createGain();
+        vowelGain.gain.value = 250;
+        vowelLfo.connect(vowelGain);
+        vowelGain.connect(monsterFilter.frequency);
+        vowelLfo.start(t);
+        
+        const monsterVol = this.ctx.createGain();
+        monsterVol.gain.value = 1.2; // Loud enough to be heard clearly
+        
+        monsterOsc.connect(monsterFilter);
+        monsterFilter.connect(monsterVol);
+        monsterVol.connect(padGain); // Routed through main pad fade in/out
+        
+        monsterOsc.start(t);
+        
+        this.padOscillators.push({ osc: monsterOsc }, { osc: monsterLfo }, { osc: vowelLfo });
+    }
 
     this.padGainNode = padGain;
   },

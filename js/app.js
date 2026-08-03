@@ -531,6 +531,16 @@ const OrisApp = {
         proverbEl.style.color = freq ? freq.color : 'inherit';
       }
 
+      // Update success subtitle based on frequency
+      const successSubtitle = document.querySelector('.success-subtitle');
+      if (successSubtitle) {
+          if (this.currentFrequency === 'lucifer') {
+              successSubtitle.textContent = 'Tu mensaje ha sido elevado al maligno, no al divino.';
+          } else {
+              successSubtitle.textContent = 'Tu mensaje ha sido elevado al divino';
+          }
+      }
+
       OrisAudio.playSuccessSound();
       this.showScreen('success');
     }, 800);
