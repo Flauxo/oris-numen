@@ -748,6 +748,8 @@ body {
     padding: 24px;
     width: calc(100% - 48px);
     max-width: 440px;
+    height: 45vh;
+    min-height: 300px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
@@ -762,7 +764,7 @@ body {
 
 #write-card-input {
     width: 100%;
-    min-height: 120px;
+    flex-grow: 1;
     background: transparent;
     border: none;
     font-family: var(--font-sans);

@@ -252,6 +252,8 @@ const OrisApp = {
       messageInput.classList.remove('dissolve-anim'); // Ensure it's reset
       messageInput.style.borderBottomColor = freq.color;
     }
+    const otherElements = document.querySelectorAll('.freq-indicator-container, .freq-info, .btn-back, .write-footer');
+    otherElements.forEach(el => el.classList.remove('dissolve-anim-delayed'));
     if (btnSend) btnSend.style.backgroundColor = freq.color;
 
     // Setup write card line and button colors
@@ -311,6 +313,8 @@ const OrisApp = {
     if (messageInput) {
       messageInput.classList.add('dissolve-anim');
     }
+    const otherElements = document.querySelectorAll('.freq-indicator-container, .freq-info, .btn-back, .write-footer');
+    otherElements.forEach(el => el.classList.add('dissolve-anim-delayed'));
     
     if (OrisAudio.playDestructionSound) {
         OrisAudio.playDestructionSound();
@@ -318,7 +322,7 @@ const OrisApp = {
         OrisAudio.playButtonSound();
     }
 
-    // Wait 1.6 seconds for animation to finish before proceeding
+    // Wait 2.0 seconds for animation to finish before proceeding
     setTimeout(() => {
         // Update channeling screen
         const label = document.getElementById('channeling-label');
@@ -345,7 +349,7 @@ const OrisApp = {
           (remaining, progress) => this.onTimerTick(remaining, progress),
           () => this.onTimerComplete()
         );
-    }, 1600);
+    }, 2000);
   },
 
   /**
