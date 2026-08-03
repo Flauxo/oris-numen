@@ -642,29 +642,29 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s ease;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s;
 }
 
 .overlay.active {
-    opacity: 1;
     pointer-events: auto;
+    visibility: visible;
+    transition: visibility 0s linear 0s;
 }
 
 .overlay-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    transition: background 0.4s ease, backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease;
-}
-
-.overlay.active .overlay-backdrop {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.overlay.active .overlay-backdrop {
+    opacity: 1;
 }
 
 .overlay-card {
@@ -676,11 +676,13 @@ body {
     width: calc(100% - 48px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     text-align: center;
+    opacity: 0;
     transform: translateY(20px) scale(0.95);
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
 }
 
 .overlay.active .overlay-card {
+    opacity: 1;
     transform: translateY(0) scale(1);
 }
 
@@ -890,6 +892,7 @@ body {
 }
 
 .sidebar-overlay.active .sidebar-drawer {
+    opacity: 1;
     transform: translateX(0);
 }
 
@@ -900,8 +903,9 @@ body {
     background-color: var(--color-bg-primary);
     border-radius: var(--radius-md);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    opacity: 0;
     transform: translateX(120%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
     display: flex;
     flex-direction: column;
     padding: 24px;
@@ -983,13 +987,14 @@ body.evil-mode .home-logo-circle {
 .evil-backdrop {
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0);
-    transition: background-color 0.4s ease;
+    background-color: rgba(0, 0, 0, 0.85);
     z-index: 100;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 .evil-overlay.active .evil-backdrop {
-    background-color: rgba(0, 0, 0, 0.85);
+    opacity: 1;
 }
 
 .evil-card {
@@ -1005,6 +1010,14 @@ body.evil-mode .home-logo-circle {
     gap: 16px;
     text-align: center;
     box-shadow: 0 10px 40px rgba(255, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
+}
+
+.evil-overlay.active .evil-card {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
 .evil-title {
