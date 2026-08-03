@@ -36,7 +36,7 @@ const WaveformRenderer = {
     
     // Create base speed and amplitude variations based on frequency
     const baseSpeed = 0.01 + rand() * 0.03;
-    const baseAmp = 30 + rand() * 40;
+    const baseAmp = 44 + rand() * 52;
 
     for (let i = 0; i < numWaves; i++) {
         // Vary frequency slightly per wave
@@ -118,7 +118,7 @@ const WaveformRenderer = {
     this.ctx.beginPath();
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
-    this.ctx.lineWidth = 2.5;
+    this.ctx.lineWidth = 3.5;
 
     // Build the wave path
     const points = [];
