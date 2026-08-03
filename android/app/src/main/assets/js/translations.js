@@ -27,6 +27,7 @@ const Translations = {
         "channeling.sublabel.evil": "for its transformation into evil energy",
         "channeling.info": "Focus on your message during channeling. (You can turn off the screen)",
         "btn.cancel": "Cancel",
+        "elements.add": "Add elements",
         
         "success.title": "Message channeled<br>successfully",
         "success.subtitle.divine": "Your message has been elevated to the divine",
@@ -148,6 +149,7 @@ const Translations = {
         "channeling.sublabel.evil": "para su transformación en energía maligna",
         "channeling.info": "Concéntrate en tu mensaje durante la canalización. (Puedes apagar la pantalla)",
         "btn.cancel": "Cancelar",
+        "elements.add": "Añadir elementos",
         
         "success.title": "Mensaje canalizado<br>con éxito",
         "success.subtitle.divine": "Tu mensaje ha sido elevado al divino",
@@ -269,6 +271,7 @@ const Translations = {
         "channeling.sublabel.evil": "per la sua trasformazione in energia malefica",
         "channeling.info": "Concentrati sul tuo messaggio durante la canalizzazione. (Puoi spegnere lo schermo)",
         "btn.cancel": "Annulla",
+        "elements.add": "Aggiungi elementi",
         
         "success.title": "Messaggio canalizzato<br>con successo",
         "success.subtitle.divine": "Il tuo messaggio è stato elevato al divino",
@@ -390,6 +393,7 @@ const Translations = {
         "channeling.sublabel.evil": "ad eius transformationem in energiam malignam",
         "channeling.info": "In nuntio tuo mente esto durante transmissione. (Licet lucem extinguere)",
         "btn.cancel": "Rescinde",
+        "elements.add": "Elementa adde",
         
         "success.title": "Nuntius feliciter<br>transmissus est",
         "success.subtitle.divine": "Nuntius tuus ad divinum evectus est",

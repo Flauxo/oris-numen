@@ -175,8 +175,49 @@
                     <canvas id="waveform-canvas"></canvas>
                 </div>
 
+                <!-- Elements section -->
+                <div class="elements-section">
+                    <p class="elements-label" data-i18n="elements.add">Añadir elementos</p>
+                    <div class="elements-grid">
+                        <!-- Aire -->
+                        <button class="element-btn" id="elem-aire" data-element="aire" data-color="#7B5EA7" aria-label="Aire">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
+                                <ellipse cx="40" cy="40" rx="18" ry="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <line x1="40" y1="10" x2="40" y2="70" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <line x1="40" y1="28" x2="28" y2="38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <line x1="40" y1="28" x2="52" y2="38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <line x1="40" y1="40" x2="30" y2="49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <line x1="40" y1="40" x2="50" y2="49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <line x1="40" y1="52" x2="33" y2="59" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <line x1="40" y1="52" x2="47" y2="59" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <!-- Tierra -->
+                        <button class="element-btn" id="elem-tierra" data-element="tierra" data-color="#D4845A" aria-label="Tierra">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
+                                <path d="M22 65 Q22 45 30 35 Q38 25 38 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                                <path d="M40 65 Q40 45 40 35 Q40 25 40 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                                <path d="M58 65 Q58 45 50 35 Q42 25 42 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                            </svg>
+                        </button>
+                        <!-- Agua -->
+                        <button class="element-btn" id="elem-agua" data-element="agua" data-color="#5A8BB5" aria-label="Agua">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
+                                <path d="M15 55 Q20 45 30 48 Q40 51 40 40 Q40 28 32 22 Q26 17 28 26 Q30 35 38 35 Q50 35 58 45 Q65 54 60 62" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                            </svg>
+                        </button>
+                        <!-- Fuego -->
+                        <button class="element-btn" id="elem-fuego" data-element="fuego" data-color="#D4B85A" aria-label="Fuego">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
+                                <path d="M40 68 Q24 60 24 46 Q24 35 32 28 Q30 38 38 40 Q34 30 40 18 Q46 30 52 26 Q58 32 56 46 Q54 56 62 52 Q60 62 40 68Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <path d="M40 58 Q34 52 36 46 Q38 52 44 50 Q42 54 40 58Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="channeling-footer">
-                    <p class="channeling-info" data-i18n="channeling.info">Mantén la pantalla encendida con la frecuencia activa durante la canalización</p>
+                    <p class="channeling-info" data-i18n="channeling.info">Concéntrate en tu mensaje durante la canalización. (Puedes apagar la pantalla)</p>
                     <button id="btn-cancel" class="btn-cancel" data-i18n="btn.cancel">Cancelar</button>
                 </div>
             </div>

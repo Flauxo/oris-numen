@@ -584,9 +584,205 @@ const OrisAudio = {
   dispose() {
     this.stopFrequencyPad();
     this.stopEvilAmbient();
+    this.stopAllElements();
     if (this.ctx) {
       this.ctx.close();
       this.ctx = null;
+    }
+  },
+
+  // ── Elemental ambient sounds ──────────────────────────────────────────
+
+  elementNodes: {}, // { aire: [...nodes], tierra: [...nodes], agua: [...nodes], fuego: [...nodes] }
+  elementGains: {},
+
+  stopAllElements() {
+    ['aire', 'tierra', 'agua', 'fuego'].forEach(el => this.stopElement(el));
+  },
+
+  stopElement(element) {
+    if (!this.elementGains[element] || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    const g = this.elementGains[element];
+    if (g && g.gain) {
+      g.gain.cancelScheduledValues(t);
+      g.gain.setValueAtTime(g.gain.value, t);
+      g.gain.linearRampToValueAtTime(0, t + 1.2);
+    }
+    setTimeout(() => {
+      (this.elementNodes[element] || []).forEach(n => {
+        try { if (n.stop) n.stop(); } catch(e) {}
+        try { if (n.disconnect) n.disconnect(); } catch(e) {}
+      });
+      this.elementNodes[element] = [];
+      this.elementGains[element] = null;
+    }, 1300);
+  },
+
+  async startElement(element) {
+    await this._ensureContext();
+    if (!this.ctx) return;
+    // Stop if already running
+    this.stopElement(element);
+    await new Promise(r => setTimeout(r, 50));
+
+    const t = this.ctx.currentTime;
+    const masterGain = this.ctx.createGain();
+    masterGain.gain.setValueAtTime(0, t);
+    masterGain.gain.linearRampToValueAtTime(0.28, t + 1.5);
+    masterGain.connect(this.masterGain);
+
+    this.elementGains[element] = masterGain;
+    this.elementNodes[element] = [masterGain];
+
+    if (element === 'agua') {
+      // Rain: layered pink noise through bandpass filters
+      const sampleRate = this.ctx.sampleRate;
+      const bufLen = sampleRate * 4;
+      const buf = this.ctx.createBuffer(1, bufLen, sampleRate);
+      const data = buf.getChannelData(0);
+      let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+      for (let i = 0; i < bufLen; i++) {
+        const w = Math.random()*2-1;
+        b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759;
+        b2=0.96900*b2+w*0.1538520; b3=0.86650*b3+w*0.3104856;
+        b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+        data[i]=(b0+b1+b2+b3+b4+b5+b6+w*0.5362)*0.11; b6=w*0.115926;
+      }
+      // Light rain layer
+      const rain1 = this.ctx.createBufferSource();
+      rain1.buffer = buf; rain1.loop = true;
+      const f1 = this.ctx.createBiquadFilter();
+      f1.type='bandpass'; f1.frequency.value=4000; f1.Q.value=0.4;
+      const g1 = this.ctx.createGain(); g1.gain.value=1.2;
+      rain1.connect(f1); f1.connect(g1); g1.connect(masterGain);
+      rain1.start(t);
+      // Heavier drops layer
+      const rain2 = this.ctx.createBufferSource();
+      rain2.buffer = buf; rain2.loop = true;
+      const f2 = this.ctx.createBiquadFilter();
+      f2.type='lowpass'; f2.frequency.value=800; f2.Q.value=0.5;
+      const g2 = this.ctx.createGain(); g2.gain.value=0.5;
+      rain2.connect(f2); f2.connect(g2); g2.connect(masterGain);
+      rain2.start(t + 0.03);
+      // LFO for rain intensity variation
+      const lfo = this.ctx.createOscillator();
+      lfo.type='sine'; lfo.frequency.value=0.15;
+      const lfoG = this.ctx.createGain(); lfoG.gain.value=0.08;
+      lfo.connect(lfoG); lfoG.connect(masterGain.gain);
+      lfo.start(t);
+      this.elementNodes[element].push(rain1, rain2, lfo, f1, f2, g1, g2, lfoG);
+
+    } else if (element === 'aire') {
+      // Wind: filtered noise with slow LFO sweep
+      const sampleRate = this.ctx.sampleRate;
+      const bufLen = sampleRate * 3;
+      const buf = this.ctx.createBuffer(1, bufLen, sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < bufLen; i++) data[i] = Math.random()*2-1;
+
+      const wind = this.ctx.createBufferSource();
+      wind.buffer = buf; wind.loop = true;
+      const f1 = this.ctx.createBiquadFilter();
+      f1.type='bandpass'; f1.frequency.value=600; f1.Q.value=0.5;
+      const f2 = this.ctx.createBiquadFilter();
+      f2.type='lowpass'; f2.frequency.value=1200;
+      const gWind = this.ctx.createGain(); gWind.gain.value=0.9;
+      wind.connect(f1); f1.connect(f2); f2.connect(gWind); gWind.connect(masterGain);
+      wind.start(t);
+      // LFO sweeps filter for gusting effect
+      const lfo = this.ctx.createOscillator();
+      lfo.type='sine'; lfo.frequency.value=0.08;
+      const lfoG = this.ctx.createGain(); lfoG.gain.value=400;
+      lfo.connect(lfoG); lfoG.connect(f1.frequency);
+      lfo.start(t);
+      // Second wind layer (high whistle)
+      const wind2 = this.ctx.createBufferSource();
+      wind2.buffer = buf; wind2.loop = true;
+      const fHigh = this.ctx.createBiquadFilter();
+      fHigh.type='bandpass'; fHigh.frequency.value=2200; fHigh.Q.value=2.5;
+      const gHigh = this.ctx.createGain(); gHigh.gain.value=0.3;
+      wind2.connect(fHigh); fHigh.connect(gHigh); gHigh.connect(masterGain);
+      wind2.start(t + 0.05);
+      const lfo2 = this.ctx.createOscillator();
+      lfo2.type='sine'; lfo2.frequency.value=0.22;
+      const lfoG2 = this.ctx.createGain(); lfoG2.gain.value=0.12;
+      lfo2.connect(lfoG2); lfoG2.connect(masterGain.gain);
+      lfo2.start(t);
+      this.elementNodes[element].push(wind, wind2, lfo, lfo2, f1, f2, fHigh, gWind, gHigh, lfoG, lfoG2);
+
+    } else if (element === 'fuego') {
+      // Fire: crackling noise + low rumble
+      const sampleRate = this.ctx.sampleRate;
+      const bufLen = sampleRate * 5;
+      const buf = this.ctx.createBuffer(1, bufLen, sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < bufLen; i++) {
+        // Sporadic crackle spikes
+        data[i] = Math.random() > 0.992 ? (Math.random()*2-1)*1.8 : 0;
+        // Low roar base
+        data[i] += (Math.random()*2-1)*0.12;
+      }
+      const fire = this.ctx.createBufferSource();
+      fire.buffer = buf; fire.loop = true;
+      const fCrackle = this.ctx.createBiquadFilter();
+      fCrackle.type='lowpass'; fCrackle.frequency.value=1000;
+      const gFire = this.ctx.createGain(); gFire.gain.value=1.0;
+      fire.connect(fCrackle); fCrackle.connect(gFire); gFire.connect(masterGain);
+      fire.start(t);
+      // Low rumble drone
+      const osc = this.ctx.createOscillator();
+      osc.type='sawtooth'; osc.frequency.value=55;
+      const fRumble = this.ctx.createBiquadFilter();
+      fRumble.type='lowpass'; fRumble.frequency.value=180;
+      const gRumble = this.ctx.createGain(); gRumble.gain.value=0.18;
+      osc.connect(fRumble); fRumble.connect(gRumble); gRumble.connect(masterGain);
+      osc.start(t);
+      // LFO for fire breathing motion
+      const lfo = this.ctx.createOscillator();
+      lfo.type='sine'; lfo.frequency.value=0.18;
+      const lfoG = this.ctx.createGain(); lfoG.gain.value=0.1;
+      lfo.connect(lfoG); lfoG.connect(masterGain.gain);
+      lfo.start(t);
+      this.elementNodes[element].push(fire, osc, lfo, fCrackle, fRumble, gFire, gRumble, lfoG);
+
+    } else if (element === 'tierra') {
+      // Earth: deep rumble + occasional stone impacts
+      const sampleRate = this.ctx.sampleRate;
+      const bufLen = sampleRate * 6;
+      const buf = this.ctx.createBuffer(1, bufLen, sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < bufLen; i++) {
+        // Random stone impacts (less frequent than crackle)
+        if (Math.random() > 0.9985) {
+          // Short percussive burst
+          const decayLen = Math.floor(sampleRate * 0.04);
+          for (let j = 0; j < decayLen && i+j < bufLen; j++) {
+            data[i+j] += (Math.random()*2-1) * Math.exp(-j/800) * 1.5;
+          }
+        }
+        data[i] += (Math.random()*2-1)*0.06;
+      }
+      const earth = this.ctx.createBufferSource();
+      earth.buffer = buf; earth.loop = true;
+      const fEarth = this.ctx.createBiquadFilter();
+      fEarth.type='lowpass'; fEarth.frequency.value=400;
+      const gEarth = this.ctx.createGain(); gEarth.gain.value=1.1;
+      earth.connect(fEarth); fEarth.connect(gEarth); gEarth.connect(masterGain);
+      earth.start(t);
+      // Sub bass rumble
+      const osc = this.ctx.createOscillator();
+      osc.type='sine'; osc.frequency.value=38;
+      const gBass = this.ctx.createGain(); gBass.gain.value=0.22;
+      osc.connect(gBass); gBass.connect(masterGain);
+      osc.start(t);
+      // Slow LFO
+      const lfo = this.ctx.createOscillator();
+      lfo.type='sine'; lfo.frequency.value=0.07;
+      const lfoG = this.ctx.createGain(); lfoG.gain.value=0.07;
+      lfo.connect(lfoG); lfoG.connect(masterGain.gain);
+      lfo.start(t);
+      this.elementNodes[element].push(earth, osc, lfo, fEarth, gEarth, gBass, lfoG);
     }
   }
 };

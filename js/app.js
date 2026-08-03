@@ -290,6 +290,28 @@ const OrisApp = {
         homeLogoCircle.addEventListener('touchstart', handleEvilClick, {passive: false});
     }
 
+    // Element buttons (aire, tierra, agua, fuego)
+    document.querySelectorAll('.element-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const element = btn.getAttribute('data-element');
+            const color = btn.getAttribute('data-color');
+            const isActive = btn.classList.contains('active');
+            if (isActive) {
+                btn.classList.remove('active');
+                btn.style.color = '';
+                btn.style.borderColor = '';
+                btn.style.boxShadow = '';
+                OrisAudio.stopElement(element);
+            } else {
+                btn.classList.add('active');
+                btn.style.color = color;
+                btn.style.borderColor = color;
+                btn.style.boxShadow = `0 0 14px ${color}55`;
+                OrisAudio.startElement(element);
+            }
+        });
+    });
+
     const btnEvilChannel = document.getElementById('btn-evil-channel');
     if (btnEvilChannel) {
         btnEvilChannel.addEventListener('click', () => this.channelEvilMode());
@@ -660,6 +682,8 @@ const OrisApp = {
   onTimerComplete() {
     ChannelTimer.clearState();
     OrisAudio.stopFrequencyPad();
+    OrisAudio.stopAllElements();
+    this.resetElementButtons();
 
     // Set waveform to full before stopping
     WaveformRenderer.setProgress(1);
@@ -723,6 +747,8 @@ const OrisApp = {
   cancelChanneling() {
     ChannelTimer.reset();
     OrisAudio.stopFrequencyPad();
+    OrisAudio.stopAllElements();
+    this.resetElementButtons();
     WaveformRenderer.reset();
     this.goHome();
   },
@@ -748,7 +774,17 @@ const OrisApp = {
     }
     OrisAudio.playButtonSound();
     this.currentFrequency = null;
+    this.resetElementButtons();
     this.showScreen('home');
+  },
+
+  resetElementButtons() {
+    document.querySelectorAll('.element-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.color = '';
+        btn.style.borderColor = '';
+        btn.style.boxShadow = '';
+    });
   },
 
   /**
