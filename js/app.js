@@ -256,7 +256,10 @@ const OrisApp = {
             const selectedLang = langItem.getAttribute('data-lang');
             if (selectedLang) {
                 this.setLanguage(selectedLang);
-                setTimeout(() => resetSidebar(), 300); // Wait briefly before closing
+                // Close sidebar and return to home screen
+                sidebarOverlay.classList.remove('active');
+                resetSidebar();
+                this.goHome();
             }
         });
     });
@@ -382,8 +385,14 @@ const OrisApp = {
     if (overlayDot) overlayDot.style.backgroundColor = freq.color;
     if (overlayDot) overlayDot.style.boxShadow = `0 0 15px rgba(${freq.colorRgb}, 0.6)`;
     if (overlayName) {
-        overlayName.textContent = freq.fullName;
+        const formatStr = Translations[this.currentLang]['freq.format'] || '{name}';
+        overlayName.textContent = formatStr.replace('{name}', freq.name);
         overlayName.style.color = freq.color;
+    }
+    const btnWrite = document.getElementById('btn-write');
+    if (btnWrite) {
+        btnWrite.style.backgroundColor = freq.color;
+        btnWrite.style.boxShadow = `0 4px 15px rgba(${freq.colorRgb}, 0.4)`;
     }
     if (overlayHz) overlayHz.textContent = `${freq.hz} Hz`;
     if (overlayPurpose) overlayPurpose.textContent = Translations[this.currentLang][`freq.${type}.purpose`];
@@ -423,7 +432,10 @@ const OrisApp = {
     const btnSend = document.getElementById('btn-send');
     const btnWrite = document.getElementById('btn-write');
 
-    if (freqName) freqName.textContent = freq.fullName;
+    if (freqName) {
+        const formatStr = Translations[this.currentLang]['freq.format'] || '{name}';
+        freqName.textContent = formatStr.replace('{name}', freq.name);
+    }
     if (freqHz) freqHz.textContent = `${freq.hz} Hz`;
     if (writeDot) writeDot.style.color = freq.color;
     if (writePurpose) writePurpose.textContent = Translations[this.currentLang][`freq.${this.currentFrequency}.type`];
@@ -605,7 +617,11 @@ const OrisApp = {
         const sublabel = document.getElementById('channeling-sublabel');
         const timer = document.getElementById('timer-display');
     
-        if (label) label.textContent = `${Translations[this.currentLang]['channeling.label']}${freq.fullName}...`;
+        if (label) {
+            const formatStr = Translations[this.currentLang]['channeling.label'] || 'Canalizando a través de la {name}...';
+            const freqFormat = Translations[this.currentLang]['freq.format'] || '{name}';
+            label.textContent = formatStr.replace('{name}', freqFormat.replace('{name}', freq.name));
+        }
         if (sublabel) sublabel.textContent = Translations[this.currentLang]['channeling.sublabel'];
         if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
     
@@ -747,7 +763,11 @@ const OrisApp = {
       if (freq) {
         const label = document.getElementById('channeling-label');
         const timer = document.getElementById('timer-display');
-        if (label) label.textContent = `Canalizando a través de la ${freq.fullName}...`;
+        if (label) {
+            const formatStr = Translations[this.currentLang]['channeling.label'] || 'Canalizando a través de la {name}...';
+            const freqFormat = Translations[this.currentLang]['freq.format'] || '{name}';
+            label.textContent = formatStr.replace('{name}', freqFormat.replace('{name}', freq.name));
+        }
         if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.remaining);
 
         this.showScreen('channeling');
@@ -824,8 +844,12 @@ const OrisApp = {
       const sublabel = document.getElementById('channeling-sublabel');
       const timer = document.getElementById('timer-display');
   
-      if (label) label.textContent = `Canalizando a través de la ${freq.fullName}...`;
-      if (sublabel) sublabel.textContent = 'para su transformación en energía maligna';
+      if (label) {
+          const formatStr = Translations[this.currentLang]['channeling.label'] || 'Canalizando a través de la {name}...';
+          const freqFormat = Translations[this.currentLang]['freq.format'] || '{name}';
+          label.textContent = formatStr.replace('{name}', freqFormat.replace('{name}', freq.name));
+      }
+      if (sublabel) sublabel.textContent = Translations[this.currentLang]['channeling.sublabel.evil'] || 'para su transformación en energía maligna';
       if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
   
       this.showScreen('channeling');
@@ -844,6 +868,68 @@ const OrisApp = {
         (remaining, progress) => this.onTimerTick(remaining, progress),
         () => this.onTimerComplete()
       );
+  },
+
+  /**
+   * Set Language and update DOM
+   */
+  setLanguage(lang) {
+    if (!Translations || !Translations[lang]) return;
+    this.currentLang = lang;
+    localStorage.setItem('oris-lang', lang);
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (Translations[lang][key]) {
+        if (el.hasAttribute('data-i18n-html')) {
+            el.innerHTML = Translations[lang][key];
+        } else {
+            el.textContent = Translations[lang][key];
+        }
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+      const attrStr = el.getAttribute('data-i18n-attr');
+      const parts = attrStr.split(':');
+      
+      let attrName, key;
+      if (parts.length === 2) {
+        attrName = parts[0];
+        key = parts[1];
+      } else if (parts.length === 1) {
+        attrName = parts[0];
+        key = el.getAttribute('data-i18n');
+      }
+      
+      if (attrName && key && Translations[lang][key]) {
+        el.setAttribute(attrName, Translations[lang][key]);
+      }
+    });
+
+    document.querySelectorAll('[data-freq-card]').forEach(el => {
+        const type = el.getAttribute('data-freq-card');
+        const freq = this.FREQUENCIES[type];
+        if (freq) {
+            const formatStr = Translations[lang]['freq.format'] || '{name}';
+            el.textContent = `${formatStr.replace('{name}', freq.name)} · ${freq.hz} Hz`;
+        }
+    });
+    
+    if (this.currentFrequency) {
+      const freq = this.FREQUENCIES[this.currentFrequency];
+      const writePurpose = document.getElementById('write-purpose');
+      const writeEffect = document.getElementById('write-effect');
+      const writeFreqName = document.getElementById('write-freq-name');
+      const overlayFreqName = document.getElementById('overlay-freq-name');
+      
+      const formatStr = Translations[lang]['freq.format'] || '{name}';
+      
+      if (writePurpose) writePurpose.textContent = Translations[this.currentLang][`freq.${this.currentFrequency}.type`] || '';
+      if (writeEffect) writeEffect.textContent = Translations[this.currentLang][`freq.${this.currentFrequency}.effect`] || '';
+      if (writeFreqName && freq) writeFreqName.textContent = formatStr.replace('{name}', freq.name);
+      if (overlayFreqName && freq) overlayFreqName.textContent = formatStr.replace('{name}', freq.name);
+    }
   }
 };
 

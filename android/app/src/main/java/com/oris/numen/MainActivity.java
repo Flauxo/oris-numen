@@ -13,6 +13,9 @@ import android.webkit.WebResourceRequest;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View;
+import android.content.pm.PackageManager;
+import android.Manifest;
+import android.os.Build;
 
 public class MainActivity extends Activity {
     private WebView webView;
@@ -61,6 +64,14 @@ public class MainActivity extends Activity {
         });
         webView.setWebChromeClient(new WebChromeClient());
         webView.loadUrl("file:///android_asset/index.html");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
+        
+        BootReceiver.scheduleNotification(this);
     }
 
     @Override
