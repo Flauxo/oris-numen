@@ -217,16 +217,26 @@
             <div class="overlay-backdrop"></div>
             <div class="sidebar-drawer">
                 <div class="sidebar-header">
-                    <h2 class="sidebar-title">Menú</h2>
+                    <h2 id="sidebar-title" class="sidebar-title">Menú</h2>
                     <button id="btn-close-sidebar" class="btn-close-sidebar">×</button>
                 </div>
-                <ul class="sidebar-menu">
-                    <li class="sidebar-item"><a href="#">Idioma</a></li>
-                    <li class="sidebar-item"><a href="#">Acerca de</a></li>
-                    <li class="sidebar-item"><a href="#">Mejoras</a></li>
-                    <li class="sidebar-item"><a href="#">Cómo funciona</a></li>
-                    <li class="sidebar-item"><a href="#">Testimonios</a></li>
-                </ul>
+                <div id="sidebar-main-menu">
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item"><a href="#" id="menu-item-lang">Idioma</a></li>
+                        <li class="sidebar-item"><a href="#">Acerca de</a></li>
+                        <li class="sidebar-item"><a href="#">Mejoras</a></li>
+                        <li class="sidebar-item"><a href="#">Cómo funciona</a></li>
+                        <li class="sidebar-item"><a href="#">Testimonios</a></li>
+                    </ul>
+                </div>
+                <div id="sidebar-lang-menu" class="hidden">
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item"><a href="#">Inglés</a></li>
+                        <li class="sidebar-item"><a href="#">Español</a></li>
+                        <li class="sidebar-item"><a href="#">Italiano</a></li>
+                        <li class="sidebar-item"><a href="#">Latín</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 

@@ -145,9 +145,53 @@ const OrisApp = {
     const btnCloseSidebar = document.getElementById('btn-close-sidebar');
     const sidebarBackdrop = sidebarOverlay ? sidebarOverlay.querySelector('.overlay-backdrop') : null;
 
-    if (btnHamburger) btnHamburger.addEventListener('click', () => sidebarOverlay.classList.add('active'));
-    if (btnCloseSidebar) btnCloseSidebar.addEventListener('click', () => sidebarOverlay.classList.remove('active'));
-    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', () => sidebarOverlay.classList.remove('active'));
+    const sidebarTitle = document.getElementById('sidebar-title');
+    const sidebarMainMenu = document.getElementById('sidebar-main-menu');
+    const sidebarLangMenu = document.getElementById('sidebar-lang-menu');
+    const menuItemLang = document.getElementById('menu-item-lang');
+
+    let isSidebarLangView = false;
+
+    const resetSidebar = () => {
+        isSidebarLangView = false;
+        if (sidebarMainMenu) sidebarMainMenu.classList.remove('hidden');
+        if (sidebarLangMenu) sidebarLangMenu.classList.add('hidden');
+        if (sidebarTitle) sidebarTitle.textContent = 'Menú';
+        if (btnCloseSidebar) btnCloseSidebar.innerHTML = '&times;';
+    };
+
+    if (btnHamburger) {
+        btnHamburger.addEventListener('click', () => {
+            resetSidebar();
+            sidebarOverlay.classList.add('active');
+        });
+    }
+
+    if (btnCloseSidebar) {
+        btnCloseSidebar.addEventListener('click', () => {
+            if (isSidebarLangView) {
+                // Go back to main menu
+                resetSidebar();
+            } else {
+                sidebarOverlay.classList.remove('active');
+            }
+        });
+    }
+
+    if (sidebarBackdrop) {
+        sidebarBackdrop.addEventListener('click', () => sidebarOverlay.classList.remove('active'));
+    }
+
+    if (menuItemLang) {
+        menuItemLang.addEventListener('click', (e) => {
+            e.preventDefault();
+            isSidebarLangView = true;
+            sidebarMainMenu.classList.add('hidden');
+            sidebarLangMenu.classList.remove('hidden');
+            sidebarTitle.textContent = 'Idioma';
+            btnCloseSidebar.innerHTML = '&larr;'; // Arrow back
+        });
+    }
 
     // Evil mode logic
     const homeLogoCircle = document.querySelector('.home-logo-circle');
