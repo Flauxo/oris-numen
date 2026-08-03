@@ -627,7 +627,6 @@ const OrisApp = {
     }
 
     // Apply destruction animation and sound
-    const messageInput = document.getElementById('message-input');
     if (messageInput) {
       messageInput.classList.add('dissolve-anim');
     }
