@@ -580,7 +580,7 @@ body {
 }
 
 .success-icon.inverted-cross {
-    transform: rotate(180deg);
+    animation: invertedPulseGlow 3s ease-in-out infinite;
 }
 
 .success-title {

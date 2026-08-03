@@ -540,7 +540,7 @@ const OrisApp = {
       const successSubtitle = document.querySelector('.success-subtitle');
       if (successSubtitle) {
           if (this.currentFrequency === 'lucifer') {
-              successSubtitle.textContent = 'Tu mensaje ha sido elevado al maligno, no al divino.';
+              successSubtitle.textContent = 'Tu mensaje ha sido elevado al maligno.';
           } else {
               successSubtitle.textContent = 'Tu mensaje ha sido elevado al divino';
           }
