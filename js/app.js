@@ -163,6 +163,24 @@ const OrisApp = {
         btnConfirmText.addEventListener('click', () => this.confirmWriteCard());
     }
 
+    // About Card Handlers
+    const btnAbout = document.getElementById('menu-item-about');
+    if (btnAbout) btnAbout.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openAboutCard();
+    });
+
+    const aboutOverlay = document.getElementById('about-overlay');
+    const aboutBackdrop = aboutOverlay ? aboutOverlay.querySelector('.overlay-backdrop') : null;
+    if (aboutBackdrop) {
+        aboutBackdrop.addEventListener('click', () => this.closeAboutCard());
+    }
+
+    const btnCloseAbout = document.getElementById('btn-close-about');
+    if (btnCloseAbout) {
+        btnCloseAbout.addEventListener('click', () => this.closeAboutCard());
+    }
+
     // Sidebar Menu Handlers
     const btnHamburger = document.getElementById('btn-hamburger');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -435,6 +453,29 @@ const OrisApp = {
       messageInput.value = writeCardInput.value;
     }
     this.closeWriteCard();
+  },
+  
+  /**
+   * Open the about card
+   */
+  openAboutCard() {
+      const aboutOverlay = document.getElementById('about-overlay');
+      if (aboutOverlay) {
+          aboutOverlay.classList.add('active');
+          this.closeSidebar(); // close sidebar if open
+          OrisAudio.playButtonSound();
+      }
+  },
+
+  /**
+   * Close the about card
+   */
+  closeAboutCard() {
+      const aboutOverlay = document.getElementById('about-overlay');
+      if (aboutOverlay) {
+          aboutOverlay.classList.remove('active');
+          OrisAudio.playButtonSound();
+      }
   },
   /**
    * Send message — start channeling process with destruction animation
