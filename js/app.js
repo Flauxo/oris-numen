@@ -616,6 +616,16 @@ const OrisApp = {
     const freq = this.FREQUENCIES[this.currentFrequency];
     if (!freq) return;
 
+    // Validate message length (< 11 characters)
+    const messageInput = document.getElementById('message-input');
+    const text = messageInput ? messageInput.value.trim() : '';
+    if (text.length < 11) {
+        if (messageInput) messageInput.value = '';
+        const warningMsg = Translations[this.currentLang] ? Translations[this.currentLang]['warning.short_message'] : 'Escribe un mensaje con más sinceridad.';
+        this.showWarning(warningMsg);
+        return;
+    }
+
     // Apply destruction animation and sound
     const messageInput = document.getElementById('message-input');
     if (messageInput) {
@@ -787,6 +797,23 @@ const OrisApp = {
         btn.style.borderColor = '';
         btn.style.boxShadow = '';
     });
+  },
+
+  /**
+   * Show a solemn warning popup, auto-dismiss after 3.5s
+   */
+  showWarning(message) {
+    const popup = document.getElementById('warning-popup');
+    const text  = document.getElementById('warning-popup-text');
+    if (!popup || !text) return;
+
+    text.textContent = message;
+    popup.classList.add('show');
+
+    if (this._warningTimer) clearTimeout(this._warningTimer);
+    this._warningTimer = setTimeout(() => {
+        popup.classList.remove('show');
+    }, 3500);
   },
 
   /**

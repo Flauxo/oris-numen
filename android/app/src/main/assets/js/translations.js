@@ -28,6 +28,7 @@ const Translations = {
         "channeling.info": "Focus on your message during channeling. (You can turn off the screen)",
         "btn.cancel": "Cancel",
         "elements.add": "Add elements",
+        "warning.short_message": "The divine does not hear empty murmurs. Open your heart and write with sincerity.",
         
         "success.title": "Message channeled<br>successfully",
         "success.subtitle.divine": "Your message has been elevated to the divine",
@@ -150,6 +151,7 @@ const Translations = {
         "channeling.info": "Concéntrate en tu mensaje durante la canalización. (Puedes apagar la pantalla)",
         "btn.cancel": "Cancelar",
         "elements.add": "Añadir elementos",
+        "warning.short_message": "Lo sagrado no atiende murmullos vacíos. Abre tu corazón y escribe con sinceridad.",
         
         "success.title": "Mensaje canalizado<br>con éxito",
         "success.subtitle.divine": "Tu mensaje ha sido elevado al divino",
@@ -272,6 +274,7 @@ const Translations = {
         "channeling.info": "Concentrati sul tuo messaggio durante la canalizzazione. (Puoi spegnere lo schermo)",
         "btn.cancel": "Annulla",
         "elements.add": "Aggiungi elementi",
+        "warning.short_message": "Il sacro non ascolta mormorii vuoti. Apri il tuo cuore e scrivi con sincerità.",
         
         "success.title": "Messaggio canalizzato<br>con successo",
         "success.subtitle.divine": "Il tuo messaggio è stato elevato al divino",
@@ -394,6 +397,7 @@ const Translations = {
         "channeling.info": "In nuntio tuo mente esto durante transmissione. (Licet lucem extinguere)",
         "btn.cancel": "Rescinde",
         "elements.add": "Elementa adde",
+        "warning.short_message": "Sacrum murmura inania non audit. Aperi cor tuum et sincere scribe.",
         
         "success.title": "Nuntius feliciter<br>transmissus est",
         "success.subtitle.divine": "Nuntius tuus ad divinum evectus est",
