@@ -225,9 +225,8 @@
     pointer-events: none;
 }
 
-.dissolve-anim-delayed {
+.dissolve-anim-fast {
     animation: dissolveUp 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
-    animation-delay: 1.1s !important;
     pointer-events: none;
 }
 

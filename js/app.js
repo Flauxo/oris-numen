@@ -253,7 +253,7 @@ const OrisApp = {
       messageInput.style.borderBottomColor = freq.color;
     }
     const otherElements = document.querySelectorAll('.freq-indicator-container, .freq-info, .btn-back, .write-footer');
-    otherElements.forEach(el => el.classList.remove('dissolve-anim-delayed'));
+    otherElements.forEach(el => el.classList.remove('dissolve-anim', 'dissolve-anim-fast'));
     if (btnSend) btnSend.style.backgroundColor = freq.color;
 
     // Setup write card line and button colors
@@ -314,7 +314,11 @@ const OrisApp = {
       messageInput.classList.add('dissolve-anim');
     }
     const otherElements = document.querySelectorAll('.freq-indicator-container, .freq-info, .btn-back, .write-footer');
-    otherElements.forEach(el => el.classList.add('dissolve-anim-delayed'));
+    
+    // Trigger second phase after 1.1s
+    setTimeout(() => {
+      otherElements.forEach(el => el.classList.add('dissolve-anim-fast'));
+    }, 1100);
     
     if (OrisAudio.playDestructionSound) {
         OrisAudio.playDestructionSound();
