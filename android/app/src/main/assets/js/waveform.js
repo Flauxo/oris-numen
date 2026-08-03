@@ -20,6 +20,7 @@ const WaveformRenderer = {
   },
 
   setupWaves(frequencyHz = 100) {
+    this.currentFreqHz = frequencyHz;
     // Generate deterministic pseudo-random values based on frequencyHz
     // so the same frequency always produces the same waveform pattern
     let seed = frequencyHz;
@@ -31,7 +32,10 @@ const WaveformRenderer = {
     };
 
     // Determine number of waves (3 to 5)
-    const numWaves = 3 + Math.floor(rand() * 3);
+    let numWaves = 3 + Math.floor(rand() * 3);
+    if (frequencyHz === 88) numWaves = 5; // humilis
+    if (frequencyHz === 777) numWaves = 2; // absolutio
+
     this.waves = [];
     
     // Create base speed and amplitude variations based on frequency
@@ -42,7 +46,9 @@ const WaveformRenderer = {
         // Vary frequency slightly per wave
         const freq = 0.005 + rand() * 0.015;
         // Direction and speed
-        const speed = baseSpeed * (rand() > 0.5 ? 1 : -1) * (0.8 + rand() * 0.6);
+        let speed = baseSpeed * (rand() > 0.5 ? 1 : -1) * (0.8 + rand() * 0.6);
+        if (frequencyHz === 1418) speed *= 4.5; // gratia moves very fast
+
         // Amplitude falls off for higher indices
         const amp = baseAmp * (1.0 - (i * 0.15)) * (0.7 + rand() * 0.6);
         
@@ -118,7 +124,7 @@ const WaveformRenderer = {
     this.ctx.beginPath();
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
-    this.ctx.lineWidth = 3.5;
+    this.ctx.lineWidth = (this.currentFreqHz === 777) ? 8.0 : 3.5;
 
     // Build the wave path
     const points = [];
