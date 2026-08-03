@@ -343,6 +343,7 @@ const OrisApp = {
         OrisAudio.startFrequencyPad(freq.hz);
     
         // Start waveform animation
+        WaveformRenderer.setupWaves(freq.hz);
         WaveformRenderer.setColor(freq.color);
         WaveformRenderer.setProgress(0);
         WaveformRenderer.start();

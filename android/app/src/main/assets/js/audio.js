@@ -172,10 +172,22 @@ const OrisAudio = {
     padGain.connect(filter);
     filter.connect(this.masterGain);
 
+    // LFO for pitch modulation (accelerate/decelerate effect)
+    const lfo = this.ctx.createOscillator();
+    lfo.type = 'sine';
+    // Very slow modulation creates a swelling/breathing irregular effect
+    lfo.frequency.value = 0.05 + (frequencyHz % 50) * 0.002;
+    const lfoGain = this.ctx.createGain();
+    // Modulation depth
+    lfoGain.gain.value = frequencyHz < 150 ? 1.5 : 4.0;
+    lfo.connect(lfoGain);
+    lfo.start(t);
+
     // 1. Main sine
     const osc1 = this.ctx.createOscillator();
     osc1.type = 'sine';
     osc1.frequency.value = frequencyHz;
+    lfoGain.connect(osc1.frequency);
     osc1.connect(padGain);
     osc1.start(t);
 
@@ -183,6 +195,11 @@ const OrisAudio = {
     const osc2 = this.ctx.createOscillator();
     osc2.type = 'triangle';
     osc2.frequency.value = frequencyHz * 2;
+    // Scale LFO depth for harmonic
+    const lfoGain2 = this.ctx.createGain();
+    lfoGain2.gain.value = 2.0;
+    lfoGain.connect(lfoGain2);
+    lfoGain2.connect(osc2.frequency);
     const gain2 = this.ctx.createGain();
     gain2.gain.value = frequencyHz < 100 ? 0.15 : 0.05; // Boost harmonic for low freq
     osc2.connect(gain2);
@@ -193,6 +210,7 @@ const OrisAudio = {
     const osc3 = this.ctx.createOscillator();
     osc3.type = 'sine';
     osc3.frequency.value = frequencyHz + 2;
+    lfoGain.connect(osc3.frequency);
     const gain3 = this.ctx.createGain();
     gain3.gain.value = 0.5;
     osc3.connect(gain3);
@@ -200,7 +218,7 @@ const OrisAudio = {
     osc3.start(t);
 
     this.padOscillators = [
-      { osc: osc1 }, { osc: osc2 }, { osc: osc3 }
+      { osc: osc1 }, { osc: osc2 }, { osc: osc3 }, { osc: lfo }
     ];
 
     // Extra harmonic for very low bass translation on mobile speakers
@@ -208,6 +226,10 @@ const OrisAudio = {
       const osc4 = this.ctx.createOscillator();
       osc4.type = 'triangle';
       osc4.frequency.value = frequencyHz * 3;
+      const lfoGain3 = this.ctx.createGain();
+      lfoGain3.gain.value = 3.0;
+      lfoGain.connect(lfoGain3);
+      lfoGain3.connect(osc4.frequency);
       const gain4 = this.ctx.createGain();
       gain4.gain.value = 0.1;
       osc4.connect(gain4);

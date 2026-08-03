@@ -19,12 +19,41 @@ const WaveformRenderer = {
     window.addEventListener('resize', () => this.resize());
   },
 
-  setupWaves() {
-    this.waves = [
-      { amplitude: 55, frequency: 0.012, speed: 0.025, phase: 0 },
-      { amplitude: 40, frequency: 0.008, speed: -0.018, phase: Math.PI / 3 },
-      { amplitude: 30, frequency: 0.015, speed: 0.035, phase: Math.PI * 2 / 3 }
-    ];
+  setupWaves(frequencyHz = 100) {
+    // Generate deterministic pseudo-random values based on frequencyHz
+    // so the same frequency always produces the same waveform pattern
+    let seed = frequencyHz;
+    const rand = () => {
+        let t = seed += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+
+    // Determine number of waves (3 to 5)
+    const numWaves = 3 + Math.floor(rand() * 3);
+    this.waves = [];
+    
+    // Create base speed and amplitude variations based on frequency
+    const baseSpeed = 0.01 + rand() * 0.03;
+    const baseAmp = 30 + rand() * 40;
+
+    for (let i = 0; i < numWaves; i++) {
+        // Vary frequency slightly per wave
+        const freq = 0.005 + rand() * 0.015;
+        // Direction and speed
+        const speed = baseSpeed * (rand() > 0.5 ? 1 : -1) * (0.8 + rand() * 0.6);
+        // Amplitude falls off for higher indices
+        const amp = baseAmp * (1.0 - (i * 0.15)) * (0.7 + rand() * 0.6);
+        
+        this.waves.push({
+            amplitude: amp,
+            frequency: freq,
+            speed: speed,
+            phase: rand() * Math.PI * 2,
+            irregularity: 1.0 + rand() * 2.0 // Used in drawWave for complex harmonics
+        });
+    }
   },
 
   setColor(hexColor) {
@@ -94,10 +123,12 @@ const WaveformRenderer = {
     // Build the wave path
     const points = [];
     for (let x = 0; x <= width; x += 2) {
+      // Use the new irregularity parameter to create distinct, irregular shapes
+      const irreg = wave.irregularity || 1.0;
       const y = centerY
         + wave.amplitude * Math.sin(x * wave.frequency + this.time * wave.speed + wave.phase)
-        + (wave.amplitude * 0.3) * Math.sin(x * wave.frequency * 2.7 + this.time * wave.speed * 1.3)
-        + (wave.amplitude * 0.15) * Math.sin(x * wave.frequency * 4.1 + this.time * wave.speed * 0.7);
+        + (wave.amplitude * 0.3 * irreg) * Math.sin(x * wave.frequency * 2.7 + this.time * wave.speed * 1.3)
+        + (wave.amplitude * 0.15 * irreg) * Math.sin(x * wave.frequency * 4.1 + this.time * wave.speed * 0.7);
 
       points.push({ x, y });
     }
