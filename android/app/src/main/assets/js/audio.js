@@ -382,7 +382,7 @@ const OrisAudio = {
     // Gain envelope (fade in, peak, fade out)
     const gain = this.ctx.createGain();
     gain.gain.setValueAtTime(0, t);
-    gain.gain.linearRampToValueAtTime(0.8, t + 0.5); // Crash volume
+    gain.gain.linearRampToValueAtTime(0.3, t + 0.5); // Crash volume (lowered)
     gain.gain.exponentialRampToValueAtTime(0.01, t + duration); // Recede
     
     noise.connect(filter);

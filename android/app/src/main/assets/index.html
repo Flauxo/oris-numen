@@ -146,7 +146,7 @@
                     <p id="write-effect" class="write-effect">Eleva la voz del suplicante desde la humildad terrenal directamente hacia lo divino.</p>
                 </div>
 
-                <textarea id="message-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false"></textarea>
+                <textarea id="message-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false" readonly></textarea>
 
                 <div class="write-footer">
                     <button id="btn-send" class="btn-send">Canalizar Mensaje</button>
@@ -185,6 +185,21 @@
                     <p id="success-proverb" class="success-proverb"></p>
                 </div>
                 <button id="btn-home" class="btn-home">Volver al inicio</button>
+            </div>
+        </div>
+
+        <!-- Write Card Overlay -->
+        <div id="write-card-overlay" class="overlay">
+            <div class="overlay-backdrop"></div>
+            <div class="write-card">
+                <textarea id="write-card-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false" maxlength="250"></textarea>
+                <div class="write-card-footer">
+                    <div class="char-counter-container">
+                        <span id="char-counter" class="char-counter">0/250</span>
+                    </div>
+                    <div id="write-card-line" class="write-card-line"></div>
+                </div>
+                <button id="btn-confirm-text" class="btn-confirm-text">Confirmar</button>
             </div>
         </div>
 

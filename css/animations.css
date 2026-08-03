@@ -221,7 +221,7 @@
 }
 
 .dissolve-anim {
-    animation: dissolveUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+    animation: dissolveUp 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
     pointer-events: none;
 }
 

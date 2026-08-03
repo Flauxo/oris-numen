@@ -122,6 +122,32 @@ const OrisApp = {
     const btnHome = document.getElementById('btn-home');
     if (btnHome) btnHome.addEventListener('click', () => this.goHome());
 
+    // Write Card Handlers
+    const messageInput = document.getElementById('message-input');
+    if (messageInput) {
+        messageInput.addEventListener('click', () => this.openWriteCard());
+    }
+
+    const writeCardOverlay = document.getElementById('write-card-overlay');
+    const writeCardBackdrop = writeCardOverlay ? writeCardOverlay.querySelector('.overlay-backdrop') : null;
+    if (writeCardBackdrop) {
+        writeCardBackdrop.addEventListener('click', () => this.closeWriteCard());
+    }
+
+    const btnConfirmText = document.getElementById('btn-confirm-text');
+    if (btnConfirmText) {
+        btnConfirmText.addEventListener('click', () => this.confirmWriteCard());
+    }
+
+    const writeCardInput = document.getElementById('write-card-input');
+    const charCounter = document.getElementById('char-counter');
+    if (writeCardInput && charCounter) {
+        writeCardInput.addEventListener('input', () => {
+            const length = writeCardInput.value.length;
+            charCounter.textContent = `${length}/250`;
+        });
+    }
+
     // Waveform init
     WaveformRenderer.init('waveform-canvas');
 
@@ -228,10 +254,49 @@ const OrisApp = {
     }
     if (btnSend) btnSend.style.backgroundColor = freq.color;
 
+    // Setup write card line and button colors
+    const writeCardLine = document.getElementById('write-card-line');
+    const btnConfirmText = document.getElementById('btn-confirm-text');
+    if (writeCardLine) writeCardLine.style.backgroundColor = freq.color;
+    if (btnConfirmText) btnConfirmText.style.backgroundColor = freq.color;
+
     // Small delay so the overlay closing animation plays first
     setTimeout(() => {
       this.showScreen('write');
     }, 200);
+  },
+
+  /**
+   * Write Card Overlay Methods
+   */
+  openWriteCard() {
+    const overlay = document.getElementById('write-card-overlay');
+    const writeCardInput = document.getElementById('write-card-input');
+    const messageInput = document.getElementById('message-input');
+    const charCounter = document.getElementById('char-counter');
+    
+    if (overlay && writeCardInput && messageInput) {
+      writeCardInput.value = messageInput.value;
+      if (charCounter) charCounter.textContent = `${writeCardInput.value.length}/250`;
+      overlay.classList.add('active');
+      setTimeout(() => writeCardInput.focus(), 100);
+    }
+  },
+
+  closeWriteCard() {
+    const overlay = document.getElementById('write-card-overlay');
+    const writeCardInput = document.getElementById('write-card-input');
+    if (overlay) overlay.classList.remove('active');
+    if (writeCardInput) writeCardInput.blur();
+  },
+
+  confirmWriteCard() {
+    const writeCardInput = document.getElementById('write-card-input');
+    const messageInput = document.getElementById('message-input');
+    if (writeCardInput && messageInput) {
+      messageInput.value = writeCardInput.value;
+    }
+    this.closeWriteCard();
   },
 
   /**
@@ -253,7 +318,7 @@ const OrisApp = {
         OrisAudio.playButtonSound();
     }
 
-    // Wait 1 second for animation to finish before proceeding
+    // Wait 1.6 seconds for animation to finish before proceeding
     setTimeout(() => {
         // Update channeling screen
         const label = document.getElementById('channeling-label');
@@ -280,7 +345,7 @@ const OrisApp = {
           (remaining, progress) => this.onTimerTick(remaining, progress),
           () => this.onTimerComplete()
         );
-    }, 1000);
+    }, 1600);
   },
 
   /**
