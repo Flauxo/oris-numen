@@ -269,28 +269,24 @@ const OrisApp = {
     const homeLogoCircle = document.querySelector('.home-logo-circle');
     let evilClicks = 0;
     let evilClickTimer = null;
-    let lastTouchTime = 0;
     
     const handleEvilClick = (e) => {
-        // Prevent duplicate trigger on devices where touchstart and click both fire
-        if (e.type === 'click' && (Date.now() - lastTouchTime) < 500) {
-            return;
-        }
-        if (e.type === 'touchstart') {
-            lastTouchTime = Date.now();
-        }
+        // Only run on click event or single touch end
+        if (e.type === 'touchstart') return; // let click handle it or handle click directly
 
         evilClicks++;
         if (evilClickTimer) clearTimeout(evilClickTimer);
         
-        // 2-second timeout window between clicks
+        // 3-second timeout window between clicks
         evilClickTimer = setTimeout(() => {
             evilClicks = 0;
-        }, 2000); 
+        }, 3000); 
 
-        // Exactly when reaching 6 clicks (or more up to 19), show warning
+        // At 6 clicks or more (up to 19 clicks), show warning
         if (evilClicks >= 6 && evilClicks < 20) {
-            this.showWarning(Translations[this.currentLang]['warning.too_many_clicks'] || 'Por favor, no pulses más veces en el símbolo.');
+            const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.too_many_clicks']) 
+                || 'Por favor, no pulses más veces en el símbolo.';
+            this.showWarning(warningMsg);
         }
         
         if (evilClicks >= 20) {
@@ -301,18 +297,21 @@ const OrisApp = {
 
     if (homeLogoCircle) {
         homeLogoCircle.addEventListener('click', handleEvilClick);
-        homeLogoCircle.addEventListener('touchstart', handleEvilClick, {passive: true});
     }
 
     // Element buttons (aire, tierra, agua, fuego)
     document.querySelectorAll('.element-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
             const element = btn.getAttribute('data-element');
             
             // In evil mode (pazuzu frequency or body has evil-mode class), only 'fuego' is allowed
             const isEvil = this.currentFrequency === 'pazuzu' || document.body.classList.contains('evil-mode');
             if (isEvil && element !== 'fuego') {
-                this.showWarning(Translations[this.currentLang]['warning.incompatible_element'] || 'Elemento incompatible en modo maligno');
+                e.preventDefault();
+                e.stopPropagation();
+                const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.incompatible_element']) 
+                    || 'Elemento incompatible en modo maligno';
+                this.showWarning(warningMsg);
                 return;
             }
 
