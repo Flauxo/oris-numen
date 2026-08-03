@@ -520,6 +520,11 @@ const OrisApp = {
       const successIcon = document.querySelector('.success-icon');
       if (freq && successIcon) {
         successIcon.style.color = freq.color;
+        if (this.currentFrequency === 'lucifer') {
+            successIcon.classList.add('inverted-cross');
+        } else {
+            successIcon.classList.remove('inverted-cross');
+        }
       }
       
       // Set random proverb
@@ -570,6 +575,10 @@ const OrisApp = {
    */
   goHome() {
     document.body.classList.remove('evil-mode');
+    const successIcon = document.querySelector('.success-icon');
+    if (successIcon) {
+        successIcon.classList.remove('inverted-cross');
+    }
     OrisAudio.playButtonSound();
     this.currentFrequency = null;
     this.showScreen('home');
