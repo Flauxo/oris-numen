@@ -1197,17 +1197,28 @@ const OrisApp = {
           const formattedDate = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
           const dateText = (t['history.date'] || "Date: {date}").replace('{date}', formattedDate);
           
-          let elementsTextValue = t['history.none'] || 'None';
+          let plainElementsTextValue = t['history.none'] || 'None';
+          let htmlElementsTextValue = t['history.none'] || 'None';
+
           if (item.elements && item.elements.length > 0) {
-              const translatedElements = item.elements.map(e => {
-                  const translated = t[`elements.${e}`];
-                  return translated ? translated : e.charAt(0).toUpperCase() + e.slice(1);
+              const plainArr = item.elements.map(e => t[`elements.${e}`] || e.charAt(0).toUpperCase() + e.slice(1));
+              plainElementsTextValue = plainArr.join(', ');
+
+              const htmlArr = item.elements.map(e => {
+                  const translated = t[`elements.${e}`] || e.charAt(0).toUpperCase() + e.slice(1);
+                  let color = '#7A7A72';
+                  if (e === 'aire') color = '#B5D8D8';
+                  if (e === 'tierra') color = '#8B7355';
+                  if (e === 'agua') color = '#5A8BB5';
+                  if (e === 'fuego') color = '#D45A5A';
+                  return `<span style="color: ${color}; font-weight: 600;">${translated}</span>`;
               });
-              elementsTextValue = translatedElements.join(', ');
+              htmlElementsTextValue = htmlArr.join(', ');
           }
-          const elementsText = (t['history.elements'] || "Elements: {elements}").replace('{elements}', elementsTextValue);
+          const htmlElementsText = (t['history.elements'] || "Elements: {elements}").replace('{elements}', htmlElementsTextValue);
+          const plainElementsText = (t['history.elements'] || "Elements: {elements}").replace('{elements}', plainElementsTextValue);
           
-          metaDiv.innerHTML = `<span>${durationText}</span><span>${dateText}</span><span>${elementsText}</span>`;
+          metaDiv.innerHTML = `<span>${durationText}</span><span>${dateText}</span><span>${htmlElementsText}</span>`;
           
           header.appendChild(typeSpan);
           header.appendChild(metaDiv);
@@ -1233,7 +1244,7 @@ const OrisApp = {
           btnShare.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>';
           btnShare.title = t['history.share'] || 'Share';
           btnShare.onclick = () => {
-              this.currentShareText = `${typeName} - ${freq.fullName}\n${durationText}\n${dateText}\n${elementsText}\n\n"${item.text}"\n\n${t['share.promo'] || "Si quieres canalizar tus mensajes únete a Oris Numen. Busca la app en tu store."} 🙏\nhttps://play.google.com/store/apps/details?id=com.orisnumen.app`;
+              this.currentShareText = `${typeName} - ${freq.fullName}\n${durationText}\n${dateText}\n${plainElementsText}\n\n"${item.text}"\n\n${t['share.promo'] || "Si quieres canalizar tus mensajes únete a Oris Numen. Busca la app en tu store."} 🙏\nhttps://play.google.com/store/apps/details?id=com.orisnumen.app`;
               this.openShareOverlay();
           };
           
