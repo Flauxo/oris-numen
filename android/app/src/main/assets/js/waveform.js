@@ -36,7 +36,7 @@ const WaveformRenderer = {
     
     // Create base speed and amplitude variations based on frequency
     const baseSpeed = 0.01 + rand() * 0.03;
-    const baseAmp = 58 + rand() * 68;
+    const baseAmp = 80 + rand() * 90;
 
     for (let i = 0; i < numWaves; i++) {
         // Vary frequency slightly per wave
