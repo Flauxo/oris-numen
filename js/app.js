@@ -616,12 +616,21 @@ const OrisApp = {
     const freq = this.FREQUENCIES[this.currentFrequency];
     if (!freq) return;
 
-    // Profanity / bad words list (multi-language & common variations)
+    // Profanity / prohibited terms list (violence, explicit, profanity & variations)
     const BAD_WORDS = [
+      // Español: Tacos, insultos, violencia y sexualidad
       'puta', 'puto', 'mierda', 'coño', 'joder', 'polla', 'polas', 'pola', 'pene', 'vagina', 'chulo', 'cabron', 'cabrona', 'pendejo', 'pendeja', 'maricon', 'zorra', 'zorro', 'gilipollas', 'hostia', 'hijo de puta', 'hijadeputa', 'hijodeputa',
-      'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'cunt', 'dick', 'pussy', 'cock', 'nigger', 'faggot',
-      'merde', 'putain', 'connard', 'salope', 'encule',
-      'stronzo', 'stronza', 'cazzo', 'merda', 'vaffanculo', 'puttana'
+      'matar', 'matare', 'matalo', 'matala', 'asesinar', 'asesinato', 'descuartizar', 'aniquilar', 'bomba', 'nuclear', 'felacion', 'follar', 'sexo', 'chichi', 'chocho', 'paja', 'mamada', 'orgasmo', 'violacion', 'violar',
+      
+      // English: Violence, sexual & profanity
+      'fuck', 'fucking', 'shit', 'bitch', 'asshole', 'bastard', 'cunt', 'dick', 'pussy', 'cock', 'nigger', 'faggot',
+      'kill', 'killer', 'murder', 'murderer', 'dismember', 'annihilate', 'bomb', 'blow up', 'blowup', 'blowjob', 'fellatio', 'sex', 'rape',
+      
+      // Français
+      'merde', 'putain', 'connard', 'salope', 'encule', 'tuer', 'assassiner', 'bombe', 'sexe', 'baiser', 'suce',
+      
+      // Italiano
+      'stronzo', 'stronza', 'cazzo', 'merda', 'vaffanculo', 'puttana', 'uccidere', 'assassinare', 'bomba', 'sesso', 'fottere', 'bocchino'
     ];
 
     // Validate message length (< 11 characters) or profanity
