@@ -924,6 +924,13 @@ const OrisApp = {
    * Activate evil mode
    */
   activateEvilMode() {
+      const popup = document.getElementById('warning-popup');
+      if (popup) {
+          popup.classList.remove('show');
+          popup.classList.remove('evil-warning');
+      }
+      if (this._warningTimer) clearTimeout(this._warningTimer);
+
       const evilOverlay = document.getElementById('evil-overlay');
       if (evilOverlay) {
           evilOverlay.classList.add('active');
