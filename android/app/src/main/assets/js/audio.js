@@ -33,18 +33,23 @@ const OrisAudio = {
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
 
+    // Grave "tick" sound
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(120, t);
+    
+    // Pitch drops very fast (percussive)
+    osc.frequency.setValueAtTime(150, t);
+    osc.frequency.exponentialRampToValueAtTime(40, t + 0.05);
 
+    // Very short volume envelope
     gain.gain.setValueAtTime(0, t);
-    gain.gain.linearRampToValueAtTime(0.3, t + 0.01);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    gain.gain.linearRampToValueAtTime(0.5, t + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
 
     osc.connect(gain);
     gain.connect(this.masterGain);
 
     osc.start(t);
-    osc.stop(t + 0.21);
+    osc.stop(t + 0.15);
 
     // subtle reverb tail
     const delay = this.ctx.createDelay();

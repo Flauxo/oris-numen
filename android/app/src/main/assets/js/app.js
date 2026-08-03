@@ -115,6 +115,13 @@ const OrisApp = {
       });
     });
 
+    // Global button/link sound
+    document.querySelectorAll('button, a').forEach(el => {
+        el.addEventListener('click', () => {
+            try { OrisAudio.playButtonSound(); } catch(e) {}
+        });
+    });
+
     // Overlay buttons
     const btnCloseOverlay = document.getElementById('btn-close-overlay');
     if (btnCloseOverlay) btnCloseOverlay.addEventListener('click', () => this.closeOverlay());
@@ -253,6 +260,27 @@ const OrisApp = {
         writeCardInput.addEventListener('input', () => {
             const length = writeCardInput.value.length;
             charCounter.textContent = `${length}/250`;
+        });
+    }
+
+    // Timer easter egg logic
+    const timerDisplay = document.getElementById('timer-display');
+    let timerClicks = 0;
+    let timerClickTimeout = null;
+    
+    if (timerDisplay) {
+        timerDisplay.addEventListener('click', () => {
+            timerClicks++;
+            if (timerClickTimeout) clearTimeout(timerClickTimeout);
+            
+            timerClickTimeout = setTimeout(() => {
+                timerClicks = 0;
+            }, 1000);
+            
+            if (timerClicks >= 5) {
+                timerClicks = 0;
+                ChannelTimer.fastForwardTo(5);
+            }
         });
     }
 

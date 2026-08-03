@@ -57,9 +57,19 @@ const ChannelTimer = {
   
   reset() {
     this.stop();
+    // Random duration between 3:23 (203s) and 12:56 (776s)
+    this.duration = Math.floor(Math.random() * (776 - 203 + 1)) + 203;
     this.remaining = this.duration;
     this.startTime = null;
     this.clearState();
+  },
+  
+  fastForwardTo(seconds) {
+      if (this.isRunning && this.remaining > seconds) {
+          const now = Date.now();
+          this.startTime = now - ((this.duration - seconds) * 1000);
+          this.remaining = seconds;
+      }
   },
   
   formatTime(seconds) {
