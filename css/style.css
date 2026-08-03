@@ -1209,7 +1209,7 @@ body.evil-mode .home-logo-circle {
     margin-bottom: 8px;
 }
 
-.history-meta span {
+.history-meta > span {
     display: block;
 }
 
