@@ -256,7 +256,7 @@ const OrisAudio = {
       this.padOscillators.push({ osc: osc4 });
     }
     
-    // Monster voices for Lucifer
+    // Monster voices for Pazuzu
     if (frequencyHz === 666) {
         const monsterOsc = this.ctx.createOscillator();
         monsterOsc.type = 'sawtooth';

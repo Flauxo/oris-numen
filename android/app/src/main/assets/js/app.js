@@ -47,9 +47,9 @@ const OrisApp = {
       purpose: 'Canalizar oraciones de agradecimiento, bendiciones por lo recibido y alabanza pura.',
       effect: 'Eleva la vibración del alma al sintonizarla con la gratitud absoluta y la paz interior.'
     },
-    lucifer: {
-      name: 'Lucifer',
-      fullName: 'Frecuencia Lucifer',
+    pazuzu: {
+      name: 'Pazuzu',
+      fullName: 'Frecuencia Pazuzu',
       hz: 666,
       color: '#ff3333',
       colorRgb: '255, 51, 51',
@@ -88,7 +88,7 @@ const OrisApp = {
       "La alegría es el eco natural de un espíritu que sabe agradecer.",
       "Alabar la luz es la mejor forma de asegurar que nunca nos falte."
     ],
-    lucifer: [
+    pazuzu: [
       "La oscuridad no es la ausencia de luz, sino la presencia de una fuerza más antigua y hambrienta.",
       "Aquel que invoca al abismo, pronto descubre que el abismo le devuelve la mirada con una sonrisa.",
       "El precio del conocimiento prohibido siempre se paga con pedazos de tu propia alma.",
@@ -520,7 +520,7 @@ const OrisApp = {
       const successIcon = document.querySelector('.success-icon');
       if (freq && successIcon) {
         successIcon.style.color = freq.color;
-        if (this.currentFrequency === 'lucifer') {
+        if (this.currentFrequency === 'pazuzu') {
             successIcon.classList.add('inverted-cross');
         } else {
             successIcon.classList.remove('inverted-cross');
@@ -539,7 +539,7 @@ const OrisApp = {
       // Update success subtitle based on frequency
       const successSubtitle = document.querySelector('.success-subtitle');
       if (successSubtitle) {
-          if (this.currentFrequency === 'lucifer') {
+          if (this.currentFrequency === 'pazuzu') {
               successSubtitle.textContent = 'Tu mensaje ha sido elevado al maligno.';
           } else {
               successSubtitle.textContent = 'Tu mensaje ha sido elevado al divino';
@@ -666,7 +666,7 @@ const OrisApp = {
           console.error("Audio error", e);
       }
       
-      this.currentFrequency = 'lucifer';
+      this.currentFrequency = 'pazuzu';
       const freq = this.FREQUENCIES[this.currentFrequency];
       
       const label = document.getElementById('channeling-label');
