@@ -1171,7 +1171,6 @@ body.evil-mode .home-logo-circle {
     font-family: var(--font-serif);
     color: #ff3333;
     font-size: 1.6rem;
-    text-transform: lowercase;
 }
 
 .evil-subtitle {
