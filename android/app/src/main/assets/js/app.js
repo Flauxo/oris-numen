@@ -694,8 +694,10 @@ const OrisApp = {
         successIcon.style.color = freq.color;
         if (this.currentFrequency === 'pazuzu') {
             successIcon.classList.add('inverted-cross');
+            successIcon.classList.remove('pulse-glow');
         } else {
             successIcon.classList.remove('inverted-cross');
+            successIcon.classList.add('pulse-glow');
         }
       }
       
@@ -750,6 +752,7 @@ const OrisApp = {
     const successIcon = document.querySelector('.success-icon');
     if (successIcon) {
         successIcon.classList.remove('inverted-cross');
+        successIcon.classList.add('pulse-glow');
     }
     OrisAudio.playButtonSound();
     this.currentFrequency = null;
