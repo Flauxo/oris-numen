@@ -29,8 +29,10 @@ const Translations = {
         "btn.cancel": "Cancel",
         "elements.add": "Add elements",
         "warning.short_message": "The divine does not hear empty murmurs. Open your heart and write with sincerity.",
+        "warning.incompatible_element": "Incompatible element in evil mode",
+        "warning.too_many_clicks": "Please do not tap the symbol any more times.",
         
-        "success.title": "Message channeled<br>successfully",
+        "success.title": "Message channeled<br>successfully",,
         "success.subtitle.divine": "Your message has been elevated to the divine",
         "success.subtitle.evil": "Your message has been elevated to the evil one",
         "btn.home": "Back to start",
@@ -152,6 +154,8 @@ const Translations = {
         "btn.cancel": "Cancelar",
         "elements.add": "Añadir elementos",
         "warning.short_message": "Lo sagrado no atiende murmullos vacíos. Abre tu corazón y escribe con sinceridad.",
+        "warning.incompatible_element": "Elemento incompatible en modo maligno",
+        "warning.too_many_clicks": "Por favor, no pulses más veces en el símbolo.",
         
         "success.title": "Mensaje canalizado<br>con éxito",
         "success.subtitle.divine": "Tu mensaje ha sido elevado al divino",
@@ -275,6 +279,8 @@ const Translations = {
         "btn.cancel": "Annulla",
         "elements.add": "Aggiungi elementi",
         "warning.short_message": "Il sacro non ascolta mormorii vuoti. Apri il tuo cuore e scrivi con sincerità.",
+        "warning.incompatible_element": "Elemento incompatibile in modalità malefica",
+        "warning.too_many_clicks": "Per favore, non premere più volte il simbolo.",
         
         "success.title": "Messaggio canalizzato<br>con successo",
         "success.subtitle.divine": "Il tuo messaggio è stato elevato al divino",
@@ -398,6 +404,8 @@ const Translations = {
         "btn.cancel": "Rescinde",
         "elements.add": "Elementa adde",
         "warning.short_message": "Sacrum murmura inania non audit. Aperi cor tuum et sincere scribe.",
+        "warning.incompatible_element": "Elementum incompatiens in modo maligno",
+        "warning.too_many_clicks": "Quaeso, ne amplius symbolum pulsaveris.",
         
         "success.title": "Nuntius feliciter<br>transmissus est",
         "success.subtitle.divine": "Nuntius tuus ad divinum evectus est",
