@@ -32,7 +32,8 @@ const OrisApp = {
     gratia: {
       name: 'Gratia',
       fullName: 'Frecuencia Gratia',
-      hz: 1012,
+      hz: 1418,
+      audioHz: 1012,
       color: '#D4B85A',
       colorRgb: '212, 184, 90',
     },
@@ -416,7 +417,7 @@ const OrisApp = {
     const freq = this.FREQUENCIES[type];
     if (!freq) return;
 
-    OrisAudio.playFrequencyPreview(freq.hz);
+    OrisAudio.playFrequencyPreview(freq.audioHz || freq.hz);
 
     this.currentFrequency = type;
 
@@ -706,7 +707,7 @@ const OrisApp = {
         this.showScreen('channeling');
     
         // Start frequency pad audio
-        OrisAudio.startFrequencyPad(freq.hz);
+        OrisAudio.startFrequencyPad(freq.audioHz || freq.hz);
     
         // Start waveform animation
         WaveformRenderer.setupWaves(freq.hz);
@@ -890,7 +891,7 @@ const OrisApp = {
           () => this.onTimerComplete()
         );
 
-        OrisAudio.startFrequencyPad(freq.hz);
+        OrisAudio.startFrequencyPad(freq.audioHz || freq.hz);
         return true;
       }
     }
