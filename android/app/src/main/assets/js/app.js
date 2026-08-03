@@ -46,6 +46,16 @@ const OrisApp = {
       type: 'Agradecimiento',
       purpose: 'Canalizar oraciones de agradecimiento, bendiciones por lo recibido y alabanza pura.',
       effect: 'Eleva la vibración del alma al sintonizarla con la gratitud absoluta y la paz interior.'
+    },
+    lucifer: {
+      name: 'Lucifer',
+      fullName: 'Frecuencia Lucifer',
+      hz: 666,
+      color: '#ff3333',
+      colorRgb: '255, 51, 51',
+      type: 'Canalización',
+      purpose: 'Comunicación con el maligno.',
+      effect: 'Abre un portal prohibido de energía oscura.'
     }
   },
 
@@ -77,6 +87,13 @@ const OrisApp = {
       "En la gratitud, lo que tenemos se vuelve suficiente y se multiplica.",
       "La alegría es el eco natural de un espíritu que sabe agradecer.",
       "Alabar la luz es la mejor forma de asegurar que nunca nos falte."
+    ],
+    lucifer: [
+      "La oscuridad no es la ausencia de luz, sino la presencia de una fuerza más antigua y hambrienta.",
+      "Aquel que invoca al abismo, pronto descubre que el abismo le devuelve la mirada con una sonrisa.",
+      "El precio del conocimiento prohibido siempre se paga con pedazos de tu propia alma.",
+      "Las cadenas más fuertes no son de hierro, sino de los deseos inconfesables que acabas de liberar.",
+      "Has alimentado al fuego negro, ahora no te sorprendas cuando las sombras te llamen por tu nombre."
     ]
   },
 
@@ -505,6 +522,7 @@ const OrisApp = {
    * Go back from write screen to home
    */
   goBack() {
+    document.body.classList.remove('evil-mode');
     OrisAudio.playButtonSound();
     this.showScreen('home');
   },
@@ -513,6 +531,7 @@ const OrisApp = {
    * Return to home screen
    */
   goHome() {
+    document.body.classList.remove('evil-mode');
     OrisAudio.playButtonSound();
     this.currentFrequency = null;
     this.showScreen('home');
@@ -588,7 +607,6 @@ const OrisApp = {
       if (evilOverlay) {
           evilOverlay.classList.remove('active');
       }
-      document.body.classList.remove('evil-mode');
       
       const evilInput = document.getElementById('evil-input');
       if (evilInput) {
@@ -600,6 +618,34 @@ const OrisApp = {
       } catch (e) {
           console.error("Audio error", e);
       }
+      
+      this.currentFrequency = 'lucifer';
+      const freq = this.FREQUENCIES[this.currentFrequency];
+      
+      const label = document.getElementById('channeling-label');
+      const sublabel = document.getElementById('channeling-sublabel');
+      const timer = document.getElementById('timer-display');
+  
+      if (label) label.textContent = `Canalizando a través de la ${freq.fullName}...`;
+      if (sublabel) sublabel.textContent = 'para su transformación en energía maligna';
+      if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
+  
+      this.showScreen('channeling');
+  
+      try {
+          OrisAudio.startFrequencyPad(freq.hz);
+      } catch (e) {}
+  
+      WaveformRenderer.setupWaves(freq.hz);
+      WaveformRenderer.setColor(freq.color);
+      WaveformRenderer.setProgress(0);
+      WaveformRenderer.start();
+  
+      ChannelTimer.reset();
+      ChannelTimer.start(
+        (remaining, progress) => this.onTimerTick(remaining, progress),
+        () => this.onTimerComplete()
+      );
   }
 };
 
