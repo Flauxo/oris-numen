@@ -5,6 +5,7 @@
 const OrisApp = {
   currentScreen: 'splash',
   currentFrequency: null,
+  currentLang: 'en', // Default language
 
   FREQUENCIES: {
     humilis: {
@@ -13,9 +14,6 @@ const OrisApp = {
       hz: 88,
       color: '#7B5EA7',
       colorRgb: '123, 94, 167',
-      type: 'Plegaria',
-      purpose: 'Canalizar plegarias de petición, ruegos personales y necesidades urgentes del alma.',
-      effect: 'Eleva la voz del suplicante desde la humildad terrenal directamente hacia lo divino.'
     },
     revelatio: {
       name: 'Revelatio',
@@ -23,9 +21,6 @@ const OrisApp = {
       hz: 555,
       color: '#D4845A',
       colorRgb: '212, 132, 90',
-      type: 'Confesión',
-      purpose: 'Canalizar confesiones honestas, desahogos íntimos y la verdad desnuda del corazón.',
-      effect: 'Rompe las barreras del ego, permitiendo mostrar las debilidades humanas sin miedo al juicio.'
     },
     absolutio: {
       name: 'Absolutio',
@@ -33,9 +28,6 @@ const OrisApp = {
       hz: 777,
       color: '#5A8BB5',
       colorRgb: '90, 139, 181',
-      type: 'Perdón',
-      purpose: 'Canalizar pedidos de perdón, arrepentimiento y la búsqueda de paz espiritual.',
-      effect: 'Libera la culpa acumulada y abre el espíritu para recibir la compasión y la gracia divina.'
     },
     gratia: {
       name: 'Gratia',
@@ -43,9 +35,6 @@ const OrisApp = {
       hz: 1012,
       color: '#D4B85A',
       colorRgb: '212, 184, 90',
-      type: 'Agradecimiento',
-      purpose: 'Canalizar oraciones de agradecimiento, bendiciones por lo recibido y alabanza pura.',
-      effect: 'Eleva la vibración del alma al sintonizarla con la gratitud absoluta y la paz interior.'
     },
     pazuzu: {
       name: 'Pazuzu',
@@ -53,48 +42,7 @@ const OrisApp = {
       hz: 666,
       color: '#ff3333',
       colorRgb: '255, 51, 51',
-      type: 'Canalización',
-      purpose: 'Comunicación con el maligno.',
-      effect: 'Abre un portal prohibido de energía oscura.'
     }
-  },
-
-  PROVERBS: {
-    humilis: [
-      "En la debilidad, encontramos nuestra mayor fortaleza ante lo divino.",
-      "El que pide con un corazón sincero, ya ha sido escuchado.",
-      "No hay ruego pequeño cuando la fe que lo eleva es inmensa.",
-      "La plegaria es el puente invisible que une el suelo con el cielo.",
-      "Habla desde el vacío de tu ser, para que la gracia pueda llenarlo."
-    ],
-    revelatio: [
-      "La verdad te hará libre, pues no hay sombra que resista a la luz.",
-      "Desnudar el alma es el primer paso hacia su verdadera sanación.",
-      "Aquello que confiesas deja de ser un peso y se convierte en sabiduría.",
-      "En la vulnerabilidad de la confesión reside el coraje más puro.",
-      "Nombrar tus miedos ante el silencio es arrebatarles su poder."
-    ],
-    absolutio: [
-      "Perdonar es soltar a un prisionero y descubrir que el prisionero eras tú.",
-      "El agua borra la mancha, pero el perdón renueva todo el espíritu.",
-      "Aquel que busca misericordia, ya ha empezado a purificar su camino.",
-      "Donde abunda el error, sobreabunda la gracia que todo lo redime.",
-      "Suelta la carga de la culpa; el amanecer no castiga a la noche."
-    ],
-    gratia: [
-      "Un corazón agradecido es el altar más sublime para recibir bendiciones.",
-      "Dar gracias es reconocer que la vida misma es un regalo inmerecido.",
-      "En la gratitud, lo que tenemos se vuelve suficiente y se multiplica.",
-      "La alegría es el eco natural de un espíritu que sabe agradecer.",
-      "Alabar la luz es la mejor forma de asegurar que nunca nos falte."
-    ],
-    pazuzu: [
-      "La oscuridad no es la ausencia de luz, sino la presencia de una fuerza más antigua y hambrienta.",
-      "Aquel que invoca al abismo, pronto descubre que el abismo le devuelve la mirada con una sonrisa.",
-      "El precio del conocimiento prohibido siempre se paga con pedazos de tu propia alma.",
-      "Las cadenas más fuertes no son de hierro, sino de los deseos inconfesables que acabas de liberar.",
-      "Has alimentado al fuego negro, ahora no te sorprendas cuando las sombras te llamen por tu nombre."
-    ]
   },
 
   init() {
@@ -106,6 +54,10 @@ const OrisApp = {
     };
     document.addEventListener('click', initAudio);
     document.addEventListener('touchstart', initAudio);
+
+    // Initialize translations
+    const savedLang = localStorage.getItem('oris-lang') || 'en';
+    this.setLanguage(savedLang);
 
     // Card click handlers → show info overlay
     document.querySelectorAll('.message-card').forEach(card => {
@@ -292,10 +244,22 @@ const OrisApp = {
             isSidebarLangView = true;
             sidebarMainMenu.classList.add('hidden');
             sidebarLangMenu.classList.remove('hidden');
-            sidebarTitle.textContent = 'Idioma';
+            sidebarTitle.textContent = Translations[this.currentLang]['menu.language'] || 'Idioma';
             btnCloseSidebar.innerHTML = '&larr;'; // Arrow back
         });
     }
+
+    // Language selection handlers
+    document.querySelectorAll('#sidebar-lang-menu a').forEach(langItem => {
+        langItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            const selectedLang = langItem.getAttribute('data-lang');
+            if (selectedLang) {
+                this.setLanguage(selectedLang);
+                setTimeout(() => resetSidebar(), 300); // Wait briefly before closing
+            }
+        });
+    });
 
     // Evil mode logic
     const homeLogoCircle = document.querySelector('.home-logo-circle');
@@ -406,26 +370,26 @@ const OrisApp = {
 
     OrisAudio.playFrequencyPreview(freq.hz);
 
-    // Populate overlay
-    const dot = document.getElementById('overlay-freq-dot');
-    const name = document.getElementById('overlay-freq-name');
-    const hz = document.getElementById('overlay-freq-hz');
-    const purpose = document.getElementById('overlay-purpose');
-    const effect = document.getElementById('overlay-effect');
-    const btnWrite = document.getElementById('btn-write');
+    this.currentFrequency = type;
 
-    if (dot) {
-      dot.style.color = freq.color;
-      dot.style.backgroundColor = freq.color;
+    const overlay = document.getElementById('freq-info-overlay');
+    const overlayDot = document.getElementById('overlay-freq-dot');
+    const overlayName = document.getElementById('overlay-freq-name');
+    const overlayHz = document.getElementById('overlay-freq-hz');
+    const overlayPurpose = document.getElementById('overlay-purpose');
+    const overlayEffect = document.getElementById('overlay-effect');
+
+    if (overlayDot) overlayDot.style.backgroundColor = freq.color;
+    if (overlayDot) overlayDot.style.boxShadow = `0 0 15px rgba(${freq.colorRgb}, 0.6)`;
+    if (overlayName) {
+        overlayName.textContent = freq.fullName;
+        overlayName.style.color = freq.color;
     }
-    if (name) name.textContent = freq.fullName;
-    if (hz) hz.textContent = `${freq.hz} Hz`;
-    if (purpose) purpose.textContent = freq.purpose;
-    if (effect) effect.textContent = freq.effect;
-    if (btnWrite) btnWrite.style.backgroundColor = freq.color;
+    if (overlayHz) overlayHz.textContent = `${freq.hz} Hz`;
+    if (overlayPurpose) overlayPurpose.textContent = Translations[this.currentLang][`freq.${type}.purpose`];
+    if (overlayEffect) overlayEffect.textContent = Translations[this.currentLang][`freq.${type}.effect`];
 
     // Show overlay
-    const overlay = document.getElementById('freq-info-overlay');
     if (overlay) overlay.classList.add('active');
   },
 
@@ -452,17 +416,18 @@ const OrisApp = {
     // Update write screen elements
     const freqName = document.getElementById('write-freq-name');
     const freqHz = document.getElementById('write-freq-hz');
-    const freqDot = document.getElementById('write-freq-dot');
-    const purpose = document.getElementById('write-purpose');
-    const effect = document.getElementById('write-effect');
+    const writeDot = document.getElementById('write-freq-dot');
+    const writePurpose = document.getElementById('write-purpose');
+    const writeEffect = document.getElementById('write-effect');
     const messageInput = document.getElementById('message-input');
     const btnSend = document.getElementById('btn-send');
+    const btnWrite = document.getElementById('btn-write');
 
     if (freqName) freqName.textContent = freq.fullName;
     if (freqHz) freqHz.textContent = `${freq.hz} Hz`;
-    if (freqDot) freqDot.style.color = freq.color;
-    if (purpose) purpose.textContent = freq.type;
-    if (effect) effect.textContent = freq.effect;
+    if (writeDot) writeDot.style.color = freq.color;
+    if (writePurpose) writePurpose.textContent = Translations[this.currentLang][`freq.${this.currentFrequency}.type`];
+    if (writeEffect) writeEffect.textContent = Translations[this.currentLang][`freq.${this.currentFrequency}.effect`];
     if (messageInput) {
       messageInput.value = '';
       messageInput.classList.remove('dissolve-anim'); // Ensure it's reset
@@ -640,8 +605,8 @@ const OrisApp = {
         const sublabel = document.getElementById('channeling-sublabel');
         const timer = document.getElementById('timer-display');
     
-        if (label) label.textContent = `Canalizando a través de la ${freq.fullName}...`;
-        if (sublabel) sublabel.textContent = 'para su transformación en energía';
+        if (label) label.textContent = `${Translations[this.currentLang]['channeling.label']}${freq.fullName}...`;
+        if (sublabel) sublabel.textContent = Translations[this.currentLang]['channeling.sublabel'];
         if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
     
         this.showScreen('channeling');
@@ -713,10 +678,11 @@ const OrisApp = {
       
       // Set random proverb
       const proverbEl = document.getElementById('success-proverb');
-      const proverbs = this.PROVERBS[this.currentFrequency];
-      if (proverbEl && proverbs && proverbs.length > 0) {
-        const randomIndex = Math.floor(Math.random() * proverbs.length);
-        proverbEl.textContent = `"${proverbs[randomIndex]}"`;
+      const numProverbs = 5; // 5 proverbs per frequency
+      if (proverbEl && this.currentFrequency) {
+        const randomIndex = Math.floor(Math.random() * numProverbs);
+        const translatedProverb = Translations[this.currentLang][`proverb.${this.currentFrequency}.${randomIndex}`];
+        proverbEl.textContent = `"${translatedProverb}"`;
         proverbEl.style.color = freq ? freq.color : 'inherit';
       }
 
@@ -724,9 +690,9 @@ const OrisApp = {
       const successSubtitle = document.querySelector('.success-subtitle');
       if (successSubtitle) {
           if (this.currentFrequency === 'pazuzu') {
-              successSubtitle.textContent = 'Tu mensaje ha sido elevado al maligno.';
+              successSubtitle.textContent = Translations[this.currentLang]['success.subtitle.evil'];
           } else {
-              successSubtitle.textContent = 'Tu mensaje ha sido elevado al divino';
+              successSubtitle.textContent = Translations[this.currentLang]['success.subtitle.divine'];
           }
       }
 

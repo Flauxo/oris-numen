@@ -21,7 +21,7 @@
             <div class="splash-content breathe-anim">
                 <div class="splash-cross">✟</div>
                 <h1 class="splash-title">ORIS<br>NUMEN</h1>
-                <p class="splash-subtitle">Eleva tu voz</p>
+                <p class="splash-subtitle" data-i18n="splash.subtitle">Eleva tu voz</p>
             </div>
         </div>
 
@@ -31,7 +31,7 @@
                 <div class="header-content">
                     <div class="header-titles">
                         <h1 class="home-title">Oris Numen</h1>
-                        <p class="home-subtitle">Canaliza tu mensaje al divino</p>
+                        <p class="home-subtitle" data-i18n="home.subtitle">Canaliza tu mensaje al divino</p>
                     </div>
                     <button id="btn-hamburger" class="btn-hamburger" aria-label="Abrir menú">
                         <div class="hamburger-line short-top"></div>
@@ -50,9 +50,9 @@
                             <img class="card-icon" src="assets/images/humilis.jpg" alt="Plegaria">
                         </div>
                         <div class="card-text">
-                            <h3 class="card-title">Plegaria</h3>
+                            <h3 class="card-title" id="card-humilis-title" data-i18n="freq.humilis.type">Plegaria</h3>
                             <span class="card-freq">Frecuencia Humilis · 88 Hz</span>
-                            <p class="card-desc">Petición y Súplica</p>
+                            <p class="card-desc" data-i18n="card.humilis.desc">Petición y Súplica</p>
                         </div>
                     </div>
                 </div>
@@ -65,9 +65,9 @@
                             <img class="card-icon" src="assets/images/revelatio.jpg" alt="Confesión">
                         </div>
                         <div class="card-text">
-                            <h3 class="card-title">Confesión</h3>
+                            <h3 class="card-title" id="card-revelatio-title" data-i18n="freq.revelatio.type">Confesión</h3>
                             <span class="card-freq">Frecuencia Revelatio · 555 Hz</span>
-                            <p class="card-desc">Confesión y Sinceridad</p>
+                            <p class="card-desc" data-i18n="card.revelatio.desc">Confesión y Sinceridad</p>
                         </div>
                     </div>
                 </div>
@@ -80,9 +80,9 @@
                             <img class="card-icon" src="assets/images/absolutio.jpg" alt="Perdón">
                         </div>
                         <div class="card-text">
-                            <h3 class="card-title">Perdón</h3>
+                            <h3 class="card-title" id="card-absolutio-title" data-i18n="freq.absolutio.type">Perdón</h3>
                             <span class="card-freq">Frecuencia Absolutio · 777 Hz</span>
-                            <p class="card-desc">Perdón y Reconciliación</p>
+                            <p class="card-desc" data-i18n="card.absolutio.desc">Perdón y Reconciliación</p>
                         </div>
                     </div>
                 </div>
@@ -95,16 +95,16 @@
                             <img class="card-icon" src="assets/images/gratia.jpg" alt="Agradecimiento">
                         </div>
                         <div class="card-text">
-                            <h3 class="card-title">Agradecimiento</h3>
+                            <h3 class="card-title" id="card-gratia-title" data-i18n="freq.gratia.type">Agradecimiento</h3>
                             <span class="card-freq">Frecuencia Gratia · 1012 Hz</span>
-                            <p class="card-desc">Agradecimiento y Alabanza</p>
+                            <p class="card-desc" data-i18n="card.gratia.desc">Agradecimiento y Alabanza</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="home-description">
-                <p>Escribe tu plegaria, confesión, petición de perdón o agradecimiento y permítele transformarse en energía pura mediante ondas de sonido calibradas para elevar tu voz hasta lo celestial.</p>
+                <p data-i18n="home.desc">Escribe tu plegaria, confesión, petición de perdón o agradecimiento y permítele transformarse en energía pura mediante ondas de sonido calibradas para elevar tu voz hasta lo celestial.</p>
             </div>
             
             <div class="home-logo">
@@ -122,14 +122,14 @@
                 <span id="overlay-freq-hz" class="overlay-freq-hz">88 Hz</span>
                 <div class="overlay-divider"></div>
                 <div class="overlay-section">
-                    <h4 class="overlay-label">Propósito</h4>
+                    <h4 class="overlay-label" data-i18n="freq.purpose">Propósito</h4>
                     <p id="overlay-purpose" class="overlay-text"></p>
                 </div>
                 <div class="overlay-section">
-                    <h4 class="overlay-label">Efecto</h4>
+                    <h4 class="overlay-label" data-i18n="freq.effect">Efecto</h4>
                     <p id="overlay-effect" class="overlay-text"></p>
                 </div>
-                <button id="btn-write" class="btn-write">Escribir Mensaje</button>
+                <button id="btn-write" class="btn-write" data-i18n="btn.write">Escribir Mensaje</button>
             </div>
         </div>
 
@@ -137,7 +137,7 @@
         <!-- Screen 3: Write Screen -->
         <div id="write-screen" class="screen">
             <div class="write-header">
-                <button id="btn-back" class="btn-back">← Volver</button>
+                <button id="btn-back" class="btn-back" data-i18n="btn.back">← Volver</button>
                 <div class="freq-indicator-container">
                     <div id="write-freq-dot" class="freq-dot shimmer-anim"></div>
                     <div class="freq-titles">
@@ -153,10 +153,10 @@
                     <p id="write-effect" class="write-effect">Eleva la voz del suplicante desde la humildad terrenal directamente hacia lo divino.</p>
                 </div>
 
-                <textarea id="message-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false" readonly></textarea>
+                <textarea id="message-input" data-i18n="write.placeholder" data-i18n-attr="placeholder" placeholder="Escribe tu mensaje aquí..." spellcheck="false" readonly></textarea>
 
                 <div class="write-footer">
-                    <button id="btn-send" class="btn-send">Canalizar Mensaje</button>
+                    <button id="btn-send" class="btn-send" data-i18n="btn.send">Canalizar Mensaje</button>
                 </div>
             </div>
         </div>
@@ -176,8 +176,8 @@
                 </div>
 
                 <div class="channeling-footer">
-                    <p class="channeling-info">Mantén la pantalla encendida con la frecuencia activa durante la canalización</p>
-                    <button id="btn-cancel" class="btn-cancel">Cancelar</button>
+                    <p class="channeling-info" data-i18n="channeling.info">Mantén la pantalla encendida con la frecuencia activa durante la canalización</p>
+                    <button id="btn-cancel" class="btn-cancel" data-i18n="btn.cancel">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -186,12 +186,12 @@
         <div id="success-screen" class="screen">
             <div class="success-content">
                 <div class="success-icon pulse-glow"><span class="cross-inner">✟</span></div>
-                <h2 class="success-title">Mensaje canalizado<br>con éxito</h2>
-                <p class="success-subtitle">Tu mensaje ha sido elevado al divino</p>
+                <h2 class="success-title" data-i18n="success.title" data-i18n-html="true">Mensaje canalizado<br>con éxito</h2>
+                <p class="success-subtitle" data-i18n="success.subtitle.divine">Tu mensaje ha sido elevado al divino</p>
                 <div class="success-proverb-container">
                     <p id="success-proverb" class="success-proverb"></p>
                 </div>
-                <button id="btn-home" class="btn-home">Volver al inicio</button>
+                <button id="btn-home" class="btn-home" data-i18n="btn.home">Volver al inicio</button>
             </div>
         </div>
 
@@ -199,14 +199,14 @@
         <div id="write-card-overlay" class="overlay">
             <div class="overlay-backdrop"></div>
             <div class="write-card">
-                <textarea id="write-card-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false" maxlength="250"></textarea>
+                <textarea id="write-card-input" data-i18n="write.placeholder" data-i18n-attr="placeholder" placeholder="Escribe tu mensaje aquí..." spellcheck="false" maxlength="250"></textarea>
                 <div class="write-card-footer">
                     <div class="char-counter-container">
                         <span id="char-counter" class="char-counter">0/250</span>
                     </div>
                     <div id="write-card-line" class="write-card-line"></div>
                 </div>
-                <button id="btn-confirm-text" class="btn-confirm-text">Confirmar</button>
+                <button id="btn-confirm-text" class="btn-confirm-text" data-i18n="write.confirm">Confirmar</button>
             </div>
         </div>
 
@@ -215,24 +215,24 @@
             <div class="overlay-backdrop"></div>
             <div class="sidebar-drawer">
                 <div class="sidebar-header">
-                    <h2 id="sidebar-title" class="sidebar-title">Menú</h2>
+                    <h2 id="sidebar-title" class="sidebar-title" data-i18n="menu.title">Menú</h2>
                     <button id="btn-close-sidebar" class="btn-close-sidebar">×</button>
                 </div>
                 <div id="sidebar-main-menu">
                     <ul class="sidebar-menu">
-                        <li class="sidebar-item"><a href="#" id="menu-item-lang">Idioma</a></li>
-                        <li class="sidebar-item"><a href="#" id="menu-item-how-it-works">Cómo funciona</a></li>
-                        <li class="sidebar-item"><a href="#" id="menu-item-upgrades">Mejoras</a></li>
-                        <li class="sidebar-item"><a href="#" id="menu-item-testimonials">Testimonios</a></li>
-                        <li class="sidebar-item"><a href="#" id="menu-item-about">Acerca de</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-lang" data-i18n="menu.language">Idioma</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-how-it-works" data-i18n="menu.how_it_works">Cómo funciona</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-upgrades" data-i18n="menu.upgrades">Mejoras</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-testimonials" data-i18n="menu.testimonials">Testimonios</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-about" data-i18n="menu.about">Acerca de</a></li>
                     </ul>
                 </div>
                 <div id="sidebar-lang-menu" class="hidden">
                     <ul class="sidebar-menu">
-                        <li class="sidebar-item"><a href="#">Inglés</a></li>
-                        <li class="sidebar-item"><a href="#">Español</a></li>
-                        <li class="sidebar-item"><a href="#">Italiano</a></li>
-                        <li class="sidebar-item"><a href="#">Latín</a></li>
+                        <li class="sidebar-item"><a href="#" data-lang="en">Inglés</a></li>
+                        <li class="sidebar-item"><a href="#" data-lang="es">Español</a></li>
+                        <li class="sidebar-item"><a href="#" data-lang="it">Italiano</a></li>
+                        <li class="sidebar-item"><a href="#" data-lang="la">Latín</a></li>
                     </ul>
                 </div>
             </div>
@@ -243,13 +243,13 @@
             <div class="overlay-backdrop" id="about-backdrop"></div>
             <div class="modal-card">
                 <div class="modal-header">
-                    <h3 class="modal-title title-about">Acerca de Oris Numen</h3>
+                    <h3 class="modal-title title-about" data-i18n="about.title">Acerca de Oris Numen</h3>
                     <button id="btn-close-about" class="btn-close-modal">×</button>
                 </div>
                 <div class="modal-content">
-                    <p>A lo largo de la historia, la humanidad ha buscado innumerables formas de elevar su voz hacia la divinidad. Oris Numen es nuestra aportación a esa búsqueda: un instrumento digital diseñado para que la fe encuentre un nuevo vehículo de expresión.</p>
-                    <p>Nuestro equipo aborda este proyecto desde una perspectiva técnica e imparcial, sin adscribirse a ninguna fe en concreto, pero con un profundo respeto por la necesidad humana de conectar con algo más grande. Confiamos sinceramente en que esta herramienta te sirva de ayuda y consuelo.</p>
-                    <p class="modal-disclaimer">Todos los fondos recaudados a través de las opciones de pago y mejoras tienen un único fin: mantener viva la aplicación, costear su desarrollo técnico y permitirnos seguir mejorando tu experiencia.</p>
+                    <p data-i18n="about.p1">A lo largo de la historia, la humanidad ha buscado innumerables formas de elevar su voz hacia la divinidad. Oris Numen es nuestra aportación a esa búsqueda: un instrumento digital diseñado para que la fe encuentre un nuevo vehículo de expresión.</p>
+                    <p data-i18n="about.p2">Nuestro equipo aborda este proyecto desde una perspectiva técnica e imparcial, sin adscribirse a ninguna fe en concreto, pero con un profundo respeto por la necesidad humana de conectar con algo más grande. Confiamos sinceramente en que esta herramienta te sirva de ayuda y consuelo.</p>
+                    <p class="modal-disclaimer" data-i18n="about.p3">Todos los fondos recaudados a través de las opciones de pago y mejoras tienen un único fin: mantener viva la aplicación, costear su desarrollo técnico y permitirnos seguir mejorando tu experiencia.</p>
                 </div>
             </div>
         </div>
@@ -259,13 +259,13 @@
             <div class="overlay-backdrop" id="how-it-works-backdrop"></div>
             <div class="modal-card">
                 <div class="modal-header">
-                    <h3 class="modal-title title-how-it-works">Cómo funciona</h3>
+                    <h3 class="modal-title title-how-it-works" data-i18n="how_it_works.title">Cómo funciona</h3>
                     <button id="btn-close-how-it-works" class="btn-close-modal">×</button>
                 </div>
                 <div class="modal-content">
-                    <p>La ciencia y la espiritualidad encuentran un punto de unión en el sonido. Oris Numen utiliza principios de <strong>resonancia acústica</strong> y <strong>arrastre de ondas cerebrales</strong> (Brainwave Entrainment) para potenciar la intención de tu mensaje.</p>
-                    <p>Cuando te expones a frecuencias específicas (como los tonos Solfeggio), se produce un fenómeno conocido como <em>respuesta de seguimiento de frecuencia</em>. Estudios neuroacústicos sugieren que nuestras ondas cerebrales tienden a sincronizarse con el ritmo del estímulo sonoro externo.</p>
-                    <p>Al alinear tu estado mental con frecuencias asociadas a la gratitud, el alivio o la sanación, tu mensaje se emite desde un estado de mayor coherencia electromagnética. La visualización de la onda asegura que la vibración impregne tu texto actuando como un catalizador hacia lo divino.</p>
+                    <p data-i18n="how_it_works.p1" data-i18n-html="true">La ciencia y la espiritualidad encuentran un punto de unión en el sonido. Oris Numen utiliza principios de <strong>resonancia acústica</strong> y <strong>Brainwave Entrainment</strong> para potenciar la intención de tu mensaje.</p>
+                    <p data-i18n="how_it_works.p2" data-i18n-html="true">Cuando te expones a frecuencias específicas (como los tonos Solfeggio), se produce un fenómeno conocido como <em>respuesta de seguimiento de frecuencia</em>. Estudios neuroacústicos sugieren que nuestras ondas cerebrales tienden a sincronizarse con el ritmo del estímulo sonoro externo.</p>
+                    <p data-i18n="how_it_works.p3">Al alinear tu estado mental con frecuencias asociadas a la gratitud, el alivio o la sanación, tu mensaje se emite desde un estado de mayor coherencia electromagnética. La visualización de la onda asegura que la vibración impregne tu texto actuando como un catalizador hacia lo divino.</p>
                 </div>
             </div>
         </div>
@@ -275,50 +275,50 @@
             <div class="overlay-backdrop" id="testimonials-backdrop"></div>
             <div class="modal-card">
                 <div class="modal-header">
-                    <h3 class="modal-title title-testimonials">Testimonios</h3>
+                    <h3 class="modal-title title-testimonials" data-i18n="testimonials.title">Testimonios</h3>
                     <button id="btn-close-testimonials" class="btn-close-modal">×</button>
                 </div>
                 <div class="modal-content">
                     <div class="testimonial-item">
                         <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-text">"Nunca pensé que una aplicación pudiera darme tanta paz. Escribir mis súplicas y ver cómo se transforman en frecuencias me ha ayudado a sobrellevar un momento de gran ansiedad."</p>
-                        <p class="testimonial-location">- Desde España</p>
+                        <p class="testimonial-text" data-i18n="testimonials.t1">"Nunca pensé que una aplicación pudiera darme tanta paz. Escribir mis súplicas y ver cómo se transforman en frecuencias me ha ayudado a sobrellevar un momento de gran ansiedad."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l1">- Desde España</p>
                     </div>
                     <hr class="testimonial-divider">
                     <div class="testimonial-item">
                         <div class="testimonial-stars">★★★★<span class="half-star">★</span></div>
-                        <p class="testimonial-text">"Al principio era escéptico, pero el uso continuo de la frecuencia de Gratitud ha cambiado mi forma de empezar el día. Me siento más conectado."</p>
-                        <p class="testimonial-location">- Desde EE.UU.</p>
+                        <p class="testimonial-text" data-i18n="testimonials.t2">"Al principio era escéptico, pero el uso continuo de la frecuencia de Gratitud ha cambiado mi forma de empezar el día. Me siento más conectado."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l2">- Desde EE.UU.</p>
                     </div>
                     <hr class="testimonial-divider">
                     <div class="testimonial-item">
                         <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-text">"Pude canalizar un mensaje para mi abuela que estaba enferma y, de alguna forma, sentí que la energía le llegaba. Es una herramienta preciosa."</p>
-                        <p class="testimonial-location">- Desde Colombia</p>
+                        <p class="testimonial-text" data-i18n="testimonials.t3">"Pude canalizar un mensaje para mi abuela que estaba enferma y, de alguna forma, sentí que la energía le llegaba. Es una herramienta preciosa."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l3">- Desde Colombia</p>
                     </div>
                     <hr class="testimonial-divider">
                     <div class="testimonial-item">
                         <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-text">"La frecuencia de Revelatio me permitió encontrar claridad en una decisión difícil. La interfaz es solemne y ayuda a la concentración."</p>
-                        <p class="testimonial-location">- Desde Italia</p>
+                        <p class="testimonial-text" data-i18n="testimonials.t4">"La frecuencia de Revelatio me permitió encontrar claridad en una decisión difícil. La interfaz es solemne y ayuda a la concentración."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l4">- Desde Italia</p>
                     </div>
                     <hr class="testimonial-divider">
                     <div class="testimonial-item">
                         <div class="testimonial-stars">★★★★<span class="half-star">★</span></div>
-                        <p class="testimonial-text">"Lo utilizo como complemento a mis meditaciones diarias. El sonido es envolvente y realmente sientes una resonancia interior."</p>
-                        <p class="testimonial-location">- Desde Francia</p>
+                        <p class="testimonial-text" data-i18n="testimonials.t5">"Lo utilizo como complemento a mis meditaciones diarias. El sonido es envolvente y realmente sientes una resonancia interior."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l5">- Desde Francia</p>
                     </div>
                     <hr class="testimonial-divider">
                     <div class="testimonial-item">
                         <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-text">"Confesar mis cargas aquí antes de dormir me ha quitado un peso de encima inmenso. El anonimato y la transmutación del mensaje son liberadores."</p>
-                        <p class="testimonial-location">- Desde Venezuela</p>
+                        <p class="testimonial-text" data-i18n="testimonials.t6">"Confesar mis cargas aquí antes de dormir me ha quitado un peso de encima inmenso. El anonimato y la transmutación del mensaje son liberadores."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l6">- Desde Venezuela</p>
                     </div>
                     <hr class="testimonial-divider">
                     <div class="testimonial-item">
                         <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-text">"Una experiencia digital pero profundamente espiritual. Se nota que está hecha con mucho respeto y base sonora. Totalmente recomendada."</p>
-                        <p class="testimonial-location">- Desde Tailandia</p>
+                        <p class="testimonial-text" data-i18n="testimonials.t7">"Una experiencia digital pero profundamente espiritual. Se nota que está hecha con mucho respeto y base sonora. Totalmente recomendada."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l7">- Desde Tailandia</p>
                     </div>
                 </div>
             </div>
@@ -329,13 +329,13 @@
             <div class="overlay-backdrop" id="upgrades-backdrop"></div>
             <div class="modal-card">
                 <div class="modal-header">
-                    <h3 class="modal-title title-upgrades">Mejoras</h3>
+                    <h3 class="modal-title title-upgrades" data-i18n="upgrades.title">Mejoras</h3>
                     <button id="btn-close-upgrades" class="btn-close-modal">×</button>
                 </div>
                 <div class="modal-content upgrades-content">
-                    <p>Esta aplicación tiene un uso gratuito de 24 horas. A partir de entonces sólo podrás usar alguna opción una vez al día.</p>
-                    <p>Puedes desbloquearla para siempre por 0,99 céntimos pinchando en el siguiente botón:</p>
-                    <button id="btn-unlock-upgrades" class="btn-upgrade">Desbloquear mejoras</button>
+                    <p data-i18n="upgrades.p1">Esta aplicación tiene un uso gratuito de 24 horas. A partir de entonces sólo podrás usar alguna opción una vez al día.</p>
+                    <p data-i18n="upgrades.p2">Puedes desbloquearla para siempre por 0,99 céntimos pinchando en el siguiente botón:</p>
+                    <button id="btn-unlock-upgrades" class="btn-upgrade" data-i18n="btn.unlock">Desbloquear mejoras</button>
                 </div>
             </div>
         </div>
@@ -344,16 +344,17 @@
         <div id="evil-overlay" class="overlay evil-overlay">
             <div class="evil-backdrop"></div>
             <div class="evil-card">
-                <h2 class="evil-title">comunicación con el maligno.</h2>
-                <p class="evil-subtitle">(úsala bajo tu propia responsabilidad).</p>
-                <textarea id="evil-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false"></textarea>
-                <button id="btn-evil-channel" class="btn-evil-channel">Canalizar</button>
+                <h2 class="evil-title" data-i18n="evil.title">comunicación con el maligno.</h2>
+                <p class="evil-subtitle" data-i18n="evil.subtitle">(úsala bajo tu propia responsabilidad).</p>
+                <textarea id="evil-input" data-i18n="evil.placeholder" data-i18n-attr="placeholder" placeholder="Escribe tu mensaje aquí..." spellcheck="false"></textarea>
+                <button id="btn-evil-channel" class="btn-evil-channel" data-i18n="btn.evil">Canalizar</button>
             </div>
         </div>
 
     </div>
 
     <!-- Scripts -->
+    <script src="js/translations.js"></script>
     <script src="js/audio.js"></script>
     <script src="js/waveform.js"></script>
     <script src="js/timer.js"></script>
