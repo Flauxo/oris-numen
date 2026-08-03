@@ -561,6 +561,45 @@ const OrisApp = {
     setTimeout(() => {
       this.showScreen('home');
     }, 3000);
+  },
+  
+  /**
+   * Activate evil mode
+   */
+  activateEvilMode() {
+      const evilOverlay = document.getElementById('evil-overlay');
+      if (evilOverlay) {
+          evilOverlay.classList.add('active');
+      }
+      document.body.classList.add('evil-mode');
+      
+      try {
+          OrisAudio.playEvilAmbient();
+      } catch (e) {
+          console.error("Audio error", e);
+      }
+  },
+
+  /**
+   * Channel evil mode
+   */
+  channelEvilMode() {
+      const evilOverlay = document.getElementById('evil-overlay');
+      if (evilOverlay) {
+          evilOverlay.classList.remove('active');
+      }
+      document.body.classList.remove('evil-mode');
+      
+      const evilInput = document.getElementById('evil-input');
+      if (evilInput) {
+          evilInput.value = '';
+      }
+      
+      try {
+          OrisAudio.stopEvilAmbient();
+      } catch (e) {
+          console.error("Audio error", e);
+      }
   }
 };
 
