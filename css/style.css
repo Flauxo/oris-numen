@@ -1257,6 +1257,25 @@ body.evil-mode .home-logo-circle {
     color: var(--color-text-muted);
 }
 
+.btn-share-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-share-whatsapp { background-color: #25D366; }
+.btn-share-x { background-color: #000000; }
+.btn-share-facebook { background-color: #1877F2; }
+.btn-share-email { background-color: #666666; }
+
 .history-empty {
     text-align: center;
     color: var(--color-text-muted);

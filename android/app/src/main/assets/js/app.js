@@ -210,6 +210,37 @@ const OrisApp = {
         });
     }
 
+    const btnShareX = document.getElementById('btn-share-x');
+    if (btnShareX) {
+        btnShareX.addEventListener('click', () => {
+            if (this.currentShareText) {
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(this.currentShareText)}`, '_blank');
+                this.closeShareOverlay();
+            }
+        });
+    }
+
+    const btnShareFacebook = document.getElementById('btn-share-facebook');
+    if (btnShareFacebook) {
+        btnShareFacebook.addEventListener('click', () => {
+            if (this.currentShareText) {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://play.google.com/store/apps/details?id=com.orisnumen.app')}&quote=${encodeURIComponent(this.currentShareText)}`, '_blank');
+                this.closeShareOverlay();
+            }
+        });
+    }
+
+    const btnShareEmail = document.getElementById('btn-share-email');
+    if (btnShareEmail) {
+        btnShareEmail.addEventListener('click', () => {
+            if (this.currentShareText) {
+                const subject = (Translations[this.currentLang] && Translations[this.currentLang]['history.title']) || 'Oris Numen';
+                window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(this.currentShareText)}`;
+                this.closeShareOverlay();
+            }
+        });
+    }
+
     // Upgrades Card Handlers
     const btnUpgrades = document.getElementById('menu-item-upgrades');
     if (btnUpgrades) btnUpgrades.addEventListener('click', (e) => {
