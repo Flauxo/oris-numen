@@ -1288,38 +1288,38 @@ body.evil-mode .home-logo-circle {
 /* Warning Popup */
 .warning-popup {
     position: fixed;
-    bottom: 48px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(30px);
+    transform: translate(-50%, -40%) scale(0.95);
     z-index: 9999;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.35s ease, transform 0.35s ease;
     width: calc(100% - 48px);
-    max-width: 340px;
+    max-width: 360px;
 }
 
 .warning-popup.show {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .warning-popup-inner {
     background: var(--color-bg-card);
-    border: 1px solid rgba(92, 60, 40, 0.22);
-    border-radius: 16px;
-    padding: 20px 24px;
+    border: 1px solid rgba(92, 60, 40, 0.25);
+    border-radius: 20px;
+    padding: 28px 26px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+    gap: 16px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.12);
 }
 
 .warning-symbol {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     color: #8B5E3C;
-    opacity: 0.7;
+    opacity: 0.85;
     animation: warning-spin 4s linear infinite;
 }
 
@@ -1331,9 +1331,9 @@ body.evil-mode .home-logo-circle {
 .warning-popup-text {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 0.95rem;
-    color: #5C4030;
+    font-size: 1.25rem;
+    color: #4A3020;
     text-align: center;
-    line-height: 1.55;
+    line-height: 1.5;
 }
 
