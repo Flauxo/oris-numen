@@ -616,10 +616,25 @@ const OrisApp = {
     const freq = this.FREQUENCIES[this.currentFrequency];
     if (!freq) return;
 
-    // Validate message length (< 11 characters)
+    // Profanity / bad words list (multi-language & common variations)
+    const BAD_WORDS = [
+      'puta', 'puto', 'mierda', 'coño', 'joder', 'polla', 'polas', 'pola', 'pene', 'vagina', 'chulo', 'cabron', 'cabrona', 'pendejo', 'pendeja', 'maricon', 'zorra', 'zorro', 'gilipollas', 'hostia', 'hijo de puta', 'hijadeputa', 'hijodeputa',
+      'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'cunt', 'dick', 'pussy', 'cock', 'nigger', 'faggot',
+      'merde', 'putain', 'connard', 'salope', 'encule',
+      'stronzo', 'stronza', 'cazzo', 'merda', 'vaffanculo', 'puttana'
+    ];
+
+    // Validate message length (< 11 characters) or profanity
     const messageInput = document.getElementById('message-input');
     const text = messageInput ? messageInput.value.trim() : '';
-    if (text.length < 11) {
+    const normalizedText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    const containsProfanity = BAD_WORDS.some(word => {
+      const regex = new RegExp(`\\b${word}\\b`, 'i');
+      return regex.test(normalizedText) || normalizedText.includes(word);
+    });
+
+    if (text.length < 11 || containsProfanity) {
         if (messageInput) messageInput.value = '';
         const warningMsg = Translations[this.currentLang] ? Translations[this.currentLang]['warning.short_message'] : 'Escribe un mensaje con más sinceridad.';
         this.showWarning(warningMsg);
