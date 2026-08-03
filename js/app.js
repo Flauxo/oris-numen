@@ -286,7 +286,7 @@ const OrisApp = {
         if (evilClicks >= 6 && evilClicks < 20) {
             const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.too_many_clicks']) 
                 || 'Por favor, no pulses más veces en el símbolo.';
-            this.showWarning(warningMsg);
+            this.showWarning(warningMsg, 'normal', 1300);
         }
         
         if (evilClicks >= 20) {
@@ -315,7 +315,7 @@ const OrisApp = {
                 e.stopImmediatePropagation();
                 const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.incompatible_element']) 
                     || 'Elemento incompatible en modo maligno';
-                this.showWarning(warningMsg, 'evil', 2000);
+                this.showWarning(warningMsg, 'evil', 1300);
                 return false;
             }
 
