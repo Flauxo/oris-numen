@@ -748,7 +748,7 @@ body {
     padding: 24px;
     width: calc(100% - 48px);
     max-width: 440px;
-    height: 45vh;
+    height: 55vh;
     min-height: 300px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     display: flex;
