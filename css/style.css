@@ -1337,3 +1337,27 @@ body.evil-mode .home-logo-circle {
     line-height: 1.5;
 }
 
+/* Evil Warning Override */
+.warning-popup.evil-warning .warning-popup-inner {
+    background: #000000;
+    border-color: #ff0000;
+    box-shadow: 0 16px 48px rgba(255,0,0,0.22), 0 4px 16px rgba(255,0,0,0.12);
+}
+
+.warning-popup.evil-warning .warning-symbol {
+    color: #ff0000;
+    animation: warning-spin-fast 1s linear infinite;
+}
+
+@keyframes warning-spin-fast {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.warning-popup.evil-warning .warning-popup-text {
+    color: #ff0000;
+    font-family: var(--font-sans);
+    font-style: normal;
+    font-weight: 500;
+}
+

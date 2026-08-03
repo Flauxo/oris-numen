@@ -315,7 +315,7 @@ const OrisApp = {
                 e.stopImmediatePropagation();
                 const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.incompatible_element']) 
                     || 'Elemento incompatible en modo maligno';
-                this.showWarning(warningMsg);
+                this.showWarning(warningMsg, 'evil', 2000);
                 return false;
             }
 
@@ -850,10 +850,16 @@ const OrisApp = {
   /**
    * Show a solemn warning popup, auto-dismiss after 3.5s
    */
-  showWarning(message) {
+  showWarning(message, type = 'normal', duration = 3500) {
     const popup = document.getElementById('warning-popup');
     const text  = document.getElementById('warning-popup-text');
     if (!popup || !text) return;
+
+    if (type === 'evil') {
+        popup.classList.add('evil-warning');
+    } else {
+        popup.classList.remove('evil-warning');
+    }
 
     text.textContent = message;
     popup.classList.add('show');
@@ -861,7 +867,8 @@ const OrisApp = {
     if (this._warningTimer) clearTimeout(this._warningTimer);
     this._warningTimer = setTimeout(() => {
         popup.classList.remove('show');
-    }, 3500);
+        setTimeout(() => popup.classList.remove('evil-warning'), 400);
+    }, duration);
   },
 
   /**
