@@ -1068,6 +1068,7 @@ body.evil-mode .home-logo-circle {
 #about-overlay.active .modal-card,
 #how-it-works-overlay.active .modal-card,
 #testimonials-overlay.active .modal-card,
+#history-overlay.active .modal-card,
 #upgrades-overlay.active .modal-card {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1243,6 +1244,12 @@ body.evil-mode .home-logo-circle {
     color: var(--color-text-muted);
     font-style: italic;
     padding: 24px 0;
+}
+
+#history-list {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 4px;
 }
 
 /* Upgrades Button */
