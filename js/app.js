@@ -315,10 +315,10 @@ const OrisApp = {
     }
     const otherElements = document.querySelectorAll('.freq-indicator-container, .freq-info, .btn-back, .write-footer');
     
-    // Trigger second phase after 0.8s (overlap)
+    // Trigger second phase after 0.5s (overlap)
     setTimeout(() => {
       otherElements.forEach(el => el.classList.add('dissolve-anim-second'));
-    }, 800);
+    }, 500);
     
     if (OrisAudio.playDestructionSound) {
         OrisAudio.playDestructionSound();
@@ -353,7 +353,7 @@ const OrisApp = {
           (remaining, progress) => this.onTimerTick(remaining, progress),
           () => this.onTimerComplete()
         );
-    }, 2000);
+    }, 1800);
   },
 
   /**

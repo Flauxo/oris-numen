@@ -345,7 +345,7 @@ const OrisAudio = {
     if (!this.ctx) return;
     
     const t = this.ctx.currentTime;
-    const duration = 2.0; // 2 seconds wave sound
+    const duration = 1.8; // 1.8 seconds wave sound
     
     // Create white noise buffer
     const bufferSize = this.ctx.sampleRate * duration; 
