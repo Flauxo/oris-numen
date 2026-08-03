@@ -71,7 +71,7 @@ const OrisAudio = {
 
     // Master gain for the preview with envelope
     const previewGain = this.ctx.createGain();
-    const targetGain = frequencyHz < 100 ? 0.35 : 0.18; // Boost low frequencies
+    const targetGain = frequencyHz < 100 ? 0.7 : 0.18; // Boost low frequencies (increased from 0.35 to 0.7)
     previewGain.gain.setValueAtTime(0, t);
     previewGain.gain.linearRampToValueAtTime(targetGain, t + fadeIn);
     previewGain.gain.setValueAtTime(targetGain, t + duration - fadeOut);
@@ -138,11 +138,11 @@ const OrisAudio = {
     const gain = this.ctx.createGain();
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(60, t);
+    osc.frequency.setValueAtTime(110, t); // Increased from 60 to 110 (higher pitch)
 
     gain.gain.setValueAtTime(0, t);
-    gain.gain.linearRampToValueAtTime(0.4, t + 1);
-    gain.gain.setValueAtTime(0.4, t + 1.2);
+    gain.gain.linearRampToValueAtTime(0.8, t + 1); // Increased from 0.4 to 0.8
+    gain.gain.setValueAtTime(0.8, t + 1.2); // Increased from 0.4 to 0.8
     gain.gain.exponentialRampToValueAtTime(0.001, t + 3);
 
     osc.connect(gain);
@@ -161,7 +161,7 @@ const OrisAudio = {
     const t = this.ctx.currentTime;
 
     const padGain = this.ctx.createGain();
-    const targetGain = frequencyHz < 100 ? 0.4 : 0.2; // Boost low frequencies
+    const targetGain = frequencyHz < 100 ? 0.8 : 0.2; // Boost low frequencies (increased from 0.4 to 0.8)
     padGain.gain.setValueAtTime(0, t);
     padGain.gain.linearRampToValueAtTime(targetGain, t + 2.5);
 
