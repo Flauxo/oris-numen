@@ -138,33 +138,32 @@ body {
 
 .home-header {
     margin-bottom: 20px;
+    position: relative;
+    padding-top: 24px;
 }
 
 .header-content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    position: relative;
 }
 
 .header-titles {
-    flex-grow: 1;
     text-align: center;
 }
 
 .btn-hamburger {
     background: none;
     border: none;
-    padding: 8px;
+    padding: 12px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 4px;
+    gap: 5px;
     position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    right: -8px;
+    top: -8px;
     z-index: 20;
 }
 

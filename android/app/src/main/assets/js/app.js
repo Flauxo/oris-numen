@@ -154,20 +154,25 @@ const OrisApp = {
     let evilClicks = 0;
     let evilClickTimer = null;
     
+    const handleEvilClick = (e) => {
+        e.preventDefault(); // Prevent double-tap zoom on mobile
+        evilClicks++;
+        if (evilClickTimer) clearTimeout(evilClickTimer);
+        
+        // 2-second timeout window between clicks is more forgiving on mobile
+        evilClickTimer = setTimeout(() => {
+            evilClicks = 0;
+        }, 2000); 
+        
+        if (evilClicks >= 20) {
+            evilClicks = 0;
+            this.activateEvilMode();
+        }
+    };
+
     if (homeLogoCircle) {
-        homeLogoCircle.addEventListener('click', () => {
-            evilClicks++;
-            if (evilClickTimer) clearTimeout(evilClickTimer);
-            
-            evilClickTimer = setTimeout(() => {
-                evilClicks = 0;
-            }, 800); // Reset if 0.8 seconds pass without a click
-            
-            if (evilClicks >= 20) {
-                evilClicks = 0;
-                this.activateEvilMode();
-            }
-        });
+        homeLogoCircle.addEventListener('click', handleEvilClick);
+        homeLogoCircle.addEventListener('touchstart', handleEvilClick, {passive: false});
     }
 
     const btnEvilChannel = document.getElementById('btn-evil-channel');
