@@ -999,7 +999,8 @@ body.evil-mode .home-logo-circle {
 }
 
 #about-overlay.active .modal-card,
-#how-it-works-overlay.active .modal-card {
+#how-it-works-overlay.active .modal-card,
+#testimonials-overlay.active .modal-card {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
@@ -1019,15 +1020,15 @@ body.evil-mode .home-logo-circle {
 }
 
 .title-about {
-    color: var(--color-freq-revelatio); /* Purple */
+    color: var(--color-freq-humilis); /* Purple */
 }
 
 .title-how-it-works {
-    color: var(--color-freq-confessio); /* Orange */
+    color: var(--color-freq-revelatio); /* Orange */
 }
 
 .title-testimonials {
-    color: var(--color-freq-solacium); /* Blue */
+    color: var(--color-freq-absolutio); /* Blue */
 }
 
 .btn-close-modal {
