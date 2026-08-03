@@ -181,6 +181,24 @@ const OrisApp = {
         btnCloseAbout.addEventListener('click', () => this.closeAboutCard());
     }
 
+    // How It Works Card Handlers
+    const btnHowItWorks = document.getElementById('menu-item-how-it-works');
+    if (btnHowItWorks) btnHowItWorks.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openHowItWorksCard();
+    });
+
+    const howItWorksOverlay = document.getElementById('how-it-works-overlay');
+    const howItWorksBackdrop = howItWorksOverlay ? howItWorksOverlay.querySelector('.overlay-backdrop') : null;
+    if (howItWorksBackdrop) {
+        howItWorksBackdrop.addEventListener('click', () => this.closeHowItWorksCard());
+    }
+
+    const btnCloseHowItWorks = document.getElementById('btn-close-how-it-works');
+    if (btnCloseHowItWorks) {
+        btnCloseHowItWorks.addEventListener('click', () => this.closeHowItWorksCard());
+    }
+
     // Sidebar Menu Handlers
     const btnHamburger = document.getElementById('btn-hamburger');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -474,6 +492,29 @@ const OrisApp = {
       const aboutOverlay = document.getElementById('about-overlay');
       if (aboutOverlay) {
           aboutOverlay.classList.remove('active');
+          OrisAudio.playButtonSound();
+      }
+  },
+
+  /**
+   * Open the how it works card
+   */
+  openHowItWorksCard() {
+      const overlay = document.getElementById('how-it-works-overlay');
+      if (overlay) {
+          overlay.classList.add('active');
+          this.closeSidebar(); // close sidebar if open
+          OrisAudio.playButtonSound();
+      }
+  },
+
+  /**
+   * Close the how it works card
+   */
+  closeHowItWorksCard() {
+      const overlay = document.getElementById('how-it-works-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
           OrisAudio.playButtonSound();
       }
   },

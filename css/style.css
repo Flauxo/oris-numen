@@ -981,8 +981,8 @@ body.evil-mode .home-logo-circle {
     box-shadow: 0 0 15px rgba(200, 0, 0, 0.3);
 }
 
-/* About Overlay */
-.about-card {
+/* Modals (About & How it works) */
+.modal-card {
     background-color: var(--color-bg-card);
     border-radius: var(--radius-lg);
     padding: 24px;
@@ -998,12 +998,13 @@ body.evil-mode .home-logo-circle {
     transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
 }
 
-#about-overlay.active .about-card {
+#about-overlay.active .modal-card,
+#how-it-works-overlay.active .modal-card {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
-.about-header {
+.modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1011,14 +1012,21 @@ body.evil-mode .home-logo-circle {
     padding-bottom: 12px;
 }
 
-.about-title {
+.modal-title {
     font-family: var(--font-serif);
     font-size: 1.3rem;
     font-weight: 500;
-    color: var(--color-text-dark);
 }
 
-.btn-close-about {
+.title-about {
+    color: var(--color-freq-revelatio); /* Purple */
+}
+
+.title-how-it-works {
+    color: var(--color-freq-confessio); /* Orange */
+}
+
+.btn-close-modal {
     background: none;
     border: none;
     font-size: 1.8rem;
@@ -1028,7 +1036,7 @@ body.evil-mode .home-logo-circle {
     padding: 0 8px;
 }
 
-.about-content {
+.modal-content {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -1036,14 +1044,14 @@ body.evil-mode .home-logo-circle {
     overflow-y: auto;
 }
 
-.about-content p {
+.modal-content p {
     font-size: 0.95rem;
     color: var(--color-text-muted);
     line-height: 1.6;
     text-align: left;
 }
 
-.about-disclaimer {
+.modal-disclaimer {
     font-style: italic;
     font-size: 0.85rem !important;
     padding-top: 8px;
