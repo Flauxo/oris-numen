@@ -199,6 +199,24 @@ const OrisApp = {
         btnCloseHowItWorks.addEventListener('click', () => this.closeHowItWorksCard());
     }
 
+    // Testimonials Card Handlers
+    const btnTestimonials = document.getElementById('menu-item-testimonials');
+    if (btnTestimonials) btnTestimonials.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openTestimonialsCard();
+    });
+
+    const testimonialsOverlay = document.getElementById('testimonials-overlay');
+    const testimonialsBackdrop = testimonialsOverlay ? testimonialsOverlay.querySelector('.overlay-backdrop') : null;
+    if (testimonialsBackdrop) {
+        testimonialsBackdrop.addEventListener('click', () => this.closeTestimonialsCard());
+    }
+
+    const btnCloseTestimonials = document.getElementById('btn-close-testimonials');
+    if (btnCloseTestimonials) {
+        btnCloseTestimonials.addEventListener('click', () => this.closeTestimonialsCard());
+    }
+
     // Sidebar Menu Handlers
     const btnHamburger = document.getElementById('btn-hamburger');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -513,6 +531,29 @@ const OrisApp = {
    */
   closeHowItWorksCard() {
       const overlay = document.getElementById('how-it-works-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
+          OrisAudio.playButtonSound();
+      }
+  },
+
+  /**
+   * Open the testimonials card
+   */
+  openTestimonialsCard() {
+      const overlay = document.getElementById('testimonials-overlay');
+      if (overlay) {
+          overlay.classList.add('active');
+          this.closeSidebar(); // close sidebar if open
+          OrisAudio.playButtonSound();
+      }
+  },
+
+  /**
+   * Close the testimonials card
+   */
+  closeTestimonialsCard() {
+      const overlay = document.getElementById('testimonials-overlay');
       if (overlay) {
           overlay.classList.remove('active');
           OrisAudio.playButtonSound();
