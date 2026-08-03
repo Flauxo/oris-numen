@@ -130,6 +130,9 @@ const OrisAudio = {
   },
 
   async playSplashSound() {
+    if (this.splashPlayed) return;
+    this.splashPlayed = true;
+
     await this._ensureContext();
     if (!this.ctx) return;
 
@@ -188,49 +191,47 @@ const OrisAudio = {
     padGain.connect(filter);
     filter.connect(this.masterGain);
 
-    // LFO for pitch modulation (accelerate/decelerate effect)
+    // LFO for volume modulation (swelling/breathing effect)
     const lfo = this.ctx.createOscillator();
     lfo.type = 'sine';
-    // Very slow modulation creates a swelling/breathing irregular effect
+    // Very slow modulation creates a swelling irregular effect
     lfo.frequency.value = 0.05 + (frequencyHz % 50) * 0.002;
+    
+    const tremoloGain = this.ctx.createGain();
+    tremoloGain.gain.value = 0.7; // Base volume
     const lfoGain = this.ctx.createGain();
-    // Modulation depth
-    lfoGain.gain.value = frequencyHz < 150 ? 1.5 : 4.0;
+    lfoGain.gain.value = 0.3; // Fluctuate by +/- 0.3 (0.4 to 1.0)
     lfo.connect(lfoGain);
+    lfoGain.connect(tremoloGain.gain);
     lfo.start(t);
+    
+    tremoloGain.connect(padGain);
 
     // 1. Main sine
     const osc1 = this.ctx.createOscillator();
     osc1.type = 'sine';
     osc1.frequency.value = frequencyHz;
-    lfoGain.connect(osc1.frequency);
-    osc1.connect(padGain);
+    osc1.connect(tremoloGain);
     osc1.start(t);
 
     // 2. Octave triangle (quiet)
     const osc2 = this.ctx.createOscillator();
     osc2.type = 'triangle';
     osc2.frequency.value = frequencyHz * 2;
-    // Scale LFO depth for harmonic
-    const lfoGain2 = this.ctx.createGain();
-    lfoGain2.gain.value = 2.0;
-    lfoGain.connect(lfoGain2);
-    lfoGain2.connect(osc2.frequency);
     const gain2 = this.ctx.createGain();
     gain2.gain.value = frequencyHz < 100 ? 0.8 : 0.05; // Massive boost harmonic for low freq
     osc2.connect(gain2);
-    gain2.connect(padGain);
+    gain2.connect(tremoloGain);
     osc2.start(t);
 
     // 3. Detuned sine for chorus width
     const osc3 = this.ctx.createOscillator();
     osc3.type = 'sine';
     osc3.frequency.value = frequencyHz + 2;
-    lfoGain.connect(osc3.frequency);
     const gain3 = this.ctx.createGain();
     gain3.gain.value = 0.5;
     osc3.connect(gain3);
-    gain3.connect(padGain);
+    gain3.connect(tremoloGain);
     osc3.start(t);
 
     this.padOscillators = [
@@ -242,14 +243,10 @@ const OrisAudio = {
       const osc4 = this.ctx.createOscillator();
       osc4.type = 'triangle';
       osc4.frequency.value = frequencyHz * 3;
-      const lfoGain3 = this.ctx.createGain();
-      lfoGain3.gain.value = 3.0;
-      lfoGain.connect(lfoGain3);
-      lfoGain3.connect(osc4.frequency);
       const gain4 = this.ctx.createGain();
       gain4.gain.value = 0.5; // Boost from 0.1 to 0.5
       osc4.connect(gain4);
-      gain4.connect(padGain);
+      gain4.connect(tremoloGain);
       osc4.start(t);
       this.padOscillators.push({ osc: osc4 });
     }

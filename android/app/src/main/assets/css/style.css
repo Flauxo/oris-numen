@@ -170,7 +170,7 @@ body {
 
 .hamburger-line {
     height: 2px;
-    background-color: var(--color-text-dark);
+    background-color: var(--color-text-muted);
     border-radius: 2px;
     transition: all 0.3s ease;
 }
@@ -933,8 +933,8 @@ body {
 
 .sidebar-item a {
     text-decoration: none;
-    color: var(--color-text-dark);
-    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
     font-weight: 400;
     transition: color 0.2s;
 }
