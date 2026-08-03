@@ -13,10 +13,15 @@ const Translations = {
         "history.title": "Channeling History",
         "history.empty": "You haven't channeled any messages yet.",
         "history.delete": "Delete message",
+        "history.share": "Share message",
         "history.duration": "Duration: {time}",
         "history.date": "Date: {date}",
         "history.elements": "Elements: {elements}",
         "history.none": "None",
+
+        "share.title": "Share",
+        "share.whatsapp": "Share on WhatsApp",
+        "share.promo": "If you want to channel your messages, join Oris Numen. Search for the app in your store.",
 
         "card.humilis.desc": "Petition and Supplication",
         "card.revelatio.desc": "Confession and Sincerity",
@@ -151,10 +156,15 @@ const Translations = {
         "history.title": "Historial de Canalizaciones",
         "history.empty": "Aún no tienes mensajes canalizados.",
         "history.delete": "Borrar mensaje",
+        "history.share": "Compartir mensaje",
         "history.duration": "Duración: {time}",
         "history.date": "Fecha: {date}",
         "history.elements": "Elementos: {elements}",
         "history.none": "Ninguno",
+
+        "share.title": "Compartir",
+        "share.whatsapp": "Compartir por WhatsApp",
+        "share.promo": "Si quieres canalizar tus mensajes únete a Oris Numen. Busca la app en tu store.",
         
         "card.humilis.desc": "Petición y Súplica",
         "card.revelatio.desc": "Confesión y Sinceridad",
@@ -289,10 +299,15 @@ const Translations = {
         "history.title": "Cronologia delle Canalizzazioni",
         "history.empty": "Non hai ancora canalizzato alcun messaggio.",
         "history.delete": "Elimina messaggio",
+        "history.share": "Condividi messaggio",
         "history.duration": "Durata: {time}",
         "history.date": "Data: {date}",
         "history.elements": "Elementi: {elements}",
         "history.none": "Nessuno",
+
+        "share.title": "Condividi",
+        "share.whatsapp": "Condividi su WhatsApp",
+        "share.promo": "Se vuoi canalizzare i tuoi messaggi unisciti a Oris Numen. Cerca l'app nel tuo store.",
         
         "card.humilis.desc": "Petizione e Supplica",
         "card.revelatio.desc": "Confessione e Sincerità",
@@ -427,10 +442,15 @@ const Translations = {
         "history.title": "Historia Canalizationum",
         "history.empty": "Nondum ulla nuntia canalizasti.",
         "history.delete": "Nuntium delere",
+        "history.share": "Nuntium communicare",
         "history.duration": "Duratio: {time}",
         "history.date": "Data: {date}",
         "history.elements": "Elementa: {elements}",
         "history.none": "Nulla",
+
+        "share.title": "Communicare",
+        "share.whatsapp": "Communicare in WhatsApp",
+        "share.promo": "Si vis nuntia tua canalizare, iunge Oris Numen. Quaere app in theca tua.",
         
         "card.humilis.desc": "Petitio et Supplicatio",
         "card.revelatio.desc": "Confessio et Sinceritas",

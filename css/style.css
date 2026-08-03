@@ -1069,6 +1069,7 @@ body.evil-mode .home-logo-circle {
 #how-it-works-overlay.active .modal-card,
 #testimonials-overlay.active .modal-card,
 #history-overlay.active .modal-card,
+#share-overlay.active .modal-card,
 #upgrades-overlay.active .modal-card {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1223,20 +1224,37 @@ body.evil-mode .home-logo-circle {
     word-break: break-word;
 }
 
-.btn-delete-history {
-    background: none;
-    border: none;
-    color: #ff5252;
-    font-size: 1.4rem;
-    cursor: pointer;
-    padding: 12px 8px;
-    transition: transform 0.2s;
-    opacity: 0.8;
+.history-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn-delete-history:hover {
+.btn-history-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s, opacity 0.2s;
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-history-action:hover {
     transform: scale(1.1);
     opacity: 1;
+}
+
+.btn-delete-history {
+    color: #ff5252;
+}
+
+.btn-share-history {
+    color: var(--color-text-muted);
 }
 
 .history-empty {

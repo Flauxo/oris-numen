@@ -188,6 +188,28 @@ const OrisApp = {
         btnCloseHistory.addEventListener('click', () => this.closeHistoryCard());
     }
 
+    // Share Overlay Handlers
+    const shareOverlay = document.getElementById('share-overlay');
+    const shareBackdrop = shareOverlay ? shareOverlay.querySelector('.overlay-backdrop') : null;
+    if (shareBackdrop) {
+        shareBackdrop.addEventListener('click', () => this.closeShareOverlay());
+    }
+
+    const btnCloseShare = document.getElementById('btn-close-share');
+    if (btnCloseShare) {
+        btnCloseShare.addEventListener('click', () => this.closeShareOverlay());
+    }
+
+    const btnShareWhatsapp = document.getElementById('btn-share-whatsapp');
+    if (btnShareWhatsapp) {
+        btnShareWhatsapp.addEventListener('click', () => {
+            if (this.currentShareText) {
+                window.open(`https://wa.me/?text=${encodeURIComponent(this.currentShareText)}`, '_blank');
+                this.closeShareOverlay();
+            }
+        });
+    }
+
     // Upgrades Card Handlers
     const btnUpgrades = document.getElementById('menu-item-upgrades');
     if (btnUpgrades) btnUpgrades.addEventListener('click', (e) => {
@@ -1040,7 +1062,7 @@ const OrisApp = {
           const historyItem = {
               id: Date.now(),
               type: freqId,
-              duration: ChannelTimer.originalDuration || 15 * 60,
+              duration: ChannelTimer.duration,
               elements: activeElements,
               text: text,
               date: Date.now()
@@ -1076,6 +1098,22 @@ const OrisApp = {
       const sidebarOverlay = document.getElementById('sidebar-overlay');
       if (sidebarOverlay) {
           sidebarOverlay.classList.remove('active');
+      }
+  },
+
+  openShareOverlay() {
+      const overlay = document.getElementById('share-overlay');
+      if (overlay) {
+          overlay.classList.add('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
+      }
+  },
+
+  closeShareOverlay() {
+      const overlay = document.getElementById('share-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
       }
   },
 
@@ -1150,14 +1188,29 @@ const OrisApp = {
           content.appendChild(header);
           content.appendChild(textDiv);
           
+          const actionsDiv = document.createElement('div');
+          actionsDiv.className = 'history-actions';
+          
           const btnDelete = document.createElement('button');
-          btnDelete.className = 'btn-delete-history';
-          btnDelete.innerHTML = '🗑️'; // trash icon
+          btnDelete.className = 'btn-history-action btn-delete-history';
+          btnDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>';
           btnDelete.title = t['history.delete'] || 'Delete';
           btnDelete.onclick = () => this.deleteHistoryItem(item.id);
           
+          const btnShare = document.createElement('button');
+          btnShare.className = 'btn-history-action btn-share-history';
+          btnShare.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>';
+          btnShare.title = t['history.share'] || 'Share';
+          btnShare.onclick = () => {
+              this.currentShareText = `${typeName} - ${freq.fullName}\n${durationText}\n${dateText}\n${elementsText}\n\n"${item.text}"\n\n${t['share.promo'] || "Si quieres canalizar tus mensajes únete a Oris Numen. Busca la app en tu store."}`;
+              this.openShareOverlay();
+          };
+          
+          actionsDiv.appendChild(btnDelete);
+          actionsDiv.appendChild(btnShare);
+          
           wrapper.appendChild(content);
-          wrapper.appendChild(btnDelete);
+          wrapper.appendChild(actionsDiv);
           
           listContainer.appendChild(wrapper);
       });
