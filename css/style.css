@@ -1000,7 +1000,8 @@ body.evil-mode .home-logo-circle {
 
 #about-overlay.active .modal-card,
 #how-it-works-overlay.active .modal-card,
-#testimonials-overlay.active .modal-card {
+#testimonials-overlay.active .modal-card,
+#upgrades-overlay.active .modal-card {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
@@ -1025,6 +1026,10 @@ body.evil-mode .home-logo-circle {
 
 .title-how-it-works {
     color: var(--color-freq-revelatio); /* Orange */
+}
+
+.title-upgrades {
+    color: var(--color-freq-gratia); /* Yellow */
 }
 
 .title-testimonials {
@@ -1097,6 +1102,26 @@ body.evil-mode .home-logo-circle {
     border: none;
     border-top: 1px solid rgba(0,0,0,0.08);
     margin: 8px 0;
+}
+
+/* Upgrades Button */
+.btn-upgrade {
+    background-color: var(--color-freq-gratia);
+    color: white;
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    box-shadow: var(--shadow-subtle);
+}
+
+.btn-upgrade:hover, .btn-upgrade:active {
+    opacity: 0.9;
+    transform: scale(0.98);
 }
 
 /* Evil Overlay */

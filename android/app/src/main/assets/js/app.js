@@ -217,6 +217,32 @@ const OrisApp = {
         btnCloseTestimonials.addEventListener('click', () => this.closeTestimonialsCard());
     }
 
+    // Upgrades Card Handlers
+    const btnUpgrades = document.getElementById('menu-item-upgrades');
+    if (btnUpgrades) btnUpgrades.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openUpgradesCard();
+    });
+
+    const upgradesOverlay = document.getElementById('upgrades-overlay');
+    const upgradesBackdrop = upgradesOverlay ? upgradesOverlay.querySelector('.overlay-backdrop') : null;
+    if (upgradesBackdrop) {
+        upgradesBackdrop.addEventListener('click', () => this.closeUpgradesCard());
+    }
+
+    const btnCloseUpgrades = document.getElementById('btn-close-upgrades');
+    if (btnCloseUpgrades) {
+        btnCloseUpgrades.addEventListener('click', () => this.closeUpgradesCard());
+    }
+
+    const btnUnlockUpgrades = document.getElementById('btn-unlock-upgrades');
+    if (btnUnlockUpgrades) {
+        btnUnlockUpgrades.addEventListener('click', () => {
+            OrisAudio.playButtonSound();
+            window.location.href = "https://play.google.com/store/apps/details?id=com.orisnumen.app";
+        });
+    }
+
     // Sidebar Menu Handlers
     const btnHamburger = document.getElementById('btn-hamburger');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -554,6 +580,29 @@ const OrisApp = {
    */
   closeTestimonialsCard() {
       const overlay = document.getElementById('testimonials-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
+          OrisAudio.playButtonSound();
+      }
+  },
+
+  /**
+   * Open the upgrades card
+   */
+  openUpgradesCard() {
+      const overlay = document.getElementById('upgrades-overlay');
+      if (overlay) {
+          overlay.classList.add('active');
+          this.closeSidebar(); // close sidebar if open
+          OrisAudio.playButtonSound();
+      }
+  },
+
+  /**
+   * Close the upgrades card
+   */
+  closeUpgradesCard() {
+      const overlay = document.getElementById('upgrades-overlay');
       if (overlay) {
           overlay.classList.remove('active');
           OrisAudio.playButtonSound();
