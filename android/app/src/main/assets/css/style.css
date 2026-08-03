@@ -329,7 +329,6 @@ body {
     padding: 20px 24px;
     padding-top: calc(20px + env(safe-area-inset-top));
     position: relative;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .btn-back {
@@ -731,10 +730,7 @@ body {
 }
 
 .overlay-divider {
-    width: 40px;
-    height: 1px;
-    background: rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
+    display: none;
 }
 
 .overlay-section {
