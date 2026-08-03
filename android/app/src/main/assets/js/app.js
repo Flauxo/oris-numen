@@ -170,6 +170,24 @@ const OrisApp = {
         btnCloseTestimonials.addEventListener('click', () => this.closeTestimonialsCard());
     }
 
+    // History Card Handlers
+    const btnHistory = document.getElementById('menu-item-history');
+    if (btnHistory) btnHistory.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openHistoryCard();
+    });
+
+    const historyOverlay = document.getElementById('history-overlay');
+    const historyBackdrop = historyOverlay ? historyOverlay.querySelector('.overlay-backdrop') : null;
+    if (historyBackdrop) {
+        historyBackdrop.addEventListener('click', () => this.closeHistoryCard());
+    }
+
+    const btnCloseHistory = document.getElementById('btn-close-history');
+    if (btnCloseHistory) {
+        btnCloseHistory.addEventListener('click', () => this.closeHistoryCard());
+    }
+
     // Upgrades Card Handlers
     const btnUpgrades = document.getElementById('menu-item-upgrades');
     if (btnUpgrades) btnUpgrades.addEventListener('click', (e) => {
@@ -740,6 +758,8 @@ const OrisApp = {
    * Timer complete — show success
    */
   onTimerComplete() {
+    this.saveToHistory();
+
     ChannelTimer.clearState();
     OrisAudio.stopFrequencyPad();
     OrisAudio.stopAllElements();
@@ -995,6 +1015,161 @@ const OrisApp = {
         (remaining, progress) => this.onTimerTick(remaining, progress),
         () => this.onTimerComplete()
       );
+  },
+
+  saveToHistory() {
+      try {
+          const freqId = this.currentFrequency;
+          if (!freqId) return;
+          const freq = this.FREQUENCIES[freqId];
+          
+          let text = '';
+          if (freqId === 'pazuzu') {
+              const evilInput = document.getElementById('evil-input');
+              text = evilInput ? evilInput.value : '';
+          } else {
+              const msgInput = document.getElementById('message-input');
+              text = msgInput ? msgInput.value : '';
+          }
+
+          if (!text || text.trim().length === 0) return; // don't save empty
+          
+          const activeElements = Array.from(document.querySelectorAll('.element-btn.active'))
+                                      .map(btn => btn.getAttribute('data-element'));
+
+          const historyItem = {
+              id: Date.now(),
+              type: freqId,
+              duration: ChannelTimer.originalDuration || 15 * 60,
+              elements: activeElements,
+              text: text,
+              date: Date.now()
+          };
+
+          let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
+          history.unshift(historyItem);
+          localStorage.setItem('oris_history', JSON.stringify(history));
+      } catch (e) {
+          console.error("Error saving history", e);
+      }
+  },
+
+  openHistoryCard() {
+      const overlay = document.getElementById('history-overlay');
+      if (overlay) {
+          this.renderHistory();
+          overlay.classList.add('active');
+          if (typeof this.closeSidebar === 'function') this.closeSidebar();
+          try { OrisAudio.playButtonSound(); } catch(e){}
+      }
+  },
+
+  closeHistoryCard() {
+      const overlay = document.getElementById('history-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
+      }
+  },
+
+  closeSidebar() {
+      const sidebarOverlay = document.getElementById('sidebar-overlay');
+      if (sidebarOverlay) {
+          sidebarOverlay.classList.remove('active');
+      }
+  },
+
+  renderHistory() {
+      const listContainer = document.getElementById('history-list');
+      if (!listContainer) return;
+      
+      let history = [];
+      try {
+          history = JSON.parse(localStorage.getItem('oris_history') || '[]');
+      } catch (e) {}
+
+      listContainer.innerHTML = '';
+      
+      const t = Translations[this.currentLang] || Translations['en'];
+
+      if (history.length === 0) {
+          const emptyDiv = document.createElement('div');
+          emptyDiv.className = 'history-empty';
+          emptyDiv.textContent = t['history.empty'] || "No messages";
+          listContainer.appendChild(emptyDiv);
+          return;
+      }
+
+      history.forEach(item => {
+          const freq = this.FREQUENCIES[item.type] || this.FREQUENCIES['humilis'];
+          
+          const wrapper = document.createElement('div');
+          wrapper.className = 'history-item';
+          
+          const content = document.createElement('div');
+          content.className = 'history-item-content';
+          
+          const header = document.createElement('div');
+          header.className = 'history-item-header';
+          
+          const typeSpan = document.createElement('span');
+          typeSpan.className = 'history-item-type';
+          typeSpan.style.color = freq.color;
+          const typeName = item.type === 'pazuzu' ? 'Maleficus' : (t[`freq.${item.type}.type`] || freq.name);
+          typeSpan.textContent = `${typeName} - ${freq.fullName}`;
+          
+          const metaDiv = document.createElement('div');
+          metaDiv.className = 'history-meta';
+          
+          const formattedDuration = ChannelTimer.formatTime(item.duration);
+          const durationText = (t['history.duration'] || "Duration: {time}").replace('{time}', formattedDuration);
+          
+          const d = new Date(item.date);
+          const formattedDate = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          const dateText = (t['history.date'] || "Date: {date}").replace('{date}', formattedDate);
+          
+          let elementsTextValue = t['history.none'] || 'None';
+          if (item.elements && item.elements.length > 0) {
+              const translatedElements = item.elements.map(e => {
+                  const translated = t[`elements.${e}`];
+                  return translated ? translated : e.charAt(0).toUpperCase() + e.slice(1);
+              });
+              elementsTextValue = translatedElements.join(', ');
+          }
+          const elementsText = (t['history.elements'] || "Elements: {elements}").replace('{elements}', elementsTextValue);
+          
+          metaDiv.innerHTML = `<span>${durationText}</span><span>${dateText}</span><span>${elementsText}</span>`;
+          
+          header.appendChild(typeSpan);
+          header.appendChild(metaDiv);
+          
+          const textDiv = document.createElement('div');
+          textDiv.className = 'history-text';
+          textDiv.textContent = item.text;
+          
+          content.appendChild(header);
+          content.appendChild(textDiv);
+          
+          const btnDelete = document.createElement('button');
+          btnDelete.className = 'btn-delete-history';
+          btnDelete.innerHTML = '🗑️'; // trash icon
+          btnDelete.title = t['history.delete'] || 'Delete';
+          btnDelete.onclick = () => this.deleteHistoryItem(item.id);
+          
+          wrapper.appendChild(content);
+          wrapper.appendChild(btnDelete);
+          
+          listContainer.appendChild(wrapper);
+      });
+  },
+
+  deleteHistoryItem(id) {
+      try {
+          let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
+          history = history.filter(item => item.id !== id);
+          localStorage.setItem('oris_history', JSON.stringify(history));
+          this.renderHistory();
+      } catch (e) {}
   },
 
   /**

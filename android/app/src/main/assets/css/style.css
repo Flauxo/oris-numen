@@ -1171,6 +1171,80 @@ body.evil-mode .home-logo-circle {
     margin: 8px 0;
 }
 
+/* History Styles */
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item-content {
+    flex-grow: 1;
+    padding-right: 12px;
+}
+
+.history-item-header {
+    margin-bottom: 6px;
+}
+
+.history-item-type {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 1.15rem;
+    display: block;
+}
+
+.history-meta {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.history-meta span {
+    display: block;
+}
+
+.history-text {
+    font-size: 0.95rem;
+    color: var(--color-text-dark);
+    font-style: italic;
+    line-height: 1.5;
+    background: rgba(0,0,0,0.03);
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    word-break: break-word;
+}
+
+.btn-delete-history {
+    background: none;
+    border: none;
+    color: #ff5252;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 12px 8px;
+    transition: transform 0.2s;
+    opacity: 0.8;
+}
+
+.btn-delete-history:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.history-empty {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-style: italic;
+    padding: 24px 0;
+}
+
 /* Upgrades Button */
 .btn-upgrade {
     background-color: var(--color-freq-gratia);
