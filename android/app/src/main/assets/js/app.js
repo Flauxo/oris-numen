@@ -690,14 +690,24 @@ const OrisApp = {
       // Color the success icon with the frequency color
       const freq = this.FREQUENCIES[this.currentFrequency];
       const successIcon = document.querySelector('.success-icon');
-      if (freq && successIcon) {
+      const crossInner = document.querySelector('.cross-inner');
+      if (freq && successIcon && crossInner) {
         successIcon.style.color = freq.color;
+        
+        // Ensure pulse-glow is active
+        successIcon.classList.add('pulse-glow');
+        
+        // Reset rotation state immediately
+        crossInner.style.transition = 'none';
+        crossInner.style.transform = 'rotate(0deg)';
+        void crossInner.offsetWidth; // Force reflow
+
         if (this.currentFrequency === 'pazuzu') {
-            successIcon.classList.add('inverted-cross');
-            successIcon.classList.remove('pulse-glow');
-        } else {
-            successIcon.classList.remove('inverted-cross');
-            successIcon.classList.add('pulse-glow');
+            // Apply slow motion rotation after 1 second
+            setTimeout(() => {
+                crossInner.style.transition = 'transform 2s ease-in-out';
+                crossInner.style.transform = 'rotate(180deg)';
+            }, 1000);
         }
       }
       
@@ -749,10 +759,10 @@ const OrisApp = {
    */
   goHome() {
     document.body.classList.remove('evil-mode');
-    const successIcon = document.querySelector('.success-icon');
-    if (successIcon) {
-        successIcon.classList.remove('inverted-cross');
-        successIcon.classList.add('pulse-glow');
+    const crossInner = document.querySelector('.cross-inner');
+    if (crossInner) {
+        crossInner.style.transition = 'none';
+        crossInner.style.transform = 'rotate(0deg)';
     }
     OrisAudio.playButtonSound();
     this.currentFrequency = null;
