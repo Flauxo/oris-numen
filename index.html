@@ -30,8 +30,17 @@
         <!-- Screen 2: Home Screen -->
         <div id="home-screen" class="screen">
             <header class="home-header">
-                <h1 class="home-title">Oris Numen</h1>
-                <p class="home-subtitle">Canaliza tu mensaje al divino</p>
+                <div class="header-content">
+                    <div class="header-titles">
+                        <h1 class="home-title">Oris Numen</h1>
+                        <p class="home-subtitle">Canaliza tu mensaje al divino</p>
+                    </div>
+                    <button id="btn-hamburger" class="btn-hamburger" aria-label="Abrir menú">
+                        <div class="hamburger-line short-top"></div>
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line short-bottom"></div>
+                    </button>
+                </div>
             </header>
 
             <div class="cards-container">
@@ -200,6 +209,35 @@
                     <div id="write-card-line" class="write-card-line"></div>
                 </div>
                 <button id="btn-confirm-text" class="btn-confirm-text">Confirmar</button>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu Overlay -->
+        <div id="sidebar-overlay" class="overlay sidebar-overlay">
+            <div class="overlay-backdrop"></div>
+            <div class="sidebar-drawer">
+                <div class="sidebar-header">
+                    <h2 class="sidebar-title">Menú</h2>
+                    <button id="btn-close-sidebar" class="btn-close-sidebar">×</button>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item"><a href="#">Idioma</a></li>
+                    <li class="sidebar-item"><a href="#">Acerca de</a></li>
+                    <li class="sidebar-item"><a href="#">Mejoras</a></li>
+                    <li class="sidebar-item"><a href="#">Cómo funciona</a></li>
+                    <li class="sidebar-item"><a href="#">Testimonios</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Evil Mode Overlay -->
+        <div id="evil-overlay" class="overlay evil-overlay">
+            <div class="evil-backdrop"></div>
+            <div class="evil-card">
+                <h2 class="evil-title">comunicación con el maligno.</h2>
+                <p class="evil-subtitle">(úsala bajo tu propia responsabilidad).</p>
+                <textarea id="evil-input" placeholder="Escribe tu mensaje aquí..." spellcheck="false"></textarea>
+                <button id="btn-evil-channel" class="btn-evil-channel">Canalizar</button>
             </div>
         </div>
 

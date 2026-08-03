@@ -430,8 +430,114 @@ const OrisAudio = {
     noise.start(t);
   },
 
+  async playEvilAmbient() {
+    await this._ensureContext();
+    if (!this.ctx) return;
+    this.stopEvilAmbient();
+
+    const t = this.ctx.currentTime;
+    
+    // Create minor chord
+    this.evilNodes = [];
+    const frequencies = [65.41, 77.78, 98.00]; // C2, Eb2, G2 (C minor chord)
+    
+    // Master evil gain
+    const masterEvilGain = this.ctx.createGain();
+    masterEvilGain.gain.setValueAtTime(0, t);
+    masterEvilGain.gain.linearRampToValueAtTime(0.6, t + 2);
+    masterEvilGain.connect(this.masterGain);
+    this.evilNodes.push(masterEvilGain);
+
+    // Drones
+    frequencies.forEach(freq => {
+        const osc = this.ctx.createOscillator();
+        osc.type = 'sawtooth';
+        osc.frequency.value = freq;
+        
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = freq * 3;
+        
+        // Slow LFO for filter
+        const lfo = this.ctx.createOscillator();
+        lfo.type = 'sine';
+        lfo.frequency.value = 0.1 + Math.random() * 0.2;
+        const lfoGain = this.ctx.createGain();
+        lfoGain.gain.value = freq;
+        
+        lfo.connect(lfoGain);
+        lfoGain.connect(filter.frequency);
+        
+        const gain = this.ctx.createGain();
+        gain.gain.value = 0.2;
+        
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(masterEvilGain);
+        
+        osc.start(t);
+        lfo.start(t);
+        
+        this.evilNodes.push(osc, lfo, gain, filter, lfoGain);
+    });
+
+    // Fire crackling (filtered noise)
+    const bufferSize = this.ctx.sampleRate * 5; // 5 second loop
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+        // Sporadic spikes for crackling
+        data[i] = Math.random() > 0.99 ? (Math.random() * 2 - 1) * 2 : 0;
+        // Background rumble
+        data[i] += (Math.random() * 2 - 1) * 0.1;
+    }
+    
+    const fireNoise = this.ctx.createBufferSource();
+    fireNoise.buffer = buffer;
+    fireNoise.loop = true;
+    
+    const fireFilter = this.ctx.createBiquadFilter();
+    fireFilter.type = 'lowpass';
+    fireFilter.frequency.value = 800;
+    
+    const fireGain = this.ctx.createGain();
+    fireGain.gain.value = 0.4;
+    
+    fireNoise.connect(fireFilter);
+    fireFilter.connect(fireGain);
+    fireGain.connect(masterEvilGain);
+    
+    fireNoise.start(t);
+    this.evilNodes.push(fireNoise, fireFilter, fireGain);
+  },
+
+  stopEvilAmbient() {
+      if (!this.evilNodes || !this.ctx) return;
+      const t = this.ctx.currentTime;
+      
+      // Find the master evil gain and fade it out
+      if (this.evilNodes.length > 0) {
+          const master = this.evilNodes[0];
+          if (master.gain) {
+              master.gain.setValueAtTime(master.gain.value, t);
+              master.gain.linearRampToValueAtTime(0, t + 2);
+          }
+          
+          setTimeout(() => {
+              this.evilNodes.forEach(node => {
+                  try {
+                      if (node.stop) node.stop();
+                      if (node.disconnect) node.disconnect();
+                  } catch (e) {}
+              });
+              this.evilNodes = [];
+          }, 2100);
+      }
+  },
+
   dispose() {
     this.stopFrequencyPad();
+    this.stopEvilAmbient();
     if (this.ctx) {
       this.ctx.close();
       this.ctx = null;

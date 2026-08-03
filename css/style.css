@@ -137,8 +137,54 @@ body {
 }
 
 .home-header {
-    text-align: center;
     margin-bottom: 20px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.header-titles {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.btn-hamburger {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+}
+
+.hamburger-line {
+    height: 2px;
+    background-color: var(--color-text-dark);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger-line.short-top {
+    width: 12px;
+}
+
+.hamburger-line:not(.short-top):not(.short-bottom) {
+    width: 24px;
+}
+
+.hamburger-line.short-bottom {
+    width: 16px;
 }
 
 .home-title {
@@ -829,3 +875,174 @@ body {
 .btn-confirm-text:active {
     transform: translateY(1px);
 }
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    justify-content: flex-end;
+    align-items: stretch;
+}
+
+.sidebar-overlay.active .sidebar-drawer {
+    transform: translateX(0);
+}
+
+.sidebar-drawer {
+    width: 33.33%;
+    min-width: 250px;
+    height: 100%;
+    background-color: var(--color-bg-primary);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    padding: env(safe-area-inset-top) 24px 24px 24px;
+    z-index: 200;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    margin-top: 24px;
+}
+
+.sidebar-title {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--color-freq-humilis);
+}
+
+.btn-close-sidebar {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sidebar-item a {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    font-size: 1.1rem;
+    font-weight: 400;
+    transition: color 0.2s;
+}
+
+.sidebar-item a:active {
+    color: var(--color-freq-humilis);
+}
+
+/* Evil Mode */
+body.evil-mode {
+    --color-bg-primary: #000000;
+    --color-bg-card: #0a0a0a;
+    --color-text-dark: #cc0000;
+    --color-text-muted: #660000;
+}
+
+body.evil-mode .app-container {
+    box-shadow: 0 0 50px rgba(200, 0, 0, 0.2);
+}
+
+body.evil-mode .hamburger-line {
+    background-color: var(--color-text-dark);
+}
+
+body.evil-mode .home-logo-circle {
+    border-color: var(--color-text-dark);
+    color: var(--color-text-dark);
+    box-shadow: 0 0 15px rgba(200, 0, 0, 0.3);
+}
+
+/* Evil Overlay */
+.evil-overlay {
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+}
+
+.evil-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 100;
+}
+
+.evil-card {
+    background-color: #050505;
+    border: 1px solid #330000;
+    border-radius: var(--radius-md);
+    padding: 32px 24px;
+    width: 100%;
+    max-width: 360px;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(255, 0, 0, 0.1);
+}
+
+.evil-title {
+    font-family: var(--font-serif);
+    color: #ff3333;
+    font-size: 1.6rem;
+    text-transform: lowercase;
+}
+
+.evil-subtitle {
+    font-size: 0.85rem;
+    color: #aa0000;
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+#evil-input {
+    width: 100%;
+    height: 120px;
+    background-color: #000000;
+    border: 1px solid #440000;
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-family: var(--font-sans);
+    color: #ff6666;
+    resize: none;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+#evil-input:focus {
+    outline: none;
+    border-color: #ff0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+}
+
+.btn-evil-channel {
+    background-color: #330000;
+    color: #ff3333;
+    border: 1px solid #ff0000;
+    border-radius: var(--radius-pill);
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.btn-evil-channel:active {
+    background-color: #ff0000;
+    color: #000000;
+}
+

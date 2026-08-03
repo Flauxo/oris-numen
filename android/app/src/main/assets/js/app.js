@@ -139,6 +139,48 @@ const OrisApp = {
         btnConfirmText.addEventListener('click', () => this.confirmWriteCard());
     }
 
+    // Sidebar Menu Handlers
+    const btnHamburger = document.getElementById('btn-hamburger');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const btnCloseSidebar = document.getElementById('btn-close-sidebar');
+    const sidebarBackdrop = sidebarOverlay ? sidebarOverlay.querySelector('.overlay-backdrop') : null;
+
+    if (btnHamburger) btnHamburger.addEventListener('click', () => sidebarOverlay.classList.add('active'));
+    if (btnCloseSidebar) btnCloseSidebar.addEventListener('click', () => sidebarOverlay.classList.remove('active'));
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', () => sidebarOverlay.classList.remove('active'));
+
+    // Evil mode logic
+    const homeLogoCircle = document.querySelector('.home-logo-circle');
+    let evilClicks = 0;
+    let evilClickTimer = null;
+    
+    if (homeLogoCircle) {
+        homeLogoCircle.addEventListener('click', () => {
+            evilClicks++;
+            if (evilClickTimer) clearTimeout(evilClickTimer);
+            
+            evilClickTimer = setTimeout(() => {
+                evilClicks = 0;
+            }, 800); // Reset if 0.8 seconds pass without a click
+            
+            if (evilClicks >= 20) {
+                evilClicks = 0;
+                this.activateEvilMode();
+            }
+        });
+    }
+
+    const btnEvilChannel = document.getElementById('btn-evil-channel');
+    if (btnEvilChannel) {
+        btnEvilChannel.addEventListener('click', () => this.channelEvilMode());
+    }
+
+    // Auto-advance to home after splash
+    setTimeout(() => {
+      this.showScreen('home');
+      OrisAudio.playSplashSound();
+    }, 2000);
+
     const writeCardInput = document.getElementById('write-card-input');
     const charCounter = document.getElementById('char-counter');
     if (writeCardInput && charCounter) {
@@ -300,7 +342,6 @@ const OrisApp = {
     }
     this.closeWriteCard();
   },
-
   /**
    * Send message — start channeling process with destruction animation
    */
