@@ -71,7 +71,7 @@ const OrisAudio = {
 
     // Master gain for the preview with envelope
     const previewGain = this.ctx.createGain();
-    const targetGain = frequencyHz < 100 ? 0.7 : 0.18; // Boost low frequencies (increased from 0.35 to 0.7)
+    const targetGain = frequencyHz < 100 ? 1.5 : 0.18; // Massive boost for low frequencies (from 0.7 to 1.5)
     previewGain.gain.setValueAtTime(0, t);
     previewGain.gain.linearRampToValueAtTime(targetGain, t + fadeIn);
     previewGain.gain.setValueAtTime(targetGain, t + duration - fadeOut);
@@ -109,7 +109,7 @@ const OrisAudio = {
     osc3.type = 'triangle';
     osc3.frequency.value = frequencyHz * 2;
     const g3 = this.ctx.createGain();
-    g3.gain.value = frequencyHz < 100 ? 0.12 : 0.04; // Boost harmonic for low freq
+    g3.gain.value = frequencyHz < 100 ? 0.6 : 0.04; // Massive boost for low freq harmonic
     osc3.connect(g3);
     g3.connect(previewGain);
     osc3.start(t);
@@ -121,7 +121,7 @@ const OrisAudio = {
       osc4.type = 'triangle';
       osc4.frequency.value = frequencyHz * 3;
       const g4 = this.ctx.createGain();
-      g4.gain.value = 0.08;
+      g4.gain.value = 0.4; // Boost from 0.08 to 0.4
       osc4.connect(g4);
       g4.connect(previewGain);
       osc4.start(t);
@@ -134,22 +134,38 @@ const OrisAudio = {
     if (!this.ctx) return;
 
     const t = this.ctx.currentTime;
+    
+    // Main sine
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
-
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(110, t); // Increased from 60 to 110 (higher pitch)
+    osc.frequency.setValueAtTime(130, t); // Boost to 130Hz for better mobile audibility
+
+    // Add a triangle wave for extra harmonics so it cuts through small speakers
+    const oscTri = this.ctx.createOscillator();
+    oscTri.type = 'triangle';
+    oscTri.frequency.setValueAtTime(130, t);
+    const triGain = this.ctx.createGain();
 
     gain.gain.setValueAtTime(0, t);
-    gain.gain.linearRampToValueAtTime(0.8, t + 1); // Increased from 0.4 to 0.8
-    gain.gain.setValueAtTime(0.8, t + 1.2); // Increased from 0.4 to 0.8
+    gain.gain.linearRampToValueAtTime(1.5, t + 1); // Drive it harder
+    gain.gain.setValueAtTime(1.5, t + 1.2);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 3);
 
+    triGain.gain.setValueAtTime(0, t);
+    triGain.gain.linearRampToValueAtTime(0.5, t + 1);
+    triGain.gain.setValueAtTime(0.5, t + 1.2);
+    triGain.gain.exponentialRampToValueAtTime(0.001, t + 3);
+
     osc.connect(gain);
+    oscTri.connect(triGain);
     gain.connect(this.masterGain);
+    triGain.connect(this.masterGain);
 
     osc.start(t);
+    oscTri.start(t);
     osc.stop(t + 3.1);
+    oscTri.stop(t + 3.1);
   },
 
   async startFrequencyPad(frequencyHz) {
@@ -161,7 +177,7 @@ const OrisAudio = {
     const t = this.ctx.currentTime;
 
     const padGain = this.ctx.createGain();
-    const targetGain = frequencyHz < 100 ? 0.8 : 0.2; // Boost low frequencies (increased from 0.4 to 0.8)
+    const targetGain = frequencyHz < 100 ? 1.8 : 0.2; // Massive boost for low frequencies (from 0.8 to 1.8)
     padGain.gain.setValueAtTime(0, t);
     padGain.gain.linearRampToValueAtTime(targetGain, t + 2.5);
 
@@ -201,7 +217,7 @@ const OrisAudio = {
     lfoGain.connect(lfoGain2);
     lfoGain2.connect(osc2.frequency);
     const gain2 = this.ctx.createGain();
-    gain2.gain.value = frequencyHz < 100 ? 0.15 : 0.05; // Boost harmonic for low freq
+    gain2.gain.value = frequencyHz < 100 ? 0.8 : 0.05; // Massive boost harmonic for low freq
     osc2.connect(gain2);
     gain2.connect(padGain);
     osc2.start(t);
@@ -231,7 +247,7 @@ const OrisAudio = {
       lfoGain.connect(lfoGain3);
       lfoGain3.connect(osc4.frequency);
       const gain4 = this.ctx.createGain();
-      gain4.gain.value = 0.1;
+      gain4.gain.value = 0.5; // Boost from 0.1 to 0.5
       osc4.connect(gain4);
       gain4.connect(padGain);
       osc4.start(t);
