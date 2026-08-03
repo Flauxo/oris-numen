@@ -179,38 +179,39 @@
                 <div class="elements-section">
                     <p class="elements-label" data-i18n="elements.add">Añadir elementos</p>
                     <div class="elements-grid">
-                        <!-- Aire -->
-                        <button class="element-btn" id="elem-aire" data-element="aire" data-color="#7B5EA7" aria-label="Aire">
+                        <!-- Aire (Verde - Pluma/Hoja simétrica) -->
+                        <button class="element-btn" id="elem-aire" data-element="aire" data-color="#4CAF50" aria-label="Aire">
                             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
-                                <ellipse cx="40" cy="40" rx="18" ry="30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                                <line x1="40" y1="10" x2="40" y2="70" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                                <line x1="40" y1="28" x2="28" y2="38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                                <line x1="40" y1="28" x2="52" y2="38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                                <line x1="40" y1="40" x2="30" y2="49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                                <line x1="40" y1="40" x2="50" y2="49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                                <line x1="40" y1="52" x2="33" y2="59" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                                <line x1="40" y1="52" x2="47" y2="59" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <circle cx="40" cy="40" r="34" stroke="currentColor" stroke-width="3"/>
+                                <line x1="40" y1="12" x2="40" y2="68" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M40 20 C24 20 12 28 12 34 C24 34 36 30 40 26 M40 20 C56 20 68 28 68 34 C56 34 44 30 40 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                                <path d="M40 32 C22 34 10 44 10 50 C24 48 36 42 40 38 M40 32 C58 34 70 44 70 50 C56 48 44 42 40 38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                                <path d="M40 44 C26 46 16 56 16 60 C26 58 36 53 40 49 M40 44 C54 46 64 56 64 60 C54 58 44 53 40 49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
                             </svg>
                         </button>
-                        <!-- Tierra -->
-                        <button class="element-btn" id="elem-tierra" data-element="tierra" data-color="#D4845A" aria-label="Tierra">
+                        <!-- Tierra (Morado - Espiral concéntrica) -->
+                        <button class="element-btn" id="elem-tierra" data-element="tierra" data-color="#8E24AA" aria-label="Tierra">
                             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
-                                <path d="M22 65 Q22 45 30 35 Q38 25 38 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                                <path d="M40 65 Q40 45 40 35 Q40 25 40 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                                <path d="M58 65 Q58 45 50 35 Q42 25 42 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                                <circle cx="40" cy="40" r="34" stroke="currentColor" stroke-width="3"/>
+                                <path d="M 40 40 A 6 6 0 0 1 40 28 A 12 12 0 0 1 40 52 A 18 18 0 0 1 40 16 A 24 24 0 0 1 40 64 A 30 30 0 0 1 12 44" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
                             </svg>
                         </button>
-                        <!-- Agua -->
-                        <button class="element-btn" id="elem-agua" data-element="agua" data-color="#5A8BB5" aria-label="Agua">
+                        <!-- Agua (Azul - Ondas horizontales) -->
+                        <button class="element-btn" id="elem-agua" data-element="agua" data-color="#00BCD4" aria-label="Agua">
                             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
-                                <path d="M15 55 Q20 45 30 48 Q40 51 40 40 Q40 28 32 22 Q26 17 28 26 Q30 35 38 35 Q50 35 58 45 Q65 54 60 62" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                                <circle cx="40" cy="40" r="34" stroke="currentColor" stroke-width="3"/>
+                                <path d="M14 28 Q 27 20 40 28 T 66 28" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+                                <path d="M9 38 Q 24.5 30 40 38 T 71 38" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+                                <path d="M9 48 Q 24.5 40 40 48 T 71 48" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+                                <path d="M14 58 Q 27 50 40 58 T 66 58" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
                             </svg>
                         </button>
-                        <!-- Fuego -->
-                        <button class="element-btn" id="elem-fuego" data-element="fuego" data-color="#D4B85A" aria-label="Fuego">
+                        <!-- Fuego (Amarillo - Llama en círculo) -->
+                        <button class="element-btn" id="elem-fuego" data-element="fuego" data-color="#FFC107" aria-label="Fuego">
                             <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
-                                <path d="M40 68 Q24 60 24 46 Q24 35 32 28 Q30 38 38 40 Q34 30 40 18 Q46 30 52 26 Q58 32 56 46 Q54 56 62 52 Q60 62 40 68Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                                <path d="M40 58 Q34 52 36 46 Q38 52 44 50 Q42 54 40 58Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <circle cx="40" cy="40" r="34" stroke="currentColor" stroke-width="3"/>
+                                <path d="M40 70 C24 70 16 58 16 44 C16 30 28 20 38 10 C34 22 42 26 40 34 C44 26 52 24 54 18 C64 28 66 40 64 50 C60 64 48 70 40 70 Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <path d="M38 70 C28 66 26 56 30 48 C34 42 32 38 34 34 C40 40 46 48 44 56 C42 64 38 70 38 70 Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                             </svg>
                         </button>
                     </div>

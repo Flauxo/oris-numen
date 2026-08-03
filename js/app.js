@@ -300,13 +300,15 @@ const OrisApp = {
                 btn.classList.remove('active');
                 btn.style.color = '';
                 btn.style.borderColor = '';
-                btn.style.boxShadow = '';
+                btn.style.removeProperty('--elem-color');
+                btn.style.removeProperty('--elem-color-dim');
                 OrisAudio.stopElement(element);
             } else {
                 btn.classList.add('active');
                 btn.style.color = color;
                 btn.style.borderColor = color;
-                btn.style.boxShadow = `0 0 14px ${color}55`;
+                btn.style.setProperty('--elem-color', color);
+                btn.style.setProperty('--elem-color-dim', `${color}33`);
                 OrisAudio.startElement(element);
             }
         });
