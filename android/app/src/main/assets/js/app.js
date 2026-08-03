@@ -272,6 +272,7 @@ const OrisApp = {
     let evilClickTimer = null;
     
     const handleEvilClick = (e) => {
+        if (e) { e.stopPropagation(); e.preventDefault(); }
         // Only respond while in normal mode (not evil mode already)
         if (document.body.classList.contains('evil-mode')) return;
 

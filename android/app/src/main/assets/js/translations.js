@@ -32,7 +32,7 @@ const Translations = {
         "warning.incompatible_element": "Incompatible element in evil mode",
         "warning.too_many_clicks": "Please do not tap the symbol any more times.",
         
-        "success.title": "Message channeled<br>successfully",,
+        "success.title": "Message channeled<br>successfully",
         "success.subtitle.divine": "Your message has been elevated to the divine",
         "success.subtitle.evil": "Your message has been elevated to the evil one",
         "btn.home": "Back to start",
