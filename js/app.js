@@ -274,6 +274,11 @@ const OrisApp = {
         evilClicks++;
         if (evilClickTimer) clearTimeout(evilClickTimer);
         
+        // Check if user pressed 6 or more times
+        if (evilClicks >= 6 && evilClicks < 20) {
+            this.showWarning(Translations[this.currentLang]['warning.too_many_clicks'] || 'Por favor, no pulses más veces en el símbolo.');
+        }
+
         // 2-second timeout window between clicks is more forgiving on mobile
         evilClickTimer = setTimeout(() => {
             evilClicks = 0;
@@ -294,6 +299,13 @@ const OrisApp = {
     document.querySelectorAll('.element-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const element = btn.getAttribute('data-element');
+            
+            // In evil mode (pazuzu frequency), only 'fuego' is allowed
+            if (this.currentFrequency === 'pazuzu' && element !== 'fuego') {
+                this.showWarning(Translations[this.currentLang]['warning.incompatible_element'] || 'Elemento incompatible en modo maligno');
+                return;
+            }
+
             const color = btn.getAttribute('data-color');
             const isActive = btn.classList.contains('active');
             if (isActive) {
