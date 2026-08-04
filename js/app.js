@@ -415,6 +415,21 @@ const OrisApp = {
         btnEvilChannel.addEventListener('click', () => this.channelEvilMode());
     }
 
+    const btnEvilReturn = document.getElementById('btn-evil-return');
+    if (btnEvilReturn) {
+        btnEvilReturn.addEventListener('click', () => {
+            const evilOverlay = document.getElementById('evil-overlay');
+            if (evilOverlay) {
+                evilOverlay.classList.remove('active');
+            }
+            document.body.classList.remove('evil-mode');
+            const evilInput = document.getElementById('evil-input');
+            if (evilInput) {
+                evilInput.value = '';
+            }
+        });
+    }
+
     // Auto-advance to home after splash
     setTimeout(() => {
       this.showScreen('home');
@@ -1242,7 +1257,7 @@ const OrisApp = {
           
           const btnDelete = document.createElement('button');
           btnDelete.className = 'btn-history-action btn-delete-history';
-          btnDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>';
+          btnDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="purple" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>';
           btnDelete.title = t['history.delete'] || 'Delete';
           btnDelete.onclick = () => this.deleteHistoryItem(item.id);
           
