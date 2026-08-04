@@ -862,7 +862,8 @@ const OrisApp = {
       const successIcon = document.getElementById('success-icon');
       const btnDownload = document.getElementById('btn-download-sigil');
 
-      if (text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
+      // Do not show Sigil in Evil Mode
+      if (!isEvil && text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
           if (sigilCanvas && btnDownload) {
               sigilCanvas.style.display = 'block';
               btnDownload.style.display = 'inline-flex';
@@ -1071,8 +1072,6 @@ const OrisApp = {
       }
   },
 
-  /**
-   * Channel evil mode
   playGlitchEffect(element, durationMs) {
       return new Promise(resolve => {
           const originalText = element.value || "OMEN GLITCH ERROR";
@@ -1283,10 +1282,17 @@ const OrisApp = {
       ctx.fillText('Este Sigilo sagrado ha sido trazado a través de tu mensaje.', canvas.width / 2, yPos);
       
       // Trigger download
-      const link = document.createElement('a');
-      link.download = `OrisNumen-Sigil-${date.replace(/\//g, '-')}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+      const fileName = `OrisNumen-Sigil-${date.replace(/\//g, '-')}.png`;
+      const dataUrl = canvas.toDataURL('image/png');
+      
+      if (window.AndroidInterface && window.AndroidInterface.saveImageBase64) {
+          window.AndroidInterface.saveImageBase64(dataUrl, fileName);
+      } else {
+          const link = document.createElement('a');
+          link.download = fileName;
+          link.href = dataUrl;
+          link.click();
+      }
   },
 
   saveToHistory() {

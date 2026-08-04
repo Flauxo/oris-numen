@@ -227,23 +227,16 @@
         <!-- Success Screen -->
         <div id="success-screen" class="screen">
             <div class="success-content">
-                <div class="success-icon" id="success-icon">
-                    <div class="cross-inner"></div>
+                <div class="success-icon pulse-glow" id="success-icon">
+                    <span class="cross-inner">✟</span>
                 </div>
-                <canvas id="sigil-canvas" width="200" height="200" style="display: none; margin: 0 auto 24px;"></canvas>
-                
-                <h2 id="success-title" class="freq-name" data-i18n="success.title">Oris Numen</h2>
-                <p id="success-message" data-i18n="success.message">Tu canalización se ha completado. La energía fluye a tu favor.</p>
-                
-                <button class="btn btn-primary" id="btn-download-sigil" style="display: none; margin-bottom: 16px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Descargar Sigilo
-                </button>
-                <button class="btn btn-primary btn-outline" id="btn-success-home" data-i18n="success.btn">Volver al inicio</button>
+                <h2 class="success-title" data-i18n="success.title" data-i18n-html="true">Mensaje canalizado<br>con éxito</h2>
+                <p class="success-subtitle" data-i18n="success.subtitle.divine">Tu mensaje ha sido elevado al divino</p>
+                <div class="success-proverb-container">
+                    <p id="success-proverb" class="success-proverb"></p>
+                </div>
+                <a href="#" id="link-download-sigil" style="display: none; color: var(--color-text-muted); text-decoration: underline; margin-bottom: 24px; font-size: 1.1rem; cursor: pointer;">Descargar Sigilo</a>
+                <button id="btn-success-home" class="btn btn-primary btn-outline" data-i18n="success.btn">Volver al inicio</button>
             </div>
         </div>
 
