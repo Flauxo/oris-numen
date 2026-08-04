@@ -427,6 +427,9 @@ const OrisApp = {
             if (evilInput) {
                 evilInput.value = '';
             }
+            if (typeof OrisAudio !== 'undefined') {
+                OrisAudio.stopEvilAmbient();
+            }
         });
     }
 

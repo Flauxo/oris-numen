@@ -561,14 +561,13 @@ const OrisAudio = {
     // --- 2. Initial Chorus Effect (One-shot) ---
     const duration = 4.0;
     const masterChorusGain = this.ctx.createGain();
-    // Start immediately at a higher volume
-    masterChorusGain.gain.setValueAtTime(0.4, t);
-    masterChorusGain.gain.linearRampToValueAtTime(0.8, t + 0.1);
+    // Attack of 0.8s
+    masterChorusGain.gain.setValueAtTime(0.001, t);
+    masterChorusGain.gain.linearRampToValueAtTime(0.8, t + 0.8);
     // Rise in volume (exponential)
-    masterChorusGain.gain.exponentialRampToValueAtTime(1.5, t + duration - 0.1);
-    // Abrupt end
-    masterChorusGain.gain.setValueAtTime(1.5, t + duration - 0.05);
-    masterChorusGain.gain.linearRampToValueAtTime(0.001, t + duration);
+    masterChorusGain.gain.exponentialRampToValueAtTime(1.5, t + duration);
+    // Fade out of 0.8s
+    masterChorusGain.gain.linearRampToValueAtTime(0.001, t + duration + 0.8);
     
     masterChorusGain.connect(this.masterGain);
     this.evilNodes.push(masterChorusGain);
@@ -607,7 +606,7 @@ const OrisAudio = {
             oscGain.connect(masterChorusGain);
             
             osc.start(t);
-            osc.stop(t + duration + 0.1);
+            osc.stop(t + duration + 0.9);
             this.evilNodes.push(osc, filter1, filter2, oscGain);
         }
     });
@@ -635,7 +634,7 @@ const OrisAudio = {
     noiseGain.connect(masterChorusGain);
     
     noiseSrc.start(t);
-    noiseSrc.stop(t + duration + 0.1);
+    noiseSrc.stop(t + duration + 0.9);
     
     this.evilNodes.push(noiseSrc, noiseFilter, noiseGain);
   },
