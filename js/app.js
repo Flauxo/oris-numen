@@ -1220,67 +1220,112 @@ const OrisApp = {
   downloadSigilImage(text, freq, isEvil, activeElementsSet) {
       try {
           const canvas = document.createElement('canvas');
-      canvas.width = 1080;
-      canvas.height = 1920; // Vertical format
-      const ctx = canvas.getContext('2d');
-      
-      // Background
-      ctx.fillStyle = isEvil ? '#050505' : '#E8E1D5'; // --color-bg-primary or evil
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Oris Numen Title
-      ctx.fillStyle = isEvil ? '#cc0000' : '#2A2A2A';
-      ctx.font = 'bold 80px "Playfair Display", serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('Oris Numen', canvas.width / 2, 200);
-      
-      // Draw Sigil
-      if (typeof SigilGenerator !== 'undefined') {
-          SigilGenerator.draw(ctx, canvas.width / 2, canvas.height / 2 - 100, 400, text, freq.color, isEvil);
-      }
-      
-      // Draw Metadata
-      ctx.font = 'normal 40px sans-serif';
-      ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
-      
-      let yPos = canvas.height - 400;
-      
-      const type = isEvil ? 'Plegaria Maligna' : 'Canalización Espiritual';
-      ctx.fillText(type, canvas.width / 2, yPos);
-      yPos += 60;
-      
-      ctx.font = 'bold 50px sans-serif';
-      ctx.fillStyle = freq.color;
-      ctx.fillText(`Frecuencia: ${freq.name} (${freq.hz || freq.audioHz} Hz)`, canvas.width / 2, yPos);
-      yPos += 80;
-      
-      ctx.font = 'normal 35px sans-serif';
-      ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
-      
-      // Translate elements
-      const elsToUse = activeElementsSet || this.activeElements;
-      const activeEls = Array.from(elsToUse).map(el => {
-          return Translations[this.currentLang][`element.${el}`] || el;
-      });
-      const elementsText = activeEls.join(', ') || (Translations[this.currentLang]['history.none'] || 'Ninguno');
-      ctx.fillText(`Elementos vinculados: ${elementsText}`, canvas.width / 2, yPos);
-      yPos += 60;
-      
-      const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
-      ctx.fillText(`Duración: ${timeStr}`, canvas.width / 2, yPos);
-      yPos += 60;
-      
-      const date = new Date().toLocaleDateString(this.currentLang);
-      ctx.fillText(`Fecha: ${date}`, canvas.width / 2, yPos);
-      yPos += 120;
-      
-      // Footer text
-      ctx.font = 'italic 30px "Playfair Display", serif';
-      ctx.fillText('Este Sigilo sagrado ha sido trazado a través de tu mensaje.', canvas.width / 2, yPos);
-      
-      // Trigger download
-      const fileName = `OrisNumen-Sigil-${date.replace(/\//g, '-')}.png`;
-      const dataUrl = canvas.toDataURL('image/png');
+          canvas.width = 1080;
+          canvas.height = 1920; // Vertical format
+          const ctx = canvas.getContext('2d');
+          
+          // Background
+          ctx.fillStyle = isEvil ? '#050505' : '#E8E1D5'; // --color-bg-primary or evil
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          
+          // Oris Numen Title
+          ctx.fillStyle = isEvil ? '#cc0000' : '#2A2A2A';
+          ctx.font = 'bold 130px "Playfair Display", serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('Oris Numen', canvas.width / 2, 220);
+          
+          // Draw Sigil (smaller)
+          if (typeof SigilGenerator !== 'undefined') {
+              SigilGenerator.draw(ctx, canvas.width / 2, canvas.height / 2 - 150, 320, text, freq.color, isEvil);
+          }
+          
+          let yPos = canvas.height - 520;
+          ctx.textAlign = 'center';
+
+          // Type of prayer (Plegaria, Perdón, Confesión, etc.)
+          const prayerType = (Translations[this.currentLang][`card.${this.currentFrequency}.desc`] || "Canalización Espiritual").toUpperCase();
+          ctx.font = 'normal 40px sans-serif';
+          ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
+          ctx.fillText(prayerType, canvas.width / 2, yPos);
+          yPos += 70;
+
+          // Frequency
+          ctx.font = 'bold 60px sans-serif';
+          ctx.fillStyle = freq.color;
+          ctx.fillText(`${freq.name} (${freq.hz || freq.audioHz} Hz)`, canvas.width / 2, yPos);
+          yPos += 90;
+
+          // Elements with colors
+          const elsToUse = activeElementsSet || this.activeElements;
+          if (elsToUse.size > 0) {
+              ctx.font = 'bold 35px sans-serif';
+              const elementColors = {
+                  'aire': '#5CE1E6',
+                  'agua': '#0057FF',
+                  'fuego': '#FF3131',
+                  'tierra': '#7ED957'
+              };
+              const elsArray = Array.from(elsToUse);
+              let totalWidth = 0;
+              const parts = [];
+              for (const el of elsArray) {
+                  const elText = (Translations[this.currentLang][`element.${el}`] || el).toUpperCase();
+                  const w = ctx.measureText(elText + "    ").width;
+                  parts.push({ text: elText, color: elementColors[el] || '#666', width: w });
+                  totalWidth += w;
+              }
+              let currentX = canvas.width / 2 - totalWidth / 2;
+              ctx.textAlign = 'left';
+              for (const p of parts) {
+                  ctx.fillStyle = p.color;
+                  ctx.fillText(p.text, currentX, yPos);
+                  currentX += p.width;
+              }
+              ctx.textAlign = 'center';
+          } else {
+              ctx.font = 'bold 35px sans-serif';
+              ctx.fillStyle = '#6A6A6A';
+              const noneText = (Translations[this.currentLang]['history.none'] || 'Ninguno').toUpperCase();
+              ctx.fillText(noneText, canvas.width / 2, yPos);
+          }
+          yPos += 80;
+
+          // Duration & Date
+          ctx.font = 'normal 35px sans-serif';
+          ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
+          const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
+          const dateStr = new Date().toLocaleDateString(this.currentLang);
+          ctx.fillText(`${timeStr}   •   ${dateStr}`, canvas.width / 2, yPos);
+          yPos += 100;
+
+          // Explanatory Text with word wrapping
+          ctx.font = 'italic 28px "Playfair Display", serif';
+          ctx.fillStyle = isEvil ? '#550000' : '#5A5A5A';
+          const explText = Translations[this.currentLang]['success.sigil_explanation'] || "Your prayer has been converted into a numeric seed...";
+          
+          const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
+              const words = text.split(' ');
+              let line = '';
+              for(let n = 0; n < words.length; n++) {
+                  let testLine = line + words[n] + ' ';
+                  let metrics = context.measureText(testLine);
+                  let testWidth = metrics.width;
+                  if (testWidth > maxWidth && n > 0) {
+                      context.fillText(line, x, y);
+                      line = words[n] + ' ';
+                      y += lineHeight;
+                  } else {
+                      line = testLine;
+                  }
+              }
+              context.fillText(line, x, y);
+          };
+          wrapText(ctx, explText, canvas.width / 2, yPos, 850, 40);
+          
+          // Trigger download
+          const date = new Date().toLocaleDateString('en-CA');
+          const fileName = `OrisNumen-Sigil-${date.replace(/\//g, '-')}.png`;
+          const dataUrl = canvas.toDataURL('image/png');
       
       if (window.AndroidInterface && window.AndroidInterface.saveImageBase64) {
           window.AndroidInterface.saveImageBase64(dataUrl, fileName);
