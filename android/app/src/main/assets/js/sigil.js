@@ -45,12 +45,14 @@ class SigilGenerator {
         const symmetry = symmetries[Math.floor(random() * symmetries.length)];
         
         // Number of layers/rings of geometry
-        const layers = 5 + Math.floor(random() * 6); 
+        const layers = 7 + Math.floor(random() * 8); 
 
         for (let l = 0; l < layers; l++) {
             const layerRadius = radius * (0.2 + (0.8 * random()));
             const shapeType = Math.floor(random() * 5);
-            const lineWidth = 3 + random() * 4;
+            // Mix thick and thin lines
+            const isThin = random() > 0.5;
+            const lineWidth = isThin ? (1 + random() * 2) : (4 + random() * 4);
             
             ctx.lineWidth = lineWidth;
             

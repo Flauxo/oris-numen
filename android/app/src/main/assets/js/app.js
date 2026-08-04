@@ -830,7 +830,8 @@ const OrisApp = {
    */
   onTimerComplete() {
     this.saveToHistory();
-    const activeElementsCopy = new Set(this.activeElements);
+    const activeElementsArray = Array.from(document.querySelectorAll('.element-btn.active')).map(btn => btn.getAttribute('data-element'));
+    const activeElementsCopy = new Set(activeElementsArray);
 
     ChannelTimer.clearState();
     OrisAudio.stopFrequencyPad();
@@ -1225,7 +1226,7 @@ const OrisApp = {
           const ctx = canvas.getContext('2d');
           
           // Background
-          ctx.fillStyle = isEvil ? '#050505' : '#E8E1D5'; // --color-bg-primary or evil
+          ctx.fillStyle = isEvil ? '#050505' : '#F4EEE6'; // Lighter beige
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           
           // Oris Numen Title
@@ -1235,10 +1236,10 @@ const OrisApp = {
           ctx.fillText('Oris Numen', canvas.width / 2, 190);
           
           // Subtitle
-          ctx.font = '400 45px "Inter", sans-serif';
+          ctx.font = '400 35px "Inter", sans-serif';
           ctx.fillStyle = isEvil ? '#990000' : '#777777';
           const homeSubtitle = Translations[this.currentLang]['home.subtitle'] || "Canaliza tu mensaje al divino";
-          ctx.fillText(homeSubtitle.toUpperCase(), canvas.width / 2, 260);
+          ctx.fillText(homeSubtitle.toUpperCase(), canvas.width / 2, 255);
           
           // Draw Sigil
           if (typeof SigilGenerator !== 'undefined') {
@@ -1341,7 +1342,7 @@ const OrisApp = {
           yPos += 70;
 
           // Explanatory Text with word wrapping
-          ctx.font = 'italic 42px "Cormorant Garamond", serif';
+          ctx.font = 'italic 48px "Cormorant Garamond", serif';
           ctx.fillStyle = isEvil ? '#550000' : '#333333';
           const explText = Translations[this.currentLang]['success.sigil_explanation'] || "Your prayer has been converted into a numeric seed...";
           
@@ -1362,7 +1363,7 @@ const OrisApp = {
               }
               context.fillText(line, x, y);
           };
-          wrapText(ctx, explText, canvas.width / 2, yPos, 900, 52);
+          wrapText(ctx, explText, canvas.width / 2, yPos, 940, 58);
           
           // Trigger download
           const date = new Date().toLocaleDateString('en-CA');
