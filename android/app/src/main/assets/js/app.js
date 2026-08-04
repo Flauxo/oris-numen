@@ -427,6 +427,9 @@ const OrisApp = {
             if (evilInput) {
                 evilInput.value = '';
             }
+            if (typeof OrisAudio !== 'undefined') {
+                OrisAudio.stopEvilAmbient();
+            }
         });
     }
 
@@ -1023,7 +1026,8 @@ const OrisApp = {
       if (evilOverlay) {
           evilOverlay.classList.add('active');
       }
-      document.body.classList.add('evil-mode');
+      // The body background transition to evil mode is delayed until channelEvilMode
+      
       
       try {
           OrisAudio.playEvilAmbient();
@@ -1036,6 +1040,20 @@ const OrisApp = {
    * Channel evil mode
    */
   channelEvilMode() {
+      // Set the body to evil mode now, hidden under the opaque black overlay
+      document.body.classList.add('evil-mode');
+
+      // Hide home screen instantly to avoid seeing it during the fade
+      const homeScreen = document.getElementById('home-screen');
+      if (homeScreen) {
+          homeScreen.style.transition = 'none';
+          homeScreen.style.opacity = '0';
+          setTimeout(() => {
+              homeScreen.style.transition = '';
+              homeScreen.style.opacity = '';
+          }, 1000);
+      }
+
       const evilOverlay = document.getElementById('evil-overlay');
       if (evilOverlay) {
           evilOverlay.classList.remove('active');

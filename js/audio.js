@@ -641,6 +641,62 @@ const OrisAudio = {
     
     this.evilNodes.push(noiseSrc, noiseFilter, noiseGain);
   },
+  playGlitchAudio(durationSeconds = 2.0) {
+      if (!this.ctx) return;
+      const t = this.ctx.currentTime;
+      
+      const glitchNodes = [];
+      
+      const masterGlitchGain = this.ctx.createGain();
+      masterGlitchGain.gain.value = 0.5;
+      masterGlitchGain.connect(this.masterGain);
+      
+      // We create a buffer of random noise
+      const bufferSize = this.ctx.sampleRate * durationSeconds;
+      const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+          // sporadic digital clips
+          if (Math.random() > 0.95) {
+              output[i] = Math.random() * 2 - 1;
+          } else {
+              output[i] = 0;
+          }
+      }
+      
+      const noiseSrc = this.ctx.createBufferSource();
+      noiseSrc.buffer = noiseBuffer;
+      
+      // Bandpass it to make it sound sharp/digital
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'highpass';
+      filter.frequency.value = 2000;
+      
+      noiseSrc.connect(filter);
+      filter.connect(masterGlitchGain);
+      
+      noiseSrc.start(t);
+      noiseSrc.stop(t + durationSeconds);
+      
+      // Also a few rapid low-freq oscillator "blips"
+      for(let i=0; i<8; i++) {
+          const osc = this.ctx.createOscillator();
+          osc.type = 'square';
+          osc.frequency.value = 100 + Math.random() * 400;
+          
+          const oscGain = this.ctx.createGain();
+          oscGain.gain.value = 0.3;
+          
+          osc.connect(oscGain);
+          oscGain.connect(masterGlitchGain);
+          
+          const startDelay = Math.random() * (durationSeconds - 0.1);
+          const blipDuration = 0.05 + Math.random() * 0.1;
+          
+          osc.start(t + startDelay);
+          osc.stop(t + startDelay + blipDuration);
+      }
+  },
 
   stopEvilAmbient() {
       if (!this.evilNodes || !this.ctx) return;
