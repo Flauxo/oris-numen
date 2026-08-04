@@ -1307,15 +1307,15 @@ const OrisApp = {
           // Subtitle
           ctx.font = '400 35px "Inter", sans-serif';
           ctx.fillStyle = isEvil ? '#990000' : '#777777';
-          const homeSubtitle = Translations[this.currentLang]['home.subtitle'] || "Canaliza tu mensaje al divino";
-          ctx.fillText(homeSubtitle, canvas.width / 2, 300);
+          const canvasSubtitle = Translations[this.currentLang]['success.share_channeling'] || "Comparte tu canalización";
+          ctx.fillText(canvasSubtitle, canvas.width / 2, 300);
           
           // Draw Sigil
           if (typeof SigilGenerator !== 'undefined') {
-              SigilGenerator.draw(ctx, canvas.width / 2, 720, 300, text, freq.color, isEvil);
+              SigilGenerator.draw(ctx, canvas.width / 2, 670, 300, text, freq.color, isEvil);
           }
           
-          let yPos = 1140;
+          let yPos = 1040;
           ctx.textAlign = 'center';
 
           // Type of prayer (Plegaria, Perdón, Confesión, etc.)
