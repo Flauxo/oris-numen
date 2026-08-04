@@ -1408,10 +1408,12 @@ const OrisApp = {
           ctx.moveTo(canvas.width / 2 - 400, yPos);
           ctx.lineTo(canvas.width / 2 + 400, yPos);
           ctx.stroke();
-          yPos += 65;
+          
+          // Gap below line needs to account for font height because text is drawn from bottom up
+          yPos += 120;
 
           // Explanatory Text with justified word wrapping
-          ctx.font = 'italic 46px "Cormorant Garamond", serif';
+          ctx.font = 'italic 50px "Cormorant Garamond", serif';
           ctx.fillStyle = isEvil ? '#550000' : '#333333';
           const explText = Translations[this.currentLang]['success.sigil_explanation'] || "Your prayer has been converted into a numeric seed...";
           
@@ -1461,7 +1463,7 @@ const OrisApp = {
               }
               context.textAlign = 'center'; // restore
           };
-          wrapTextJustified(ctx, explText, canvas.width / 2 - 425, yPos, 850, 56);
+          wrapTextJustified(ctx, explText, canvas.width / 2 - 425, yPos, 850, 60);
           
           // Trigger download
           const date = new Date().toLocaleDateString('en-CA');

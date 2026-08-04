@@ -1420,44 +1420,75 @@ const OrisApp = {
           const wrapTextJustified = (context, text, x, y, maxWidth, lineHeight) => {
               context.textAlign = 'left';
               const paragraphs = text.split('\n');
+              const regularFont = 'italic 50px "Cormorant Garamond", serif';
+              const boldFont = 'bold italic 50px "Cormorant Garamond", serif';
               
               for (const p of paragraphs) {
                   if (p.trim() === '') {
                       y += lineHeight;
                       continue;
                   }
-                  const words = p.split(' ');
+                  
+                  // Parse bold tags **word**
+                  let rawParts = p.split(/(\*\*.*?\*\*)/g);
+                  let wordList = [];
+                  
+                  for (let part of rawParts) {
+                      if (!part) continue;
+                      let isBold = false;
+                      if (part.startsWith('**') && part.endsWith('**')) {
+                          isBold = true;
+                          part = part.substring(2, part.length - 2);
+                      }
+                      
+                      let subwords = part.split(' ');
+                      for (let i = 0; i < subwords.length; i++) {
+                          if (subwords[i] !== '') {
+                              wordList.push({ text: subwords[i], bold: isBold });
+                          }
+                      }
+                  }
+                  
                   let lineWords = [];
                   let currentLineWidth = 0;
+                  context.font = regularFont;
                   const spaceWidth = context.measureText(' ').width;
                   
-                  for (let n = 0; n < words.length; n++) {
-                      let word = words[n];
-                      let wordWidth = context.measureText(word).width;
+                  for (let n = 0; n < wordList.length; n++) {
+                      let wObj = wordList[n];
+                      context.font = wObj.bold ? boldFont : regularFont;
+                      let wordWidth = context.measureText(wObj.text).width;
                       
                       if (lineWords.length > 0 && currentLineWidth + spaceWidth + wordWidth > maxWidth) {
-                          let totalWordWidth = lineWords.reduce((sum, w) => sum + context.measureText(w).width, 0);
+                          let totalWordWidth = 0;
+                          for (let lw of lineWords) {
+                              context.font = lw.bold ? boldFont : regularFont;
+                              totalWordWidth += context.measureText(lw.text).width;
+                          }
+                          
                           let spaceBetween = lineWords.length > 1 ? (maxWidth - totalWordWidth) / (lineWords.length - 1) : 0;
                           
                           let currentX = x;
                           for (let i = 0; i < lineWords.length; i++) {
-                              context.fillText(lineWords[i], currentX, y);
-                              currentX += context.measureText(lineWords[i]).width + spaceBetween;
+                              context.font = lineWords[i].bold ? boldFont : regularFont;
+                              context.fillText(lineWords[i].text, currentX, y);
+                              currentX += context.measureText(lineWords[i].text).width + spaceBetween;
                           }
                           
-                          lineWords = [word];
+                          lineWords = [wObj];
                           currentLineWidth = wordWidth;
                           y += lineHeight;
                       } else {
-                          lineWords.push(word);
+                          lineWords.push(wObj);
                           currentLineWidth += (lineWords.length === 1 ? 0 : spaceWidth) + wordWidth;
                       }
                   }
                   
                   let currentX = x;
                   for (let i = 0; i < lineWords.length; i++) {
-                      context.fillText(lineWords[i], currentX, y);
-                      currentX += context.measureText(lineWords[i]).width + spaceWidth;
+                      context.font = lineWords[i].bold ? boldFont : regularFont;
+                      context.fillText(lineWords[i].text, currentX, y);
+                      currentX += context.measureText(lineWords[i].text).width + spaceWidth;
                   }
                   y += lineHeight;
               }
