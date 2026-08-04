@@ -1355,8 +1355,14 @@ const OrisApp = {
               
               for (let i = 0; i < elsArray.length; i++) {
                   const el = elsArray[i];
-                  let elText = (Translations[this.currentLang][`element.${el}`] || el).toLowerCase();
-                  if (i < elsArray.length - 1) elText += " y ";
+                  let elText = (Translations[this.currentLang][`elements.${el}`] || el).toLowerCase();
+                  if (i < elsArray.length - 1) {
+                      let andStr = " y ";
+                      if (this.currentLang === 'en') andStr = " and ";
+                      if (this.currentLang === 'it') andStr = " e ";
+                      if (this.currentLang === 'la') andStr = " et ";
+                      elText += andStr;
+                  }
                   const w = ctx.measureText(elText).width;
                   parts.push({ text: elText, color: elementColors[el] || '#666', width: w });
                   totalWidth += w;

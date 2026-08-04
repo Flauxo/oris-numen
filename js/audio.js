@@ -212,11 +212,34 @@ const OrisAudio = {
     
     tremoloGain.connect(padGain);
 
+    let pan1 = this.ctx.createGain();
+    let pan2 = this.ctx.createGain();
+    let pan3 = this.ctx.createGain();
+    let panLfo;
+    
+    if (this.ctx.createStereoPanner) {
+        pan1 = this.ctx.createStereoPanner();
+        pan2 = this.ctx.createStereoPanner();
+        pan3 = this.ctx.createStereoPanner();
+        
+        if (frequencyHz !== 666) {
+            pan1.pan.value = -1; // Hard Left
+            pan3.pan.value = 1;  // Hard Right
+            
+            panLfo = this.ctx.createOscillator();
+            panLfo.type = 'sine';
+            panLfo.frequency.value = 0.08; // slow 3D sweep for the octave
+            panLfo.connect(pan2.pan);
+            panLfo.start(t);
+        }
+    }
+
     // 1. Main sine
     const osc1 = this.ctx.createOscillator();
     osc1.type = 'sine';
     osc1.frequency.value = frequencyHz;
-    osc1.connect(tremoloGain);
+    osc1.connect(pan1);
+    pan1.connect(tremoloGain);
     osc1.start(t);
 
     // 2. Octave triangle (quiet)
@@ -226,22 +249,28 @@ const OrisAudio = {
     const gain2 = this.ctx.createGain();
     gain2.gain.value = frequencyHz < 100 ? 0.8 : 0.05; // Massive boost harmonic for low freq
     osc2.connect(gain2);
-    gain2.connect(tremoloGain);
+    gain2.connect(pan2);
+    pan2.connect(tremoloGain);
     osc2.start(t);
 
-    // 3. Detuned sine for chorus width
+    // 3. Detuned sine for chorus width / binaural beat
     const osc3 = this.ctx.createOscillator();
     osc3.type = 'sine';
-    osc3.frequency.value = frequencyHz + 2;
+    // Use 4Hz detune for a theta binaural beat if not Pazuzu
+    osc3.frequency.value = frequencyHz !== 666 ? frequencyHz + 4 : frequencyHz + 2;
     const gain3 = this.ctx.createGain();
     gain3.gain.value = 0.5;
     osc3.connect(gain3);
-    gain3.connect(tremoloGain);
+    gain3.connect(pan3);
+    pan3.connect(tremoloGain);
     osc3.start(t);
 
     this.padOscillators = [
       { osc: osc1 }, { osc: osc2 }, { osc: osc3 }, { osc: lfo }
     ];
+    if (panLfo) {
+      this.padOscillators.push({ osc: panLfo });
+    }
 
     // Extra harmonic for very low bass translation on mobile speakers
     if (frequencyHz < 100) {
