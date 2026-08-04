@@ -54,6 +54,7 @@ const Translations = {
         "success.subtitle.divine": "Your message has been elevated to the divine",
         "success.subtitle.evil": "Your message has been elevated to the evil one",
         "btn.home": "Back to start",
+        "success.download_sigil": "Download Sigil",
         
         "write.confirm": "Confirm",
         
@@ -198,6 +199,7 @@ const Translations = {
         "success.subtitle.divine": "Tu mensaje ha sido elevado al divino",
         "success.subtitle.evil": "Tu mensaje ha sido elevado al maligno",
         "btn.home": "Volver al inicio",
+        "success.download_sigil": "Descargar Sigilo",
         
         "write.confirm": "Confirmar",
         
@@ -342,6 +344,7 @@ const Translations = {
         "success.subtitle.divine": "Il tuo messaggio è stato elevato al divino",
         "success.subtitle.evil": "Il tuo messaggio è stato elevato al maligno",
         "btn.home": "Torna all'inizio",
+        "success.download_sigil": "Scarica Sigillo",
         
         "write.confirm": "Conferma",
         
@@ -482,6 +485,7 @@ const Translations = {
         "success.subtitle.divine": "Nuntius tuus ad divinum evectus est",
         "success.subtitle.evil": "Nuntius tuus ad malignum evectus est",
         "btn.home": "Redi ad initium",
+        "success.download_sigil": "Sigillum Excute",
         
         "write.confirm": "Confirma",
         

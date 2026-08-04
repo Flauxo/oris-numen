@@ -830,6 +830,7 @@ const OrisApp = {
    */
   onTimerComplete() {
     this.saveToHistory();
+    const activeElementsCopy = new Set(this.activeElements);
 
     ChannelTimer.clearState();
     OrisAudio.stopFrequencyPad();
@@ -889,7 +890,7 @@ const OrisApp = {
               linkDownload.style.display = 'block';
               linkDownload.onclick = (e) => {
                   e.preventDefault();
-                  this.downloadSigilImage(text, freq, isEvil);
+                  this.downloadSigilImage(text, freq, isEvil, activeElementsCopy);
               };
           }
       } else {
@@ -1216,8 +1217,9 @@ const OrisApp = {
       }
   },
 
-  downloadSigilImage(text, freq, isEvil) {
-      const canvas = document.createElement('canvas');
+  downloadSigilImage(text, freq, isEvil, activeElementsSet) {
+      try {
+          const canvas = document.createElement('canvas');
       canvas.width = 1080;
       canvas.height = 1920; // Vertical format
       const ctx = canvas.getContext('2d');
@@ -1256,7 +1258,8 @@ const OrisApp = {
       ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
       
       // Translate elements
-      const activeEls = Array.from(this.activeElements).map(el => {
+      const elsToUse = activeElementsSet || this.activeElements;
+      const activeEls = Array.from(elsToUse).map(el => {
           return Translations[this.currentLang][`element.${el}`] || el;
       });
       const elementsText = activeEls.join(', ') || (Translations[this.currentLang]['history.none'] || 'Ninguno');
@@ -1286,6 +1289,9 @@ const OrisApp = {
           link.download = fileName;
           link.href = dataUrl;
           link.click();
+      }
+      } catch (err) {
+          console.error("Error generating sigil: ", err);
       }
   },
 
