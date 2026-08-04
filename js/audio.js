@@ -482,97 +482,97 @@ const OrisAudio = {
     this.stopEvilAmbient();
 
     const t = this.ctx.currentTime;
+    const duration = 4.0; // 4 seconds total
     
-    // Create minor chord
     this.evilNodes = [];
-    const frequencies = [65.41, 77.78, 98.00]; // C2, Eb2, G2 (C minor chord)
     
-    // Master evil gain
-    const masterEvilGain = this.ctx.createGain();
-    masterEvilGain.gain.setValueAtTime(0, t);
-    masterEvilGain.gain.linearRampToValueAtTime(0.6, t + 2);
-    masterEvilGain.connect(this.masterGain);
-    this.evilNodes.push(masterEvilGain);
+    // Master gain for the chorus effect
+    const masterChorusGain = this.ctx.createGain();
+    masterChorusGain.gain.setValueAtTime(0.001, t);
+    
+    // Rise in volume (exponential rise creates a more dramatic build-up)
+    masterChorusGain.gain.exponentialRampToValueAtTime(1.2, t + duration - 0.1);
+    
+    // Abrupt end
+    masterChorusGain.gain.setValueAtTime(1.2, t + duration - 0.05);
+    masterChorusGain.gain.linearRampToValueAtTime(0.001, t + duration);
+    
+    masterChorusGain.connect(this.masterGain);
+    this.evilNodes.push(masterChorusGain);
 
-    // Descent to hell effect
-    const descentOsc = this.ctx.createOscillator();
-    descentOsc.type = 'sawtooth';
-    descentOsc.frequency.setValueAtTime(400, t);
-    descentOsc.frequency.exponentialRampToValueAtTime(30, t + 2);
+    // C minor chord frequencies (deep)
+    const chord = [65.41, 77.78, 98.00]; // C2, Eb2, G2
     
-    const descentGain = this.ctx.createGain();
-    descentGain.gain.setValueAtTime(0, t);
-    descentGain.gain.linearRampToValueAtTime(0.5, t + 0.1);
-    descentGain.gain.exponentialRampToValueAtTime(0.01, t + 2);
-    
-    descentOsc.connect(descentGain);
-    descentGain.connect(this.masterGain);
-    descentOsc.start(t);
-    descentOsc.stop(t + 2);
-    
-    this.evilNodes.push(descentOsc, descentGain);
+    // Formant frequencies for a deep, dark 'O' / 'A'
+    const f1 = 450;
+    const f2 = 850;
 
-    // Drones
-    frequencies.forEach(freq => {
-        const osc = this.ctx.createOscillator();
-        osc.type = 'sawtooth';
-        osc.frequency.value = freq;
-        
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = freq * 3;
-        
-        // Slow LFO for filter
-        const lfo = this.ctx.createOscillator();
-        lfo.type = 'sine';
-        lfo.frequency.value = 0.1 + Math.random() * 0.2;
-        const lfoGain = this.ctx.createGain();
-        lfoGain.gain.value = freq;
-        
-        lfo.connect(lfoGain);
-        lfoGain.connect(filter.frequency);
-        
-        const gain = this.ctx.createGain();
-        gain.gain.value = 0.2;
-        
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(masterEvilGain);
-        
-        osc.start(t);
-        lfo.start(t);
-        
-        this.evilNodes.push(osc, lfo, gain, filter, lfoGain);
+    // Create the chorus
+    chord.forEach(freq => {
+        // 3 oscillators per note for chorus effect
+        for (let i = 0; i < 3; i++) {
+            const osc = this.ctx.createOscillator();
+            osc.type = 'sawtooth';
+            // Detune each slightly (-15, 0, +15 cents)
+            osc.detune.value = (i - 1) * 15;
+            osc.frequency.value = freq;
+            
+            // Formant filter (bandpass)
+            const filter1 = this.ctx.createBiquadFilter();
+            filter1.type = 'bandpass';
+            filter1.frequency.value = f1;
+            filter1.Q.value = 5;
+            
+            const filter2 = this.ctx.createBiquadFilter();
+            filter2.type = 'bandpass';
+            filter2.frequency.value = f2;
+            filter2.Q.value = 5;
+            
+            osc.connect(filter1);
+            osc.connect(filter2);
+            
+            // Gain to balance the oscillators
+            const oscGain = this.ctx.createGain();
+            oscGain.gain.value = 0.6;
+            
+            filter1.connect(oscGain);
+            filter2.connect(oscGain);
+            
+            oscGain.connect(masterChorusGain);
+            
+            osc.start(t);
+            osc.stop(t + duration + 0.1);
+            this.evilNodes.push(osc, filter1, filter2, oscGain);
+        }
     });
 
-    // Fire crackling (filtered noise)
-    const bufferSize = this.ctx.sampleRate * 5; // 5 second loop
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-    const data = buffer.getChannelData(0);
+    // Add aspirated noise (breath)
+    const bufferSize = this.ctx.sampleRate * (duration + 0.5);
+    const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
-        // Sporadic spikes for crackling
-        data[i] = Math.random() > 0.99 ? (Math.random() * 2 - 1) * 2 : 0;
-        // Background rumble
-        data[i] += (Math.random() * 2 - 1) * 0.1;
+        output[i] = Math.random() * 2 - 1;
     }
+    const noiseSrc = this.ctx.createBufferSource();
+    noiseSrc.buffer = noiseBuffer;
     
-    const fireNoise = this.ctx.createBufferSource();
-    fireNoise.buffer = buffer;
-    fireNoise.loop = true;
+    // Filter noise to sound like breath in the chord
+    const noiseFilter = this.ctx.createBiquadFilter();
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.value = 600; 
+    noiseFilter.Q.value = 1.5;
     
-    const fireFilter = this.ctx.createBiquadFilter();
-    fireFilter.type = 'lowpass';
-    fireFilter.frequency.value = 800;
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.value = 1.0; // mix level for the breath
     
-    const fireGain = this.ctx.createGain();
-    fireGain.gain.value = 0.4;
+    noiseSrc.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(masterChorusGain);
     
-    fireNoise.connect(fireFilter);
-    fireFilter.connect(fireGain);
-    fireGain.connect(masterEvilGain);
+    noiseSrc.start(t);
+    noiseSrc.stop(t + duration + 0.1);
     
-    fireNoise.start(t);
-    this.evilNodes.push(fireNoise, fireFilter, fireGain);
+    this.evilNodes.push(noiseSrc, noiseFilter, noiseGain);
   },
 
   stopEvilAmbient() {
