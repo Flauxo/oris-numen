@@ -22,7 +22,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import android.util.Base64;
 import android.widget.Toast;
-
+import android.content.ContentValues;
+import android.provider.MediaStore;
+import java.io.OutputStream;
 public class MainActivity extends Activity {
     private WebView webView;
 
@@ -76,12 +78,34 @@ public class MainActivity extends Activity {
                 try {
                     String pureBase64 = base64Data.substring(base64Data.indexOf(",") + 1);
                     byte[] decodedBytes = Base64.decode(pureBase64, Base64.DEFAULT);
-                    File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                    File file = new File(downloadsDir, filename);
-                    FileOutputStream os = new FileOutputStream(file);
-                    os.write(decodedBytes);
-                    os.close();
-                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Guardado en Descargas: " + filename, Toast.LENGTH_LONG).show());
+                    
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        ContentValues values = new ContentValues();
+                        values.put(MediaStore.Images.Media.DISPLAY_NAME, filename);
+                        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+                        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/OrisNumen");
+                        
+                        Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                        if (uri != null) {
+                            OutputStream os = getContentResolver().openOutputStream(uri);
+                            os.write(decodedBytes);
+                            os.close();
+                            runOnUiThread(() -> Toast.makeText(MainActivity.this, "Sigilo guardado en Galería (Pictures/OrisNumen)", Toast.LENGTH_LONG).show());
+                        }
+                    } else {
+                        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OrisNumen");
+                        if (!dir.exists()) dir.mkdirs();
+                        File file = new File(dir, filename);
+                        FileOutputStream os = new FileOutputStream(file);
+                        os.write(decodedBytes);
+                        os.close();
+                        
+                        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                        mediaScanIntent.setData(Uri.fromFile(file));
+                        sendBroadcast(mediaScanIntent);
+                        
+                        runOnUiThread(() -> Toast.makeText(MainActivity.this, "Sigilo guardado en Galería", Toast.LENGTH_LONG).show());
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     runOnUiThread(() -> Toast.makeText(MainActivity.this, "Error al guardar imagen", Toast.LENGTH_SHORT).show());

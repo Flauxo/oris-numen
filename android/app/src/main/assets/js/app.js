@@ -848,7 +848,30 @@ const OrisApp = {
       const freq = this.FREQUENCIES[freqId];
       const isEvil = freqId === 'pazuzu';
 
-      // Sigil Generation
+      // Color the success icon with the frequency color
+      const successIcon = document.querySelector('.success-icon');
+      const crossInner = document.querySelector('.cross-inner');
+      if (freq && successIcon && crossInner) {
+        successIcon.style.color = freq.color;
+        
+        // Ensure pulse-glow is active
+        successIcon.classList.add('pulse-glow');
+        
+        // Reset rotation state immediately
+        crossInner.style.transition = 'none';
+        crossInner.style.transform = 'rotate(0deg)';
+        void crossInner.offsetWidth; // Force reflow
+
+        if (isEvil) {
+            // Apply slow motion rotation after 1 second
+            setTimeout(() => {
+                crossInner.style.transition = 'transform 2s ease-in-out';
+                crossInner.style.transform = 'rotate(180deg)';
+            }, 1000);
+        }
+      }
+
+      // Sigil Download Link
       let text = '';
       if (isEvil) {
           const evilInput = document.getElementById('evil-input');
@@ -858,48 +881,19 @@ const OrisApp = {
           text = msgInput ? msgInput.value : '';
       }
 
-      const sigilCanvas = document.getElementById('sigil-canvas');
-      const successIcon = document.getElementById('success-icon');
-      const btnDownload = document.getElementById('btn-download-sigil');
+      const linkDownload = document.getElementById('link-download-sigil');
 
-      // Do not show Sigil in Evil Mode
+      // Do not show Sigil link in Evil Mode
       if (!isEvil && text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
-          if (sigilCanvas && btnDownload) {
-              sigilCanvas.style.display = 'block';
-              btnDownload.style.display = 'inline-flex';
-              if (successIcon) successIcon.style.display = 'none';
-
-              const ctx = sigilCanvas.getContext('2d');
-              ctx.clearRect(0, 0, sigilCanvas.width, sigilCanvas.height);
-              SigilGenerator.draw(ctx, sigilCanvas.width/2, sigilCanvas.height/2, sigilCanvas.width*0.45, text, freq.color, isEvil);
-
-              // Setup download button
-              btnDownload.onclick = () => {
+          if (linkDownload) {
+              linkDownload.style.display = 'block';
+              linkDownload.onclick = (e) => {
+                  e.preventDefault();
                   this.downloadSigilImage(text, freq, isEvil);
               };
           }
       } else {
-          // Fallback to normal icon if no text
-          if (sigilCanvas) sigilCanvas.style.display = 'none';
-          if (btnDownload) btnDownload.style.display = 'none';
-          if (successIcon) successIcon.style.display = 'flex';
-          
-          const crossInner = document.querySelector('.cross-inner');
-          if (freq && successIcon && crossInner) {
-            successIcon.style.color = freq.color;
-            successIcon.classList.add('pulse-glow');
-            
-            crossInner.style.transition = 'none';
-            crossInner.style.transform = 'rotate(0deg)';
-            void crossInner.offsetWidth;
-
-            if (isEvil) {
-                setTimeout(() => {
-                    crossInner.style.transition = 'transform 2s ease-in-out';
-                    crossInner.style.transform = 'rotate(180deg)';
-                }, 1000);
-            }
-          }
+          if (linkDownload) linkDownload.style.display = 'none';
       }
       
       // Set random proverb

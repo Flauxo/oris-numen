@@ -677,25 +677,6 @@ const OrisAudio = {
       
       noiseSrc.start(t);
       noiseSrc.stop(t + durationSeconds);
-      
-      // Also a few rapid low-freq oscillator "blips"
-      for(let i=0; i<8; i++) {
-          const osc = this.ctx.createOscillator();
-          osc.type = 'square';
-          osc.frequency.value = 100 + Math.random() * 400;
-          
-          const oscGain = this.ctx.createGain();
-          oscGain.gain.value = 0.3;
-          
-          osc.connect(oscGain);
-          oscGain.connect(masterGlitchGain);
-          
-          const startDelay = Math.random() * (durationSeconds - 0.1);
-          const blipDuration = 0.05 + Math.random() * 0.1;
-          
-          osc.start(t + startDelay);
-          osc.stop(t + startDelay + blipDuration);
-      }
   },
 
   stopEvilAmbient() {
