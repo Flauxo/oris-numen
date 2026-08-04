@@ -1322,7 +1322,7 @@ body.evil-mode .home-logo-circle {
     background-color: #000000;
     z-index: 100;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.1s ease;
 }
 
 .evil-overlay.active .evil-backdrop {

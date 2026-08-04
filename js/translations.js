@@ -92,6 +92,7 @@ const Translations = {
         "evil.subtitle": "(use at your own risk).",
         "evil.placeholder": "Write your message here...",
         "btn.evil": "Channel",
+        "evil.return": "Get out of here, return to the light",
         
         "word.frequency": "Frequency",
         "freq.format": "{name} Frequency",
@@ -235,6 +236,7 @@ const Translations = {
         "evil.subtitle": "(úsala bajo tu propia responsabilidad).",
         "evil.placeholder": "Escribe tu mensaje aquí...",
         "btn.evil": "Canalizar",
+        "evil.return": "Sal de aquí, vuelve a la luz",
 
         "word.frequency": "Frecuencia",
         "freq.format": "Frecuencia {name}",
@@ -378,6 +380,7 @@ const Translations = {
         "evil.subtitle": "(usala a tuo rischio e pericolo).",
         "evil.placeholder": "Scrivi il tuo messaggio qui...",
         "btn.evil": "Canalizza",
+        "evil.return": "Esci da qui, torna alla luce",
 
         "word.frequency": "Frequenza",
         "freq.format": "Frequenza {name}",
@@ -517,6 +520,7 @@ const Translations = {
         "evil.subtitle": "(utere periculo tuo).",
         "evil.placeholder": "Scribe nuntium tuum hic...",
         "btn.evil": "Transmitte",
+        "evil.return": "Exi hinc, redi ad lucem",
 
         "word.frequency": "Frequentia",
         "freq.format": "Frequentia {name}",

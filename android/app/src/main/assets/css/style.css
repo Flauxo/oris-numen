@@ -1,6 +1,6 @@
 :root {
     /* Colors */
-    --color-bg-primary: #F2E8DC;
+    --color-bg-primary: #F8EFE4;
     --color-bg-card: #FAFAF5;
     --color-text-dark: #2C2C28;
     --color-text-muted: #7A7A72;
@@ -1319,7 +1319,7 @@ body.evil-mode .home-logo-circle {
 .evil-backdrop {
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: #000000;
     z-index: 100;
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -1350,6 +1350,7 @@ body.evil-mode .home-logo-circle {
 .evil-overlay.active .evil-card {
     opacity: 1;
     transform: translateY(0) scale(1);
+    transition-delay: 1.5s;
 }
 
 .evil-title {

@@ -494,6 +494,24 @@ const OrisAudio = {
     masterEvilGain.connect(this.masterGain);
     this.evilNodes.push(masterEvilGain);
 
+    // Descent to hell effect
+    const descentOsc = this.ctx.createOscillator();
+    descentOsc.type = 'sawtooth';
+    descentOsc.frequency.setValueAtTime(400, t);
+    descentOsc.frequency.exponentialRampToValueAtTime(30, t + 2);
+    
+    const descentGain = this.ctx.createGain();
+    descentGain.gain.setValueAtTime(0, t);
+    descentGain.gain.linearRampToValueAtTime(0.5, t + 0.1);
+    descentGain.gain.exponentialRampToValueAtTime(0.01, t + 2);
+    
+    descentOsc.connect(descentGain);
+    descentGain.connect(this.masterGain);
+    descentOsc.start(t);
+    descentOsc.stop(t + 2);
+    
+    this.evilNodes.push(descentOsc, descentGain);
+
     // Drones
     frequencies.forEach(freq => {
         const osc = this.ctx.createOscillator();
