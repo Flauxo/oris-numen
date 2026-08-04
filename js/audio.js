@@ -559,15 +559,18 @@ const OrisAudio = {
 
 
     // --- 2. Initial Chorus Effect (One-shot) ---
-    const duration = 4.0;
+    const duration = 1.2;
+    const fadeOut = 0.8;
+    const totalDuration = duration + fadeOut;
+    
     const masterChorusGain = this.ctx.createGain();
     // Attack of 0.8s
     masterChorusGain.gain.setValueAtTime(0.001, t);
-    masterChorusGain.gain.linearRampToValueAtTime(0.8, t + 0.8);
-    // Rise in volume (exponential)
-    masterChorusGain.gain.exponentialRampToValueAtTime(1.5, t + duration);
+    masterChorusGain.gain.linearRampToValueAtTime(1.5, t + 0.8);
+    // Hold normal sound for 0.4s (until 1.2s)
+    masterChorusGain.gain.setValueAtTime(1.5, t + duration);
     // Fade out of 0.8s
-    masterChorusGain.gain.linearRampToValueAtTime(0.001, t + duration + 0.8);
+    masterChorusGain.gain.linearRampToValueAtTime(0.001, t + totalDuration);
     
     masterChorusGain.connect(this.masterGain);
     this.evilNodes.push(masterChorusGain);
@@ -606,13 +609,13 @@ const OrisAudio = {
             oscGain.connect(masterChorusGain);
             
             osc.start(t);
-            osc.stop(t + duration + 0.9);
+            osc.stop(t + totalDuration + 0.1);
             this.evilNodes.push(osc, filter1, filter2, oscGain);
         }
     });
 
     // Add aspirated noise (breath)
-    const bufferSizeNoise = this.ctx.sampleRate * (duration + 0.5);
+    const bufferSizeNoise = this.ctx.sampleRate * (totalDuration + 0.5);
     const noiseBuffer = this.ctx.createBuffer(1, bufferSizeNoise, this.ctx.sampleRate);
     const outputNoise = noiseBuffer.getChannelData(0);
     for (let i = 0; i < bufferSizeNoise; i++) {
@@ -634,7 +637,7 @@ const OrisAudio = {
     noiseGain.connect(masterChorusGain);
     
     noiseSrc.start(t);
-    noiseSrc.stop(t + duration + 0.9);
+    noiseSrc.stop(t + totalDuration + 0.1);
     
     this.evilNodes.push(noiseSrc, noiseFilter, noiseGain);
   },
