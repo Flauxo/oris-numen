@@ -1229,6 +1229,64 @@ const OrisApp = {
           ctx.fillStyle = isEvil ? '#050505' : '#F4EEE6'; // Lighter beige
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           
+          // Draw geometric border frame
+          ctx.strokeStyle = freq.color;
+          ctx.lineJoin = 'round';
+          ctx.lineCap = 'round';
+          ctx.globalAlpha = isEvil ? 0.4 : 0.7;
+          
+          const drawFrame = (margin, outerPadding, lw) => {
+              ctx.lineWidth = lw;
+              ctx.beginPath();
+              const r = 40; // corner radius
+              const dipW = 80; // width of the dip
+              
+              const L = margin;
+              const R = canvas.width - margin;
+              const T = margin;
+              const B = canvas.height - margin;
+              
+              const cx = canvas.width / 2;
+              const cy = canvas.height / 2;
+              
+              // Top
+              ctx.moveTo(L + r, T);
+              ctx.lineTo(cx - dipW, T);
+              ctx.lineTo(cx, outerPadding); 
+              ctx.lineTo(cx + dipW, T);
+              ctx.lineTo(R - r, T);
+              ctx.arcTo(R, T, R, T + r, r);
+              
+              // Right
+              ctx.lineTo(R, cy - dipW);
+              ctx.lineTo(canvas.width - outerPadding, cy); 
+              ctx.lineTo(R, cy + dipW);
+              ctx.lineTo(R, B - r);
+              ctx.arcTo(R, B, R - r, B, r);
+              
+              // Bottom
+              ctx.lineTo(cx + dipW, B);
+              ctx.lineTo(cx, canvas.height - outerPadding); 
+              ctx.lineTo(cx - dipW, B);
+              ctx.lineTo(L + r, B);
+              ctx.arcTo(L, B, L, B - r, r);
+              
+              // Left
+              ctx.lineTo(L, cy + dipW);
+              ctx.lineTo(outerPadding, cy); 
+              ctx.lineTo(L, cy - dipW);
+              ctx.lineTo(L, T + r);
+              ctx.arcTo(L, T, L + r, T, r);
+              
+              ctx.stroke();
+          };
+          
+          drawFrame(45, 45, 3);
+          drawFrame(65, 45, 2);
+          drawFrame(85, 45, 1);
+          
+          ctx.globalAlpha = 1.0;
+          
           // Oris Numen Title
           ctx.fillStyle = isEvil ? '#cc0000' : '#2A2A2A';
           ctx.font = '600 140px "Cormorant Garamond", serif';
@@ -1239,7 +1297,7 @@ const OrisApp = {
           ctx.font = '400 35px "Inter", sans-serif';
           ctx.fillStyle = isEvil ? '#990000' : '#777777';
           const homeSubtitle = Translations[this.currentLang]['home.subtitle'] || "Canaliza tu mensaje al divino";
-          ctx.fillText(homeSubtitle.toUpperCase(), canvas.width / 2, 255);
+          ctx.fillText(homeSubtitle, canvas.width / 2, 255);
           
           // Draw Sigil
           if (typeof SigilGenerator !== 'undefined') {

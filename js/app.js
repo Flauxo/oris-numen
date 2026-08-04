@@ -1428,14 +1428,16 @@ const OrisApp = {
           const fileName = `OrisNumen-Sigil-${date.replace(/\//g, '-')}.png`;
           const dataUrl = canvas.toDataURL('image/png');
       
-      if (window.AndroidInterface && window.AndroidInterface.saveImageBase64) {
-          window.AndroidInterface.saveImageBase64(dataUrl, fileName);
-      } else {
-          const link = document.createElement('a');
-          link.download = fileName;
-          link.href = dataUrl;
-          link.click();
-      }
+          if (window.AndroidInterface && window.AndroidInterface.saveImageBase64) {
+              const successMsg = Translations[this.currentLang]['success.image_saved'] || "Imagen guardada en Galería";
+              const errorMsg = Translations[this.currentLang]['error.image_saved'] || "Error al guardar imagen";
+              window.AndroidInterface.saveImageBase64(dataUrl, fileName, successMsg, errorMsg);
+          } else {
+              const link = document.createElement('a');
+              link.download = fileName;
+              link.href = dataUrl;
+              link.click();
+          }
       } catch (err) {
           console.error("Error generating sigil: ", err);
       }

@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 
     public class WebAppInterface {
         @JavascriptInterface
-        public void saveImageBase64(String base64Data, String filename) {
+        public void saveImageBase64(String base64Data, String filename, String successMsg, String errorMsg) {
             try {
                 String pureBase64 = base64Data.substring(base64Data.indexOf(",") + 1);
                 byte[] decodedBytes = Base64.decode(pureBase64, Base64.DEFAULT);
@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
                         OutputStream os = getContentResolver().openOutputStream(uri);
                         os.write(decodedBytes);
                         os.close();
-                        runOnUiThread(() -> Toast.makeText(MainActivity.this, "Sigilo guardado en Galería (Pictures/OrisNumen)", Toast.LENGTH_LONG).show());
+                        runOnUiThread(() -> Toast.makeText(MainActivity.this, successMsg, Toast.LENGTH_LONG).show());
                     }
                 } else {
                     File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OrisNumen");
@@ -60,11 +60,11 @@ public class MainActivity extends Activity {
                     mediaScanIntent.setData(Uri.fromFile(file));
                     sendBroadcast(mediaScanIntent);
                     
-                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Sigilo guardado en Galería", Toast.LENGTH_LONG).show());
+                    runOnUiThread(() -> Toast.makeText(MainActivity.this, successMsg, Toast.LENGTH_LONG).show());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Error al guardar imagen", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_SHORT).show());
             }
         }
     }
