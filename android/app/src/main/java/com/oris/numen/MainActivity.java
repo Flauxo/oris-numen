@@ -16,6 +16,12 @@ import android.view.View;
 import android.content.pm.PackageManager;
 import android.Manifest;
 import android.os.Build;
+import android.webkit.JavascriptInterface;
+import android.os.Environment;
+import java.io.File;
+import java.io.FileOutputStream;
+import android.util.Base64;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private WebView webView;
@@ -63,6 +69,26 @@ public class MainActivity extends Activity {
             }
         });
         webView.setWebChromeClient(new WebChromeClient());
+        
+        webView.addJavascriptInterface(new Object() {
+            @JavascriptInterface
+            public void saveImageBase64(String base64Data, String filename) {
+                try {
+                    String pureBase64 = base64Data.substring(base64Data.indexOf(",") + 1);
+                    byte[] decodedBytes = Base64.decode(pureBase64, Base64.DEFAULT);
+                    File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                    File file = new File(downloadsDir, filename);
+                    FileOutputStream os = new FileOutputStream(file);
+                    os.write(decodedBytes);
+                    os.close();
+                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Guardado en Descargas: " + filename, Toast.LENGTH_LONG).show());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Error al guardar imagen", Toast.LENGTH_SHORT).show());
+                }
+            }
+        }, "AndroidInterface");
+
         webView.loadUrl("file:///android_asset/index.html");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

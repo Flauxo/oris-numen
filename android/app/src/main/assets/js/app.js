@@ -835,6 +835,7 @@ const OrisApp = {
     OrisAudio.stopFrequencyPad();
     OrisAudio.stopAllElements();
     this.resetElementButtons();
+    this.stopEvilVibration();
 
     // Set waveform to full before stopping
     WaveformRenderer.setProgress(1);
@@ -843,28 +844,61 @@ const OrisApp = {
     setTimeout(() => {
       WaveformRenderer.stop();
 
-      // Color the success icon with the frequency color
-      const freq = this.FREQUENCIES[this.currentFrequency];
-      const successIcon = document.querySelector('.success-icon');
-      const crossInner = document.querySelector('.cross-inner');
-      if (freq && successIcon && crossInner) {
-        successIcon.style.color = freq.color;
-        
-        // Ensure pulse-glow is active
-        successIcon.classList.add('pulse-glow');
-        
-        // Reset rotation state immediately
-        crossInner.style.transition = 'none';
-        crossInner.style.transform = 'rotate(0deg)';
-        void crossInner.offsetWidth; // Force reflow
+      const freqId = this.currentFrequency;
+      const freq = this.FREQUENCIES[freqId];
+      const isEvil = freqId === 'pazuzu';
 
-        if (this.currentFrequency === 'pazuzu') {
-            // Apply slow motion rotation after 1 second
-            setTimeout(() => {
-                crossInner.style.transition = 'transform 2s ease-in-out';
-                crossInner.style.transform = 'rotate(180deg)';
-            }, 1000);
-        }
+      // Sigil Generation
+      let text = '';
+      if (isEvil) {
+          const evilInput = document.getElementById('evil-input');
+          text = evilInput ? evilInput.value : '';
+      } else {
+          const msgInput = document.getElementById('message-input');
+          text = msgInput ? msgInput.value : '';
+      }
+
+      const sigilCanvas = document.getElementById('sigil-canvas');
+      const successIcon = document.getElementById('success-icon');
+      const btnDownload = document.getElementById('btn-download-sigil');
+
+      if (text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
+          if (sigilCanvas && btnDownload) {
+              sigilCanvas.style.display = 'block';
+              btnDownload.style.display = 'inline-flex';
+              if (successIcon) successIcon.style.display = 'none';
+
+              const ctx = sigilCanvas.getContext('2d');
+              ctx.clearRect(0, 0, sigilCanvas.width, sigilCanvas.height);
+              SigilGenerator.draw(ctx, sigilCanvas.width/2, sigilCanvas.height/2, sigilCanvas.width*0.45, text, freq.color, isEvil);
+
+              // Setup download button
+              btnDownload.onclick = () => {
+                  this.downloadSigilImage(text, freq, isEvil);
+              };
+          }
+      } else {
+          // Fallback to normal icon if no text
+          if (sigilCanvas) sigilCanvas.style.display = 'none';
+          if (btnDownload) btnDownload.style.display = 'none';
+          if (successIcon) successIcon.style.display = 'flex';
+          
+          const crossInner = document.querySelector('.cross-inner');
+          if (freq && successIcon && crossInner) {
+            successIcon.style.color = freq.color;
+            successIcon.classList.add('pulse-glow');
+            
+            crossInner.style.transition = 'none';
+            crossInner.style.transform = 'rotate(0deg)';
+            void crossInner.offsetWidth;
+
+            if (isEvil) {
+                setTimeout(() => {
+                    crossInner.style.transition = 'transform 2s ease-in-out';
+                    crossInner.style.transform = 'rotate(180deg)';
+                }, 1000);
+            }
+          }
       }
       
       // Set random proverb
@@ -901,6 +935,7 @@ const OrisApp = {
     OrisAudio.stopAllElements();
     this.resetElementButtons();
     WaveformRenderer.reset();
+    this.stopEvilVibration();
     this.goHome();
   },
 
@@ -1038,8 +1073,64 @@ const OrisApp = {
 
   /**
    * Channel evil mode
+  playGlitchEffect(element, durationMs) {
+      return new Promise(resolve => {
+          const originalText = element.value || "OMEN GLITCH ERROR";
+          // If empty, fill it temporarily
+          if (!element.value) element.value = originalText;
+          
+          const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|:<>?~`";
+          const startTime = Date.now();
+          
+          const glitchInterval = setInterval(() => {
+              const now = Date.now();
+              if (now - startTime > durationMs) {
+                  clearInterval(glitchInterval);
+                  resolve();
+                  return;
+              }
+              
+              let glitched = "";
+              for (let i = 0; i < originalText.length; i++) {
+                  if (Math.random() > 0.3) {
+                      glitched += charset[Math.floor(Math.random() * charset.length)];
+                  } else {
+                      glitched += originalText[i];
+                  }
+              }
+              element.value = glitched;
+          }, 50);
+      });
+  },
+
+  /**
+   * Channel evil mode
    */
   channelEvilMode() {
+      const evilInput = document.getElementById('evil-input');
+      
+      // 1. Play glitch audio
+      try {
+          if (typeof OrisAudio !== 'undefined' && OrisAudio.playGlitchAudio) {
+              OrisAudio.playGlitchAudio(2.0);
+          }
+      } catch (e) {
+          console.error("Glitch audio error", e);
+      }
+      
+      // 2. Play visual glitch on input for 2 seconds
+      if (evilInput) {
+          this.playGlitchEffect(evilInput, 2000).then(() => {
+              this._startEvilChannelingSequence();
+          });
+      } else {
+          setTimeout(() => {
+              this._startEvilChannelingSequence();
+          }, 2000);
+      }
+  },
+
+  _startEvilChannelingSequence() {
       // Set the body to evil mode now, hidden under the opaque black overlay
       document.body.classList.add('evil-mode');
 
@@ -1061,7 +1152,8 @@ const OrisApp = {
       
       const evilInput = document.getElementById('evil-input');
       if (evilInput) {
-          evilInput.value = '';
+          // Keep the value for the history/sigil! Don't clear it yet.
+          // evilInput.value = ''; // We will clear it later or on exit
       }
       
       try {
@@ -1096,11 +1188,105 @@ const OrisApp = {
       WaveformRenderer.setProgress(0);
       WaveformRenderer.start();
   
+      // Start Evil Vibration
+      this.startEvilVibration();
+
       ChannelTimer.reset();
       ChannelTimer.start(
         (remaining, progress) => this.onTimerTick(remaining, progress),
         () => this.onTimerComplete()
       );
+  },
+  startEvilVibration() {
+      // Soft, irregular heartbeat pattern:
+      // small thud (20ms), wait 100ms, stronger thud (40ms), wait 800-1200ms
+      if (!navigator.vibrate) return;
+      
+      const pattern = [20, 100, 40];
+      
+      const triggerVibe = () => {
+          navigator.vibrate(pattern);
+          const nextWait = 800 + Math.random() * 400; // 800 to 1200ms
+          this._evilVibeTimer = setTimeout(triggerVibe, nextWait);
+      };
+      
+      triggerVibe();
+  },
+
+  stopEvilVibration() {
+      if (this._evilVibeTimer) {
+          clearTimeout(this._evilVibeTimer);
+          this._evilVibeTimer = null;
+      }
+      if (navigator.vibrate) {
+          navigator.vibrate(0); // stop
+      }
+  },
+
+  downloadSigilImage(text, freq, isEvil) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1920; // Vertical format
+      const ctx = canvas.getContext('2d');
+      
+      // Background
+      ctx.fillStyle = isEvil ? '#050505' : '#E8E1D5'; // --color-bg-primary or evil
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Oris Numen Title
+      ctx.fillStyle = isEvil ? '#cc0000' : '#2A2A2A';
+      ctx.font = 'bold 80px "Playfair Display", serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Oris Numen', canvas.width / 2, 200);
+      
+      // Draw Sigil
+      if (typeof SigilGenerator !== 'undefined') {
+          SigilGenerator.draw(ctx, canvas.width / 2, canvas.height / 2 - 100, 400, text, freq.color, isEvil);
+      }
+      
+      // Draw Metadata
+      ctx.font = 'normal 40px sans-serif';
+      ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
+      
+      let yPos = canvas.height - 400;
+      
+      const type = isEvil ? 'Plegaria Maligna' : 'Canalización Espiritual';
+      ctx.fillText(type, canvas.width / 2, yPos);
+      yPos += 60;
+      
+      ctx.font = 'bold 50px sans-serif';
+      ctx.fillStyle = freq.color;
+      ctx.fillText(`Frecuencia: ${freq.name} (${freq.hz || freq.audioHz} Hz)`, canvas.width / 2, yPos);
+      yPos += 80;
+      
+      ctx.font = 'normal 35px sans-serif';
+      ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
+      
+      // Translate elements
+      const activeEls = Array.from(this.activeElements).map(el => {
+          return Translations[this.currentLang][`element.${el}`] || el;
+      });
+      const elementsText = activeEls.join(', ') || (Translations[this.currentLang]['history.none'] || 'Ninguno');
+      ctx.fillText(`Elementos vinculados: ${elementsText}`, canvas.width / 2, yPos);
+      yPos += 60;
+      
+      const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
+      ctx.fillText(`Duración: ${timeStr}`, canvas.width / 2, yPos);
+      yPos += 60;
+      
+      const date = new Date().toLocaleDateString(this.currentLang);
+      ctx.fillText(`Fecha: ${date}`, canvas.width / 2, yPos);
+      yPos += 120;
+      
+      // Footer text
+      ctx.font = 'italic 30px "Playfair Display", serif';
+      ctx.fillText('Este Sigilo sagrado ha sido trazado a través de tu mensaje.', canvas.width / 2, yPos);
+      
+      // Trigger download
+      const link = document.createElement('a');
+      link.download = `OrisNumen-Sigil-${date.replace(/\//g, '-')}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
   },
 
   saveToHistory() {
