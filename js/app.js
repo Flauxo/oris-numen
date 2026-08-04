@@ -1291,20 +1291,20 @@ const OrisApp = {
           ctx.fillStyle = isEvil ? '#cc0000' : '#2A2A2A';
           ctx.font = '600 140px "Cormorant Garamond", serif';
           ctx.textAlign = 'center';
-          ctx.fillText('Oris Numen', canvas.width / 2, 190);
+          ctx.fillText('Oris Numen', canvas.width / 2, 230);
           
           // Subtitle
           ctx.font = '400 35px "Inter", sans-serif';
           ctx.fillStyle = isEvil ? '#990000' : '#777777';
           const homeSubtitle = Translations[this.currentLang]['home.subtitle'] || "Canaliza tu mensaje al divino";
-          ctx.fillText(homeSubtitle, canvas.width / 2, 255);
+          ctx.fillText(homeSubtitle, canvas.width / 2, 300);
           
           // Draw Sigil
           if (typeof SigilGenerator !== 'undefined') {
-              SigilGenerator.draw(ctx, canvas.width / 2, 700, 350, text, freq.color, isEvil);
+              SigilGenerator.draw(ctx, canvas.width / 2, 720, 300, text, freq.color, isEvil);
           }
           
-          let yPos = 1180;
+          let yPos = 1140;
           ctx.textAlign = 'center';
 
           // Type of prayer (Plegaria, Perdón, Confesión, etc.)
@@ -1312,13 +1312,13 @@ const OrisApp = {
           ctx.font = '500 38px "Inter", sans-serif';
           ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
           ctx.fillText(prayerType, canvas.width / 2, yPos);
-          yPos += 70;
+          yPos += 60;
 
           // Frequency
           ctx.font = '700 55px "Inter", sans-serif';
           ctx.fillStyle = freq.color;
           ctx.fillText(`${freq.name} (${freq.hz || freq.audioHz} Hz)`, canvas.width / 2, yPos);
-          yPos += 80;
+          yPos += 75;
 
           // Elements with colors
           const elsToUse = activeElementsSet || this.activeElements;
@@ -1373,7 +1373,7 @@ const OrisApp = {
               if (this.currentLang === 'la') noneText = "Elementa: Nulla";
               ctx.fillText(noneText, canvas.width / 2, yPos);
           }
-          yPos += 70;
+          yPos += 65;
 
           // Duration & Date
           ctx.font = '400 35px "Inter", sans-serif';
@@ -1388,7 +1388,7 @@ const OrisApp = {
           if (this.currentLang === 'la') { durPrefix = "Tempus"; datePrefix = "Dies"; }
           
           ctx.fillText(`${durPrefix}: ${timeStr}   •   ${datePrefix}: ${dateStr}`, canvas.width / 2, yPos);
-          yPos += 70;
+          yPos += 65;
           
           // Horizontal Line
           ctx.strokeStyle = isEvil ? '#440000' : '#CCCCCC';
@@ -1397,31 +1397,60 @@ const OrisApp = {
           ctx.moveTo(canvas.width / 2 - 400, yPos);
           ctx.lineTo(canvas.width / 2 + 400, yPos);
           ctx.stroke();
-          yPos += 70;
+          yPos += 65;
 
-          // Explanatory Text with word wrapping
-          ctx.font = 'italic 48px "Cormorant Garamond", serif';
+          // Explanatory Text with justified word wrapping
+          ctx.font = 'italic 46px "Cormorant Garamond", serif';
           ctx.fillStyle = isEvil ? '#550000' : '#333333';
           const explText = Translations[this.currentLang]['success.sigil_explanation'] || "Your prayer has been converted into a numeric seed...";
           
-          const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
-              const words = text.split(' ');
-              let line = '';
-              for(let n = 0; n < words.length; n++) {
-                  let testLine = line + words[n] + ' ';
-                  let metrics = context.measureText(testLine);
-                  let testWidth = metrics.width;
-                  if (testWidth > maxWidth && n > 0) {
-                      context.fillText(line, x, y);
-                      line = words[n] + ' ';
+          const wrapTextJustified = (context, text, x, y, maxWidth, lineHeight) => {
+              context.textAlign = 'left';
+              const paragraphs = text.split('\n');
+              
+              for (const p of paragraphs) {
+                  if (p.trim() === '') {
                       y += lineHeight;
-                  } else {
-                      line = testLine;
+                      continue;
                   }
+                  const words = p.split(' ');
+                  let lineWords = [];
+                  let currentLineWidth = 0;
+                  const spaceWidth = context.measureText(' ').width;
+                  
+                  for (let n = 0; n < words.length; n++) {
+                      let word = words[n];
+                      let wordWidth = context.measureText(word).width;
+                      
+                      if (lineWords.length > 0 && currentLineWidth + spaceWidth + wordWidth > maxWidth) {
+                          let totalWordWidth = lineWords.reduce((sum, w) => sum + context.measureText(w).width, 0);
+                          let spaceBetween = lineWords.length > 1 ? (maxWidth - totalWordWidth) / (lineWords.length - 1) : 0;
+                          
+                          let currentX = x;
+                          for (let i = 0; i < lineWords.length; i++) {
+                              context.fillText(lineWords[i], currentX, y);
+                              currentX += context.measureText(lineWords[i]).width + spaceBetween;
+                          }
+                          
+                          lineWords = [word];
+                          currentLineWidth = wordWidth;
+                          y += lineHeight;
+                      } else {
+                          lineWords.push(word);
+                          currentLineWidth += (lineWords.length === 1 ? 0 : spaceWidth) + wordWidth;
+                      }
+                  }
+                  
+                  let currentX = x;
+                  for (let i = 0; i < lineWords.length; i++) {
+                      context.fillText(lineWords[i], currentX, y);
+                      currentX += context.measureText(lineWords[i]).width + spaceWidth;
+                  }
+                  y += lineHeight;
               }
-              context.fillText(line, x, y);
+              context.textAlign = 'center'; // restore
           };
-          wrapText(ctx, explText, canvas.width / 2, yPos, 940, 58);
+          wrapTextJustified(ctx, explText, canvas.width / 2 - 425, yPos, 850, 56);
           
           // Trigger download
           const date = new Date().toLocaleDateString('en-CA');
