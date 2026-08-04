@@ -888,8 +888,14 @@ const OrisApp = {
       // Do not show Sigil link in Evil Mode
       if (!isEvil && text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
           if (linkDownload) {
-              linkDownload.style.display = 'block';
+              // Instantly reset state without transition
+              linkDownload.style.transition = 'none';
               linkDownload.classList.remove('show');
+              void linkDownload.offsetWidth; // Force reflow
+              linkDownload.style.transition = ''; // Restore CSS transition
+              
+              linkDownload.style.display = 'block';
+              
               setTimeout(() => {
                   linkDownload.classList.add('show');
               }, 1000); // Wait 1 second, then trigger CSS transition
