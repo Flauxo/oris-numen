@@ -41,11 +41,11 @@ class SigilGenerator {
         ctx.fillStyle = color;
 
         // Base symmetry
-        const symmetries = isEvil ? [3, 5, 7, 9] : [4, 6, 8, 12];
+        const symmetries = isEvil ? [5, 7, 9, 11] : [6, 8, 12, 16];
         const symmetry = symmetries[Math.floor(random() * symmetries.length)];
         
         // Number of layers/rings of geometry
-        const layers = 3 + Math.floor(random() * 4); 
+        const layers = 5 + Math.floor(random() * 6); 
 
         for (let l = 0; l < layers; l++) {
             const layerRadius = radius * (0.2 + (0.8 * random()));
