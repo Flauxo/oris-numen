@@ -1039,6 +1039,17 @@ const OrisApp = {
    * Channel evil mode
    */
   channelEvilMode() {
+      // Hide home screen instantly to avoid seeing it during the fade
+      const homeScreen = document.getElementById('home-screen');
+      if (homeScreen) {
+          homeScreen.style.transition = 'none';
+          homeScreen.style.opacity = '0';
+          setTimeout(() => {
+              homeScreen.style.transition = '';
+              homeScreen.style.opacity = '';
+          }, 1000);
+      }
+
       const evilOverlay = document.getElementById('evil-overlay');
       if (evilOverlay) {
           evilOverlay.classList.remove('active');
