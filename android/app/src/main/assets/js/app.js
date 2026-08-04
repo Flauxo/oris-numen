@@ -889,6 +889,11 @@ const OrisApp = {
       if (!isEvil && text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
           if (linkDownload) {
               linkDownload.style.display = 'block';
+              linkDownload.classList.remove('show');
+              setTimeout(() => {
+                  linkDownload.classList.add('show');
+              }, 1000); // Wait 1 second, then trigger CSS transition
+              
               linkDownload.onclick = (e) => {
                   e.preventDefault();
                   this.downloadSigilImage(text, freq, isEvil, activeElementsCopy);

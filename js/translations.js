@@ -55,7 +55,7 @@ const Translations = {
         "success.subtitle.evil": "Your message has been elevated to the evil one",
         "btn.home": "Back to start",
         "success.download_sigil": "Download Sigil",
-        "success.sigil_explanation": "This Sigil is the graphic manifestation of your intent. Your message has been converted into a seed (via a hash function) transcending the physical plane, an algorithm transforms it into geometry and draws the symmetrical forms through the channeled frequencies. Its form is unique, as it is born from your words and is eternally bound to your essence. Help us spread the light; share Oris Numen with those who also seek to be heard.",
+        "success.sigil_explanation": "This Sigil is the graphic manifestation of your intent. Your message is converted into a seed (via a hash function) and an algorithm transforms it into geometry by drawing symmetrical shapes. Its form is unique, as it is born from your words and is linked to your essence, inheriting the color of your frequency.",
         "success.image_saved": "Image saved to Gallery",
         "error.image_saved": "Error saving image",
         
@@ -203,7 +203,7 @@ const Translations = {
         "success.subtitle.evil": "Tu mensaje ha sido elevado al maligno",
         "btn.home": "Volver al inicio",
         "success.download_sigil": "Descargar Sigilo",
-        "success.sigil_explanation": "Este Sigilo es la manifestación gráfica de tu intención. Tu mensaje ha sido convertido en semilla (mediante una función de hash) trascendiendo al plano físico, un algoritmo lo transforma en geometría y dibuja las formas simétricas a través de las frecuencias canalizadas. Su forma es única, ya que nace de tus palabras y está eternamente ligada a tu esencia. Ayúdanos a expandir la luz; comparte Oris Numen con aquellos que también buscan ser escuchados.",
+        "success.sigil_explanation": "Este Sigilo es la manifestación gráfica de tu intención. Tu mensaje se convierte en semilla (mediante una función de hash) y un algoritmo lo transforma en geometría dibujando formas simétricas. Su forma es única, ya que nace de tus palabras y está ligada a tu esencia, heredando el color de tu frecuencia.",
         "success.image_saved": "Imagen guardada en Galería",
         "error.image_saved": "Error al guardar imagen",
         
@@ -351,7 +351,7 @@ const Translations = {
         "success.subtitle.evil": "Il tuo messaggio è stato elevato al maligno",
         "btn.home": "Torna all'inizio",
         "success.download_sigil": "Scarica Sigillo",
-        "success.sigil_explanation": "Questo Sigillo è la manifestazione grafica del tuo intento. Il tuo messaggio è stato convertito in un seme (tramite una funzione hash) trascendendo il piano fisico, un algoritmo lo trasforma in geometria e disegna le forme simmetriche attraverso le frequenze canalizzate. La sua forma è unica, poiché nasce dalle tue parole ed è eternamente legata alla tua essenza. Aiutaci a diffondere la luce; condividi Oris Numen con chi cerca di essere ascoltato.",
+        "success.sigil_explanation": "Questo Sigillo è la manifestazione grafica del tuo intento. Il tuo messaggio viene convertito in un seme (tramite una funzione hash) e un algoritmo lo trasforma in geometria disegnando forme simmetriche. La sua forma è unica, poiché nasce dalle tue parole ed è legata alla tua essenza, ereditando il colore della tua frequenza.",
         "success.image_saved": "Immagine salvata nella Galleria",
         "error.image_saved": "Errore di salvataggio",
         
@@ -495,7 +495,7 @@ const Translations = {
         "success.subtitle.evil": "Nuntius tuus ad malignum evectus est",
         "btn.home": "Redi ad initium",
         "success.download_sigil": "Sigillum Excute",
-        "success.sigil_explanation": "Hoc Sigillum est manifestatio graphica intentionis tuae. Nuntius tuus in semen conversus est (per functionem hash) planum physicum transcendens, algorithmus illum in geometriam transformat et formas symmetras per frequentias canalizatas trahit. Forma eius unica est, quia ex verbis tuis oritur et essentiae tuae in aeternum ligatur. Adjuva nos lucem spargere; communica Oris Numen cum iis qui audiri quaerunt.",
+        "success.sigil_explanation": "Hoc Sigillum est manifestatio graphica intentionis tuae. Nuntius tuus in semen convertitur (per functionem hash) et algorithmus eum in geometriam transformat formas symmetras trahendo. Forma eius unica est, quia ex verbis tuis oritur et essentiae tuae ligatur, colorem frequentiae tuae hereditans.",
         "success.image_saved": "Imago in pinacotheca servata est",
         "error.image_saved": "Error ad imaginem salvandam",
         
