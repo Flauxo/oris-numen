@@ -50,7 +50,7 @@ class SigilGenerator {
         for (let l = 0; l < layers; l++) {
             const layerRadius = radius * (0.2 + (0.8 * random()));
             const shapeType = Math.floor(random() * 5);
-            const lineWidth = 1 + random() * 2;
+            const lineWidth = 3 + random() * 4;
             
             ctx.lineWidth = lineWidth;
             

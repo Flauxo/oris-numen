@@ -55,6 +55,7 @@ const Translations = {
         "success.subtitle.evil": "Your message has been elevated to the evil one",
         "btn.home": "Back to start",
         "success.download_sigil": "Download Sigil",
+        "success.sigil_explanation": "Your prayer (or confession, plea for forgiveness, gratitude) has been converted into a numeric \"seed\" (via a hash function). Using this seed, an algorithm draws symmetrical forms (curves, circles, sacred angles) giving rise to this Sigil. It inherits the color of the frequency used.",
         
         "write.confirm": "Confirm",
         
@@ -200,6 +201,7 @@ const Translations = {
         "success.subtitle.evil": "Tu mensaje ha sido elevado al maligno",
         "btn.home": "Volver al inicio",
         "success.download_sigil": "Descargar Sigilo",
+        "success.sigil_explanation": "Tu plegaria (o perdón, confesión, agradecimiento) ha sido convertida en una \"semilla\" numérica (mediante una función hash). Utilizando esta semilla, un algoritmo dibuja formas simétricas (curvas, círculos, ángulos sagrados) dando lugar a este Sigilo. Hereda el color de la frecuencia utilizada.",
         
         "write.confirm": "Confirmar",
         
@@ -345,6 +347,7 @@ const Translations = {
         "success.subtitle.evil": "Il tuo messaggio è stato elevato al maligno",
         "btn.home": "Torna all'inizio",
         "success.download_sigil": "Scarica Sigillo",
+        "success.sigil_explanation": "La tua preghiera (o confessione, richiesta di perdono, gratitudine) è stata convertita in un \"seme\" numerico (tramite una funzione hash). Utilizzando questo seme, un algoritmo disegna forme simmetriche (curve, cerchi, angoli sacri) dando origine a questo Sigillo. Eredita il colore della frequenza utilizzata.",
         
         "write.confirm": "Conferma",
         
@@ -486,6 +489,7 @@ const Translations = {
         "success.subtitle.evil": "Nuntius tuus ad malignum evectus est",
         "btn.home": "Redi ad initium",
         "success.download_sigil": "Sigillum Excute",
+        "success.sigil_explanation": "Precatio tua (vel confessio, deprecatio, gratiarum actio) in \"semen\" numericum (per functionem hash) conversa est. Hoc semine utendo, algorithmus formas symmetras (curvas, circulos, angulos sacros) trahit, unde hoc Sigillum oritur. Colorem frequentiae adhibitae hereditabit.",
         
         "write.confirm": "Confirma",
         

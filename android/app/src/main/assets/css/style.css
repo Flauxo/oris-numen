@@ -1481,3 +1481,12 @@ body.evil-mode .home-logo-circle {
     font-weight: 500;
 }
 
+
+@keyframes fadeInDelayed {
+  0% { opacity: 0; }
+  70% { opacity: 0; }
+  100% { opacity: 1; }
+}
+#link-download-sigil {
+  animation: fadeInDelayed 4s ease-in-out forwards;
+}
