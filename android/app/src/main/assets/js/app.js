@@ -1230,16 +1230,22 @@ const OrisApp = {
           
           // Oris Numen Title
           ctx.fillStyle = isEvil ? '#cc0000' : '#2A2A2A';
-          ctx.font = 'bold 130px "Playfair Display", serif';
+          ctx.font = 'bold 150px "Cormorant Garamond", serif';
           ctx.textAlign = 'center';
-          ctx.fillText('Oris Numen', canvas.width / 2, 220);
+          ctx.fillText('Oris Numen', canvas.width / 2, 200);
+          
+          // Subtitle
+          ctx.font = 'italic 55px "Cormorant Garamond", serif';
+          ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
+          const homeSubtitle = Translations[this.currentLang]['home.subtitle'] || "Canaliza tu mensaje al divino";
+          ctx.fillText(homeSubtitle, canvas.width / 2, 270);
           
           // Draw Sigil (smaller)
           if (typeof SigilGenerator !== 'undefined') {
-              SigilGenerator.draw(ctx, canvas.width / 2, canvas.height / 2 - 150, 320, text, freq.color, isEvil);
+              SigilGenerator.draw(ctx, canvas.width / 2, canvas.height / 2 - 120, 340, text, freq.color, isEvil);
           }
           
-          let yPos = canvas.height - 520;
+          let yPos = canvas.height - 560;
           ctx.textAlign = 'center';
 
           // Type of prayer (Plegaria, Perdón, Confesión, etc.)
@@ -1253,7 +1259,7 @@ const OrisApp = {
           ctx.font = 'bold 60px sans-serif';
           ctx.fillStyle = freq.color;
           ctx.fillText(`${freq.name} (${freq.hz || freq.audioHz} Hz)`, canvas.width / 2, yPos);
-          yPos += 90;
+          yPos += 80;
 
           // Elements with colors
           const elsToUse = activeElementsSet || this.activeElements;
@@ -1268,14 +1274,31 @@ const OrisApp = {
               const elsArray = Array.from(elsToUse);
               let totalWidth = 0;
               const parts = [];
-              for (const el of elsArray) {
-                  const elText = (Translations[this.currentLang][`element.${el}`] || el).toUpperCase();
-                  const w = ctx.measureText(elText + "    ").width;
+              
+              let prefixStr = "Elementos: ";
+              if (this.currentLang === 'en') prefixStr = "Elements: ";
+              if (this.currentLang === 'it') prefixStr = "Elementi: ";
+              if (this.currentLang === 'la') prefixStr = "Elementa: ";
+              
+              const prefixW = ctx.measureText(prefixStr).width;
+              totalWidth += prefixW;
+              
+              for (let i = 0; i < elsArray.length; i++) {
+                  const el = elsArray[i];
+                  let elText = (Translations[this.currentLang][`element.${el}`] || el).toLowerCase();
+                  if (i < elsArray.length - 1) elText += " y ";
+                  const w = ctx.measureText(elText).width;
                   parts.push({ text: elText, color: elementColors[el] || '#666', width: w });
                   totalWidth += w;
               }
+              
               let currentX = canvas.width / 2 - totalWidth / 2;
               ctx.textAlign = 'left';
+              
+              ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
+              ctx.fillText(prefixStr, currentX, yPos);
+              currentX += prefixW;
+              
               for (const p of parts) {
                   ctx.fillStyle = p.color;
                   ctx.fillText(p.text, currentX, yPos);
@@ -1285,22 +1308,41 @@ const OrisApp = {
           } else {
               ctx.font = 'bold 35px sans-serif';
               ctx.fillStyle = '#6A6A6A';
-              const noneText = (Translations[this.currentLang]['history.none'] || 'Ninguno').toUpperCase();
+              let noneText = "Elementos: Ninguno";
+              if (this.currentLang === 'en') noneText = "Elements: None";
+              if (this.currentLang === 'it') noneText = "Elementi: Nessuno";
+              if (this.currentLang === 'la') noneText = "Elementa: Nulla";
               ctx.fillText(noneText, canvas.width / 2, yPos);
           }
-          yPos += 80;
+          yPos += 70;
 
           // Duration & Date
           ctx.font = 'normal 35px sans-serif';
           ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
           const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
           const dateStr = new Date().toLocaleDateString(this.currentLang);
-          ctx.fillText(`${timeStr}   •   ${dateStr}`, canvas.width / 2, yPos);
-          yPos += 100;
+          
+          let durPrefix = "Duración";
+          let datePrefix = "Fecha";
+          if (this.currentLang === 'en') { durPrefix = "Duration"; datePrefix = "Date"; }
+          if (this.currentLang === 'it') { durPrefix = "Durata"; datePrefix = "Data"; }
+          if (this.currentLang === 'la') { durPrefix = "Tempus"; datePrefix = "Dies"; }
+          
+          ctx.fillText(`${durPrefix}: ${timeStr}   •   ${datePrefix}: ${dateStr}`, canvas.width / 2, yPos);
+          yPos += 70;
+          
+          // Horizontal Line
+          ctx.strokeStyle = isEvil ? '#440000' : '#CCCCCC';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(canvas.width / 2 - 400, yPos);
+          ctx.lineTo(canvas.width / 2 + 400, yPos);
+          ctx.stroke();
+          yPos += 60;
 
           // Explanatory Text with word wrapping
-          ctx.font = 'italic 28px "Playfair Display", serif';
-          ctx.fillStyle = isEvil ? '#550000' : '#5A5A5A';
+          ctx.font = 'italic 34px "Cormorant Garamond", serif';
+          ctx.fillStyle = isEvil ? '#550000' : '#333333';
           const explText = Translations[this.currentLang]['success.sigil_explanation'] || "Your prayer has been converted into a numeric seed...";
           
           const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
@@ -1320,7 +1362,7 @@ const OrisApp = {
               }
               context.fillText(line, x, y);
           };
-          wrapText(ctx, explText, canvas.width / 2, yPos, 850, 40);
+          wrapText(ctx, explText, canvas.width / 2, yPos, 850, 48);
           
           // Trigger download
           const date = new Date().toLocaleDateString('en-CA');

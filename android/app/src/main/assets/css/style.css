@@ -1484,9 +1484,9 @@ body.evil-mode .home-logo-circle {
 
 @keyframes fadeInDelayed {
   0% { opacity: 0; }
-  70% { opacity: 0; }
   100% { opacity: 1; }
 }
 #link-download-sigil {
-  animation: fadeInDelayed 4s ease-in-out forwards;
+  animation: fadeInDelayed 0.8s ease-in forwards;
+  animation-delay: 1.5s;
 }

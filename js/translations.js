@@ -55,7 +55,7 @@ const Translations = {
         "success.subtitle.evil": "Your message has been elevated to the evil one",
         "btn.home": "Back to start",
         "success.download_sigil": "Download Sigil",
-        "success.sigil_explanation": "Your prayer (or confession, plea for forgiveness, gratitude) has been converted into a numeric \"seed\" (via a hash function). Using this seed, an algorithm draws symmetrical forms (curves, circles, sacred angles) giving rise to this Sigil. It inherits the color of the frequency used.",
+        "success.sigil_explanation": "This Sigil is the sacred manifestation of your intent. Your message has transcended the physical plane, crystallizing into divine geometry through channeled frequencies. Its form is unique and eternally bound to your essence. Help us spread the light; share Oris Numen with those who also seek to be heard.",
         
         "write.confirm": "Confirm",
         
@@ -201,7 +201,7 @@ const Translations = {
         "success.subtitle.evil": "Tu mensaje ha sido elevado al maligno",
         "btn.home": "Volver al inicio",
         "success.download_sigil": "Descargar Sigilo",
-        "success.sigil_explanation": "Tu plegaria (o perdón, confesión, agradecimiento) ha sido convertida en una \"semilla\" numérica (mediante una función hash). Utilizando esta semilla, un algoritmo dibuja formas simétricas (curvas, círculos, ángulos sagrados) dando lugar a este Sigilo. Hereda el color de la frecuencia utilizada.",
+        "success.sigil_explanation": "Este Sigilo es la manifestación sagrada de tu intención. Tu mensaje ha trascendido el plano físico, cristalizándose en geometría sagrada a través de las frecuencias canalizadas. Su forma es única y está eternamente ligada a tu esencia. Ayúdanos a expandir la luz; comparte Oris Numen con aquellos que también buscan ser escuchados.",
         
         "write.confirm": "Confirmar",
         
@@ -347,7 +347,7 @@ const Translations = {
         "success.subtitle.evil": "Il tuo messaggio è stato elevato al maligno",
         "btn.home": "Torna all'inizio",
         "success.download_sigil": "Scarica Sigillo",
-        "success.sigil_explanation": "La tua preghiera (o confessione, richiesta di perdono, gratitudine) è stata convertita in un \"seme\" numerico (tramite una funzione hash). Utilizzando questo seme, un algoritmo disegna forme simmetriche (curve, cerchi, angoli sacri) dando origine a questo Sigillo. Eredita il colore della frequenza utilizzata.",
+        "success.sigil_explanation": "Questo Sigillo è la manifestazione sacra del tuo intento. Il tuo messaggio ha trasceso il piano fisico, cristallizzandosi in geometria divina attraverso le frequenze canalizzate. La sua forma è unica ed eternamente legata alla tua essenza. Aiutaci a diffondere la luce; condividi Oris Numen con chi cerca di essere ascoltato.",
         
         "write.confirm": "Conferma",
         
@@ -489,7 +489,7 @@ const Translations = {
         "success.subtitle.evil": "Nuntius tuus ad malignum evectus est",
         "btn.home": "Redi ad initium",
         "success.download_sigil": "Sigillum Excute",
-        "success.sigil_explanation": "Precatio tua (vel confessio, deprecatio, gratiarum actio) in \"semen\" numericum (per functionem hash) conversa est. Hoc semine utendo, algorithmus formas symmetras (curvas, circulos, angulos sacros) trahit, unde hoc Sigillum oritur. Colorem frequentiae adhibitae hereditabit.",
+        "success.sigil_explanation": "Hoc Sigillum sacra manifestationis intentionis tuae est. Nuntius tuus per frequentias transmutatas in geometriam divinam corporatur. Forma eius unica est et essentiae tuae in aeternum ligatur. Adjuva nos lucem spargere; communica Oris Numen cum iis qui audiri quaerunt.",
         
         "write.confirm": "Confirma",
         
