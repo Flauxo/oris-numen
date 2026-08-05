@@ -184,7 +184,7 @@ public class MainActivity extends Activity {
             public void onPermissionRequest(final PermissionRequest request) {
                 runOnUiThread(() -> {
                     try {
-                        request.grant(request.getResources());
+                        request.grant(new String[]{PermissionRequest.RESOURCE_AUDIO_CAPTURE});
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

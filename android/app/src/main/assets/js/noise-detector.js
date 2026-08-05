@@ -31,7 +31,14 @@ class NoiseDetector {
         }
 
         try {
-            this.stream = await getUserMedia({ audio: true, video: false });
+            this.stream = await getUserMedia({ 
+                audio: { 
+                    echoCancellation: false, 
+                    noiseSuppression: false, 
+                    autoGainControl: false 
+                }, 
+                video: false 
+            });
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.analyser = this.audioContext.createAnalyser();
             this.analyser.fftSize = 256;
@@ -46,7 +53,7 @@ class NoiseDetector {
             return true;
         } catch (err) {
             console.error("Error accessing microphone for noise detection:", err);
-            // alert("Microphone error: " + err.message);
+            alert("Error de micrófono: " + err.message);
             return false;
         }
     }
@@ -86,13 +93,10 @@ class NoiseDetector {
      */
     isNoisy() {
         if (!this.isListening) {
-            // Si no está escuchando, puede que el permiso haya fallado.
-            // Retornar falso por defecto para no bloquear la app entera si falla el micro.
             return false;
         }
         console.log("Current noise peak:", this.currentVolume);
-        // Strict threshold. Ambient room is usually 5-10. Speech is 100+.
-        return this.currentVolume > 20;
+        return this.currentVolume > 2;
     }
 }
 
