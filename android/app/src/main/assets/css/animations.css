@@ -180,7 +180,9 @@
 
 #splash-screen .splash-subtitle {
     opacity: 0;
-    animation: fadeIn 0.4s ease-out 4.6s forwards;
+    animation: 
+        fadeIn 0.4s ease-out 4.6s forwards,
+        crossFloat 4s ease-in-out 4.6s infinite;
 }
 
 
