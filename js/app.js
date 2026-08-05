@@ -1403,10 +1403,7 @@ const OrisApp = {
               let totalWidth = 0;
               const parts = [];
               
-              let prefixStr = "Elementos: ";
-              if (this.currentLang === 'en') prefixStr = "Elements: ";
-              if (this.currentLang === 'it') prefixStr = "Elementi: ";
-              if (this.currentLang === 'la') prefixStr = "Elementa: ";
+              let prefixStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.elements"]) || "Elementos: ";
               
               const prefixW = ctx.measureText(prefixStr).width;
               totalWidth += prefixW;
@@ -1415,10 +1412,7 @@ const OrisApp = {
                   const el = elsArray[i];
                   let elText = (Translations[this.currentLang][`elements.${el}`] || el).toLowerCase();
                   if (i < elsArray.length - 1) {
-                      let andStr = " y ";
-                      if (this.currentLang === 'en') andStr = " and ";
-                      if (this.currentLang === 'it') andStr = " e ";
-                      if (this.currentLang === 'la') andStr = " et ";
+                      let andStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.and"]) || " y ";
                       elText += andStr;
                   }
                   const w = ctx.measureText(elText).width;
@@ -1442,10 +1436,7 @@ const OrisApp = {
           } else {
               ctx.font = '700 35px "Inter", sans-serif';
               ctx.fillStyle = '#6A6A6A';
-              let noneText = "Elementos: Ninguno";
-              if (this.currentLang === 'en') noneText = "Elements: None";
-              if (this.currentLang === 'it') noneText = "Elementi: Nessuno";
-              if (this.currentLang === 'la') noneText = "Elementa: Nulla";
+              let noneText = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.none"]) || "Elementos: Ninguno";
               ctx.fillText(noneText, canvas.width / 2, yPos);
           }
           yPos += 65;
@@ -1456,11 +1447,8 @@ const OrisApp = {
           const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
           const dateStr = new Date().toLocaleDateString(this.currentLang);
           
-          let durPrefix = "Duración";
-          let datePrefix = "Fecha";
-          if (this.currentLang === 'en') { durPrefix = "Duration"; datePrefix = "Date"; }
-          if (this.currentLang === 'it') { durPrefix = "Durata"; datePrefix = "Data"; }
-          if (this.currentLang === 'la') { durPrefix = "Tempus"; datePrefix = "Dies"; }
+          let durPrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.duration"]) || "Duración";
+          let datePrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.date"]) || "Fecha";
           
           ctx.fillText(`${durPrefix}: ${timeStr}   •   ${datePrefix}: ${dateStr}`, canvas.width / 2, yPos);
           yPos += 65;
@@ -2199,10 +2187,7 @@ const OrisApp = {
           
           if (elsArray.length > 0) {
               const elementColors = { 'aire': '#5CE1E6', 'agua': '#0057FF', 'fuego': '#FF3131', 'tierra': '#7ED957' };
-              let prefixStr = "Elementos: ";
-              if (this.currentLang === 'en') prefixStr = "Elements: ";
-              if (this.currentLang === 'it') prefixStr = "Elementi: ";
-              if (this.currentLang === 'la') prefixStr = "Elementa: ";
+              let prefixStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.elements"]) || "Elementos: ";
               const prefixW = ctx.measureText(prefixStr).width;
               let totalWidth = prefixW;
               const parts = [];
@@ -2210,10 +2195,7 @@ const OrisApp = {
                   const el = elsArray[i];
                   let elText = (Translations[this.currentLang][`elements.${el}`] || el).toLowerCase();
                   if (i < elsArray.length - 1) {
-                      let andStr = " y ";
-                      if (this.currentLang === 'en') andStr = " and ";
-                      if (this.currentLang === 'it') andStr = " e ";
-                      if (this.currentLang === 'la') andStr = " et ";
+                      let andStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.and"]) || " y ";
                       elText += andStr;
                   }
                   const w = ctx.measureText(elText).width;
@@ -2234,10 +2216,7 @@ const OrisApp = {
           } else {
               ctx.font = '700 35px "Inter", sans-serif';
               ctx.fillStyle = '#6A6A6A';
-              let noneText = "Elementos: Ninguno";
-              if (this.currentLang === 'en') noneText = "Elements: None";
-              if (this.currentLang === 'it') noneText = "Elementi: Nessuno";
-              if (this.currentLang === 'la') noneText = "Elementa: Nulla";
+              let noneText = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.none"]) || "Elementos: Ninguno";
               ctx.fillText(noneText, canvas.width / 2, yPos);
           }
           yPos += 65;
@@ -2246,10 +2225,8 @@ const OrisApp = {
           ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
           const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
           const dateStr = new Date().toLocaleDateString(this.currentLang);
-          let durPrefix = "Duración"; let datePrefix = "Fecha";
-          if (this.currentLang === 'en') { durPrefix = "Duration"; datePrefix = "Date"; }
-          if (this.currentLang === 'it') { durPrefix = "Durata"; datePrefix = "Data"; }
-          if (this.currentLang === 'la') { durPrefix = "Tempus"; datePrefix = "Dies"; }
+          let durPrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.duration"]) || "Duración";
+          let datePrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.date"]) || "Fecha";
           ctx.fillText(`${durPrefix}: ${timeStr}       ${datePrefix}: ${dateStr}`, canvas.width / 2, yPos);
           yPos += 65;
           

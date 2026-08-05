@@ -166,7 +166,12 @@ const Translations = {
         "proverb.pazuzu.1": "He who invokes the abyss soon discovers that the abyss smiles back at him.",
         "proverb.pazuzu.2": "The price of forbidden knowledge is always paid with pieces of your own soul.",
         "proverb.pazuzu.3": "The strongest chains are not made of iron, but of the unspeakable desires you just released.",
-        "proverb.pazuzu.4": "You have fed the black fire, now do not be surprised when the shadows call you by your name."
+        "proverb.pazuzu.4": "You have fed the black fire, now do not be surprised when the shadows call you by your name.",
+        "sigil.elements": "Elements: ",
+        "sigil.and": " and ",
+        "sigil.none": "Elements: None",
+        "sigil.duration": "Duration",
+        "sigil.date": "Date",
     },
     es: {
         "splash.subtitle": "Eleva tu voz",
@@ -335,7 +340,12 @@ const Translations = {
         "proverb.pazuzu.1": "Aquel que invoca al abismo, pronto descubre que el abismo le devuelve la mirada con una sonrisa.",
         "proverb.pazuzu.2": "El precio del conocimiento prohibido siempre se paga con pedazos de tu propia alma.",
         "proverb.pazuzu.3": "Las cadenas más fuertes no son de hierro, sino de los deseos inconfesables que acabas de liberar.",
-        "proverb.pazuzu.4": "Has alimentado al fuego negro, ahora no te sorprendas cuando las sombras te llamen por tu nombre."
+        "proverb.pazuzu.4": "Has alimentado al fuego negro, ahora no te sorprendas cuando las sombras te llamen por tu nombre.",
+        "sigil.elements": "Elementos: ",
+        "sigil.and": " y ",
+        "sigil.none": "Elementos: Ninguno",
+        "sigil.duration": "Duración",
+        "sigil.date": "Fecha",
     },
     it: {
         "splash.subtitle": "Eleva la tua voce",
@@ -504,7 +514,12 @@ const Translations = {
         "proverb.pazuzu.1": "Chi invoca l'abisso scopre presto che l'abisso gli sorride di rimando.",
         "proverb.pazuzu.2": "Il prezzo della conoscenza proibita si paga sempre con pezzi della propria anima.",
         "proverb.pazuzu.3": "Le catene più forti non sono fatte di ferro, ma degli indicibili desideri che hai appena liberato.",
-        "proverb.pazuzu.4": "Hai nutrito il fuoco nero, ora non sorprenderti quando le ombre ti chiameranno per nome."
+        "proverb.pazuzu.4": "Hai nutrito il fuoco nero, ora non sorprenderti quando le ombre ti chiameranno per nome.",
+        "sigil.elements": "Elementi: ",
+        "sigil.and": " e ",
+        "sigil.none": "Elementi: Nessuno",
+        "sigil.duration": "Durata",
+        "sigil.date": "Data",
     },
     la: {
         "splash.subtitle": "Tolle vocem tuam",
@@ -669,7 +684,12 @@ const Translations = {
         "proverb.pazuzu.1": "Qui abyssum invocat cito deprehendit abyssum ei arridere.",
         "proverb.pazuzu.2": "Pretium scientiae prohibitae semper solvitur fragmentis propriae animae.",
         "proverb.pazuzu.3": "Vincula fortissima non sunt ex ferro, sed ex ineffabilibus desideriis quae modo liberasti.",
-        "proverb.pazuzu.4": "Ignem atrum pavisti, nunc ne mireris cum umbrae te nomine tuo vocant."
+        "proverb.pazuzu.4": "Ignem atrum pavisti, nunc ne mireris cum umbrae te nomine tuo vocant.",
+        "sigil.elements": "Elementa: ",
+        "sigil.and": " et ",
+        "sigil.none": "Elementa: Nulla",
+        "sigil.duration": "Tempus",
+        "sigil.date": "Dies",
     }
 ,
     zh: {
@@ -768,6 +788,11 @@ const Translations = {
         "lang.it": "\u610f\u5927\u5229\u8bed",
         "lang.la": "\u62c9\u4e01\u8bed",
         "lang.zh": "\u4e2d\u6587",
+        "sigil.elements": "元素：",
+        "sigil.and": " 和 ",
+        "sigil.none": "元素：无",
+        "sigil.duration": "持续时间",
+        "sigil.date": "日期",
     }
 };
 
