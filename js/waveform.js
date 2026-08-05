@@ -122,24 +122,34 @@ const WaveformRenderer = {
 
     const isEvil = (this.currentFreqHz === 666);
 
-    this.ctx.beginPath();
-    this.ctx.lineCap = 'round';
-    this.ctx.lineJoin = 'round';
-
-    const points = [];
-    // Extend x beyond the canvas to hide thick rounded end caps
-    for (let x = -200; x <= width + 200; x += 4) {
+    const pointsTop = [];
+    const pointsBottom = [];
+    
+    // Calculate points for the top and bottom edges
+    for (let x = -50; x <= width + 50; x += 4) {
       const irreg = wave.irregularity || 1.0;
-      let y = centerY
+      let y1 = centerY
         + wave.amplitude * Math.sin(x * wave.frequency + this.time * wave.speed + wave.phase)
         + (wave.amplitude * 0.3 * irreg) * Math.sin(x * wave.frequency * 2.7 + this.time * wave.speed * 1.3)
         + (wave.amplitude * 0.15 * irreg) * Math.sin(x * wave.frequency * 4.1 + this.time * wave.speed * 0.7);
         
       if (!isEvil) {
-          y += height * 0.05; // Slightly lower center
+          y1 += height * 0.05; // Slightly lower center
+          pointsTop.push({ x, y: y1 });
+          
+          // Generate a smooth varying thickness for organic blob-like ribbons
+          let thickness = height * 0.25 
+            + (height * 0.15) * Math.sin(x * wave.frequency * 0.8 + this.time * wave.speed * 0.5 + wave.phase * 2);
+          
+          pointsBottom.push({ x, y: y1 + thickness });
+      } else {
+          pointsTop.push({ x, y: y1 });
       }
-      points.push({ x, y });
     }
+
+    this.ctx.beginPath();
+    this.ctx.lineCap = 'round';
+    this.ctx.lineJoin = 'round';
 
     if (isEvil) {
         // EVIL MODE: Use original thin stroked lines
@@ -147,11 +157,11 @@ const WaveformRenderer = {
         
         if (this.displayProgress <= 0.001) {
             this.ctx.strokeStyle = 'rgba(200, 200, 195, 0.35)';
-            this._tracePath(points);
+            this._tracePath(pointsTop);
             this.ctx.stroke();
         } else if (this.displayProgress >= 0.999) {
             this.ctx.strokeStyle = this.targetColor;
-            this._tracePath(points);
+            this._tracePath(pointsTop);
             this.ctx.stroke();
         } else {
             const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
@@ -166,39 +176,45 @@ const WaveformRenderer = {
             gradient.addColorStop(1, 'rgba(200, 200, 195, 0.35)');
 
             this.ctx.strokeStyle = gradient;
-            this._tracePath(points);
+            this._tracePath(pointsTop);
             this.ctx.stroke();
         }
     } else {
-        // NON-EVIL MODE: Thick translucent overlapping ribbons
+        // NON-EVIL MODE: Filled translucent shapes with varying thickness
         this.ctx.globalCompositeOperation = 'multiply';
-        // Base thickness on canvas height (e.g. 25% of height) to make it a thick band
-        this.ctx.lineWidth = height * 0.25; 
         
-        this._tracePath(points);
+        // Build the closed path (top edge left-to-right, then bottom edge right-to-left)
+        this.ctx.moveTo(pointsTop[0].x, pointsTop[0].y);
+        for (let i = 1; i < pointsTop.length; i++) {
+            this.ctx.lineTo(pointsTop[i].x, pointsTop[i].y);
+        }
+        for (let i = pointsBottom.length - 1; i >= 0; i--) {
+            this.ctx.lineTo(pointsBottom[i].x, pointsBottom[i].y);
+        }
+        this.ctx.closePath();
 
         if (this.displayProgress <= 0.001) {
-            this.ctx.strokeStyle = 'rgba(200, 200, 195, 0.17)';
-            this.ctx.stroke();
+            this.ctx.fillStyle = 'rgba(200, 200, 195, 0.35)';
+            this.ctx.fill();
         } else if (this.displayProgress >= 0.999) {
-            this.ctx.strokeStyle = this._hexToRgba(this.targetColor, 0.17);
-            this.ctx.stroke();
+            this.ctx.fillStyle = this._hexToRgba(this.targetColor, 0.35);
+            this.ctx.fill();
         } else {
             const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
             const solidEnd = Math.max(0, (fillBoundary - transitionWidth) / width);
             const transEnd = Math.min(1, (fillBoundary + transitionWidth * 0.3) / width);
 
-            const targetColorRgba = this._hexToRgba(this.targetColor, 0.17);
+            const targetColorRgba = this._hexToRgba(this.targetColor, 0.35);
             
             gradient.addColorStop(0, targetColorRgba);
             if (solidEnd > 0.01) gradient.addColorStop(solidEnd, targetColorRgba);
             const midPoint = Math.min(1, (solidEnd + transEnd) / 2);
-            gradient.addColorStop(midPoint, this._hexToRgba(this.targetColor, 0.08));
-            gradient.addColorStop(transEnd, 'rgba(200, 200, 195, 0.17)');
-            gradient.addColorStop(1, 'rgba(200, 200, 195, 0.17)');
+            gradient.addColorStop(midPoint, this._hexToRgba(this.targetColor, 0.17));
+            gradient.addColorStop(transEnd, 'rgba(200, 200, 195, 0.35)');
+            gradient.addColorStop(1, 'rgba(200, 200, 195, 0.35)');
 
-            this.ctx.strokeStyle = gradient;
-            this.ctx.stroke();
+            this.ctx.fillStyle = gradient;
+            this.ctx.fill();
         }
         this.ctx.globalCompositeOperation = 'source-over';
     }
