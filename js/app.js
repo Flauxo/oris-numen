@@ -453,11 +453,6 @@ const OrisApp = {
         });
     }
 
-    // Auto-advance to home after splash
-    setTimeout(() => {
-      this.showScreen('home');
-      OrisAudio.playSplashSound();
-    }, 2000);
 
     const writeCardInput = document.getElementById('write-card-input');
     const charCounter = document.getElementById('char-counter');
