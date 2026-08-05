@@ -821,6 +821,21 @@ const OrisApp = {
                 btnSend.style.setProperty('--progress-width', '100%');
                 return;
             }
+            if (window.OrisNoiseDetector && OrisNoiseDetector.isNoisy()) {
+                btnSend.classList.remove('progressing');
+                const sendText = Translations[this.currentLang] ? (Translations[this.currentLang]['btn.send'] || 'Canalizar Mensaje') : 'Canalizar Mensaje';
+                btnSend.textContent = sendText;
+                btnSend.style.setProperty('--progress-width', '0%');
+                
+                if (this._channelingTimeout) {
+                    clearTimeout(this._channelingTimeout);
+                    this._channelingTimeout = null;
+                }
+                
+                const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.noise']) || 'Busca un lugar con menos ruido para escribir tu mensaje';
+                this.showWarning(warningMsg, this.currentFrequency === 'pazuzu' ? 'evil' : 'normal');
+                return;
+            }
             
             if (Math.random() < 0.20) { 
                 const linear = (elapsed / duration) * 100;
@@ -834,7 +849,7 @@ const OrisApp = {
     }
 
     // Wait 4.0 seconds for the progress bar animation to finish
-    setTimeout(() => {
+    this._channelingTimeout = setTimeout(() => {
         // Apply destruction animation and sound
         if (messageInput) {
           messageInput.classList.add('dissolve-anim');
