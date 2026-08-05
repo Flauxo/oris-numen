@@ -1956,7 +1956,7 @@ const OrisApp = {
               
               // Lock height explicitly for smooth transition
               el.style.height = el.offsetHeight + 'px';
-              el.style.overflow = 'hidden';
+              // Do NOT set overflow: hidden yet, so the evaporating text doesn't get clipped as it floats up
               
               // Animate inner content so the outer container stays perfectly static
               Array.from(el.children).forEach(child => {
@@ -1965,6 +1965,7 @@ const OrisApp = {
               
               // Wait for the dissolve animation (1.0s) + 0.4s empty hold = 1.4s (1400ms) before collapsing
               setTimeout(() => {
+                  el.style.overflow = 'hidden';
                   el.style.transition = 'all 0.5s ease-in-out';
                   el.style.height = '0px';
                   el.style.paddingTop = '0px';
