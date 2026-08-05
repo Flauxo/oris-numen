@@ -1971,9 +1971,7 @@ const OrisApp = {
               
               // Lock height explicitly for smooth transition
               el.style.height = el.offsetHeight + 'px';
-              el.style.transition = 'all 0.5s ease-in-out';
-              el.style.willChange = 'height, padding, opacity';
-              // Do NOT set overflow: hidden yet, so the evaporating text doesn't get clipped as it floats up
+              el.style.overflow = 'hidden';
               
               // Animate inner content so the outer container stays perfectly static
               Array.from(el.children).forEach(child => {
@@ -1982,8 +1980,10 @@ const OrisApp = {
               
               // Wait for the dissolve animation (1.0s) + 0.4s empty hold = 1.4s (1400ms) before collapsing
               setTimeout(() => {
-                  el.style.overflow = 'hidden';
-                  el.style.transform = 'translateZ(0)'; // Force hardware acceleration
+                  el.style.transition = 'all 0.5s ease-in-out';
+                  // Force a reflow to guarantee the transition applies
+                  void el.offsetHeight;
+                  
                   el.style.height = '0px';
                   el.style.paddingTop = '0px';
                   el.style.paddingBottom = '0px';
@@ -1991,7 +1991,7 @@ const OrisApp = {
                   el.style.opacity = '0';
               }, 1400);
 
-              // After the collapse is done (1400ms + 550ms buffer), remove the element from DOM and state
+              // After the collapse is done (1400ms + 500ms), remove the element from DOM and state
               setTimeout(() => {
                   let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
                   history = history.filter(item => item.id !== id);
