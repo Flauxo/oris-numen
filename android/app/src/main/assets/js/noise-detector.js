@@ -31,14 +31,7 @@ class NoiseDetector {
         }
 
         try {
-            this.stream = await getUserMedia({ 
-                audio: { 
-                    echoCancellation: false, 
-                    noiseSuppression: false, 
-                    autoGainControl: false 
-                }, 
-                video: false 
-            });
+            this.stream = await getUserMedia({ audio: true, video: false });
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.analyser = this.audioContext.createAnalyser();
             this.analyser.fftSize = 256;
