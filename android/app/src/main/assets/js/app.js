@@ -410,7 +410,10 @@ const OrisApp = {
                 return false;
             }
 
-            const color = btn.getAttribute('data-color');
+            let color = btn.getAttribute('data-color');
+            if (isEvil && element === 'fuego') {
+                color = '#cc0000'; // Dark blood red in evil mode
+            }
             const isActive = btn.classList.contains('active');
             if (isActive) {
                 btn.classList.remove('active');

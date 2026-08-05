@@ -1118,6 +1118,12 @@ body.evil-mode {
     --color-text-muted: #660000;
 }
 
+body.evil-mode .element-btn {
+    background-color: #000000;
+    color: #555555;
+    border: 1px solid #1a1a1a;
+}
+
 body.evil-mode .app-container {
     box-shadow: 0 0 50px rgba(200, 0, 0, 0.2);
 }
