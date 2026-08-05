@@ -848,8 +848,9 @@ const OrisApp = {
             if (label) {
                 const formatStr = Translations[this.currentLang]['channeling.label'] || 'Canalizando a través de la {name}...';
                 const freqFormat = Translations[this.currentLang]['freq.format'] || '{name}';
-                const formattedName = freqFormat.replace('{name}', freq.name);
-                label.innerHTML = formatStr.replace('{name}', `<span style="color: ${freq.color}">${formattedName}</span>`);
+                const coloredName = `<span style="color: ${freq.color}">${freq.name}</span>`;
+                const formattedName = freqFormat.replace('{name}', coloredName);
+                label.innerHTML = formatStr.replace('{name}', formattedName);
             }
             if (sublabel) sublabel.textContent = Translations[this.currentLang]['channeling.sublabel'];
             if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
@@ -1109,8 +1110,9 @@ const OrisApp = {
         if (label) {
             const formatStr = Translations[this.currentLang]['channeling.label'] || 'Canalizando a través de la {name}...';
             const freqFormat = Translations[this.currentLang]['freq.format'] || '{name}';
-            const formattedName = freqFormat.replace('{name}', freq.name);
-            label.innerHTML = formatStr.replace('{name}', `<span style="color: ${freq.color}">${formattedName}</span>`);
+            const coloredName = `<span style="color: ${freq.color}">${freq.name}</span>`;
+            const formattedName = freqFormat.replace('{name}', coloredName);
+            label.innerHTML = formatStr.replace('{name}', formattedName);
         }
         if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.remaining);
 
@@ -1274,8 +1276,9 @@ const OrisApp = {
       if (label) {
           const formatStr = Translations[this.currentLang]['channeling.label'] || 'Canalizando a través de la {name}...';
           const freqFormat = Translations[this.currentLang]['freq.format'] || '{name}';
-          const formattedName = freqFormat.replace('{name}', freq.name);
-          label.innerHTML = formatStr.replace('{name}', `<span style="color: ${freq.color}">${formattedName}</span>`);
+          const coloredName = `<span style="color: ${freq.color}">${freq.name}</span>`;
+          const formattedName = freqFormat.replace('{name}', coloredName);
+          label.innerHTML = formatStr.replace('{name}', formattedName);
       }
       if (sublabel) sublabel.textContent = Translations[this.currentLang]['channeling.sublabel.evil'] || 'para su transformación en energía maligna';
       if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
