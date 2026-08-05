@@ -117,63 +117,91 @@ const WaveformRenderer = {
     const height = this.canvas.height;
     const centerY = height / 2;
 
-    // Use displayProgress for ultra-smooth color filling
     const fillBoundary = width * this.displayProgress;
-    const transitionWidth = 80; // Wide transition zone for smooth gradient
+    const transitionWidth = 80; 
+
+    const isEvil = (this.currentFreqHz === 666);
 
     this.ctx.beginPath();
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
     this.ctx.lineWidth = (this.currentFreqHz === 777) ? 8.0 : 3.5;
 
-    // Build the wave path
     const points = [];
     for (let x = 0; x <= width; x += 2) {
-      // Use the new irregularity parameter to create distinct, irregular shapes
       const irreg = wave.irregularity || 1.0;
-      const y = centerY
+      let y = centerY
         + wave.amplitude * Math.sin(x * wave.frequency + this.time * wave.speed + wave.phase)
         + (wave.amplitude * 0.3 * irreg) * Math.sin(x * wave.frequency * 2.7 + this.time * wave.speed * 1.3)
         + (wave.amplitude * 0.15 * irreg) * Math.sin(x * wave.frequency * 4.1 + this.time * wave.speed * 0.7);
-
+        
+      if (!isEvil) {
+          // Shift waves down slightly so they look like hills originating from the bottom
+          y += height * 0.15;
+      }
       points.push({ x, y });
     }
 
-    // Determine stroke style based on progress
-    if (this.displayProgress <= 0.001) {
-      // No progress: all gray
-      this.ctx.strokeStyle = 'rgba(200, 200, 195, 0.35)';
-      this._tracePath(points);
-      this.ctx.stroke();
-    } else if (this.displayProgress >= 0.999) {
-      // Full progress: all colored
-      this.ctx.strokeStyle = this.targetColor;
-      this._tracePath(points);
-      this.ctx.stroke();
+    if (isEvil) {
+        // EVIL MODE: Use original stroked lines
+        if (this.displayProgress <= 0.001) {
+            this.ctx.strokeStyle = 'rgba(200, 200, 195, 0.35)';
+            this._tracePath(points);
+            this.ctx.stroke();
+        } else if (this.displayProgress >= 0.999) {
+            this.ctx.strokeStyle = this.targetColor;
+            this._tracePath(points);
+            this.ctx.stroke();
+        } else {
+            const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
+            const solidEnd = Math.max(0, (fillBoundary - transitionWidth) / width);
+            const transEnd = Math.min(1, (fillBoundary + transitionWidth * 0.3) / width);
+
+            gradient.addColorStop(0, this.targetColor);
+            if (solidEnd > 0.01) gradient.addColorStop(solidEnd, this.targetColor);
+            const midPoint = Math.min(1, (solidEnd + transEnd) / 2);
+            gradient.addColorStop(midPoint, this._hexToRgba(this.targetColor, 0.5));
+            gradient.addColorStop(transEnd, 'rgba(200, 200, 195, 0.35)');
+            gradient.addColorStop(1, 'rgba(200, 200, 195, 0.35)');
+
+            this.ctx.strokeStyle = gradient;
+            this._tracePath(points);
+            this.ctx.stroke();
+        }
     } else {
-      // Partial progress: draw colored segment then gray segment with smooth transition
+        // NON-EVIL MODE: Filled translucent overlapping waves
+        this.ctx.globalCompositeOperation = 'multiply';
+        
+        this._tracePath(points);
+        // Close path to the bottom of the canvas
+        this.ctx.lineTo(width, height);
+        this.ctx.lineTo(0, height);
+        this.ctx.closePath();
 
-      // Create gradient with wide, smooth transition
-      const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
+        if (this.displayProgress <= 0.001) {
+            this.ctx.fillStyle = 'rgba(200, 200, 195, 0.35)';
+            this.ctx.fill();
+        } else if (this.displayProgress >= 0.999) {
+            this.ctx.fillStyle = this._hexToRgba(this.targetColor, 0.35);
+            this.ctx.fill();
+        } else {
+            const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
+            const solidEnd = Math.max(0, (fillBoundary - transitionWidth) / width);
+            const transEnd = Math.min(1, (fillBoundary + transitionWidth * 0.3) / width);
 
-      // Solid color from start to near the boundary
-      const solidEnd = Math.max(0, (fillBoundary - transitionWidth) / width);
-      // Transition zone
-      const transEnd = Math.min(1, (fillBoundary + transitionWidth * 0.3) / width);
+            const targetColorRgba = this._hexToRgba(this.targetColor, 0.35);
+            
+            gradient.addColorStop(0, targetColorRgba);
+            if (solidEnd > 0.01) gradient.addColorStop(solidEnd, targetColorRgba);
+            const midPoint = Math.min(1, (solidEnd + transEnd) / 2);
+            gradient.addColorStop(midPoint, this._hexToRgba(this.targetColor, 0.17));
+            gradient.addColorStop(transEnd, 'rgba(200, 200, 195, 0.35)');
+            gradient.addColorStop(1, 'rgba(200, 200, 195, 0.35)');
 
-      gradient.addColorStop(0, this.targetColor);
-      if (solidEnd > 0.01) {
-        gradient.addColorStop(solidEnd, this.targetColor);
-      }
-      // Smooth fade through the transition zone
-      const midPoint = Math.min(1, (solidEnd + transEnd) / 2);
-      gradient.addColorStop(midPoint, this._hexToRgba(this.targetColor, 0.5));
-      gradient.addColorStop(transEnd, 'rgba(200, 200, 195, 0.35)');
-      gradient.addColorStop(1, 'rgba(200, 200, 195, 0.35)');
-
-      this.ctx.strokeStyle = gradient;
-      this._tracePath(points);
-      this.ctx.stroke();
+            this.ctx.fillStyle = gradient;
+            this.ctx.fill();
+        }
+        this.ctx.globalCompositeOperation = 'source-over';
     }
   },
 
