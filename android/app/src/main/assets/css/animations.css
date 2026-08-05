@@ -130,13 +130,53 @@
     animation: crossFloat 4s ease-in-out infinite;
 }
 
-#splash-screen .splash-title {
-    animation: fadeIn 1.5s ease-out forwards;
+@keyframes splashOAppearMove {
+    0% {
+        opacity: 0;
+        transform: translateX(80px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateX(80px);
+    }
+    30% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-#splash-screen .splash-subtitle {
-    animation: fadeIn 2s ease-out 0.5s forwards;
+@keyframes letterFadeIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+#splash-screen .splash-o-img {
     opacity: 0;
+    animation: splashOAppearMove 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+#splash-screen .letter {
+    opacity: 0;
+    display: inline-block;
+}
+
+#splash-screen .splash-line1 .letter:nth-child(1) { animation: letterFadeIn 0.3s ease-out 1.5s forwards; }
+#splash-screen .splash-line1 .letter:nth-child(2) { animation: letterFadeIn 0.3s ease-out 1.6s forwards; }
+#splash-screen .splash-line1 .letter:nth-child(3) { animation: letterFadeIn 0.3s ease-out 1.7s forwards; }
+
+#splash-screen .splash-line2 .letter:nth-child(1) { animation: letterFadeIn 0.3s ease-out 1.9s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(2) { animation: letterFadeIn 0.3s ease-out 2.0s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(3) { animation: letterFadeIn 0.3s ease-out 2.1s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(4) { animation: letterFadeIn 0.3s ease-out 2.2s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(5) { animation: letterFadeIn 0.3s ease-out 2.3s forwards; }
+
+#splash-screen .splash-subtitle {
+    opacity: 0;
+    animation: fadeIn 0.4s ease-out 3.0s forwards;
 }
 
 
