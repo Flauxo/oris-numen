@@ -1967,11 +1967,18 @@ const OrisApp = {
       try {
           const el = document.querySelector(`.history-item[data-id="${id}"]`);
           if (el) {
+              // Double-click guard to prevent race conditions on multi-taps
+              if (el.dataset.deleting) return;
+              el.dataset.deleting = 'true';
+
               try { OrisAudio.playDestructionSound(); } catch (e) {}
               
-              // Lock height explicitly for smooth transition
-              el.style.height = el.offsetHeight + 'px';
-              el.style.overflow = 'hidden';
+              // Absolute lock on height for smooth transition
+              const startHeight = el.offsetHeight + 'px';
+              el.style.minHeight = startHeight;
+              el.style.maxHeight = startHeight;
+              el.style.height = startHeight;
+              // Do NOT set overflow: hidden yet, so the evaporating text doesn't get clipped as it floats up
               
               // Animate inner content so the outer container stays perfectly static
               Array.from(el.children).forEach(child => {
@@ -1980,18 +1987,24 @@ const OrisApp = {
               
               // Wait for the dissolve animation (1.0s) + 0.4s empty hold = 1.4s (1400ms) before collapsing
               setTimeout(() => {
-                  el.style.transition = 'all 0.5s ease-in-out';
-                  // Force a reflow to guarantee the transition applies
-                  void el.offsetHeight;
+                  el.style.overflow = 'hidden';
+                  el.style.transform = 'translateZ(0)'; // Force hardware acceleration
                   
-                  el.style.height = '0px';
-                  el.style.paddingTop = '0px';
-                  el.style.paddingBottom = '0px';
-                  el.style.borderBottomWidth = '0px';
-                  el.style.opacity = '0';
+                  requestAnimationFrame(() => {
+                      el.style.transition = 'all 0.5s ease-in-out';
+                      requestAnimationFrame(() => {
+                          el.style.minHeight = '0px';
+                          el.style.maxHeight = '0px';
+                          el.style.height = '0px';
+                          el.style.paddingTop = '0px';
+                          el.style.paddingBottom = '0px';
+                          el.style.borderBottomWidth = '0px';
+                          el.style.opacity = '0';
+                      });
+                  });
               }, 1400);
 
-              // After the collapse is done (1400ms + 500ms), remove the element from DOM and state
+              // After the collapse is done (1400ms + 550ms buffer), remove the element from DOM and state
               setTimeout(() => {
                   let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
                   history = history.filter(item => item.id !== id);
@@ -2418,4 +2431,5 @@ const OrisApp = {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => OrisApp.init());
+
 
