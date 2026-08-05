@@ -125,10 +125,10 @@ const WaveformRenderer = {
     this.ctx.beginPath();
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
-    this.ctx.lineWidth = (this.currentFreqHz === 777) ? 8.0 : 3.5;
 
     const points = [];
-    for (let x = 0; x <= width; x += 2) {
+    // Extend x beyond the canvas to hide thick rounded end caps
+    for (let x = -200; x <= width + 200; x += 4) {
       const irreg = wave.irregularity || 1.0;
       let y = centerY
         + wave.amplitude * Math.sin(x * wave.frequency + this.time * wave.speed + wave.phase)
@@ -136,14 +136,15 @@ const WaveformRenderer = {
         + (wave.amplitude * 0.15 * irreg) * Math.sin(x * wave.frequency * 4.1 + this.time * wave.speed * 0.7);
         
       if (!isEvil) {
-          // Shift waves down slightly so they look like hills originating from the bottom
-          y += height * 0.15;
+          y += height * 0.05; // Slightly lower center
       }
       points.push({ x, y });
     }
 
     if (isEvil) {
-        // EVIL MODE: Use original stroked lines
+        // EVIL MODE: Use original thin stroked lines
+        this.ctx.lineWidth = (this.currentFreqHz === 777) ? 8.0 : 3.5;
+        
         if (this.displayProgress <= 0.001) {
             this.ctx.strokeStyle = 'rgba(200, 200, 195, 0.35)';
             this._tracePath(points);
@@ -169,21 +170,19 @@ const WaveformRenderer = {
             this.ctx.stroke();
         }
     } else {
-        // NON-EVIL MODE: Filled translucent overlapping waves
+        // NON-EVIL MODE: Thick translucent overlapping ribbons
         this.ctx.globalCompositeOperation = 'multiply';
+        // Base thickness on canvas height (e.g. 25% of height) to make it a thick band
+        this.ctx.lineWidth = height * 0.25; 
         
         this._tracePath(points);
-        // Close path to the bottom of the canvas
-        this.ctx.lineTo(width, height);
-        this.ctx.lineTo(0, height);
-        this.ctx.closePath();
 
         if (this.displayProgress <= 0.001) {
-            this.ctx.fillStyle = 'rgba(200, 200, 195, 0.35)';
-            this.ctx.fill();
+            this.ctx.strokeStyle = 'rgba(200, 200, 195, 0.35)';
+            this.ctx.stroke();
         } else if (this.displayProgress >= 0.999) {
-            this.ctx.fillStyle = this._hexToRgba(this.targetColor, 0.35);
-            this.ctx.fill();
+            this.ctx.strokeStyle = this._hexToRgba(this.targetColor, 0.35);
+            this.ctx.stroke();
         } else {
             const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
             const solidEnd = Math.max(0, (fillBoundary - transitionWidth) / width);
@@ -198,8 +197,8 @@ const WaveformRenderer = {
             gradient.addColorStop(transEnd, 'rgba(200, 200, 195, 0.35)');
             gradient.addColorStop(1, 'rgba(200, 200, 195, 0.35)');
 
-            this.ctx.fillStyle = gradient;
-            this.ctx.fill();
+            this.ctx.strokeStyle = gradient;
+            this.ctx.stroke();
         }
         this.ctx.globalCompositeOperation = 'source-over';
     }
