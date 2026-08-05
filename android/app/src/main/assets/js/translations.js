@@ -46,6 +46,7 @@ const Translations = {
         "btn.back": "← Back",
         "write.placeholder": "Write your message here...",
         "btn.send": "Channel Message",
+        "btn.channeling": "Channeling...",
         
         "channeling.sublabel": "for its transformation into energy",
         "channeling.sublabel.evil": "for its transformation into evil energy",
@@ -226,6 +227,7 @@ const Translations = {
         "btn.back": "← Volver",
         "write.placeholder": "Escribe tu mensaje aquí...",
         "btn.send": "Canalizar Mensaje",
+        "btn.channeling": "Canalizando...",
         
         "channeling.sublabel": "para su transformación en energía",
         "channeling.sublabel.evil": "para su transformación en energía maligna",
@@ -406,6 +408,7 @@ const Translations = {
         "btn.back": "← Indietro",
         "write.placeholder": "Scrivi il tuo messaggio qui...",
         "btn.send": "Canalizza Messaggio",
+        "btn.channeling": "Canalizzazione in corso...",
         
         "channeling.sublabel": "per la sua trasformazione in energia",
         "channeling.sublabel.evil": "per la sua trasformazione in energia malefica",
@@ -586,6 +589,7 @@ const Translations = {
         "btn.back": "← Regressus",
         "write.placeholder": "Scribe nuntium tuum hic...",
         "btn.send": "Nuntium Transmitte",
+        "btn.channeling": "Transmittens...",
         
         "channeling.sublabel": "ad eius transformationem in energiam",
         "channeling.sublabel.evil": "ad eius transformationem in energiam malignam",
@@ -758,6 +762,7 @@ const Translations = {
         "btn.back": "\u2190 \u8fd4\u56de",
         "write.placeholder": "\u5728\u8fd9\u91cc\u5199\u4e0b\u4f60\u7684\u4fe1\u606f...",
         "btn.send": "\u5f15\u5bfc\u4fe1\u606f",
+        "btn.channeling": "\u5f15\u5bfc\u4e2d...",
         "channeling.sublabel": "\u8f6c\u5316\u4e3a\u80fd\u91cf",
         "channeling.sublabel.evil": "\u8f6c\u5316\u4e3a\u90aa\u6076\u80fd\u91cf",
         "channeling.info": "\u5728\u5f15\u5bfc\u671f\u95f4\u4e13\u6ce8\u4e8e\u4f60\u7684\u4fe1\u606f\u3002\uff08\u4f60\u53ef\u4ee5\u5173\u95ed\u5c4f\u5e55\uff09",

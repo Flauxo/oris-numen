@@ -600,7 +600,11 @@ const OrisApp = {
     }
     const otherElements = document.querySelectorAll('.freq-indicator-container, .freq-info, .btn-back, .write-footer');
     otherElements.forEach(el => el.classList.remove('dissolve-anim', 'dissolve-anim-second'));
-    if (btnSend) btnSend.style.backgroundColor = freq.color;
+    if (btnSend) {
+        btnSend.style.backgroundColor = freq.color;
+        btnSend.classList.remove('progressing');
+        btnSend.textContent = Translations[this.currentLang] ? (Translations[this.currentLang]['btn.send'] || 'Canalizar Mensaje') : 'Canalizar Mensaje';
+    }
 
     // Setup write card line and button colors
     const writeCardLine = document.getElementById('write-card-line');
@@ -783,56 +787,67 @@ const OrisApp = {
         return;
     }
 
-    // Apply destruction animation and sound
-    if (messageInput) {
-      messageInput.classList.add('dissolve-anim');
-    }
-    const otherElements = document.querySelectorAll('.freq-indicator-container, .freq-info, .btn-back, .write-footer');
-    
-    // Trigger second phase after 0.5s (overlap)
-    setTimeout(() => {
-      otherElements.forEach(el => el.classList.add('dissolve-anim-second'));
-    }, 500);
-    
-    if (OrisAudio.playDestructionSound) {
-        OrisAudio.playDestructionSound();
-    } else {
-        OrisAudio.playButtonSound();
+    // Progress bar animation on button
+    const btnSend = document.getElementById('btn-send');
+    if (btnSend) {
+        btnSend.classList.add('progressing');
+        const channelingText = Translations[this.currentLang] ? (Translations[this.currentLang]['btn.channeling'] || 'Canalizando...') : 'Canalizando...';
+        btnSend.textContent = channelingText;
     }
 
-    // Wait 2.0 seconds for animation to finish before proceeding
+    // Wait 3.0 seconds for the progress bar animation to finish
     setTimeout(() => {
-        // Update channeling screen
-        const label = document.getElementById('channeling-label');
-        const sublabel = document.getElementById('channeling-sublabel');
-        const timer = document.getElementById('timer-display');
-    
-        if (label) {
-            const formatStr = Translations[this.currentLang]['channeling.label'] || 'Canalizando a través de la {name}...';
-            const freqFormat = Translations[this.currentLang]['freq.format'] || '{name}';
-            label.textContent = formatStr.replace('{name}', freqFormat.replace('{name}', freq.name));
+        // Apply destruction animation and sound
+        if (messageInput) {
+          messageInput.classList.add('dissolve-anim');
         }
-        if (sublabel) sublabel.textContent = Translations[this.currentLang]['channeling.sublabel'];
-        if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
-    
-        this.showScreen('channeling');
-    
-        // Start frequency pad audio
-        OrisAudio.startFrequencyPad(freq.audioHz || freq.hz);
-    
-        // Start waveform animation
-        WaveformRenderer.setupWaves(freq.hz);
-        WaveformRenderer.setColor(freq.color);
-        WaveformRenderer.setProgress(0);
-        WaveformRenderer.start();
-    
-        // Start countdown timer
-        ChannelTimer.reset();
-        ChannelTimer.start(
-          (remaining, progress) => this.onTimerTick(remaining, progress),
-          () => this.onTimerComplete()
-        );
-    }, 1800);
+        const otherElements = document.querySelectorAll('.freq-indicator-container, .freq-info, .btn-back, .write-footer');
+        
+        // Trigger second phase after 0.5s (overlap)
+        setTimeout(() => {
+          otherElements.forEach(el => el.classList.add('dissolve-anim-second'));
+        }, 500);
+        
+        if (OrisAudio.playDestructionSound) {
+            OrisAudio.playDestructionSound();
+        } else {
+            OrisAudio.playButtonSound();
+        }
+
+        // Wait 2.0 seconds for animation to finish before proceeding
+        setTimeout(() => {
+            // Update channeling screen
+            const label = document.getElementById('channeling-label');
+            const sublabel = document.getElementById('channeling-sublabel');
+            const timer = document.getElementById('timer-display');
+        
+            if (label) {
+                const formatStr = Translations[this.currentLang]['channeling.label'] || 'Canalizando a través de la {name}...';
+                const freqFormat = Translations[this.currentLang]['freq.format'] || '{name}';
+                label.textContent = formatStr.replace('{name}', freqFormat.replace('{name}', freq.name));
+            }
+            if (sublabel) sublabel.textContent = Translations[this.currentLang]['channeling.sublabel'];
+            if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
+        
+            this.showScreen('channeling');
+        
+            // Start frequency pad audio
+            OrisAudio.startFrequencyPad(freq.audioHz || freq.hz);
+        
+            // Start waveform animation
+            WaveformRenderer.setupWaves(freq.hz);
+            WaveformRenderer.setColor(freq.color);
+            WaveformRenderer.setProgress(0);
+            WaveformRenderer.start();
+        
+            // Start countdown timer
+            ChannelTimer.reset();
+            ChannelTimer.start(
+              (remaining, progress) => this.onTimerTick(remaining, progress),
+              () => this.onTimerComplete()
+            );
+        }, 1800);
+    }, 3000);
   },
 
   /**

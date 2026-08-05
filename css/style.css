@@ -1548,3 +1548,21 @@ body.evil-mode .home-logo-circle {
     0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
     100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
 }
+
+.btn-send.progressing {
+    pointer-events: none;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 0% 100%;
+    animation: btnProgressBg 3s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+}
+
+@keyframes btnProgressBg {
+    0% { background-size: 0% 100%; }
+    15% { background-size: 5% 100%; }
+    35% { background-size: 40% 100%; }
+    50% { background-size: 48% 100%; }
+    75% { background-size: 85% 100%; }
+    100% { background-size: 100% 100%; }
+}
