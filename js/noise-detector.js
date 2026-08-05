@@ -11,10 +11,12 @@ class NoiseDetector {
         this.isListening = false;
         this.currentVolume = 0;
         this.animationId = null;
+        this.isStarting = false;
     }
 
     async start() {
-        if (this.isListening) return true;
+        if (this.isListening || this.isStarting) return true;
+        this.isStarting = true;
         
         const getUserMedia = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) 
             ? navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)
@@ -41,10 +43,12 @@ class NoiseDetector {
             this.microphone.connect(this.analyser);
             
             this.isListening = true;
+            this.isStarting = false;
             this.monitor();
             console.log("Noise detector started.");
             return true;
         } catch (err) {
+            this.isStarting = false;
             console.error("Error accessing microphone for noise detection:", err);
             alert("Error de micrófono: " + err.message);
             return false;
