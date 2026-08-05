@@ -1649,6 +1649,15 @@ const OrisApp = {
               countDisplay.textContent = formatStr.replace('{count}', totalChannelings);
           }
           
+          const halo = document.querySelector('.evolution-glow-halo');
+          if (halo) {
+              let rgb = '138, 43, 226';
+              if (this.currentFrequency && this.FREQUENCIES && this.FREQUENCIES[this.currentFrequency]) {
+                  rgb = this.FREQUENCIES[this.currentFrequency].colorRgb;
+              }
+              halo.style.boxShadow = `0 0 50px 20px rgba(${rgb}, 0.5)`;
+          }
+          
           const canvas = document.getElementById('evolution-canvas');
           if (canvas) {
               this.drawEvolutionMandala(canvas, totalChannelings);
