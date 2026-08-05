@@ -128,9 +128,11 @@ body {
 }
 
 .splash-o-img {
-    height: 3.2rem;
+    height: 2.4rem;
     width: auto;
     object-fit: contain;
+    margin-top: 8px;
+    margin-right: 2px;
 }
 
 .splash-letters {
