@@ -185,7 +185,7 @@ const Translations = {
         "menu.about": "Acerca de",
         "menu.evolution": "Evolución espiritual",
         "evolution.title": "Evolución Espiritual",
-        "evolution.explanation": "Cada vez que canalizas un mensaje, tu núcleo desarrolla un nuevo nivel geométrico, volviéndose más majestuoso e iluminado.",
+        "evolution.explanation": "Cada vez que canalizas un mensaje, tu núcleo espiritual desarrolla un nuevo nivel geométrico, volviéndose más majestuoso e iluminado.",
         "evolution.count": "Número de canalizaciones: {count}",
         
         "history.title": "Historial de Canalizaciones",
