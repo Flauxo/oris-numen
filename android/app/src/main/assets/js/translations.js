@@ -59,6 +59,7 @@ const Translations = {
         "elements.fuego": "Fire",
         "warning.short_message": "Please write a more sincere message.",
         "warning.incompatible_element": "Incompatible element in evil mode",
+        "warning.noise": "Find a quieter place to channel the message.",
         "warning.too_many_clicks": "Please do not tap the symbol any more times.",
         
         "success.title": "Message channeled<br>successfully",
@@ -240,6 +241,7 @@ const Translations = {
         "elements.fuego": "Fuego",
         "warning.short_message": "Escribe un mensaje con más sinceridad.",
         "warning.incompatible_element": "Elemento incompatible en modo maligno",
+        "warning.noise": "Busca un lugar con menos ruido para canalizar el mensaje.",
         "warning.too_many_clicks": "Por favor, no pulses más veces en el símbolo.",
         
         "success.title": "Mensaje canalizado<br>con éxito",
@@ -421,6 +423,7 @@ const Translations = {
         "elements.fuego": "Fuoco",
         "warning.short_message": "Per favore, scrivi un messaggio più sincero.",
         "warning.incompatible_element": "Elemento incompatibile in modalità malefica",
+        "warning.noise": "Trova un posto più tranquillo per canalizzare il messaggio.",
         "warning.too_many_clicks": "Per favore, non premere più volte il simbolo.",
         
         "success.title": "Messaggio canalizzato<br>con successo",
@@ -598,6 +601,7 @@ const Translations = {
         "elements.add": "Elementa adde",
         "warning.short_message": "Sacrum murmura inania non audit. Aperi cor tuum et sincere scribe.",
         "warning.incompatible_element": "Elementum incompatiens in modo maligno",
+        "warning.noise": "Quaere locum quietiorem ut nuntium canalizes.",
         "warning.too_many_clicks": "Quaeso, ne amplius symbolum pulsaveris.",
         
         "success.title": "Nuntius feliciter<br>transmissus est",
@@ -774,6 +778,7 @@ const Translations = {
         "elements.fuego": "\u706b",
         "warning.short_message": "\u8bf7\u5199\u4e00\u4e2a\u66f4\u771f\u8bda\u7684\u4fe1\u606f\u3002",
         "warning.incompatible_element": "\u90aa\u6076\u6a21\u5f0f\u4e0b\u4e0d\u517c\u5bb9\u7684\u5143\u7d20",
+        "warning.noise": "\u5bfb\u627e\u4e00\u4e2a\u66f4\u5b89\u9759\u7684\u5730\u65b9\u6765\u4f20\u9012\u4fe1\u606f\u3002",
         "warning.too_many_clicks": "\u8bf7\u4e0d\u8981\u518d\u70b9\u51fb\u7b26\u53f7\u3002",
         "success.title": "\u4fe1\u606f\u5f15\u5bfc\u6210\u529f",
         "success.subtitle.divine": "\u4f60\u7684\u4fe1\u606f\u5df2\u63d0\u5347\u5230\u795e\u5723",

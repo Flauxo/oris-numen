@@ -781,7 +781,7 @@ const OrisApp = {
     if (!freq) return;
 
     if (window.OrisNoiseDetector && OrisNoiseDetector.isNoisy()) {
-        const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.noise']) || 'Busca un lugar con menos ruido para escribir tu mensaje';
+        const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.noise']) || 'Busca un lugar con menos ruido para canalizar el mensaje.';
         this.showWarning(warningMsg, this.currentFrequency === 'pazuzu' ? 'evil' : 'normal');
         return;
     }
@@ -849,7 +849,7 @@ const OrisApp = {
                     this._channelingTimeout = null;
                 }
                 
-                const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.noise']) || 'Busca un lugar con menos ruido para escribir tu mensaje';
+                const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.noise']) || 'Busca un lugar con menos ruido para canalizar el mensaje.';
                 this.showWarning(warningMsg, this.currentFrequency === 'pazuzu' ? 'evil' : 'normal');
                 return;
             }
