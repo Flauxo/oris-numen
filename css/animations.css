@@ -136,15 +136,15 @@
 @keyframes splashOAppearMove {
     0% {
         opacity: 0;
-        transform: translateX(3.3rem);
+        transform: translateX(4.0rem);
     }
     12% {
         opacity: 1;
-        transform: translateX(3.3rem);
+        transform: translateX(4.0rem);
     }
     25% {
         opacity: 1;
-        transform: translateX(3.3rem);
+        transform: translateX(4.0rem);
     }
     40% {
         opacity: 1;
