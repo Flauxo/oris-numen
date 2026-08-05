@@ -1551,7 +1551,7 @@ body.evil-mode .home-logo-circle {
 
 .btn-send.progressing {
     pointer-events: none;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%);
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 0% 100%;
