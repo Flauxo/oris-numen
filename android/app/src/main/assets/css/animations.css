@@ -127,7 +127,10 @@
 /* --- Splash Screen Animations --- */
 
 #splash-screen .splash-cross {
-    animation: crossFloat 4s ease-in-out infinite;
+    opacity: 0;
+    animation: 
+        fadeIn 0.4s ease-out 3.5s forwards,
+        crossFloat 4s ease-in-out 3.5s infinite;
 }
 
 @keyframes splashOAppearMove {
