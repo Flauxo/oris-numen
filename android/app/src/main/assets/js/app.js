@@ -1096,10 +1096,10 @@ const OrisApp = {
   startSplash() {
     this.showScreen('splash');
     
-    // Delay sound until the 'O' starts moving (approx 2.0s)
+    // Start sound slightly before the 'O' starts moving (approx 1.6s)
     setTimeout(() => {
       try { OrisAudio.playSplashSound(); } catch (e) { /* silent */ }
-    }, 2000);
+    }, 1600);
 
     // Extended splash time for new animation (7.5 seconds)
     setTimeout(() => {
