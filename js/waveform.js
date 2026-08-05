@@ -178,24 +178,24 @@ const WaveformRenderer = {
         this._tracePath(points);
 
         if (this.displayProgress <= 0.001) {
-            this.ctx.strokeStyle = 'rgba(200, 200, 195, 0.35)';
+            this.ctx.strokeStyle = 'rgba(200, 200, 195, 0.17)';
             this.ctx.stroke();
         } else if (this.displayProgress >= 0.999) {
-            this.ctx.strokeStyle = this._hexToRgba(this.targetColor, 0.35);
+            this.ctx.strokeStyle = this._hexToRgba(this.targetColor, 0.17);
             this.ctx.stroke();
         } else {
             const gradient = this.ctx.createLinearGradient(0, 0, width, 0);
             const solidEnd = Math.max(0, (fillBoundary - transitionWidth) / width);
             const transEnd = Math.min(1, (fillBoundary + transitionWidth * 0.3) / width);
 
-            const targetColorRgba = this._hexToRgba(this.targetColor, 0.35);
+            const targetColorRgba = this._hexToRgba(this.targetColor, 0.17);
             
             gradient.addColorStop(0, targetColorRgba);
             if (solidEnd > 0.01) gradient.addColorStop(solidEnd, targetColorRgba);
             const midPoint = Math.min(1, (solidEnd + transEnd) / 2);
-            gradient.addColorStop(midPoint, this._hexToRgba(this.targetColor, 0.17));
-            gradient.addColorStop(transEnd, 'rgba(200, 200, 195, 0.35)');
-            gradient.addColorStop(1, 'rgba(200, 200, 195, 0.35)');
+            gradient.addColorStop(midPoint, this._hexToRgba(this.targetColor, 0.08));
+            gradient.addColorStop(transEnd, 'rgba(200, 200, 195, 0.17)');
+            gradient.addColorStop(1, 'rgba(200, 200, 195, 0.17)');
 
             this.ctx.strokeStyle = gradient;
             this.ctx.stroke();
