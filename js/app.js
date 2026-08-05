@@ -1655,18 +1655,24 @@ const OrisApp = {
           let freqCounts = {};
           let maxCount = 0;
           let dominantFreq = null;
+          let totalCount = history.length;
           
           history.forEach(item => {
               if (item.freqId) {
                   freqCounts[item.freqId] = (freqCounts[item.freqId] || 0) + 1;
                   if (freqCounts[item.freqId] > maxCount) {
                       maxCount = freqCounts[item.freqId];
-                      dominantFreq = item.freqId;
                   }
               }
           });
           
+          if (maxCount > 0) {
+              let candidates = Object.keys(freqCounts).filter(k => freqCounts[k] === maxCount);
+              dominantFreq = candidates[Math.floor(Math.random() * candidates.length)];
+          }
+          
           const numinosityState = document.getElementById('evolution-numinosity-state');
+          const numinosityPercentage = document.getElementById('evolution-numinosity-percentage');
           if (numinosityState) {
               let stateKey = 'evolution.state.default';
               let stateColor = '#ffffff';
@@ -1679,6 +1685,16 @@ const OrisApp = {
               numinosityState.textContent = t[stateKey] || "Despertando";
               numinosityState.setAttribute('data-i18n', stateKey);
               numinosityState.style.color = stateColor;
+              
+              if (numinosityPercentage) {
+                  if (dominantFreq && totalCount > 0) {
+                      let percentage = Math.round((maxCount / totalCount) * 100);
+                      numinosityPercentage.textContent = ` ${percentage}%`;
+                      numinosityPercentage.style.color = stateColor;
+                  } else {
+                      numinosityPercentage.textContent = "";
+                  }
+              }
           }
           
           const halo = document.querySelector('.evolution-glow-halo');
