@@ -1649,6 +1649,38 @@ const OrisApp = {
               countDisplay.textContent = formatStr.replace('{count}', totalChannelings);
           }
           
+          // Calculate dominant frequency for Numinosity State
+          let history = [];
+          try { history = JSON.parse(localStorage.getItem('oris_history') || '[]'); } catch(e){}
+          let freqCounts = {};
+          let maxCount = 0;
+          let dominantFreq = null;
+          
+          history.forEach(item => {
+              if (item.freqId) {
+                  freqCounts[item.freqId] = (freqCounts[item.freqId] || 0) + 1;
+                  if (freqCounts[item.freqId] > maxCount) {
+                      maxCount = freqCounts[item.freqId];
+                      dominantFreq = item.freqId;
+                  }
+              }
+          });
+          
+          const numinosityState = document.getElementById('evolution-numinosity-state');
+          if (numinosityState) {
+              let stateKey = 'evolution.state.default';
+              let stateColor = '#ffffff';
+              
+              if (dominantFreq && this.FREQUENCIES && this.FREQUENCIES[dominantFreq]) {
+                  stateKey = `evolution.state.${dominantFreq}`;
+                  stateColor = this.FREQUENCIES[dominantFreq].color;
+              }
+              
+              numinosityState.textContent = t[stateKey] || "Despertando";
+              numinosityState.setAttribute('data-i18n', stateKey);
+              numinosityState.style.color = stateColor;
+          }
+          
           const halo = document.querySelector('.evolution-glow-halo');
           if (halo) {
               let rgb = '138, 43, 226';
