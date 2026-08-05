@@ -56,6 +56,23 @@ const OrisApp = {
     document.addEventListener('click', initAudio);
     document.addEventListener('touchstart', initAudio);
 
+    // Global interceptor for warning popup dismiss
+    const interceptWarningClick = (e) => {
+        const popup = document.getElementById('warning-popup');
+        if (popup && popup.classList.contains('show')) {
+            popup.classList.remove('show');
+            if (this._warningTimer) {
+                clearTimeout(this._warningTimer);
+                this._warningTimer = null;
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        }
+    };
+    document.addEventListener('click', interceptWarningClick, { capture: true });
+    document.addEventListener('touchstart', interceptWarningClick, { capture: true, passive: false });
+
     // Initialize translations
     const savedLang = localStorage.getItem('oris-lang') || 'en';
     this.setLanguage(savedLang);
