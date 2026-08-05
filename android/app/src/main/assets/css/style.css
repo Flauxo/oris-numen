@@ -571,9 +571,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    margin-top: auto;
-    padding-top: 8px;
+    flex-grow: 1;
+    width: 100%;
 }
 
 .channeling-info {
@@ -581,6 +580,7 @@ body {
     color: var(--color-text-muted);
     font-weight: 400;
     text-align: center;
+    margin: auto 0;
 }
 
 .btn-cancel {
@@ -699,18 +699,6 @@ body {
 .element-btn.active {
     background-color: var(--elem-color-dim);
     color: var(--elem-color);
-}
-
-.element-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 24px;
-    height: 2px;
-    background-color: var(--elem-color);
-    border-radius: 2px;
 }
 
 .element-icon {
