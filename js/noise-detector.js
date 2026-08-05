@@ -100,4 +100,4 @@ class NoiseDetector {
     }
 }
 
-const OrisNoiseDetector = new NoiseDetector();
+window.OrisNoiseDetector = new NoiseDetector();
