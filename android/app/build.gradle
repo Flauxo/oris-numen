@@ -2,6 +2,25 @@ plugins {
     id 'com.android.application'
 }
 
+def versionPropsFile = file('version.properties')
+def versionProps = new Properties()
+if (versionPropsFile.canRead()) {
+    versionProps.load(new FileInputStream(versionPropsFile))
+} else {
+    versionProps['VERSION_MAJOR'] = '2'
+    versionProps['VERSION_MINOR'] = '0'
+    versionProps['VERSION_PATCH'] = '4'
+}
+
+def isAssemble = gradle.startParameter.taskNames.any { it.toLowerCase().contains("assemble") }
+if (isAssemble) {
+    def patch = versionProps['VERSION_PATCH'].toInteger() + 1
+    versionProps['VERSION_PATCH'] = patch.toString()
+    versionProps.store(versionPropsFile.newWriter(), null)
+}
+
+def vName = "${versionProps['VERSION_MAJOR']}.${versionProps['VERSION_MINOR']}.${versionProps['VERSION_PATCH']}"
+
 android {
     namespace 'com.oris.numen'
     compileSdk 36
@@ -11,7 +30,7 @@ android {
         minSdk 24
         targetSdk 36
         versionCode 1
-        versionName "1.0"
+        versionName vName
     }
 
     signingConfigs {
@@ -33,6 +52,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "Oris Numen V.${vName}.apk"
+        }
     }
 }
 
