@@ -1905,7 +1905,23 @@ const OrisApp = {
           const el = document.querySelector(`.history-item[data-id="${id}"]`);
           if (el) {
               try { OrisAudio.playDestructionSound(); } catch (e) {}
+              
+              // Lock height for smooth transition
+              el.style.maxHeight = el.offsetHeight + 'px';
+              el.style.overflow = 'hidden';
+              
               el.classList.add('dissolve-anim-fast');
+              
+              // Collapse space smoothly while finishing dissolve
+              setTimeout(() => {
+                  el.style.transition = 'all 0.5s ease-in-out';
+                  el.style.maxHeight = '0px';
+                  el.style.paddingTop = '0px';
+                  el.style.paddingBottom = '0px';
+                  el.style.borderBottomWidth = '0px';
+                  el.style.opacity = '0';
+              }, 450);
+
               setTimeout(() => {
                   let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
                   history = history.filter(item => item.id !== id);
