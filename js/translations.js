@@ -78,9 +78,9 @@ const Translations = {
         "about.p3": "All funds raised through paid options and upgrades have a single purpose: to keep the application alive, cover its technical development, and allow us to continue improving your experience.",
         
         "how_it_works.title": "How it works",
-        "how_it_works.p1": "Science and spirituality find a meeting point in sound. Oris Numen uses principles of <strong>acoustic resonance</strong> and <strong>Brainwave Entrainment</strong> to enhance the intention of your message.",
-        "how_it_works.p2": "When you are exposed to specific frequencies (like the Solfeggio tones), a phenomenon known as <em>frequency following response</em> occurs. Neuroacoustic studies suggest our brainwaves tend to synchronize with the rhythm of external sound stimuli.",
-        "how_it_works.p3": "By aligning your mental state with frequencies associated with gratitude, relief, or healing, your message is emitted from a state of greater electromagnetic coherence. The visualization of the wave ensures the vibration permeates your text, acting as a catalyst toward the divine.",
+                "how_it_works.p1": "<strong>Science</strong> and <strong>spirituality</strong> find a <strong>meeting point</strong> in <strong>sound</strong>. <strong>Oris Numen</strong> uses principles of <strong>acoustic resonance</strong> and <strong>Brainwave Entrainment</strong> to enhance the intention of your message.",
+                "how_it_works.p2": "When you are exposed to specific <strong>frequencies</strong> (like the <strong>Solfeggio</strong> tones), a phenomenon known as <em>frequency following response</em> occurs. Neuroacoustic <strong>studies</strong> suggest our <strong>brainwaves</strong> tend to synchronize with the rhythm of external sound stimuli.",
+                "how_it_works.p3": "By <strong>aligning</strong> your <strong>mental</strong> state with <strong>frequencies</strong> associated with gratitude, relief, or healing, your message is emitted from a state of greater electromagnetic coherence. The visualization of the wave ensures the vibration permeates your text, acting as a catalyst toward the divine.",
         
         "testimonials.title": "Testimonials",
         "testimonials.t1": "\"I never thought an application could give me so much peace. Writing my supplications and seeing them transform into frequencies has helped me cope with a moment of great anxiety.\"",
@@ -426,9 +426,9 @@ const Translations = {
         "about.p3": "Tutti i fondi raccolti attraverso le opzioni a pagamento e i miglioramenti hanno un unico scopo: mantenere viva l'applicazione, coprire il suo sviluppo tecnico e permetterci di continuare a migliorare la tua esperienza.",
         
         "how_it_works.title": "Come funziona",
-        "how_it_works.p1": "La scienza e la spiritualità trovano un punto di incontro nel suono. Oris Numen utilizza principi di <strong>risonanza acustica</strong> e <strong>Brainwave Entrainment</strong> per potenziare l'intenzione del tuo messaggio.",
-        "how_it_works.p2": "Quando ti esponi a frequenze specifiche (come i toni Solfeggio), si verifica un fenomeno noto come <em>risposta di inseguimento in frequenza</em>. Gli studi neuroacustici suggeriscono che le nostre onde cerebrali tendono a sincronizzarsi con il ritmo degli stimoli sonori esterni.",
-        "how_it_works.p3": "Allineando il tuo stato mentale con frequenze associate alla gratitudine, al sollievo o alla guarigione, il tuo messaggio viene emesso da uno stato di maggiore coerenza elettromagnetica. La visualizzazione dell'onda assicura che la vibrazione permei il tuo testo, agendo da catalizzatore verso il divino.",
+                "how_it_works.p1": "La <strong>scienza</strong> e la <strong>spiritualità</strong> trovano un punto di <strong>incontro</strong> nel <strong>suono</strong>. <strong>Oris Numen</strong> utilizza principi di <strong>risonanza acustica</strong> e <strong>Brainwave Entrainment</strong> per potenziare l'intenzione del tuo messaggio.",
+                "how_it_works.p2": "Quando ti esponi a <strong>frequenze</strong> specifiche (come i toni <strong>Solfeggio</strong>), si verifica un fenomeno noto come <em>risposta di inseguimento in frequenza</em>. Gli <strong>studi</strong> neuroacustici suggeriscono che le nostre <strong>onde</strong> <strong>cerebrali</strong> tendono a sincronizzarsi con il ritmo degli stimoli sonori esterni.",
+                "how_it_works.p3": "<strong>Allineando</strong> il tuo stato <strong>mentale</strong> con <strong>frequenze</strong> associate alla gratitudine, al sollievo o alla guarigione, il tuo messaggio viene emesso da uno stato di maggiore coerenza elettromagnetica. La visualizzazione dell'onda assicura che la vibrazione permei il tuo testo, agendo da catalizzatore verso il divino.",
         
         "testimonials.title": "Testimonianze",
         "testimonials.t1": "\"Non avrei mai pensato che un'applicazione potesse darmi tanta pace. Scrivere le mie suppliche e vederle trasformarsi in frequenze mi ha aiutato a superare un momento di grande ansia.\"",
@@ -596,9 +596,9 @@ const Translations = {
         "about.p3": "Omnes pecuniae collectae per optiones solvendas et augmenta unicum finem habent: applicationem vivam servare, progressionem eius technicam sustinere et nos permittere ut experientiam tuam in melius mutemus.",
         
         "how_it_works.title": "Quomodo operatur",
-        "how_it_works.p1": "Scientia et spiritualitas in sono punctum unionis inveniunt. Oris Numen utitur principiis <strong>resonantiæ acousticæ</strong> et <strong>Brainwave Entrainment</strong> ad intentionem nuntii tui augendam.",
-        "how_it_works.p2": "Cum certis frequentiis exponeris (sicut toni Solfeggio), accidit phaenomenon notum ut <em>responsio insecutionis frequentiae</em>. Studia neuroacoustica innuunt undas nostras cerebrales tendere ad synchronizandum cum rhythmo stimulorum sonorum externorum.",
-        "how_it_works.p3": "Coaptando statum tuum mentalem cum frequentiis quae cum gratitudine, levamine vel sanatione sociantur, nuntius tuus ex statu maioris cohaerentiae electromagneticae emittitur. Visio undae efficit ut vibratio textum tuum pervadat, agens sicut catalysator ad divinum.",
+                "how_it_works.p1": "<strong>Scientia</strong> et <strong>spiritualitas</strong> in <strong>sono</strong> punctum <strong>unionis</strong> inveniunt. <strong>Oris Numen</strong> utitur principiis <strong>resonantiæ acousticæ</strong> et <strong>Brainwave Entrainment</strong> ad intentionem nuntii tui augendam.",
+                "how_it_works.p2": "Cum certis <strong>frequentiis</strong> exponeris (sicut toni <strong>Solfeggio</strong>), accidit phaenomenon notum ut <em>responsio insecutionis frequentiae</em>. <strong>Studia</strong> neuroacoustica innuunt <strong>undas</strong> nostras <strong>cerebrales</strong> tendere ad synchronizandum cum rhythmo stimulorum sonorum externorum.",
+                "how_it_works.p3": "<strong>Coaptando</strong> statum tuum <strong>mentalem</strong> cum <strong>frequentiis</strong> quae cum gratitudine, levamine vel sanatione sociantur, nuntius tuus ex statu maioris cohaerentiae electromagneticae emittitur. Visio undae efficit ut vibratio textum tuum pervadat, agens sicut catalysator ad divinum.",
         
         "testimonials.title": "Testimonia",
         "testimonials.t1": "\"Numquam putavi applicationem tantam pacem mihi dare posse. Supplicationes meas scribere et eas in frequentias transformari videre me iuvit in momento magnae anxietatis.\"",
@@ -761,9 +761,9 @@ const Translations = {
         "about.p2": "\u6211\u4eec\u7684\u56e2\u961f\u4ece\u6280\u672f\u548c\u516c\u6b63\u7684\u89d2\u5ea6\u5904\u7406\u8fd9\u4e2a\u9879\u76ee\u3002",
         "about.p3": "\u901a\u8fc7\u4ed8\u8d39\u9009\u9879\u548c\u5347\u7ea7\u7b79\u96c6\u7684\u6240\u6709\u8d44\u91d1\u90fd\u6709\u4e00\u4e2a\u76ee\u7684\uff1a\u4fdd\u6301\u5e94\u7528\u7a0b\u5e8f\u7684\u6d3b\u529b\u3002",
         "how_it_works.title": "\u5b83\u662f\u5982\u4f55\u5de5\u4f5c\u7684",
-        "how_it_works.p1": "\u79d1\u5b66\u548c\u7cbe\u795e\u5728\u58f0\u97f3\u4e2d\u627e\u5230\u4e86\u4e00\u4e2a\u4ea4\u6c47\u70b9\u3002",
-        "how_it_works.p2": "\u5f53\u4f60\u66b4\u9732\u5728\u7279\u5b9a\u7684\u9891\u7387\u4e0b\u65f6\uff0c\u4f1a\u53d1\u751f\u8111\u6ce2\u540c\u6b65\u3002",
-        "how_it_works.p3": "\u901a\u8fc7\u4f7f\u4f60\u7684\u7cbe\u795e\u72b6\u6001\u4e0e\u611f\u6fc0\u6216\u6cbb\u6108\u7b49\u9891\u7387\u4fdd\u6301\u4e00\u81f4\uff0c\u4f60\u7684\u4fe1\u606f\u5c31\u4f1a\u53d1\u51fa\u3002",
+                "how_it_works.p1": "<strong>科学</strong>和<strong>精神</strong>在<strong>声音</strong>中找到了一个<strong>交汇点</strong>。",
+                "how_it_works.p2": "当你暴露在特定的<strong>频率</strong>下时，会发生<strong>脑波</strong>同步。",
+                "how_it_works.p3": "通过使你的<strong>精神</strong>状态与感激或治愈等<strong>频率</strong><strong>保持一致</strong>，你的信息就会发出。",
         "testimonials.title": "\u611f\u8a00",
         "testimonials.t1": "\"\u6211\u4ece\u6ca1\u60f3\u8fc7\u4e00\u4e2a\u5e94\u7528\u7a0b\u5e8f\u80fd\u7ed9\u6211\u5e26\u6765\u8fd9\u4e48\u591a\u5e73\u9759\u3002\"",
         "testimonials.l1": "- \u6765\u81ea\u897f\u73ed\u7259",
