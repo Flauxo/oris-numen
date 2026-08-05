@@ -1960,7 +1960,7 @@ const OrisApp = {
               
               el.classList.add('dissolve-anim-fast');
               
-              // Wait for the dissolve animation (1.0s) to completely finish, then collapse the space
+              // Wait for the dissolve animation (1.0s) + 0.8s empty hold = 1.8s (1800ms) before collapsing
               setTimeout(() => {
                   el.style.transition = 'all 0.5s ease-in-out';
                   el.style.maxHeight = '0px';
@@ -1968,15 +1968,15 @@ const OrisApp = {
                   el.style.paddingBottom = '0px';
                   el.style.borderBottomWidth = '0px';
                   el.style.opacity = '0';
-              }, 1000);
+              }, 1800);
 
-              // After the collapse is done, remove the element from DOM and state
+              // After the collapse is done (1800ms + 500ms), remove the element from DOM and state
               setTimeout(() => {
                   let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
                   history = history.filter(item => item.id !== id);
                   localStorage.setItem('oris_history', JSON.stringify(history));
                   this.renderHistory();
-              }, 1500);
+              }, 2300);
           } else {
               let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
               history = history.filter(item => item.id !== id);
