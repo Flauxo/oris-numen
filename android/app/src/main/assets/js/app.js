@@ -304,7 +304,7 @@ const OrisApp = {
         isSidebarLangView = false;
         if (sidebarMainMenu) sidebarMainMenu.classList.remove('hidden');
         if (sidebarLangMenu) sidebarLangMenu.classList.add('hidden');
-        if (sidebarTitle) sidebarTitle.textContent = 'Menú';
+        if (sidebarTitle) sidebarTitle.textContent = (Translations[this.currentLang] && Translations[this.currentLang]['menu.title']) ? Translations[this.currentLang]['menu.title'] : 'Menú';
         if (btnCloseSidebar) btnCloseSidebar.innerHTML = '&times;';
     };
 
@@ -704,6 +704,10 @@ const OrisApp = {
   openTestimonialsCard() {
       const overlay = document.getElementById('testimonials-overlay');
       if (overlay) {
+          const content = overlay.querySelector('.modal-content');
+          if (content) content.scrollTop = 0;
+          const card = overlay.querySelector('.modal-card');
+          if (card) card.scrollTop = 0;
           overlay.classList.add('active');
           this.closeSidebar(); // close sidebar if open
           OrisAudio.playButtonSound();
