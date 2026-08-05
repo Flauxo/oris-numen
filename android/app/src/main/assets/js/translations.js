@@ -252,9 +252,9 @@ const Translations = {
         "about.p3": "Todos los fondos recaudados a través de las opciones de pago y mejoras tienen un único fin: mantener viva la aplicación, costear su desarrollo técnico y permitirnos seguir mejorando tu experiencia.",
         
         "how_it_works.title": "Cómo funciona",
-        "how_it_works.p1": "La ciencia y la espiritualidad encuentran un punto de unión en el sonido. Oris Numen utiliza principios de <strong>resonancia acústica</strong> y <strong>Brainwave Entrainment</strong> para potenciar la intención de tu mensaje.",
-        "how_it_works.p2": "Cuando te expones a frecuencias específicas (como los tonos Solfeggio), se produce un fenómeno conocido como <em>respuesta de seguimiento de frecuencia</em>. Estudios neuroacústicos sugieren que nuestras ondas cerebrales tienden a sincronizarse con el ritmo del estímulo sonoro externo.",
-        "how_it_works.p3": "Al alinear tu estado mental con frecuencias asociadas a la gratitud, el alivio o la sanación, tu mensaje se emite desde un estado de mayor coherencia electromagnética. La visualización de la onda asegura que la vibración impregne tu texto actuando como un catalizador hacia lo divino.",
+        "how_it_works.p1": "La <strong>ciencia</strong> y la <strong>espiritualidad</strong> encuentran un punto de <strong>unión</strong> en el <strong>sonido</strong>. <strong>Oris Numen</strong> utiliza principios de <strong>resonancia acústica</strong> y <strong>Brainwave Entrainment</strong> para potenciar la intención de tu mensaje.",
+        "how_it_works.p2": "Cuando te expones a <strong>frecuencias</strong> específicas (como los tonos <strong>Solfeggio</strong>), se produce un fenómeno conocido como <em>respuesta de seguimiento de frecuencia</em>. <strong>Estudios</strong> neuroacústicos sugieren que nuestras <strong>ondas</strong> <strong>cerebrales</strong> tienden a sincronizarse con el ritmo del estímulo sonoro externo.",
+        "how_it_works.p3": "Al <strong>alinear</strong> tu estado <strong>mental</strong> con <strong>frecuencias</strong> asociadas a la gratitud, el alivio o la sanación, tu mensaje se emite desde un estado de mayor coherencia electromagnética. La visualización de la onda asegura que la vibración impregne tu texto actuando como un catalizador hacia lo divino.",
         
         "testimonials.title": "Testimonios",
         "testimonials.t1": "\"Nunca pensé que una aplicación pudiera darme tanta paz. Escribir mis súplicas y ver cómo se transforman en frecuencias me ha ayudado a sobrellevar un momento de gran ansiedad.\"",
