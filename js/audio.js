@@ -1,6 +1,7 @@
 const OrisAudio = {
   ctx: null,
   masterGain: null,
+  speakerGain: null,
   padOscillators: [],
   padGainNode: null,
   isPlaying: false,
@@ -11,8 +12,11 @@ const OrisAudio = {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       this.ctx = new AudioContext();
       this.masterGain = this.ctx.createGain();
-      this.masterGain.connect(this.ctx.destination);
+      this.speakerGain = this.ctx.createGain();
+      this.masterGain.connect(this.speakerGain);
+      this.speakerGain.connect(this.ctx.destination);
       this.masterGain.gain.value = 1.0;
+      this.speakerGain.gain.value = 1.0;
     } catch (e) {
       console.warn('AudioContext not supported', e);
     }

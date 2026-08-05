@@ -159,6 +159,26 @@ const OrisApp = {
         this.openTestimonialsCard();
     });
 
+    // Evolution Card Handlers
+    const btnEvolution = document.getElementById('menu-item-evolution');
+    if (btnEvolution) {
+        btnEvolution.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.openEvolutionCard();
+        });
+    }
+
+    const btnCloseEvolution = document.getElementById('btn-close-evolution');
+    if (btnCloseEvolution) {
+        btnCloseEvolution.addEventListener('click', () => this.closeEvolutionCard());
+    }
+
+    const evolutionOverlay = document.getElementById('evolution-overlay');
+    const evolutionBackdrop = evolutionOverlay ? evolutionOverlay.querySelector('.overlay-backdrop') : null;
+    if (evolutionBackdrop) {
+        evolutionBackdrop.addEventListener('click', () => this.closeEvolutionCard());
+    }
+
     const testimonialsOverlay = document.getElementById('testimonials-overlay');
     const testimonialsBackdrop = testimonialsOverlay ? testimonialsOverlay.querySelector('.overlay-backdrop') : null;
     if (testimonialsBackdrop) {
@@ -835,6 +855,7 @@ const OrisApp = {
 
     ChannelTimer.clearState();
     OrisAudio.stopFrequencyPad();
+    OrisAudio.stopEvilAmbient();
     OrisAudio.stopAllElements();
     this.resetElementButtons();
     this.stopEvilVibration();
@@ -894,16 +915,43 @@ const OrisApp = {
               void linkDownload.offsetWidth; // Force reflow
               linkDownload.style.transition = ''; // Restore CSS transition
               
-              linkDownload.style.display = 'block';
-              
+              linkDownload.style.display = 'block';              
               setTimeout(() => {
                   linkDownload.classList.add('show');
               }, 1000); // Wait 1 second, then trigger CSS transition
               
+              const optionsContainer = document.getElementById('download-options-container');
+              const loadingContainer = document.getElementById('inline-loading-container');
+              
+              if (optionsContainer) optionsContainer.style.display = 'none';
+              if (loadingContainer) loadingContainer.style.display = 'none';
+              
               linkDownload.onclick = (e) => {
                   e.preventDefault();
-                  this.downloadSigilImage(text, freq, isEvil, activeElementsCopy);
+                  if (OrisAudio.playButtonSound) OrisAudio.playButtonSound();
+                  linkDownload.style.display = 'none';
+                  if (optionsContainer) optionsContainer.style.display = 'flex';
               };
+              
+              const btnImg = document.getElementById('inline-download-image');
+              if (btnImg) {
+                  btnImg.onclick = (e) => {
+                      e.preventDefault();
+                      if (OrisAudio.playButtonSound) OrisAudio.playButtonSound();
+                      this.downloadSigilImage(text, freq, isEvil, activeElementsCopy);
+                  };
+              }
+              
+              const btnVid = document.getElementById('inline-download-video');
+              if (btnVid) {
+                  btnVid.onclick = (e) => {
+                      e.preventDefault();
+                      if (OrisAudio.playButtonSound) OrisAudio.playButtonSound();
+                      if (optionsContainer) optionsContainer.style.display = 'none';
+                      if (loadingContainer) loadingContainer.style.display = 'block';
+                      this.recordSigilVideo(text, freq, isEvil, activeElementsCopy);
+                  };
+              }
           }
       } else {
           if (linkDownload) linkDownload.style.display = 'none';
@@ -940,6 +988,7 @@ const OrisApp = {
   cancelChanneling() {
     ChannelTimer.reset();
     OrisAudio.stopFrequencyPad();
+    OrisAudio.stopEvilAmbient();
     OrisAudio.stopAllElements();
     this.resetElementButtons();
     WaveformRenderer.reset();
@@ -1208,10 +1257,15 @@ const OrisApp = {
       // small thud (20ms), wait 100ms, stronger thud (40ms), wait 800-1200ms
       if (!navigator.vibrate) return;
       
-      const pattern = [20, 100, 40];
+      // Much stronger and heavier heartbeat pattern for evil mode
+      const pattern = [0, 250, 100, 350];
       
       const triggerVibe = () => {
-          navigator.vibrate(pattern);
+          if (typeof AndroidInterface !== 'undefined' && AndroidInterface.triggerNativeVibration) {
+              AndroidInterface.triggerNativeVibration();
+          } else if (navigator.vibrate) {
+              navigator.vibrate(pattern);
+          }
           const nextWait = 800 + Math.random() * 400; // 800 to 1200ms
           this._evilVibeTimer = setTimeout(triggerVibe, nextWait);
       };
@@ -1355,8 +1409,14 @@ const OrisApp = {
               
               for (let i = 0; i < elsArray.length; i++) {
                   const el = elsArray[i];
-                  let elText = (Translations[this.currentLang][`element.${el}`] || el).toLowerCase();
-                  if (i < elsArray.length - 1) elText += " y ";
+                  let elText = (Translations[this.currentLang][`elements.${el}`] || el).toLowerCase();
+                  if (i < elsArray.length - 1) {
+                      let andStr = " y ";
+                      if (this.currentLang === 'en') andStr = " and ";
+                      if (this.currentLang === 'it') andStr = " e ";
+                      if (this.currentLang === 'la') andStr = " et ";
+                      elText += andStr;
+                  }
                   const w = ctx.measureText(elText).width;
                   parts.push({ text: elText, color: elementColors[el] || '#666', width: w });
                   totalWidth += w;
@@ -1548,6 +1608,10 @@ const OrisApp = {
           let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
           history.unshift(historyItem);
           localStorage.setItem('oris_history', JSON.stringify(history));
+          
+          let totalChannelings = parseInt(localStorage.getItem('oris_total_channelings') || '0', 10);
+          totalChannelings++;
+          localStorage.setItem('oris_total_channelings', totalChannelings);
       } catch (e) {
           console.error("Error saving history", e);
       }
@@ -1573,6 +1637,129 @@ const OrisApp = {
           overlay.classList.remove('active');
           try { OrisAudio.playButtonSound(); } catch(e){}
       }
+  },
+
+  evolutionAnimId: null,
+
+  openEvolutionCard() {
+      const overlay = document.getElementById('evolution-overlay');
+      if (overlay) {
+          overlay.classList.add('active');
+          if (typeof this.closeSidebar === 'function') this.closeSidebar();
+          try { OrisAudio.playButtonSound(); } catch(e){}
+          
+          let totalChannelings = parseInt(localStorage.getItem('oris_total_channelings') || '0', 10);
+          
+          const t = Translations[this.currentLang] || Translations['en'];
+          const countDisplay = document.getElementById('evolution-count-display');
+          if (countDisplay) {
+              const formatStr = t['evolution.count'] || "Número de canalizaciones: {count}";
+              countDisplay.textContent = formatStr.replace('{count}', totalChannelings);
+          }
+          
+          const canvas = document.getElementById('evolution-canvas');
+          if (canvas) {
+              this.drawEvolutionMandala(canvas, totalChannelings);
+          }
+      }
+  },
+
+  closeEvolutionCard() {
+      const overlay = document.getElementById('evolution-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
+      }
+      if (this.evolutionAnimId) {
+          cancelAnimationFrame(this.evolutionAnimId);
+          this.evolutionAnimId = null;
+      }
+  },
+
+  drawEvolutionMandala(canvas, count) {
+      const ctx = canvas.getContext('2d');
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      let start = performance.now();
+      
+      // Colors from 4 frequencies: gold/beige, blue/cyan, purple/magenta, red/dark
+      const colors = ['#D4AF37', '#00FFFF', '#8A2BE2', '#FF4500', '#F8EFE4', '#4169E1', '#FF00FF', '#8B0000'];
+      
+      const draw = () => {
+          const now = performance.now();
+          const elapsed = (now - start) / 1000;
+          
+          // Clear background
+          ctx.fillStyle = '#0a0a0a';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          
+          // Breathing pulse
+          const pulse = 1.0 + 0.05 * Math.sin(elapsed * 2);
+          
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.scale(pulse, pulse);
+          
+          // Draw seed
+          ctx.beginPath();
+          ctx.arc(0, 0, 10, 0, Math.PI * 2);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.shadowColor = '#FFFFFF';
+          ctx.shadowBlur = 20;
+          ctx.fill();
+          
+          // Draw layers based on count
+          const maxLayers = Math.min(count, 30); // Prevent infinity
+          for (let i = 1; i <= maxLayers; i++) {
+              ctx.save();
+              // Randomish but deterministic properties per layer
+              const layerColor = colors[(i * 7) % colors.length];
+              const sides = 2 + (i % 8); // 2(line), 3(tri), 4(sq), etc
+              const radius = 20 + i * 15;
+              const rotationDir = (i % 2 === 0) ? 1 : -1;
+              const rotationSpeed = 0.5 - (i * 0.01);
+              
+              ctx.rotate(elapsed * rotationSpeed * rotationDir + (i * 0.5));
+              
+              ctx.beginPath();
+              if (sides === 2) {
+                  ctx.arc(0, 0, radius, 0, Math.PI * 2);
+              } else {
+                  for (let s = 0; s < sides; s++) {
+                      const angle = (s * Math.PI * 2) / sides;
+                      const x = Math.cos(angle) * radius;
+                      const y = Math.sin(angle) * radius;
+                      if (s === 0) ctx.moveTo(x, y);
+                      else ctx.lineTo(x, y);
+                  }
+                  ctx.closePath();
+              }
+              
+              ctx.strokeStyle = layerColor;
+              ctx.lineWidth = 1.5;
+              ctx.stroke();
+              
+              // Draw nodes
+              if (sides > 2) {
+                  for (let s = 0; s < sides; s++) {
+                      const angle = (s * Math.PI * 2) / sides;
+                      const x = Math.cos(angle) * radius;
+                      const y = Math.sin(angle) * radius;
+                      ctx.beginPath();
+                      ctx.arc(x, y, 3, 0, Math.PI * 2);
+                      ctx.fillStyle = layerColor;
+                      ctx.fill();
+                  }
+              }
+              ctx.restore();
+          }
+          
+          ctx.restore();
+          this.evolutionAnimId = requestAnimationFrame(draw);
+      };
+      
+      if (this.evolutionAnimId) cancelAnimationFrame(this.evolutionAnimId);
+      this.evolutionAnimId = requestAnimationFrame(draw);
   },
 
   closeSidebar() {
@@ -1624,6 +1811,7 @@ const OrisApp = {
           
           const wrapper = document.createElement('div');
           wrapper.className = 'history-item';
+          wrapper.setAttribute('data-id', item.id);
           
           const content = document.createElement('div');
           content.className = 'history-item-content';
@@ -1713,10 +1901,22 @@ const OrisApp = {
 
   deleteHistoryItem(id) {
       try {
-          let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
-          history = history.filter(item => item.id !== id);
-          localStorage.setItem('oris_history', JSON.stringify(history));
-          this.renderHistory();
+          const el = document.querySelector(`.history-item[data-id="${id}"]`);
+          if (el) {
+              try { OrisAudio.playDestructionSound(); } catch (e) {}
+              el.classList.add('dissolve-anim-fast');
+              setTimeout(() => {
+                  let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
+                  history = history.filter(item => item.id !== id);
+                  localStorage.setItem('oris_history', JSON.stringify(history));
+                  this.renderHistory();
+              }, 1000);
+          } else {
+              let history = JSON.parse(localStorage.getItem('oris_history') || '[]');
+              history = history.filter(item => item.id !== id);
+              localStorage.setItem('oris_history', JSON.stringify(history));
+              this.renderHistory();
+          }
       } catch (e) {}
   },
 
@@ -1781,7 +1981,365 @@ const OrisApp = {
       if (overlayFreqName && freq) overlayFreqName.textContent = formatStr.replace('{name}', freq.name);
     }
   }
+
+,
+  recordSigilVideo(text, freq, isEvil, activeElementsSet) {
+      try {
+          const loadingContainer = document.getElementById('inline-loading-container');
+          const optionsContainer = document.getElementById('download-options-container');
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1920;
+      const ctx = canvas.getContext('2d');
+
+      const fps = 30;
+      const durationSec = 12;
+      
+      const stream = canvas.captureStream(fps);
+      
+      const destNode = OrisAudio.ctx.createMediaStreamDestination();
+      const videoGain = OrisAudio.ctx.createGain();
+      videoGain.gain.setValueAtTime(0, OrisAudio.ctx.currentTime);
+      videoGain.gain.linearRampToValueAtTime(1, OrisAudio.ctx.currentTime + 1.2);
+      
+      // Mute device speakers while generating video, but route to videoGain
+      if (OrisAudio.speakerGain) {
+          OrisAudio.speakerGain.gain.setValueAtTime(0, OrisAudio.ctx.currentTime);
+      } else {
+          try { OrisAudio.masterGain.disconnect(OrisAudio.ctx.destination); } catch(e){}
+      }
+      OrisAudio.masterGain.connect(videoGain);
+      videoGain.connect(destNode);
+      const audioTracks = destNode.stream.getAudioTracks();
+      if (audioTracks.length > 0) {
+          stream.addTrack(audioTracks[0]);
+      }
+      
+      OrisAudio.startFrequencyPad(freq.audioHz || freq.hz);
+      const elsArray = Array.from(activeElementsSet || this.activeElements);
+      elsArray.forEach(el => OrisAudio.startElement(el));
+      
+      setTimeout(() => {
+          videoGain.gain.setValueAtTime(videoGain.gain.value, OrisAudio.ctx.currentTime);
+          videoGain.gain.linearRampToValueAtTime(0, OrisAudio.ctx.currentTime + 1.2);
+      }, 6800);
+      setTimeout(() => {
+          if (OrisAudio.stopFrequencyPad) OrisAudio.stopFrequencyPad();
+          if (OrisAudio.stopEvilAmbient) OrisAudio.stopEvilAmbient();
+          if (OrisAudio.stopAllElements) OrisAudio.stopAllElements();
+      }, 10000);
+      let mimeType = 'video/webm';
+      if (MediaRecorder.isTypeSupported('video/mp4')) mimeType = 'video/mp4';
+      
+      const mediaRecorder = new MediaRecorder(stream, { mimeType: mimeType });
+      const chunks = [];
+      mediaRecorder.ondataavailable = e => {
+          if (e.data && e.data.size > 0) chunks.push(e.data);
+      };
+      mediaRecorder.onstop = () => {
+          if (loadingContainer) loadingContainer.style.display = 'none';
+          if (optionsContainer) optionsContainer.style.display = 'flex';
+          
+          OrisAudio.masterGain.disconnect(videoGain);
+          videoGain.disconnect();
+          
+          // Restore audio to device speakers after reverb has fully decayed
+          setTimeout(() => {
+              if (OrisAudio && OrisAudio.ctx && OrisAudio.masterGain) {
+                  if (OrisAudio.speakerGain) {
+                      OrisAudio.speakerGain.gain.setValueAtTime(1, OrisAudio.ctx.currentTime);
+                  } else {
+                      try { OrisAudio.masterGain.connect(OrisAudio.ctx.destination); } catch(e) {}
+                  }
+              }
+          }, 2000);
+          
+          const blob = new Blob(chunks, { type: mimeType });
+          const ext = mimeType === 'video/mp4' ? 'mp4' : 'webm';
+          const dateStr = new Date().toLocaleDateString('en-CA').replace(/\//g, '-');
+          const fileName = `OrisNumen-Sigil-${dateStr}.${ext}`;
+          
+          if (window.AndroidInterface && window.AndroidInterface.saveVideoBase64) {
+              const reader = new FileReader();
+              reader.readAsDataURL(blob);
+              reader.onloadend = () => {
+                  const successMsg = Translations[this.currentLang]['success.video_saved'] || "Video guardado en Galería";
+                  const errorMsg = Translations[this.currentLang]['error.video_saved'] || "Error al guardar video";
+                  window.AndroidInterface.saveVideoBase64(reader.result, fileName, successMsg, errorMsg);
+              };
+          } else {
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = fileName;
+              link.click();
+              URL.revokeObjectURL(url);
+          }
+      };
+
+      mediaRecorder.start();
+      
+      const startTime = performance.now();
+      const renderFrame = (currentTime) => {
+          if (!currentTime) currentTime = performance.now();
+          const elapsed = (currentTime - startTime) / 1000;
+          
+          if (elapsed >= durationSec) {
+              mediaRecorder.stop();
+              return;
+          }
+          
+          const t = elapsed / durationSec;
+          
+          ctx.fillStyle = isEvil ? '#110000' : '#F8EFE4';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          
+          let titleAlpha = Math.min(1.0, elapsed / 1.6);
+          ctx.globalAlpha = titleAlpha;
+          
+          const drawFrame = (outerPadding, r, depth) => {
+              const L = outerPadding;
+              const R = canvas.width - outerPadding;
+              const T = outerPadding;
+              const B = canvas.height - outerPadding;
+              const cx = canvas.width / 2;
+              const cy = canvas.height / 2;
+              const dipW = 80;
+              const dipD = 25;
+              
+              ctx.strokeStyle = freq.color;
+              ctx.lineWidth = depth;
+              ctx.globalAlpha = titleAlpha * (0.5 + (depth * 0.1));
+              
+              ctx.beginPath();
+              ctx.moveTo(L + r, T);
+              ctx.lineTo(cx - dipW, T);
+              ctx.lineTo(cx, T + dipD);
+              ctx.lineTo(cx + dipW, T);
+              ctx.lineTo(R - r, T);
+              ctx.arcTo(R, T, R, T + r, r);
+              ctx.lineTo(R, cy - dipW);
+              ctx.lineTo(R - dipD, cy);
+              ctx.lineTo(R, cy + dipW);
+              ctx.lineTo(R, B - r);
+              ctx.arcTo(R, B, R - r, B, r);
+              ctx.lineTo(cx + dipW, B);
+              ctx.lineTo(cx, B - dipD);
+              ctx.lineTo(cx - dipW, B);
+              ctx.lineTo(L + r, B);
+              ctx.arcTo(L, B, L, B - r, r);
+              ctx.lineTo(L, cy + dipW);
+              ctx.lineTo(L + dipD, cy); 
+              ctx.lineTo(L, cy - dipW);
+              ctx.lineTo(L, T + r);
+              ctx.arcTo(L, T, L + r, T, r);
+              
+              ctx.stroke();
+          };
+          
+          drawFrame(45, 45, 3);
+          drawFrame(65, 45, 2);
+          drawFrame(85, 45, 1);
+          
+          ctx.globalAlpha = titleAlpha;
+          
+          ctx.textAlign = 'center';
+          ctx.font = '300 120px "Cormorant Garamond", serif';
+          ctx.fillStyle = isEvil ? '#CC0000' : '#0B0B0B';
+          ctx.fillText("ORIS NUMEN", canvas.width / 2, 220);
+          
+          ctx.font = '400 35px "Inter", sans-serif';
+          ctx.fillStyle = isEvil ? '#990000' : '#777777';
+          const canvasSubtitle = Translations[this.currentLang]['success.share_channeling'] || "Comparte tu canalización";
+          ctx.fillText(canvasSubtitle, canvas.width / 2, 300);
+          ctx.globalAlpha = 1.0;
+          
+          const sigilProgress = Math.min(1.0, elapsed / 6.4);
+          
+          // Heartbeat pulse effect: grows for 1.5s, shrinks for 1.0s (2.5s cycle)
+          const cycleDuration = 2.5;
+          const cycleTime = elapsed % cycleDuration;
+          const maxScale = 1.07;
+          let pulseScale = 1.0;
+          
+          if (cycleTime < 1.5) {
+              const p = cycleTime / 1.5;
+              const ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+              pulseScale = 1.0 + ((maxScale - 1.0) * ease);
+          } else {
+              const p = (cycleTime - 1.5) / 1.0;
+              const ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+              pulseScale = maxScale - ((maxScale - 1.0) * ease);
+          }
+          
+          const pulseRadius = 300 * pulseScale;
+          
+          if (typeof SigilGenerator !== 'undefined') {
+              SigilGenerator.draw(ctx, canvas.width / 2, 670, pulseRadius, text, freq.color, isEvil, sigilProgress);
+          }
+          
+          let yPos = 1040;
+          
+          let dataAlpha = Math.max(0, Math.min(1.0, (t - 0.3) / 0.2));
+          ctx.globalAlpha = dataAlpha;
+          const prayerType = (Translations[this.currentLang][`card.${this.currentFrequency}.desc`] || "Canalización Espiritual").toUpperCase();
+          ctx.font = '500 38px "Inter", sans-serif';
+          ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
+          ctx.fillText(prayerType, canvas.width / 2, yPos);
+          yPos += 60;
+          
+          ctx.font = '700 55px "Inter", sans-serif';
+          ctx.fillStyle = freq.color;
+          ctx.fillText(`${freq.name} (${freq.hz || freq.audioHz} Hz)`, canvas.width / 2, yPos);
+          yPos += 75;
+          
+          if (elsArray.length > 0) {
+              const elementColors = { 'aire': '#5CE1E6', 'agua': '#0057FF', 'fuego': '#FF3131', 'tierra': '#7ED957' };
+              let prefixStr = "Elementos: ";
+              if (this.currentLang === 'en') prefixStr = "Elements: ";
+              if (this.currentLang === 'it') prefixStr = "Elementi: ";
+              if (this.currentLang === 'la') prefixStr = "Elementa: ";
+              const prefixW = ctx.measureText(prefixStr).width;
+              let totalWidth = prefixW;
+              const parts = [];
+              for (let i = 0; i < elsArray.length; i++) {
+                  const el = elsArray[i];
+                  let elText = (Translations[this.currentLang][`elements.${el}`] || el).toLowerCase();
+                  if (i < elsArray.length - 1) {
+                      let andStr = " y ";
+                      if (this.currentLang === 'en') andStr = " and ";
+                      if (this.currentLang === 'it') andStr = " e ";
+                      if (this.currentLang === 'la') andStr = " et ";
+                      elText += andStr;
+                  }
+                  const w = ctx.measureText(elText).width;
+                  parts.push({ text: elText, color: elementColors[el] || '#666', width: w });
+                  totalWidth += w;
+              }
+              let currentX = canvas.width / 2 - totalWidth / 2;
+              ctx.textAlign = 'left';
+              ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
+              ctx.fillText(prefixStr, currentX, yPos);
+              currentX += prefixW;
+              for (const p of parts) {
+                  ctx.fillStyle = p.color;
+                  ctx.fillText(p.text, currentX, yPos);
+                  currentX += p.width;
+              }
+              ctx.textAlign = 'center';
+          } else {
+              ctx.font = '700 35px "Inter", sans-serif';
+              ctx.fillStyle = '#6A6A6A';
+              let noneText = "Elementos: Ninguno";
+              if (this.currentLang === 'en') noneText = "Elements: None";
+              if (this.currentLang === 'it') noneText = "Elementi: Nessuno";
+              if (this.currentLang === 'la') noneText = "Elementa: Nulla";
+              ctx.fillText(noneText, canvas.width / 2, yPos);
+          }
+          yPos += 65;
+          
+          ctx.font = '400 35px "Inter", sans-serif';
+          ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
+          const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
+          const dateStr = new Date().toLocaleDateString(this.currentLang);
+          let durPrefix = "Duración"; let datePrefix = "Fecha";
+          if (this.currentLang === 'en') { durPrefix = "Duration"; datePrefix = "Date"; }
+          if (this.currentLang === 'it') { durPrefix = "Durata"; datePrefix = "Data"; }
+          if (this.currentLang === 'la') { durPrefix = "Tempus"; datePrefix = "Dies"; }
+          ctx.fillText(`${durPrefix}: ${timeStr}       ${datePrefix}: ${dateStr}`, canvas.width / 2, yPos);
+          yPos += 65;
+          
+          ctx.strokeStyle = isEvil ? '#440000' : '#CCCCCC';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(canvas.width / 2 - 400, yPos);
+          ctx.lineTo(canvas.width / 2 + 400, yPos);
+          ctx.stroke();
+          yPos += 120;
+          
+          let explAlpha = Math.max(0, Math.min(1.0, (elapsed - 5.0) / 2.0));
+          ctx.globalAlpha = explAlpha;
+          ctx.font = 'italic 50px "Cormorant Garamond", serif';
+          ctx.fillStyle = isEvil ? '#550000' : '#333333';
+          const explText = Translations[this.currentLang]['success.sigil_explanation'] || "";
+          
+          const wrapTextJustified = (context, text, x, y, maxWidth, lineHeight) => {
+              context.textAlign = 'left';
+              const paragraphs = text.split('\n');
+              const regularFont = 'italic 50px "Cormorant Garamond", serif';
+              const boldFont = 'bold italic 50px "Cormorant Garamond", serif';
+              for (const p of paragraphs) {
+                  const words = p.split(' ');
+                  const lines = [];
+                  let currentLine = [];
+                  let currentWidth = 0;
+                  for (let w of words) {
+                      let isBold = false;
+                      if (w.includes('**')) {
+                          isBold = true;
+                          w = w.replace(/\*\*/g, '');
+                      }
+                      context.font = isBold ? boldFont : regularFont;
+                      const wordWidth = context.measureText(w).width;
+                      if (currentWidth + wordWidth + (currentLine.length * 10) > maxWidth && currentLine.length > 0) {
+                          lines.push(currentLine);
+                          currentLine = [];
+                          currentWidth = 0;
+                      }
+                      currentLine.push({ text: w, bold: isBold, width: wordWidth });
+                      currentWidth += wordWidth;
+                  }
+                  if (currentLine.length > 0) lines.push(currentLine);
+                  for (let j = 0; j < lines.length; j++) {
+                      const lineWords = lines[j];
+                      if (j === lines.length - 1 || lineWords.length === 1) {
+                          let currentX = x;
+                          for (let i = 0; i < lineWords.length; i++) {
+                              context.font = lineWords[i].bold ? boldFont : regularFont;
+                              context.fillText(lineWords[i].text, currentX, y);
+                              currentX += lineWords[i].width + context.measureText(" ").width;
+                          }
+                      } else {
+                          const totalTextWidth = lineWords.reduce((sum, w) => sum + w.width, 0);
+                          const spaceRemaining = maxWidth - totalTextWidth;
+                          const spaceWidth = spaceRemaining / (lineWords.length - 1);
+                          let currentX = x;
+                          for (let i = 0; i < lineWords.length; i++) {
+                              context.font = lineWords[i].bold ? boldFont : regularFont;
+                              context.fillText(lineWords[i].text, currentX, y);
+                              currentX += lineWords[i].width + spaceWidth;
+                          }
+                      }
+                      y += lineHeight;
+                  }
+              }
+              context.textAlign = 'center';
+          };
+          wrapTextJustified(ctx, explText, canvas.width / 2 - 425, yPos, 850, 60);
+          
+          ctx.globalAlpha = 1.0;
+          
+          requestAnimationFrame(renderFrame);
+      };
+      
+      renderFrame();
+      } catch (err) {
+          console.error("Error generating video: ", err);
+          
+          if (OrisAudio && OrisAudio.ctx && OrisAudio.masterGain) {
+              try { OrisAudio.masterGain.connect(OrisAudio.ctx.destination); } catch(e) {}
+          }
+          
+          const loadingContainer = document.getElementById('inline-loading-container');
+          if (loadingContainer) loadingContainer.style.display = 'none';
+          const optionsContainer = document.getElementById('download-options-container');
+          if (optionsContainer) optionsContainer.style.display = 'flex';
+          alert("Error generating video: " + err.message);
+      }
+  }
+
 };
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => OrisApp.init());
+

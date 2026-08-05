@@ -28,7 +28,7 @@ class SigilGenerator {
      * @param {string} color Color of the lines
      * @param {boolean} isEvil Whether to use chaotic/sharp shapes
      */
-    static draw(ctx, cx, cy, radius, text, color, isEvil = false) {
+    static draw(ctx, cx, cy, radius, text, color, isEvil = false, drawProgress = 1.0) {
         if (!text || text.trim() === '') text = 'OrisNumen';
         
         const seed = this.hashString(text);
@@ -50,9 +50,8 @@ class SigilGenerator {
         for (let l = 0; l < layers; l++) {
             const layerRadius = radius * (0.2 + (0.8 * random()));
             const shapeType = Math.floor(random() * 5);
-            // Mix thick and thin lines
-            const isThin = random() > 0.5;
-            const lineWidth = isThin ? (1 + random() * 2) : (4 + random() * 4);
+            // Use fine lines
+            const lineWidth = 1 + random() * 2;
             
             ctx.lineWidth = lineWidth;
             
@@ -65,14 +64,18 @@ class SigilGenerator {
                 
                 ctx.beginPath();
                 
+                let pathLen = 100; // fallback
+                const nextAngle = Math.PI * 2 / symmetry;
+                
                 if (shapeType === 0) {
                     // Circle segment
-                    ctx.arc(0, 0, layerRadius, 0, Math.PI * 2 / symmetry);
+                    ctx.arc(0, 0, layerRadius, 0, nextAngle);
+                    pathLen = layerRadius * nextAngle;
                 } else if (shapeType === 1) {
                     // Polygon lines
-                    const nextAngle = Math.PI * 2 / symmetry;
                     ctx.moveTo(layerRadius, 0);
                     ctx.lineTo(Math.cos(nextAngle) * layerRadius, Math.sin(nextAngle) * layerRadius);
+                    pathLen = 2 * layerRadius * Math.sin(nextAngle / 2);
                 } else if (shapeType === 2) {
                     // Curves / petals
                     ctx.moveTo(0, 0);
@@ -83,23 +86,45 @@ class SigilGenerator {
                         Math.cos(cpAngle) * layerRadius,
                         Math.sin(cpAngle) * layerRadius
                     );
+                    // Approximate curve length
+                    pathLen = layerRadius * 1.5; 
                 } else if (shapeType === 3) {
                     // Inner star
                     ctx.moveTo(layerRadius * 0.5, 0);
-                    const nextAngle = Math.PI * 2 / symmetry;
                     ctx.lineTo(Math.cos(nextAngle/2) * layerRadius, Math.sin(nextAngle/2) * layerRadius);
                     ctx.lineTo(Math.cos(nextAngle) * layerRadius * 0.5, Math.sin(nextAngle) * layerRadius * 0.5);
+                    const dx = Math.cos(nextAngle/2) * layerRadius - layerRadius * 0.5;
+                    const dy = Math.sin(nextAngle/2) * layerRadius;
+                    pathLen = 2 * Math.sqrt(dx * dx + dy * dy);
                 } else {
                     // Dots / runes
                     const dotRadius = 1 + random() * 2;
                     ctx.arc(layerRadius, 0, dotRadius, 0, Math.PI * 2);
-                    ctx.fill();
+                    pathLen = 2 * Math.PI * dotRadius;
+                    
+                    if (drawProgress < 1.0) {
+                        ctx.globalAlpha = drawProgress;
+                        ctx.fill();
+                        ctx.globalAlpha = 1.0;
+                    } else {
+                        ctx.fill();
+                    }
+                    
                     if (isEvil) {
                         ctx.moveTo(layerRadius, -10);
                         ctx.lineTo(layerRadius, 10);
                         ctx.moveTo(layerRadius - 10, 0);
                         ctx.lineTo(layerRadius + 10, 0);
+                        pathLen += 40;
                     }
+                }
+                
+                if (drawProgress < 1.0) {
+                    const len = pathLen; 
+                    ctx.setLineDash([len, len]);
+                    ctx.lineDashOffset = len * (1 - drawProgress);
+                } else {
+                    ctx.setLineDash([]);
                 }
                 
                 ctx.stroke();
@@ -111,7 +136,11 @@ class SigilGenerator {
         ctx.beginPath();
         ctx.lineWidth = 2;
         ctx.arc(cx, cy, radius * 0.08, 0, Math.PI * 2);
-        if (random() > 0.5) ctx.fill(); else ctx.stroke();
+        if (drawProgress > 0.5) {
+            ctx.globalAlpha = (drawProgress - 0.5) * 2; // Fade in central core at the end
+            if (random() > 0.5) ctx.fill(); else ctx.stroke();
+            ctx.globalAlpha = 1.0;
+        }
 
         ctx.restore();
     }

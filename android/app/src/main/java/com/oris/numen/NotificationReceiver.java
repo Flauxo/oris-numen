@@ -41,14 +41,50 @@ public class NotificationReceiver extends BroadcastReceiver {
             builder.setPriority(Notification.PRIORITY_DEFAULT);
         }
 
+        String type = intent.getStringExtra("type");
+        String title = "Oris Numen";
+        String desc = "Eleva tu voz al universo.";
+        
+        if ("morning".equals(type)) {
+            String[] mTitles = { "Buen día de reflexión", "Despierta tu esencia", "Comienza con paz" };
+            String[] mDescs = { 
+                "El fin de semana es perfecto para canalizar tus pensamientos.",
+                "Aprovecha esta mañana para liberar tus cargas o agradecer.",
+                "Dedica un momento a tu evolución espiritual en esta hermosa mañana."
+            };
+            int r = new java.util.Random().nextInt(mTitles.length);
+            title = mTitles[r];
+            desc = mDescs[r];
+            BootReceiver.scheduleWeekendNotification(context);
+        } else {
+            String[] titles = {
+                "Tu canal está abierto",
+                "La frecuencia te aguarda",
+                "Elévate hoy",
+                "Hora de purificar",
+                "Oris Numen"
+            };
+            String[] descs = {
+                "¿Hay algo que necesites confesar o agradecer hoy? Canalízalo ahora.",
+                "Una plegaria silenciosa puede cambiar tu día. Conecta con la divinidad.",
+                "Libera tus cargas a través de la frecuencia del Perdón.",
+                "La semilla cósmica espera tu próxima canalización para seguir creciendo.",
+                "Dedica un momento para ti. Eleva tu voz al universo."
+            };
+            int randomIndex = new java.util.Random().nextInt(titles.length);
+            title = titles[randomIndex];
+            desc = descs[randomIndex];
+            BootReceiver.scheduleNightNotification(context, 2);
+        }
+
         builder.setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(context.getString(R.string.notification_title))
-                .setContentText(context.getString(R.string.notification_desc))
+                .setContentTitle(title)
+                .setContentText(desc)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
         if (notificationManager != null) {
-            notificationManager.notify(1, builder.build());
+            notificationManager.notify(("morning".equals(type)) ? 2 : 1, builder.build());
         }
     }
 }
