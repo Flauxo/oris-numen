@@ -1658,10 +1658,10 @@ const OrisApp = {
           let totalCount = history.length;
           
           history.forEach(item => {
-              if (item.freqId) {
-                  freqCounts[item.freqId] = (freqCounts[item.freqId] || 0) + 1;
-                  if (freqCounts[item.freqId] > maxCount) {
-                      maxCount = freqCounts[item.freqId];
+              if (item.type) {
+                  freqCounts[item.type] = (freqCounts[item.type] || 0) + 1;
+                  if (freqCounts[item.type] > maxCount) {
+                      maxCount = freqCounts[item.type];
                   }
               }
           });
