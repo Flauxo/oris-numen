@@ -830,6 +830,7 @@ const OrisApp = {
             if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
         
             this.showScreen('channeling');
+            document.documentElement.style.setProperty('--channeling-color', freq.color);
         
             // Start frequency pad audio
             OrisAudio.startFrequencyPad(freq.audioHz || freq.hz);
@@ -1088,6 +1089,7 @@ const OrisApp = {
         if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.remaining);
 
         this.showScreen('channeling');
+        document.documentElement.style.setProperty('--channeling-color', freq.color);
 
         WaveformRenderer.setColor(freq.color);
         WaveformRenderer.setProgress(ChannelTimer.getProgress());
@@ -1252,6 +1254,7 @@ const OrisApp = {
       if (timer) timer.textContent = ChannelTimer.formatTime(ChannelTimer.duration);
   
       this.showScreen('channeling');
+      document.documentElement.style.setProperty('--channeling-color', freq.color);
   
       try {
           OrisAudio.startFrequencyPad(freq.hz);
