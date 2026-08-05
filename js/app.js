@@ -514,6 +514,14 @@ const OrisApp = {
     if (next) next.classList.add('active');
 
     this.currentScreen = screenId;
+    
+    if (window.OrisNoiseDetector) {
+        if (screenId === 'write') {
+            OrisNoiseDetector.start();
+        } else {
+            OrisNoiseDetector.stop();
+        }
+    }
   },
 
   /**
@@ -754,6 +762,12 @@ const OrisApp = {
   sendMessage() {
     const freq = this.FREQUENCIES[this.currentFrequency];
     if (!freq) return;
+
+    if (window.OrisNoiseDetector && OrisNoiseDetector.isNoisy()) {
+        const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.noise']) || 'Busca un lugar con menos ruido para escribir tu mensaje';
+        this.showWarning(warningMsg, this.currentFrequency === 'pazuzu' ? 'evil' : 'normal');
+        return;
+    }
 
     // Profanity / prohibited terms list (violence, explicit, profanity & variations)
     const BAD_WORDS = [
