@@ -47,4 +47,4 @@ def create_icons(source_image_path):
         print(f"Generated {density} icons ({size}x{size})")
 
 if __name__ == "__main__":
-    create_icons("new_icon.png")
+    create_icons("icon.png")
