@@ -750,12 +750,14 @@ const OrisAudio = {
 
   elementNodes: {}, // { aire: [...nodes], tierra: [...nodes], agua: [...nodes], fuego: [...nodes] }
   elementGains: {},
+  _elementPlayIds: {}, // Tracks active async play requests
 
   stopAllElements() {
     ['aire', 'tierra', 'agua', 'fuego'].forEach(el => this.stopElement(el));
   },
 
   stopElement(element) {
+    this._elementPlayIds[element] = null; // Cancel any pending async starts
     if (!this.elementGains[element] || !this.ctx) return;
     const t = this.ctx.currentTime;
     const g = this.elementGains[element];
@@ -777,9 +779,35 @@ const OrisAudio = {
   async startElement(element) {
     await this._ensureContext();
     if (!this.ctx) return;
-    // Stop if already running
-    this.stopElement(element);
+    
+    // Generate a unique ID for this play request
+    const playId = Date.now() + Math.random();
+    this._elementPlayIds[element] = playId;
+    
+    // Stop if already running, but don't clear the playId we just set
+    // So we temporarily bypass the clearing logic by saving it
+    
+    if (this.elementGains[element]) {
+        const t = this.ctx.currentTime;
+        const g = this.elementGains[element];
+        if (g && g.gain) {
+            g.gain.cancelScheduledValues(t);
+            g.gain.setValueAtTime(g.gain.value, t);
+            g.gain.linearRampToValueAtTime(0, t + 0.3);
+        }
+        const oldNodes = this.elementNodes[element] || [];
+        setTimeout(() => {
+            oldNodes.forEach(n => {
+                try { if (n.stop) n.stop(); } catch(e) {}
+                try { if (n.disconnect) n.disconnect(); } catch(e) {}
+            });
+        }, 400);
+    }
+    
     await new Promise(r => setTimeout(r, 50));
+    
+    // If stopElement was called during the 50ms wait, abort!
+    if (this._elementPlayIds[element] !== playId) return;
 
     const t = this.ctx.currentTime;
     const masterGain = this.ctx.createGain();
