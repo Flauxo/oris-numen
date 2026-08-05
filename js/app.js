@@ -795,7 +795,7 @@ const OrisApp = {
         btnSend.textContent = channelingText;
     }
 
-    // Wait 3.0 seconds for the progress bar animation to finish
+    // Wait 4.0 seconds for the progress bar animation to finish
     setTimeout(() => {
         // Apply destruction animation and sound
         if (messageInput) {
@@ -847,7 +847,7 @@ const OrisApp = {
               () => this.onTimerComplete()
             );
         }, 1800);
-    }, 3000);
+    }, 4000);
   },
 
   /**

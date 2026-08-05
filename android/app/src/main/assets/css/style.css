@@ -1568,14 +1568,14 @@ body.evil-mode .home-logo-circle {
 }
 
 .btn-send.progressing::before {
-    animation: btnProgressWidth 3s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+    animation: btnProgressWidth 4s ease-in-out forwards;
 }
 
 @keyframes btnProgressWidth {
     0% { width: 0%; }
-    15% { width: 5%; }
-    35% { width: 40%; }
-    50% { width: 48%; }
-    75% { width: 85%; }
+    20% { width: 15%; }
+    40% { width: 45%; }
+    60% { width: 60%; }
+    80% { width: 85%; }
     100% { width: 100%; }
 }
