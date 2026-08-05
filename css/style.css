@@ -490,10 +490,11 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    width: 0%;
+    width: var(--progress-width, 0%);
     background-color: rgba(255, 255, 255, 0.45);
     pointer-events: none;
     z-index: 1;
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .btn-send:hover {
@@ -1610,15 +1611,4 @@ body.evil-mode .home-logo-circle {
     pointer-events: none;
 }
 
-.btn-send.progressing::before {
-    animation: btnProgressWidth 4s ease-in-out forwards;
-}
 
-@keyframes btnProgressWidth {
-    0% { width: 0%; }
-    20% { width: 15%; }
-    40% { width: 45%; }
-    60% { width: 60%; }
-    80% { width: 85%; }
-    100% { width: 100%; }
-}

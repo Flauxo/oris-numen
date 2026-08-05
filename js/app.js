@@ -603,7 +603,9 @@ const OrisApp = {
     if (btnSend) {
         btnSend.style.backgroundColor = freq.color;
         btnSend.classList.remove('progressing');
-        btnSend.textContent = Translations[this.currentLang] ? (Translations[this.currentLang]['btn.send'] || 'Canalizar Mensaje') : 'Canalizar Mensaje';
+        btnSend.style.setProperty('--progress-width', '0%');
+        const sendText = Translations[this.currentLang] ? (Translations[this.currentLang]['btn.send'] || 'Canalizar Mensaje') : 'Canalizar Mensaje';
+        btnSend.textContent = sendText;
     }
 
     // Setup write card line and button colors
@@ -793,6 +795,28 @@ const OrisApp = {
         btnSend.classList.add('progressing');
         const channelingText = Translations[this.currentLang] ? (Translations[this.currentLang]['btn.channeling'] || 'Canalizando...') : 'Canalizando...';
         btnSend.textContent = channelingText;
+        
+        btnSend.style.setProperty('--progress-width', '0%');
+        let currentProgress = 0;
+        let startTime = Date.now();
+        const duration = 4000;
+        
+        const updateProgress = () => {
+            const elapsed = Date.now() - startTime;
+            if (elapsed >= duration) {
+                btnSend.style.setProperty('--progress-width', '100%');
+                return;
+            }
+            
+            if (Math.random() < 0.20) { 
+                const linear = (elapsed / duration) * 100;
+                currentProgress = Math.min(95, Math.max(currentProgress, linear + (Math.random() * 25 - 10)));
+                btnSend.style.setProperty('--progress-width', `${currentProgress}%`);
+            }
+            
+            requestAnimationFrame(updateProgress);
+        };
+        requestAnimationFrame(updateProgress);
     }
 
     // Wait 4.0 seconds for the progress bar animation to finish
