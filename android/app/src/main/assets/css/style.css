@@ -509,11 +509,11 @@ body {
 
 /* Screen 4: Channeling Screen */
 #channeling-screen {
-    background-color: var(--color-bg-card); /* Light beige from the cards */
+    background-color: var(--color-bg-card);
     justify-content: space-between;
     padding: 40px 24px;
-    padding-top: calc(60px + env(safe-area-inset-top));
-    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+    padding-top: calc(30px + env(safe-area-inset-top));
+    padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }
 
 .channeling-content {
