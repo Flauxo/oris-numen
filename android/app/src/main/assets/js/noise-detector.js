@@ -15,8 +15,23 @@ class NoiseDetector {
 
     async start() {
         if (this.isListening) return true;
+        
+        const getUserMedia = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) 
+            ? navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)
+            : (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia)
+                ? (constraints) => new Promise((resolve, reject) => {
+                    const fn = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                    fn.call(navigator, constraints, resolve, reject);
+                  })
+                : null;
+                
+        if (!getUserMedia) {
+            console.error("getUserMedia no está soportado");
+            return false;
+        }
+
         try {
-            this.stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+            this.stream = await getUserMedia({ audio: true, video: false });
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.analyser = this.audioContext.createAnalyser();
             this.analyser.fftSize = 256;
@@ -31,6 +46,7 @@ class NoiseDetector {
             return true;
         } catch (err) {
             console.error("Error accessing microphone for noise detection:", err);
+            // alert("Microphone error: " + err.message);
             return false;
         }
     }
@@ -40,11 +56,11 @@ class NoiseDetector {
         const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
         this.analyser.getByteFrequencyData(dataArray);
         
-        let sum = 0;
+        let max = 0;
         for (let i = 0; i < dataArray.length; i++) {
-            sum += dataArray[i];
+            if (dataArray[i] > max) max = dataArray[i];
         }
-        this.currentVolume = sum / dataArray.length; // Average amplitude 0-255
+        this.currentVolume = max; // Peak amplitude 0-255
         
         this.animationId = requestAnimationFrame(() => this.monitor());
     }
@@ -69,9 +85,14 @@ class NoiseDetector {
      * Threshold is very strict to ensure absolute silence.
      */
     isNoisy() {
-        if (!this.isListening) return false;
-        console.log("Current noise volume:", this.currentVolume);
-        return this.currentVolume > 5;
+        if (!this.isListening) {
+            // Si no está escuchando, puede que el permiso haya fallado.
+            // Retornar falso por defecto para no bloquear la app entera si falla el micro.
+            return false;
+        }
+        console.log("Current noise peak:", this.currentVolume);
+        // Strict threshold. Ambient room is usually 5-10. Speech is 100+.
+        return this.currentVolume > 20;
     }
 }
 

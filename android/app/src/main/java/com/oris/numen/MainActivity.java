@@ -183,10 +183,10 @@ public class MainActivity extends Activity {
             @Override
             public void onPermissionRequest(final PermissionRequest request) {
                 runOnUiThread(() -> {
-                    if (request.getOrigin().toString().equals("file:///") || request.getOrigin().toString().startsWith("file://")) {
+                    try {
                         request.grant(request.getResources());
-                    } else {
-                        request.deny();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 });
             }
