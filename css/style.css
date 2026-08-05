@@ -584,20 +584,20 @@ body {
 }
 
 .btn-cancel {
-    background: none;
-    border: none;
-    color: var(--color-text-muted);
+    background: transparent;
+    border: 1px solid var(--channeling-color, var(--color-text-muted));
+    color: var(--channeling-color, var(--color-text-muted));
     font-size: 0.95rem;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    text-decoration: none;
     cursor: pointer;
-    padding: 0px 16px 8px;
+    padding: 12px 32px;
+    border-radius: 30px;
     margin-bottom: -10px;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .btn-cancel:hover, .btn-cancel:active {
-    color: var(--color-text-dark);
+    opacity: 0.7;
 }
 
 /* Elements section */
@@ -612,13 +612,61 @@ body {
     flex-shrink: 0;
 }
 
+.elements-label-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.elements-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.elements-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--channeling-color, var(--color-text-muted));
+    opacity: 0.3;
+    max-width: 80px;
+}
+
 .elements-label {
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-text-muted);
+    letter-spacing: 0.15em;
+    color: var(--channeling-color, var(--color-text-muted));
     font-family: var(--font-sans);
     font-weight: 500;
+    margin: 0;
+}
+
+.elements-dot-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.elements-subline {
+    width: 30px;
+    height: 1px;
+    background-color: var(--channeling-color, var(--color-text-muted));
+    opacity: 0.3;
+}
+
+.elements-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--channeling-color, var(--color-text-muted));
 }
 
 .elements-grid {
@@ -629,19 +677,19 @@ body {
 }
 
 .element-btn {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     border: none;
-    background: transparent;
+    background: #EFEBE5;
+    color: #8B8276;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     padding: 0;
-    color: #9E8E7E;
-    transition: color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .element-btn:active {
@@ -649,13 +697,20 @@ body {
 }
 
 .element-btn.active {
-    animation: element-pulse 2.2s ease-in-out infinite;
+    background-color: var(--elem-color-dim);
+    color: var(--elem-color);
 }
 
-@keyframes element-pulse {
-    0%   { transform: scale(1.0);  box-shadow: 0 0 8px  var(--elem-color, #9E8E7E); }
-    50%  { transform: scale(1.08); box-shadow: 0 0 22px var(--elem-color, #9E8E7E), 0 0 40px var(--elem-color-dim, rgba(158,142,126,0.25)); }
-    100% { transform: scale(1.0);  box-shadow: 0 0 8px  var(--elem-color, #9E8E7E); }
+.element-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 2px;
+    background-color: var(--elem-color);
+    border-radius: 2px;
 }
 
 .element-icon {
