@@ -783,7 +783,7 @@ const OrisApp = {
     if (text.length < 11 || containsProfanity) {
         if (messageInput) messageInput.value = '';
         const warningMsg = Translations[this.currentLang] ? Translations[this.currentLang]['warning.short_message'] : 'Escribe un mensaje con más sinceridad.';
-        this.showWarning(warningMsg);
+        this.showWarning(warningMsg, 'normal', 2000);
         return;
     }
 
