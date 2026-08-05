@@ -1954,16 +1954,19 @@ const OrisApp = {
           if (el) {
               try { OrisAudio.playDestructionSound(); } catch (e) {}
               
-              // Lock height for smooth transition
-              el.style.maxHeight = el.offsetHeight + 'px';
+              // Lock height explicitly for smooth transition
+              el.style.height = el.offsetHeight + 'px';
               el.style.overflow = 'hidden';
               
-              el.classList.add('dissolve-anim-fast');
+              // Animate inner content so the outer container stays perfectly static
+              Array.from(el.children).forEach(child => {
+                  child.classList.add('dissolve-anim-fast');
+              });
               
               // Wait for the dissolve animation (1.0s) + 0.8s empty hold = 1.8s (1800ms) before collapsing
               setTimeout(() => {
                   el.style.transition = 'all 0.5s ease-in-out';
-                  el.style.maxHeight = '0px';
+                  el.style.height = '0px';
                   el.style.paddingTop = '0px';
                   el.style.paddingBottom = '0px';
                   el.style.borderBottomWidth = '0px';
