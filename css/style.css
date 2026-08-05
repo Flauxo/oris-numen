@@ -109,8 +109,8 @@ body {
 
 .splash-title-anim {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     font-family: var(--font-serif);
     font-size: 3.2rem;
@@ -119,31 +119,22 @@ body {
     color: var(--color-text-dark);
     margin-right: -0.3em;
     line-height: 1.2;
-}
-
-.splash-o-container {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 2px;
-}
-
-.splash-o-img {
-    height: 2.4rem;
-    width: auto;
-    object-fit: contain;
-    margin-top: 8px;
-    margin-right: 2px;
-}
-
-.splash-letters {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-left: 2px;
+    text-align: center;
 }
 
 .splash-line1, .splash-line2 {
     display: block;
+    white-space: nowrap;
+}
+
+.splash-o-img {
+    height: 2.5rem;
+    width: auto;
+    object-fit: contain;
+    vertical-align: baseline;
+    margin-right: 0.2rem;
+    position: relative;
+    top: 2px;
 }
 
 .splash-line2 {
