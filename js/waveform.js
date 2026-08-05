@@ -134,7 +134,7 @@ const WaveformRenderer = {
         + (wave.amplitude * 0.15 * irreg) * Math.sin(x * wave.frequency * 4.1 + this.time * wave.speed * 0.7);
         
       if (!isEvil) {
-          y1 += height * 0.05; // Slightly lower center
+          y1 -= height * 0.15; // Shift waves UP so they don't get cut off at the bottom
           pointsTop.push({ x, y: y1 });
           
           // Generate a smooth varying thickness for organic blob-like ribbons
