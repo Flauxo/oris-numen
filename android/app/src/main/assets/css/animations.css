@@ -129,8 +129,8 @@
 #splash-screen .splash-cross {
     opacity: 0;
     animation: 
-        fadeIn 0.4s ease-out 5.4s forwards,
-        crossFloat 4s ease-in-out 5.4s infinite;
+        fadeIn 0.4s ease-out 4.6s forwards,
+        crossFloat 4s ease-in-out 4.6s infinite;
 }
 
 @keyframes splashOAppearMove {
@@ -142,11 +142,7 @@
         opacity: 1;
         transform: translateX(4.0rem);
     }
-    37% {
-        opacity: 1;
-        transform: translateX(4.0rem);
-    }
-    51% {
+    40% {
         opacity: 1;
         transform: translateX(0);
     }
@@ -172,19 +168,19 @@
 }
 
 /* img is child 1, so letters are 2, 3, 4 */
-#splash-screen .splash-line1 .letter:nth-child(2) { animation: letterFadeIn 0.3s ease-out 3.7s forwards; }
-#splash-screen .splash-line1 .letter:nth-child(3) { animation: letterFadeIn 0.3s ease-out 3.8s forwards; }
-#splash-screen .splash-line1 .letter:nth-child(4) { animation: letterFadeIn 0.3s ease-out 3.9s forwards; }
+#splash-screen .splash-line1 .letter:nth-child(2) { animation: letterFadeIn 0.3s ease-out 2.9s forwards; }
+#splash-screen .splash-line1 .letter:nth-child(3) { animation: letterFadeIn 0.3s ease-out 3.0s forwards; }
+#splash-screen .splash-line1 .letter:nth-child(4) { animation: letterFadeIn 0.3s ease-out 3.1s forwards; }
 
-#splash-screen .splash-line2 .letter:nth-child(1) { animation: letterFadeIn 0.3s ease-out 4.1s forwards; }
-#splash-screen .splash-line2 .letter:nth-child(2) { animation: letterFadeIn 0.3s ease-out 4.2s forwards; }
-#splash-screen .splash-line2 .letter:nth-child(3) { animation: letterFadeIn 0.3s ease-out 4.3s forwards; }
-#splash-screen .splash-line2 .letter:nth-child(4) { animation: letterFadeIn 0.3s ease-out 4.4s forwards; }
-#splash-screen .splash-line2 .letter:nth-child(5) { animation: letterFadeIn 0.3s ease-out 4.5s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(1) { animation: letterFadeIn 0.3s ease-out 3.3s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(2) { animation: letterFadeIn 0.3s ease-out 3.4s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(3) { animation: letterFadeIn 0.3s ease-out 3.5s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(4) { animation: letterFadeIn 0.3s ease-out 3.6s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(5) { animation: letterFadeIn 0.3s ease-out 3.7s forwards; }
 
 #splash-screen .splash-subtitle {
     opacity: 0;
-    animation: fadeIn 0.4s ease-out 5.4s forwards;
+    animation: fadeIn 0.4s ease-out 4.6s forwards;
 }
 
 
