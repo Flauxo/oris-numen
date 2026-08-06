@@ -1803,7 +1803,7 @@ const OrisApp = {
               let stateColor = '#a09080';
               
               if (dominantFreq && this.FREQUENCIES && this.FREQUENCIES[dominantFreq]) {
-                  stateKey = `freq.${dominantFreq}.short`;
+                  stateKey = `evolution.state.${dominantFreq}`;
                   stateColor = this.FREQUENCIES[dominantFreq].color;
               }
               
@@ -1822,15 +1822,17 @@ const OrisApp = {
               }
           }
           
-          // Update tabs active state
+          // Update tabs active state (Icon and text color only)
           document.querySelectorAll('.breakdown-tab').forEach(tab => {
-              tab.classList.remove('active');
-              tab.style.backgroundColor = 'transparent';
+              tab.style.color = '#555';
+              const svg = tab.querySelector('svg');
+              if (svg) svg.style.stroke = 'currentColor';
               
               const f = tab.getAttribute('data-freq');
               if (f === dominantFreq && this.FREQUENCIES && this.FREQUENCIES[f]) {
-                  tab.classList.add('active');
-                  tab.style.backgroundColor = this.FREQUENCIES[f].color;
+                  const c = this.FREQUENCIES[f].color;
+                  tab.style.color = c;
+                  if (svg) svg.style.stroke = c;
               }
           });
           
@@ -1878,7 +1880,7 @@ const OrisApp = {
           
           // 1. Create ellipse clipping path (fits inside the outer edge of 'O', covers the inner hole)
           ctx.beginPath();
-          ctx.ellipse(cx, cy + 12, 60, 75, 0, 0, Math.PI * 2);
+          ctx.ellipse(cx, cy + 12, 52, 68, 0, 0, Math.PI * 2);
           ctx.clip();
           
           // 2. Draw waves inside the clipped region

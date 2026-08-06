@@ -1827,9 +1827,7 @@ body.evil-mode .home-logo-circle {
     transition: all 0.3s ease;
 }
 
-.breakdown-tab.active {
-    color: white;
-}
+
 
 .breakdown-tab .tab-icon {
     margin-bottom: 6px;
