@@ -1857,8 +1857,6 @@ const OrisApp = {
 
   drawNucleusGraphic(canvas, freqCounts, total) {
       const ctx = canvas.getContext('2d');
-      const cx = canvas.width / 2;
-      const cy = canvas.height / 2;
       let start = performance.now();
       
       const targetRatios = {
@@ -1873,17 +1871,10 @@ const OrisApp = {
           const elapsed = (now - start) / 1000;
           
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          
           const animProgress = Math.min(elapsed * 0.8, 1);
           
-          ctx.save();
-          
-          // 1. Create ellipse clipping path (fits inside the outer edge of 'O', covers the inner hole)
-          ctx.beginPath();
-          ctx.ellipse(cx, cy + 12, 52, 68, 0, 0, Math.PI * 2);
-          ctx.clip();
-          
-          // 2. Draw waves inside the clipped region
+          // Just draw the waves directly on the canvas. 
+          // The SVG overlay in HTML perfectly handles the 'O' shape mask.
           Object.keys(targetRatios).forEach((freqKey, i) => {
               const target = targetRatios[freqKey];
               if (total === 0) return;
@@ -1894,11 +1885,7 @@ const OrisApp = {
               const fData = this.FREQUENCIES[freqKey];
               if (!fData) return;
               
-              // Scale the wave height smoothly between the top and bottom of the ellipse bounds
-              // Ellipse bounds: bottom is cy + 12 + 75 = cy + 87. top is cy + 12 - 75 = cy - 63.
-              const bottomY = cy + 87;
-              const topY = cy - 63;
-              const waveHeight = bottomY - ((bottomY - topY) * ratio);
+              const waveHeight = canvas.height - (canvas.height * ratio);
               
               ctx.beginPath();
               ctx.moveTo(0, canvas.height);
@@ -1914,19 +1901,9 @@ const OrisApp = {
               ctx.closePath();
               
               ctx.fillStyle = fData.color;
-              ctx.globalAlpha = 0.65; // increased alpha so it mixes nicely but stays vibrant over cream bg
+              ctx.globalAlpha = 0.65;
               ctx.fill();
           });
-          
-          ctx.restore(); // Remove clipping
-          
-          // 3. Draw the thick "O" over the clipped waves.
-          ctx.globalAlpha = 1.0;
-          ctx.fillStyle = '#222222';
-          ctx.font = '220px "Cormorant Garamond", serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('O', cx, cy + 12);
           
           this.evolutionAnimId = requestAnimationFrame(draw);
       };

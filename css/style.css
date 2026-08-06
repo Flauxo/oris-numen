@@ -406,7 +406,7 @@ body {
 }
 
 .freq-hz {
-    font-size: 0.75rem;
+    
     font-weight: 500;
     color: var(--color-text-muted);
 }
@@ -478,7 +478,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 2px;
     position: relative;
     overflow: hidden;
 }
@@ -617,7 +617,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 2px;
     width: 100%;
     margin-bottom: 8px;
 }
@@ -652,7 +652,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 2px;
     width: 100%;
 }
 
@@ -1361,7 +1361,7 @@ body.evil-mode .home-logo-circle {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 2px;
     padding: 12px;
     border: none;
     border-radius: var(--radius-sm);
@@ -1685,17 +1685,12 @@ body.evil-mode .home-logo-circle {
     font-family: var(--font-sans);
 }
 
-.nucleus-canvas-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: -16px 0 8px 0;
-}
+
 
 .nucleus-dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 2px;
     margin-bottom: 12px;
 }
 
@@ -1800,7 +1795,7 @@ body.evil-mode .home-logo-circle {
 .breakdown-tabs {
     display: flex;
     justify-content: space-between;
-    gap: 8px;
+    gap: 2px;
 }
 
 .breakdown-tab {
@@ -1808,11 +1803,13 @@ body.evil-mode .home-logo-circle {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 12px 4px;
+    padding: 8px 2px;
+    font-size: 0.60rem;
+    letter-spacing: -0.2px;
     border-radius: 12px;
     background: transparent;
     color: #555;
-    font-size: 0.75rem;
+    
     transition: all 0.3s ease;
 }
 

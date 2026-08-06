@@ -489,8 +489,28 @@
                   
                   <div class="modal-body nucleus-body">
                       <!-- 1. Graphic -->
-                      <div class="nucleus-canvas-wrapper">
-                          <canvas id="nucleus-canvas" width="180" height="210"></canvas>
+                      <div class="nucleus-canvas-wrapper" style="position: relative; width: 160px; height: 180px; margin: -10px auto 16px auto;">
+                          <!-- Canvas for waves -->
+                          <canvas id="nucleus-canvas" width="160" height="180" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
+                          
+                          <!-- SVG Overlay (O mask) -->
+                          <svg width="160" height="180" viewBox="0 0 160 180" style="position: absolute; top: 0; left: 0; z-index: 2; pointer-events: none;">
+                              <defs>
+                                  <mask id="nucleus-mask">
+                                      <rect width="160" height="180" fill="white" />
+                                      <!-- The hole (inner path of O) -->
+                                      <path d="M80 24 C 104 24, 116 51, 116 90 C 116 129, 104 156, 80 156 C 56 156, 44 129, 44 90 C 44 51, 56 24, 80 24 Z" fill="black" />
+                                  </mask>
+                              </defs>
+                              
+                              <!-- Cream background with transparent hole -->
+                              <rect width="160" height="180" fill="#FAF6F0" mask="url(#nucleus-mask)" />
+                              
+                              <!-- The O stroke (outer and inner path) -->
+                              <path d="M80 18 C 128 18, 140 58, 140 90 C 140 122, 128 162, 80 162 C 32 162, 20 122, 20 90 C 20 58, 32 18, 80 18 Z
+                                       M80 24 C 56 24, 44 51, 44 90 C 44 129, 56 156, 80 156 C 104 156, 116 129, 116 90 C 116 51, 104 24, 80 24 Z" 
+                                    fill-rule="evenodd" fill="#2d2b29" />
+                          </svg>
                       </div>
                       
                       <!-- 3. Text -->
