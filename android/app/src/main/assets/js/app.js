@@ -1076,7 +1076,7 @@ const OrisApp = {
       
       // Set random proverb
       const proverbEl = document.getElementById('success-proverb');
-      const numProverbs = 5; // 5 proverbs per frequency
+      const numProverbs = 10; // 10 proverbs per frequency
       if (proverbEl && this.currentFrequency) {
         const randomIndex = Math.floor(Math.random() * numProverbs);
         const translatedProverb = Translations[this.currentLang][`proverb.${this.currentFrequency}.${randomIndex}`];
@@ -1515,7 +1515,7 @@ const OrisApp = {
       }
       yPos += 62;
       
-      ctx.font = '400 34px "Inter", sans-serif';
+      ctx.font = '700 34px "Inter", sans-serif';
       ctx.fillStyle = isEvil ? '#770000' : '#6A6A6A';
       const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
       const dateStr = new Date().toLocaleDateString(this.currentLang);
