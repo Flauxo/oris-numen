@@ -817,14 +817,33 @@ const OrisApp = {
     });
 
     // Spam detection: 5 consecutive identical characters or 6 consecutive consonants
-      const isSpam = /(.)\1{4,}/i.test(text) || /[bcdfghjklmnpqrstvwxyz]{6,}/i.test(text);
+    const isSpam = /(.)\1{4,}/i.test(text) || /[bcdfghjklmnpqrstvwxyz]{6,}/i.test(text);
 
-      if (text.length < 11 || containsProfanity || isSpam) {
-          if (messageInput) messageInput.value = '';
-          const warningMsg = Translations[this.currentLang] ? Translations[this.currentLang]['warning.short_message'] : 'No malgastes la energ\u00EDa, escribe un mensaje m\u00E1s sincero.';
-          this.showWarning(warningMsg, 'normal', 3000);
-          return;
-      }
+    if (text.length < 11 || containsProfanity || isSpam) {
+        if (messageInput) messageInput.value = '';
+        const warningMsg = Translations[this.currentLang] ? Translations[this.currentLang]['warning.short_message'] : 'No malgastes la energía, escribe un mensaje más sincero.';
+        this.showWarning(warningMsg, 'normal', 3000);
+        return;
+    }
+
+    // Progress bar animation on button
+    const btnSend = document.getElementById('btn-send');
+    if (btnSend) {
+        btnSend.classList.add('progressing');
+        const channelingText = Translations[this.currentLang] ? (Translations[this.currentLang]['btn.channeling'] || 'Canalizando...') : 'Canalizando...';
+        btnSend.textContent = channelingText;
+        
+        btnSend.style.setProperty('--progress-width', '0%');
+        let currentProgress = 0;
+        let startTime = Date.now();
+        const duration = 4000;
+        
+        const updateProgress = () => {
+            const elapsed = Date.now() - startTime;
+            if (elapsed >= duration) {
+                btnSend.style.setProperty('--progress-width', '100%');
+                return;
+            }
             if (window.OrisNoiseDetector && OrisNoiseDetector.isNoisy()) {
                 btnSend.classList.remove('progressing');
                 const sendText = Translations[this.currentLang] ? (Translations[this.currentLang]['btn.send'] || 'Canalizar Mensaje') : 'Canalizar Mensaje';
