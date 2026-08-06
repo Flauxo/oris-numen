@@ -1779,6 +1779,22 @@ const OrisApp = {
 
   evolutionAnimId: null,
 
+  showGuideCard() {
+      const overlay = document.getElementById('guide-overlay');
+      if (overlay) {
+          overlay.classList.add('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
+      }
+  },
+
+  closeGuideCard() {
+      const overlay = document.getElementById('guide-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
+      }
+  },
+
   openEvolutionCard() {
       const overlay = document.getElementById('evolution-overlay');
       if (overlay) {
