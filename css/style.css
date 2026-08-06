@@ -323,7 +323,7 @@ body {
 
 .card-title {
     font-family: var(--font-serif);
-    font-size: 1.4rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--color-text-dark);
     line-height: 1.2;
@@ -420,7 +420,7 @@ body {
 }
 
 .freq-info {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 }
 
 .write-purpose {
@@ -449,7 +449,7 @@ body {
     color: var(--color-text-dark);
     resize: none;
     padding: 16px 0;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
     outline: none;
     transition: border-color 0.3s ease;
 }
@@ -581,7 +581,7 @@ body {
     color: var(--color-text-muted);
     font-weight: 400;
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 
 .btn-cancel {
@@ -725,7 +725,7 @@ body {
 .success-icon {
     font-size: 5rem;
     color: var(--color-freq-gratia); /* Default, will be updated via JS */
-    margin-bottom: 32px;
+    margin-bottom: 16px;
     text-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
 
@@ -746,7 +746,7 @@ body {
 .success-subtitle {
     font-size: 1rem;
     color: var(--color-text-muted);
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 
 .success-proverb-container {
@@ -892,7 +892,7 @@ body {
 }
 
 .overlay-section {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     text-align: left;
 }
 
@@ -992,7 +992,7 @@ body {
 .write-card-footer {
     display: flex;
     flex-direction: column;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     position: relative;
 }
 
@@ -1084,7 +1084,7 @@ body {
 .btn-close-sidebar {
     background: none;
     border: none;
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: var(--color-text-muted);
     cursor: pointer;
     line-height: 1;
@@ -1655,7 +1655,7 @@ body.evil-mode .home-logo-circle {
 .nucleus-modal {
     background-color: #FAF6F0 !important;
     border-radius: 24px !important;
-    padding: 32px 24px !important;
+    padding: 24px 20px !important;
     width: 92% !important;
     max-width: 420px !important;
     color: #333;
@@ -1664,7 +1664,7 @@ body.evil-mode .home-logo-circle {
 .nucleus-header {
     border-bottom: none !important;
     padding-bottom: 0 !important;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     align-items: flex-start !important;
 }
 
@@ -1674,7 +1674,7 @@ body.evil-mode .home-logo-circle {
 }
 
 .nucleus-title {
-    font-size: 2.2rem !important;
+    font-size: 1.8rem !important;
     color: #222 !important;
     margin-bottom: 4px;
 }
@@ -1696,7 +1696,7 @@ body.evil-mode .home-logo-circle {
     display: flex;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 }
 
 .nucleus-dots .dot {
@@ -1715,7 +1715,7 @@ body.evil-mode .home-logo-circle {
     line-height: 1.6;
     text-align: center;
     color: #444;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 
 .nucleus-stats-grid {
@@ -1723,9 +1723,9 @@ body.evil-mode .home-logo-circle {
     grid-template-columns: 1fr 1fr;
     background: rgba(240, 230, 215, 0.5);
     border-radius: 16px;
-    padding: 20px;
+    padding: 12px;
     gap: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .nucleus-stat-box {
@@ -1756,7 +1756,7 @@ body.evil-mode .home-logo-circle {
 
 .stat-value {
     font-family: var(--font-serif);
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: #222;
     line-height: 1;
 }
@@ -1769,7 +1769,7 @@ body.evil-mode .home-logo-circle {
 
 #evolution-numinosity-state {
     font-family: var(--font-serif);
-    font-size: 1.4rem;
+    font-size: 1.15rem;
     font-weight: 500;
     color: #d4845a; /* overridden dynamically */
     line-height: 1.2;
@@ -1785,8 +1785,8 @@ body.evil-mode .home-logo-circle {
 .nucleus-breakdown {
     background: rgba(240, 230, 215, 0.5);
     border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 24px;
+    padding: 12px;
+    margin-bottom: 12px;
 }
 
 .breakdown-title {
@@ -1794,7 +1794,7 @@ body.evil-mode .home-logo-circle {
     font-family: var(--font-serif);
     font-size: 1.2rem;
     color: #333;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .breakdown-tabs {

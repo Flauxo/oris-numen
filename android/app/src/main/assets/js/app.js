@@ -1871,25 +1871,32 @@ const OrisApp = {
           const elapsed = (now - start) / 1000;
           
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.globalCompositeOperation = 'source-over';
           
           const animProgress = Math.min(elapsed * 0.8, 1);
           
-          // Draw waves (will be masked)
+          ctx.save();
+          
+          // 1. Create ellipse clipping path (fits inside the outer edge of 'O', covers the inner hole)
+          ctx.beginPath();
+          ctx.ellipse(cx, cy + 12, 60, 75, 0, 0, Math.PI * 2);
+          ctx.clip();
+          
+          // 2. Draw waves inside the clipped region
           Object.keys(targetRatios).forEach((freqKey, i) => {
               const target = targetRatios[freqKey];
-              // Even if target is 0, give it a tiny base so we see a sliver if total > 0, 
-              // but if total is 0, nothing.
               if (total === 0) return;
               
-              // Ensure minimum visible wave if they have at least 1 of this type
               const ratio = Math.max(target, freqCounts[freqKey] > 0 ? 0.05 : 0) * animProgress;
               if (ratio <= 0) return;
               
               const fData = this.FREQUENCIES[freqKey];
               if (!fData) return;
               
-              const waveHeight = canvas.height - (canvas.height * ratio);
+              // Scale the wave height smoothly between the top and bottom of the ellipse bounds
+              // Ellipse bounds: bottom is cy + 12 + 75 = cy + 87. top is cy + 12 - 75 = cy - 63.
+              const bottomY = cy + 87;
+              const topY = cy - 63;
+              const waveHeight = bottomY - ((bottomY - topY) * ratio);
               
               ctx.beginPath();
               ctx.moveTo(0, canvas.height);
@@ -1897,7 +1904,7 @@ const OrisApp = {
               
               for (let x = 0; x <= canvas.width; x += 10) {
                   const phase = elapsed * (1.2 + i * 0.2) + (i * 2.5);
-                  const y = waveHeight + Math.sin(x * 0.03 + phase) * 12;
+                  const y = waveHeight + Math.sin(x * 0.04 + phase) * 6;
                   ctx.lineTo(x, y);
               }
               
@@ -1905,26 +1912,19 @@ const OrisApp = {
               ctx.closePath();
               
               ctx.fillStyle = fData.color;
-              ctx.globalAlpha = 0.55; // Using 55% for beautiful overlapping secondary colors
+              ctx.globalAlpha = 0.65; // increased alpha so it mixes nicely but stays vibrant over cream bg
               ctx.fill();
           });
           
-          ctx.globalAlpha = 1.0;
+          ctx.restore(); // Remove clipping
           
-          // Mask the waves inside the "O"
-          ctx.globalCompositeOperation = 'destination-in';
-          ctx.fillStyle = '#000';
-          ctx.font = '320px "Cormorant Garamond", serif';
+          // 3. Draw the thick "O" over the clipped waves.
+          ctx.globalAlpha = 1.0;
+          ctx.fillStyle = '#222222';
+          ctx.font = '220px "Cormorant Garamond", serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText('O', cx, cy + 25);
-          
-          // Fill the remaining background of the "O" with dark grey
-          ctx.globalCompositeOperation = 'destination-over';
-          ctx.fillStyle = '#2d2b29';
-          ctx.fillText('O', cx, cy + 25);
-          
-          ctx.globalCompositeOperation = 'source-over';
+          ctx.fillText('O', cx, cy + 12);
           
           this.evolutionAnimId = requestAnimationFrame(draw);
       };
