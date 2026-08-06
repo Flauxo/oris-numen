@@ -369,7 +369,7 @@ body {
     cursor: pointer;
     position: absolute;
     left: 16px;
-    top: calc(12px + env(safe-area-inset-top));
+    top: 4px;
     padding: 12px;
     transition: color 0.2s ease;
     z-index: 20;
@@ -852,14 +852,13 @@ body {
     position: absolute;
     top: 14px;
     right: 18px;
-    background: none;
-    border: none;
-    font-size: 1.6rem;
     color: var(--color-text-muted);
-    width: 100%;
     cursor: pointer;
     padding: 4px 8px;
     line-height: 1;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
     transition: color 0.2s ease;
     z-index: 2;
 }
