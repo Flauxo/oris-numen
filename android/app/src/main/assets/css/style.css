@@ -1664,7 +1664,7 @@ body.evil-mode .home-logo-circle {
    Nucleo Espiritual (Evolution Redesign)
    ======================================== */
 .nucleus-modal {
-    background-color: #FAF6F0 !important;
+    background-color: var(--color-bg-primary) !important;
     border-radius: 24px !important;
     padding: 24px 20px !important;
     width: 92% !important;
@@ -1730,7 +1730,7 @@ h3.nucleus-title {
 .nucleus-stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: rgba(240, 230, 215, 0.5);
+    background: var(--color-bg-primary);
     border-radius: 16px;
     padding: 12px;
     gap: 16px;
