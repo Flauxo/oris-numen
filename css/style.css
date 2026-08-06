@@ -1205,11 +1205,13 @@ body.evil-mode .home-logo-circle {
 .btn-close-modal {
     background: none;
     border: none;
-    font-size: 1.8rem;
     color: var(--color-text-muted);
     cursor: pointer;
     line-height: 1;
-    padding: 0 8px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-content {
