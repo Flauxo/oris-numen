@@ -1,12 +1,14 @@
 class SigilGenerator {
+    // Generate a hash from string (djb2 algorithm)
     static hashString(str) {
         let hash = 5381;
         for (let i = 0; i < str.length; i++) {
-            hash = ((hash << 5) + hash) + str.charCodeAt(i);
+            hash = ((hash << 5) + hash) + str.charCodeAt(i); // hash * 33 + c
         }
         return hash;
     }
 
+    // Simple PRNG (Mulberry32)
     static PRNG(a) {
         return function() {
             var t = a += 0x6D2B79F5;
@@ -16,6 +18,9 @@ class SigilGenerator {
         }
     }
 
+    /**
+     * Draws a sigil onto the provided canvas context
+     */
     static draw(ctx, cx, cy, radius, text, color, isEvil = false, drawProgress = 1.0) {
         if (!text || text.trim() === '') text = 'OrisNumen';
         
@@ -28,112 +33,107 @@ class SigilGenerator {
         ctx.strokeStyle = color;
         ctx.fillStyle = color;
 
-        // 1. Background Halo (very soft, blurry aura)
-        if (drawProgress > 0) {
-            ctx.save();
-            ctx.globalAlpha = 0.05 * Math.min(1.0, drawProgress * 2);
-            ctx.translate(cx, cy);
-            const numAuras = 5;
-            for (let i = 0; i < numAuras; i++) {
-                ctx.beginPath();
-                ctx.arc(0, 0, radius * (0.5 + i * 0.1), 0, Math.PI * 2);
-                ctx.fill();
-            }
-            ctx.restore();
-        }
-
         // Base symmetry
-        const symmetries = isEvil ? [3, 5, 7] : [4, 6, 8];
+        const symmetries = isEvil ? [5, 7, 9, 11] : [6, 8, 12, 16];
         const symmetry = symmetries[Math.floor(random() * symmetries.length)];
         
-        // We will generate multiple "bundles" of waves/curves.
-        const numBundles = 6 + Math.floor(random() * 8); 
+        // Number of layers/rings of geometry
+        const layers = 7 + Math.floor(random() * 8); 
 
-        // Use multiply or source-over for overlapping translucent lines
-        ctx.globalCompositeOperation = 'source-over';
-
-        for (let b = 0; b < numBundles; b++) {
-            const bundleRadius = radius * (0.3 + (0.6 * random()));
+        for (let l = 0; l < layers; l++) {
+            const layerRadius = radius * (0.2 + (0.8 * random()));
+            const shapeType = Math.floor(random() * 5);
             
-            // Base control points for the bundle
-            const angleOffset1 = random() * Math.PI * 2;
-            const dist1 = random() * bundleRadius * 1.5;
-            const p1 = { x: Math.cos(angleOffset1) * dist1, y: Math.sin(angleOffset1) * dist1 };
+            // Gruesos variables pero definidos
+            const lineWidth = 3 + random() * 25;
+            ctx.lineWidth = lineWidth;
             
-            const angleOffset2 = random() * Math.PI * 2;
-            const dist2 = random() * bundleRadius * 1.5;
-            const p2 = { x: Math.cos(angleOffset2) * dist2, y: Math.sin(angleOffset2) * dist2 };
+            // Transparencia del 17% exacta, multiplicada por progreso de dibujo para que aparezca suavemente
+            ctx.globalAlpha = 0.17 * Math.min(1.0, drawProgress * 1.5);
             
-            const endAngle = (Math.PI * 2 / symmetry) * (random() > 0.5 ? 1.0 : 0.5);
-            const p3 = { x: Math.cos(endAngle) * bundleRadius, y: Math.sin(endAngle) * bundleRadius };
-            
-            // Number of strands in this bundle
-            const numStrands = 3 + Math.floor(random() * 6);
-            
-            // Base thickness for this bundle
-            const baseThickness = 8 + random() * 16;
-            
+            // For each symmetrical segment
             for (let s = 0; s < symmetry; s++) {
                 const angle = (Math.PI * 2 / symmetry) * s;
                 ctx.save();
                 ctx.translate(cx, cy);
                 ctx.rotate(angle);
                 
-                // Draw strands
-                for (let strand = 0; strand < numStrands; strand++) {
-                    ctx.beginPath();
-                    
-                    // Offset for this strand
-                    const offsetX = (strand - numStrands/2) * (baseThickness * 0.4);
-                    const offsetY = (strand - numStrands/2) * (baseThickness * 0.4);
-                    
-                    ctx.moveTo(offsetX * 0.2, offsetY * 0.2);
-                    ctx.bezierCurveTo(
-                        p1.x + offsetX, p1.y + offsetY,
-                        p2.x + offsetX, p2.y + offsetY,
-                        p3.x + offsetX * 0.2, p3.y + offsetY * 0.2
+                ctx.beginPath();
+                
+                let pathLen = 100; // fallback
+                const nextAngle = Math.PI * 2 / symmetry;
+                
+                if (shapeType === 0) {
+                    // Circle segment
+                    ctx.arc(0, 0, layerRadius, 0, nextAngle);
+                    pathLen = layerRadius * nextAngle;
+                } else if (shapeType === 1) {
+                    // Polygon lines
+                    ctx.moveTo(layerRadius, 0);
+                    ctx.lineTo(Math.cos(nextAngle) * layerRadius, Math.sin(nextAngle) * layerRadius);
+                    pathLen = 2 * layerRadius * Math.sin(nextAngle / 2);
+                } else if (shapeType === 2) {
+                    // Curves / petals
+                    ctx.moveTo(0, 0);
+                    const cpAngle = isEvil ? (Math.PI / 4) : (Math.PI / symmetry);
+                    ctx.quadraticCurveTo(
+                        Math.cos(cpAngle/2) * layerRadius * 1.5,
+                        Math.sin(cpAngle/2) * layerRadius * 1.5,
+                        Math.cos(cpAngle) * layerRadius,
+                        Math.sin(cpAngle) * layerRadius
                     );
-                    
-                    // Strand properties
-                    ctx.lineWidth = baseThickness * (0.8 + random() * 0.4);
-                    // High transparency to allow stacking
-                    ctx.globalAlpha = (0.05 + random() * 0.05) * Math.min(1.0, drawProgress * 1.5);
+                    // Approximate curve length
+                    pathLen = layerRadius * 1.5; 
+                } else if (shapeType === 3) {
+                    // Inner star
+                    ctx.moveTo(layerRadius * 0.5, 0);
+                    ctx.lineTo(Math.cos(nextAngle/2) * layerRadius, Math.sin(nextAngle/2) * layerRadius);
+                    ctx.lineTo(Math.cos(nextAngle) * layerRadius * 0.5, Math.sin(nextAngle) * layerRadius * 0.5);
+                    const dx = Math.cos(nextAngle/2) * layerRadius - layerRadius * 0.5;
+                    const dy = Math.sin(nextAngle/2) * layerRadius;
+                    pathLen = 2 * Math.sqrt(dx * dx + dy * dy);
+                } else {
+                    // Dots / runes
+                    const dotRadius = 1 + random() * 5;
+                    ctx.arc(layerRadius, 0, dotRadius, 0, Math.PI * 2);
+                    pathLen = 2 * Math.PI * dotRadius;
                     
                     if (drawProgress < 1.0) {
-                        const pathLen = bundleRadius * 3; 
-                        ctx.setLineDash([pathLen, pathLen]);
-                        ctx.lineDashOffset = pathLen * (1 - drawProgress);
+                        ctx.fill();
                     } else {
-                        ctx.setLineDash([]);
+                        ctx.fill();
                     }
                     
-                    ctx.stroke();
+                    if (isEvil) {
+                        ctx.moveTo(layerRadius, -10);
+                        ctx.lineTo(layerRadius, 10);
+                        ctx.moveTo(layerRadius - 10, 0);
+                        ctx.lineTo(layerRadius + 10, 0);
+                        pathLen += 40;
+                    }
                 }
+                
+                if (drawProgress < 1.0) {
+                    const len = pathLen; 
+                    ctx.setLineDash([len, len]);
+                    ctx.lineDashOffset = len * (1 - drawProgress);
+                } else {
+                    ctx.setLineDash([]);
+                }
+                
+                ctx.stroke();
                 ctx.restore();
             }
         }
         
-        // Central Spiral Core
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.globalAlpha = 0.15 * Math.min(1.0, drawProgress * 1.5);
-        ctx.lineWidth = 10;
+        // Central core
         ctx.beginPath();
-        const spiralRot = random() * Math.PI * 2;
-        ctx.rotate(spiralRot);
-        for (let i = 0; i < 60 * drawProgress; i++) {
-            const r = (radius * 0.15 * i) / 60;
-            const a = i * 0.25;
-            if (i === 0) ctx.moveTo(0, 0);
-            else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+        ctx.lineWidth = 4;
+        ctx.arc(cx, cy, radius * 0.08, 0, Math.PI * 2);
+        if (drawProgress > 0.5) {
+            ctx.globalAlpha = 0.17 * Math.min(1.0, (drawProgress - 0.5) * 2);
+            if (random() > 0.5) ctx.fill(); else ctx.stroke();
         }
-        ctx.stroke();
-        
-        // A sharper thinner line inside the spiral for definition
-        ctx.globalAlpha = 0.4 * Math.min(1.0, drawProgress * 1.5);
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        ctx.restore();
 
         ctx.restore();
     }
