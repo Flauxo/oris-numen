@@ -37,7 +37,7 @@ const Translations = {
         "card.revelatio.desc": "Confession and Sincerity",
         "card.absolutio.desc": "Forgiveness and Reconciliation",
         "card.gratia.desc": "Gratitude and Praise",
-        "home.desc": "Write your <span style='color: var(--color-freq-humilis);'>prayer</span>, <span style='color: var(--color-freq-revelatio);'>confession</span>, <span style='color: var(--color-freq-absolutio);'>plea for forgiveness</span>, or <span style='color: var(--color-freq-gratia);'>gratitude</span>, and allow it to transform into pure energy through sound waves calibrated to elevate your voice to the celestial.",
+        "home.desc": "Write your <span style='color: var(--color-freq-humilis); font-style: italic;'>prayer</span>, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confession</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>plea for forgiveness</span>, or <span style='color: var(--color-freq-gratia); font-style: italic;'>gratitude</span>, and allow it to transform into pure energy through sound waves calibrated to elevate your voice to the celestial.",
         
         "freq.purpose": "Purpose",
         "freq.effect": "Effect",
@@ -219,7 +219,7 @@ const Translations = {
         "card.revelatio.desc": "Confesión y Sinceridad",
         "card.absolutio.desc": "Perdón y Reconciliación",
         "card.gratia.desc": "Agradecimiento y Alabanza",
-        "home.desc": "Escribe tu <span style='color: var(--color-freq-humilis);'>plegaria</span>, <span style='color: var(--color-freq-revelatio);'>confesión</span>, <span style='color: var(--color-freq-absolutio);'>petición de perdón</span> o <span style='color: var(--color-freq-gratia);'>agradecimiento</span> y permítele transformarse en energía pura mediante ondas de sonido calibradas para elevar tu voz hasta lo celestial.",
+        "home.desc": "Escribe tu <span style='color: var(--color-freq-humilis); font-style: italic;'>plegaria</span>, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confesión</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>petición de perdón</span> o <span style='color: var(--color-freq-gratia); font-style: italic;'>agradecimiento</span> y permítele transformarse en energía pura mediante ondas de sonido calibradas para elevar tu voz hasta lo celestial.",
         
         "freq.purpose": "Propósito",
         "freq.effect": "Efecto",
@@ -401,7 +401,7 @@ const Translations = {
         "card.revelatio.desc": "Confessione e Sincerità",
         "card.absolutio.desc": "Perdono e Riconciliazione",
         "card.gratia.desc": "Gratitudine e Lode",
-        "home.desc": "Scrivi la tua <span style='color: var(--color-freq-humilis);'>preghiera</span>, <span style='color: var(--color-freq-revelatio);'>confessione</span>, <span style='color: var(--color-freq-absolutio);'>richiesta di perdono</span> o <span style='color: var(--color-freq-gratia);'>gratitudine</span>, e permettile di trasformarsi in pura energia attraverso onde sonore calibrate per elevare la tua voce fino al celeste.",
+        "home.desc": "Scrivi la tua <span style='color: var(--color-freq-humilis); font-style: italic;'>preghiera</span>, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confessione</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>richiesta di perdono</span> o <span style='color: var(--color-freq-gratia); font-style: italic;'>gratitudine</span>, e permettile di trasformarsi in pura energia attraverso onde sonore calibrate per elevare la tua voce fino al celeste.",
         
         "freq.purpose": "Scopo",
         "freq.effect": "Effetto",
@@ -583,7 +583,7 @@ const Translations = {
         "card.revelatio.desc": "Confessio et Sinceritas",
         "card.absolutio.desc": "Remissio et Reconciliatio",
         "card.gratia.desc": "Gratitudo et Laus",
-        "home.desc": "Scribe <span style='color: var(--color-freq-humilis);'>precem</span> tuam, <span style='color: var(--color-freq-revelatio);'>confessionem</span>, <span style='color: var(--color-freq-absolutio);'>petitionem veniae</span> vel <span style='color: var(--color-freq-gratia);'>gratiarum actionem</span>, et permitte eam in energiam puram transformari per undas sonoras caligatas ad vocem tuam ad caelestia evehendam.",
+        "home.desc": "Scribe <span style='color: var(--color-freq-humilis); font-style: italic;'>precem</span> tuam, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confessionem</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>petitionem veniae</span> vel <span style='color: var(--color-freq-gratia); font-style: italic;'>gratiarum actionem</span>, et permitte eam in energiam puram transformari per undas sonoras caligatas ad vocem tuam ad caelestia evehendam.",
         
         "freq.purpose": "Propositum",
         "freq.effect": "Effectus",

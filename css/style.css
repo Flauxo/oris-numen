@@ -1619,7 +1619,11 @@ body.evil-mode .home-logo-circle {
 
 
 /* Added for color consistency */
-.message-card[data-type="humilis"] .card-title, .message-card[data-type="humilis"] .card-freq { color: var(--color-freq-humilis); }
-.message-card[data-type="revelatio"] .card-title, .message-card[data-type="revelatio"] .card-freq { color: var(--color-freq-revelatio); }
-.message-card[data-type="absolutio"] .card-title, .message-card[data-type="absolutio"] .card-freq { color: var(--color-freq-absolutio); }
-.message-card[data-type="gratia"] .card-title, .message-card[data-type="gratia"] .card-freq { color: var(--color-freq-gratia); }
+.message-card[data-type="humilis"] .card-title { color: #000; }
+.message-card[data-type="humilis"] .card-freq { color: var(--color-freq-humilis); }
+.message-card[data-type="revelatio"] .card-title { color: #000; }
+.message-card[data-type="revelatio"] .card-freq { color: var(--color-freq-revelatio); }
+.message-card[data-type="absolutio"] .card-title { color: #000; }
+.message-card[data-type="absolutio"] .card-freq { color: var(--color-freq-absolutio); }
+.message-card[data-type="gratia"] .card-title { color: #000; }
+.message-card[data-type="gratia"] .card-freq { color: var(--color-freq-gratia); }
