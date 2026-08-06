@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/fonts.css">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=1786017004">
+    <link rel="stylesheet" href="css/style.css?v=1786017510">
     <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
@@ -489,27 +489,21 @@
                   
                   <div class="modal-body nucleus-body">
                       <!-- 1. Graphic -->
-                      <div class="nucleus-canvas-wrapper" style="position: relative; width: 160px; height: 180px; margin: -10px auto 16px auto;">
-                          <!-- Canvas for waves -->
-                          <canvas id="nucleus-canvas" width="160" height="180" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
-                          
-                          <!-- SVG Overlay (O mask) -->
-                          <svg width="160" height="180" viewBox="0 0 160 180" style="position: absolute; top: 0; left: 0; z-index: 2; pointer-events: none;">
+                      <div class="nucleus-canvas-wrapper" style="position: relative; width: 240px; height: 260px; margin: 0 auto 24px auto;">
+                          <canvas id="nucleus-canvas" width="240" height="260" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
+                          <svg width="240" height="260" viewBox="0 0 240 260" style="position: absolute; top: 0; left: 0; z-index: 2; pointer-events: none;">
                               <defs>
                                   <mask id="nucleus-mask">
-                                      <rect width="160" height="180" fill="white" />
-                                      <!-- The hole (inner path of O) -->
-                                      <path d="M80 24 C 104 24, 116 51, 116 90 C 116 129, 104 156, 80 156 C 56 156, 44 129, 44 90 C 44 51, 56 24, 80 24 Z" fill="black" />
+                                      <rect width="240" height="260" fill="white" />
+                                      <ellipse cx="120" cy="130" rx="85" ry="110" fill="black" />
+                                  </mask>
+                                  <mask id="ring-mask">
+                                      <rect width="240" height="260" fill="white" />
+                                      <ellipse cx="120" cy="130" rx="85" ry="110" fill="black" />
                                   </mask>
                               </defs>
-                              
-                              <!-- Cream background with transparent hole -->
-                              <rect width="160" height="180" fill="#FAF6F0" mask="url(#nucleus-mask)" />
-                              
-                              <!-- The O stroke (outer and inner path) -->
-                              <path d="M80 18 C 128 18, 140 58, 140 90 C 140 122, 128 162, 80 162 C 32 162, 20 122, 20 90 C 20 58, 32 18, 80 18 Z
-                                       M80 24 C 56 24, 44 51, 44 90 C 44 129, 56 156, 80 156 C 104 156, 116 129, 116 90 C 116 51, 104 24, 80 24 Z" 
-                                    fill-rule="evenodd" fill="#2d2b29" />
+                              <rect width="240" height="260" fill="#FAF6F0" mask="url(#nucleus-mask)" />
+                              <ellipse cx="120" cy="130" rx="105" ry="115" fill="#2d2b29" mask="url(#ring-mask)" />
                           </svg>
                       </div>
                       
@@ -533,31 +527,11 @@
                           </div>
                       </div>
                       
-                      <!-- 5. Breakdown Tabs -->
-                      <div class="nucleus-breakdown">
-                          <p class="breakdown-title" data-i18n="evolution.state.label_full">Estado de Numenosidad</p>
-                          <div class="breakdown-tabs" id="nucleus-tabs">
-                              <div class="breakdown-tab" data-freq="revelatio" id="tab-revelatio">
-                                  <svg class="tab-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                                  <span data-i18n="evolution.state.revelatio">Liberado</span>
-                              </div>
-                              <div class="breakdown-tab" data-freq="gratia" id="tab-gratia">
-                                  <svg class="tab-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                  <span data-i18n="evolution.state.gratia">Agradecido</span>
-                              </div>
-                              <div class="breakdown-tab" data-freq="absolutio" id="tab-absolutio">
-                                  <svg class="tab-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-2 4 4 4-4h6"></path><path d="M2 18h4l2-2 4 4 4-4h6"></path></svg>
-                                  <span data-i18n="evolution.state.absolutio">Demandante</span>
-                              </div>
-                              <div class="breakdown-tab" data-freq="humilis" id="tab-humilis">
-                                  <svg class="tab-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line></svg>
-                                  <span data-i18n="evolution.state.humilis">Confesado</span>
-                              </div>
-                          </div>
-                      </div>
-                      
-                      <!-- 6. Footer -->
-                      <p class="nucleus-footer" data-i18n="evolution.footer">Tu núcleo es único. Cuídalo, escúchalo, ilumínalo.</p>
+                      <!-- 5. Footer -->
+                      <p class="nucleus-footer">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; display: inline-block; vertical-align: middle;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                          <span data-i18n="evolution.footer">Tu núcleo es único. Cuídalo, escúchalo, ilumínalo.</span>
+                      </p>
                   </div></div>
         </div>
 
@@ -582,6 +556,6 @@
     <script src="js/timer.js"></script>
     <script src="js/sigil.js"></script>
     <script src="js/noise-detector.js"></script>
-    <script src="js/app.js?v=1786017004"></script>
+    <script src="js/app.js?v=1786017510"></script>
 </body>
 </html>
