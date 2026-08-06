@@ -1689,7 +1689,7 @@ body.evil-mode .home-logo-circle {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 16px 0;
+    margin: -16px 0 8px 0;
 }
 
 .nucleus-dots {
