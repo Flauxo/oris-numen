@@ -49,7 +49,7 @@ class SigilGenerator {
             ctx.lineWidth = lineWidth;
             
             // Transparencia del 22% exacta
-            ctx.globalAlpha = 0.30 * Math.min(1.0, drawProgress * 1.5);
+            ctx.globalAlpha = 0.22 * Math.min(1.0, drawProgress * 1.5);
             
             // For each symmetrical segment
             for (let s = 0; s < symmetry; s++) {
@@ -121,7 +121,15 @@ class SigilGenerator {
                     ctx.setLineDash([]);
                 }
                 
-                ctx.stroke();
+                                // Multi-stroke para efecto de grosor fluctuante dibujado a mano
+                for (let i = 0; i < 3; i++) {
+                    ctx.save();
+                    ctx.lineWidth = lineWidth * (0.6 + random() * 0.8); // Variación de grosor
+                    ctx.translate((random() - 0.5) * (lineWidth * 0.15), (random() - 0.5) * (lineWidth * 0.15)); // Ligero temblor proporcional al grosor
+                    ctx.globalAlpha = 0.08 * Math.min(1.0, drawProgress * 1.5); // Opacidad distribuida para que sume ~22%
+                    ctx.stroke();
+                    ctx.restore();
+                }
                 ctx.restore();
             }
         }
@@ -131,7 +139,7 @@ class SigilGenerator {
         ctx.lineWidth = 4;
         ctx.arc(cx, cy, radius * 0.08, 0, Math.PI * 2);
         if (drawProgress > 0.5) {
-            ctx.globalAlpha = 0.30 * Math.min(1.0, (drawProgress - 0.5) * 2);
+            ctx.globalAlpha = 0.22 * Math.min(1.0, (drawProgress - 0.5) * 2);
             if (random() > 0.5) ctx.fill(); else ctx.stroke();
         }
 
