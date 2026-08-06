@@ -918,7 +918,7 @@ body {
     border: none;
     color: white;
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s ease, filter 0.2s ease;
@@ -1021,7 +1021,7 @@ body {
     background-color: var(--color-text-dark); /* overridden by JS */
     color: white;
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
     transition: filter 0.2s ease, transform 0.2s ease;

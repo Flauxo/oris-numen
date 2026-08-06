@@ -191,7 +191,7 @@ const OrisAudio = {
     const padGain = this.ctx.createGain();
     const targetGain = frequencyHz < 100 ? 1.1 : 0.2; // Reduced Humilis volume
     padGain.gain.setValueAtTime(0, t);
-    padGain.gain.linearRampToValueAtTime(targetGain, t + 2.5);
+    padGain.gain.linearRampToValueAtTime(targetGain, t + 5.0);
 
     const filter = this.ctx.createBiquadFilter();
     filter.type = 'lowpass';
@@ -681,7 +681,8 @@ const OrisAudio = {
       const glitchNodes = [];
       
       const masterGlitchGain = this.ctx.createGain();
-      masterGlitchGain.gain.value = 0.5;
+      masterGlitchGain.gain.setValueAtTime(0, t);
+        masterGlitchGain.gain.linearRampToValueAtTime(0.3, t + 0.5);
       masterGlitchGain.connect(this.masterGain);
       
       // We create a buffer of random noise
