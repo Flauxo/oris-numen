@@ -37,8 +37,8 @@ class SigilGenerator {
         const symmetries = isEvil ? [5, 7, 9, 11] : [6, 8, 12, 16];
         const symmetry = symmetries[Math.floor(random() * symmetries.length)];
         
-        // Number of layers/rings of geometry
-        const layers = 7 + Math.floor(random() * 8); 
+        // Number of layers/rings of geometry - INCREASED for more complexity and overlapping
+        const layers = 15 + Math.floor(random() * 12); 
 
         for (let l = 0; l < layers; l++) {
             const layerRadius = radius * (0.2 + (0.8 * random()));
@@ -48,8 +48,8 @@ class SigilGenerator {
             const lineWidth = 3 + random() * 25;
             ctx.lineWidth = lineWidth;
             
-            // Transparencia del 17% exacta, multiplicada por progreso de dibujo para que aparezca suavemente
-            ctx.globalAlpha = 0.17 * Math.min(1.0, drawProgress * 1.5);
+            // Transparencia del 22% exacta
+            ctx.globalAlpha = 0.22 * Math.min(1.0, drawProgress * 1.5);
             
             // For each symmetrical segment
             for (let s = 0; s < symmetry; s++) {
@@ -131,7 +131,7 @@ class SigilGenerator {
         ctx.lineWidth = 4;
         ctx.arc(cx, cy, radius * 0.08, 0, Math.PI * 2);
         if (drawProgress > 0.5) {
-            ctx.globalAlpha = 0.17 * Math.min(1.0, (drawProgress - 0.5) * 2);
+            ctx.globalAlpha = 0.22 * Math.min(1.0, (drawProgress - 0.5) * 2);
             if (random() > 0.5) ctx.fill(); else ctx.stroke();
         }
 
