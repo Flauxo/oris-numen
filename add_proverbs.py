@@ -215,7 +215,7 @@ for lang in langs:
     for freq, statements in provs.items():
         # Find the proverb.freq.4 key to insert after it
         target = f'"proverb.{freq}.4":'
-        match = re.search(f'({target} .*?,\\s*)', content)
+        match = re.search(f'({target}[^\\n]*\\n)', content)
         if match:
             # Construct the 5 new lines
             new_lines = ""
