@@ -70,7 +70,7 @@ class SigilGenerator {
             // Base thickness for this layer
             const baseThickness = 4 + random() * 20;
             
-            ctx.globalAlpha = 0.22 * Math.min(1.0, drawProgress * 1.5);
+            ctx.globalAlpha = 0.28 * Math.min(1.0, drawProgress * 1.5);
             
             // Phase for the sine wave thickness to make it random per layer
             const thicknessPhase = random() * Math.PI * 2;
@@ -166,7 +166,7 @@ class SigilGenerator {
         ctx.lineWidth = 4;
         ctx.arc(cx, cy, radius * 0.08, 0, Math.PI * 2);
         if (drawProgress > 0.5) {
-            ctx.globalAlpha = 0.22 * Math.min(1.0, (drawProgress - 0.5) * 2);
+            ctx.globalAlpha = 0.28 * Math.min(1.0, (drawProgress - 0.5) * 2);
             if (random() > 0.5) ctx.fill(); else ctx.stroke();
         }
 

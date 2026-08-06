@@ -978,7 +978,7 @@ const OrisApp = {
           
           let sigilProgress = 0;
           let startTime = null;
-          const duration = 12000; // 12s to reflect complexity generation speed
+          const duration = 8000; // 12s to reflect complexity generation speed
           
           const drawFrame = (currentTime) => {
               if (!startTime) startTime = currentTime;
@@ -2355,12 +2355,12 @@ const OrisApp = {
           ctx.fillText(canvasSubtitle, canvas.width / 2, 300);
           ctx.globalAlpha = 1.0;
           
-          const sigilProgress = Math.min(1.0, elapsed / 10.0);
+          const sigilProgress = Math.min(1.0, elapsed / 8.0);
           
           // Heartbeat pulse effect: grows for 1.5s, shrinks for 1.0s (2.5s cycle)
           const cycleDuration = 2.5;
           const cycleTime = elapsed % cycleDuration;
-          const maxScale = 1.07;
+          const maxScale = 1.025;
           let pulseScale = 1.0;
           
           if (cycleTime < 1.5) {
