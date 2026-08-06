@@ -146,6 +146,7 @@
         <div id="write-screen" class="screen">
             <div class="write-header">
                 <button id="btn-back" class="btn-back" data-i18n="btn.back">← Volver</button>
+                                <button id="btn-guide" class="btn-back" style="left: auto; right: 16px;" data-i18n="btn.guide">Instrucciones</button>
                 <div class="freq-indicator-container">
                     <div id="write-freq-dot" class="freq-dot shimmer-anim"></div>
                     <div class="freq-titles">
@@ -479,6 +480,60 @@
         </div>
 
         <!-- Evolution Overlay -->
+        
+        <!-- Guide Overlay -->
+        <div id="guide-overlay" class="overlay">
+            <div class="overlay-backdrop" id="guide-backdrop"></div>
+              <div class="modal-card guide-modal">
+                  <div class="modal-header">
+                      <h3 class="modal-title" style="color: #000000; font-family: var(--font-serif); font-size: 2.2rem; font-weight: 500; text-align: left; line-height: 1.1; margin-bottom: 24px;" data-i18n="guide.title">Guía para la<br>Canalización</h3>
+                      <button id="btn-close-guide" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                  </div>
+                  
+                  <div class="modal-body guide-body" style="text-align: left;">
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #9C8BB4;">1.</div>
+                          <div class="guide-text" style="color: #9C8BB4;">
+                              <h4 data-i18n="guide.step1.title" style="color: #333;">Crea tu santuario:</h4>
+                              <p data-i18n="guide.step1.desc" style="color: #666;">Busca un espacio en penumbra y silencio, resguardado de cualquier interferencia externa.</p>
+                          </div>
+                      </div>
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #9C8BB4;">2.</div>
+                          <div class="guide-text" style="color: #9C8BB4;">
+                              <h4 data-i18n="guide.step2.title" style="color: #333;">Consagra el tiempo:</h4>
+                              <p data-i18n="guide.step2.desc" style="color: #666;">Reserva al menos 15 minutos de presencia plena para esta experiencia.</p>
+                          </div>
+                      </div>
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #6C5C8A;">3.</div>
+                          <div class="guide-text" style="color: #6C5C8A;">
+                              <h4 data-i18n="guide.step3.title" style="color: #333;">Silencia el mundo exterior:</h4>
+                              <p data-i18n="guide.step3.desc" style="color: #666;">Activa el modo «no molestar» en tu dispositivo y desvincúlate de las distracciones cotidianas.</p>
+                          </div>
+                      </div>
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #554477;">4.</div>
+                          <div class="guide-text" style="color: #554477;">
+                              <h4 data-i18n="guide.step4.title" style="color: #333;">Apaga la luz de la pantalla:</h4>
+                              <p data-i18n="guide.step4.desc" style="color: #666;">Deja que la visión física se atenúe para dar paso a la percepción interior.</p>
+                          </div>
+                      </div>
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #332255;">5.</div>
+                          <div class="guide-text" style="color: #332255;">
+                              <h4 data-i18n="guide.step5.title" style="color: #333;">Sostén la intención:</h4>
+                              <p data-i18n="guide.step5.desc" style="color: #666;">Mantén tu mente y tu espíritu enfocados en el mensaje mientras permites que la frecuencia sonora resuene y abra el canal.</p>
+                          </div>
+                      </div>
+                      
+                      <div class="guide-footer">
+                          <p data-i18n="guide.quote">"El canal se abre cuando la intención es clara y el corazón está en silencio."</p>
+                      </div>
+                  </div>
+              </div>
+        </div>
+
         <div id="evolution-overlay" class="overlay">
             <div class="overlay-backdrop" id="evolution-backdrop"></div>
               <div class="modal-card nucleus-modal">

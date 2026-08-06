@@ -105,6 +105,16 @@ const OrisApp = {
 
     // Button handlers
     const btnBack = document.getElementById('btn-back');
+
+        const btnGuide = document.getElementById('btn-guide');
+        if (btnGuide) btnGuide.addEventListener('click', () => this.showGuideCard());
+
+        const btnCloseGuide = document.getElementById('btn-close-guide');
+        if (btnCloseGuide) btnCloseGuide.addEventListener('click', () => this.closeGuideCard());
+        
+        const guideBackdrop = document.getElementById('guide-backdrop');
+        if (guideBackdrop) guideBackdrop.addEventListener('click', () => this.closeGuideCard());
+
     if (btnBack) btnBack.addEventListener('click', () => this.goBack());
 
     const btnSend = document.getElementById('btn-send');
@@ -1006,8 +1016,8 @@ const OrisApp = {
 
       const linkDownload = document.getElementById('link-download-sigil');
 
-      // Do not show Sigil link in Evil Mode
-      if (!isEvil && text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
+      // Show Sigil link in all modes, colored by the frequency (which is red for Pazuzu)
+      if (text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
           if (linkDownload) {
               // Instantly reset state without transition
               linkDownload.style.transition = 'none';
@@ -1890,7 +1900,13 @@ const OrisApp = {
           const elapsed = (now - start) / 1000;
           
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const animProgress = Math.min(elapsed * 0.8, 1);
+          // Use a slow 3.5s duration with a gentle 'easeOutBack' (overshoot and settle)
+          const rawProgress = Math.min(elapsed / 3.5, 1);
+          let animProgress = 1;
+          if (rawProgress < 1) {
+              const p = rawProgress - 1;
+              animProgress = 1 + 2.70158 * Math.pow(p, 3) + 1.70158 * Math.pow(p, 2);
+          }
           
           // Just draw the waves directly on the canvas. 
           // The SVG overlay in HTML perfectly handles the 'O' shape mask.

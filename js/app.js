@@ -105,6 +105,16 @@ const OrisApp = {
 
     // Button handlers
     const btnBack = document.getElementById('btn-back');
+
+        const btnGuide = document.getElementById('btn-guide');
+        if (btnGuide) btnGuide.addEventListener('click', () => this.showGuideCard());
+
+        const btnCloseGuide = document.getElementById('btn-close-guide');
+        if (btnCloseGuide) btnCloseGuide.addEventListener('click', () => this.closeGuideCard());
+        
+        const guideBackdrop = document.getElementById('guide-backdrop');
+        if (guideBackdrop) guideBackdrop.addEventListener('click', () => this.closeGuideCard());
+
     if (btnBack) btnBack.addEventListener('click', () => this.goBack());
 
     const btnSend = document.getElementById('btn-send');

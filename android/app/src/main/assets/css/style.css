@@ -1678,7 +1678,7 @@ body.evil-mode .home-logo-circle {
 .nucleus-header .modal-title.nucleus-title,
 h3.nucleus-title {
     font-size: 1.8rem !important;
-    color: #7B5EA7 !important;
+    color: #000000 !important;
     margin-bottom: 4px !important;
 }
 
@@ -1800,4 +1800,55 @@ h3.nucleus-title {
     text-align: center;
     font-size: 0.8rem;
     color: #888;
+}
+
+/* Guide Modal Styles */
+.guide-modal {
+    padding: 32px 24px;
+}
+.guide-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #EAE5DF;
+}
+.guide-item:last-of-type {
+    border-bottom: none;
+    margin-bottom: 16px;
+    padding-bottom: 0;
+}
+.guide-number {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 500;
+    width: 50px;
+    flex-shrink: 0;
+    text-align: center;
+}
+.guide-text {
+    flex-grow: 1;
+    padding-left: 16px;
+    border-left: 1px solid currentColor;
+}
+.guide-text h4 {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.guide-text p {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin: 0;
+}
+.guide-footer {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #7B5EA7;
+    margin-top: 32px;
+    padding: 0 16px;
 }
