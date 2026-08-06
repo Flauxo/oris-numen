@@ -365,7 +365,6 @@ body {
     font-family: var(--font-sans);
     font-size: 1rem;
     color: var(--color-text-muted);
-    width: 100%;
     cursor: pointer;
     position: absolute;
     left: 16px;
@@ -1093,9 +1092,14 @@ body {
     border: none;
     font-size: 2rem;
     color: var(--color-text-muted);
-    width: 100%;
     cursor: pointer;
     line-height: 1;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sidebar-menu {
