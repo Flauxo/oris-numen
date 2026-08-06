@@ -1168,6 +1168,7 @@ body.evil-mode .home-logo-circle {
 #history-overlay.active .modal-card,
 #share-overlay.active .modal-card,
 #upgrades-overlay.active .modal-card,
+#guide-overlay.active .modal-card,
 #evolution-overlay.active .modal-card {
     opacity: 1;
     transform: translateY(0) scale(1);
