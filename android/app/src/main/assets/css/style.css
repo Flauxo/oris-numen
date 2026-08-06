@@ -1774,6 +1774,7 @@ h3.nucleus-title {
 }
 
 .stat-percentage {
+    font-family: var(--font-serif);
     font-size: 0.9rem;
     font-weight: 600;
     color: #d4845a; /* overridden dynamically */
