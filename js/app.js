@@ -1036,14 +1036,14 @@ const OrisApp = {
                   linkDownload.style.opacity = '0';
                   linkDownload.style.pointerEvents = 'none';
                   
-                  // Wait 400ms for sigil fade out, then fade in options
+                  // Wait 200ms for sigil fade out, then fade in options
                   if (optionsContainer) {
                       setTimeout(() => {
                           optionsContainer.style.display = 'flex';
                           setTimeout(() => {
                               optionsContainer.style.opacity = '1';
                           }, 10);
-                      }, 400);
+                      }, 200);
                   }
               };
               
