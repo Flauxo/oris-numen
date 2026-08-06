@@ -60,7 +60,7 @@ class SigilGenerator {
         const layers = 15 + Math.floor(random() * 12);
         
         const baseRadius = 300.0;
-        const steps = 40;
+        const steps = 60;
         
         const layersData = [];
         let centerDotStroke = false;
@@ -143,7 +143,7 @@ class SigilGenerator {
         ctx.translate(cx, cy);
         ctx.scale(scaleFactor, scaleFactor);
 
-        const steps = 40;
+        const steps = 60;
 
         for (let l = 0; l < data.layersData.length; l++) {
             const layer = data.layersData[l];
@@ -156,16 +156,31 @@ class SigilGenerator {
                 ctx.rotate(sym.angle);
                 
                 if (!sym.isDot) {
-                    const targetSteps = Math.max(1, Math.ceil(steps * drawProgress));
+                    const exactSteps = steps * drawProgress;
+                    const floorSteps = Math.floor(exactSteps);
+                    const fractional = exactSteps - floorSteps;
                     
                     ctx.beginPath();
                     
                     ctx.moveTo(sym.fwdX[0], sym.fwdY[0]);
-                    for (let i = 1; i <= targetSteps; i++) {
+                    for (let i = 1; i <= floorSteps; i++) {
                         ctx.lineTo(sym.fwdX[i], sym.fwdY[i]);
                     }
                     
-                    for (let i = targetSteps; i >= 0; i--) {
+                    if (floorSteps < steps && fractional > 0) {
+                        const i = floorSteps;
+                        const nx = sym.fwdX[i] + (sym.fwdX[i+1] - sym.fwdX[i]) * fractional;
+                        const ny = sym.fwdY[i] + (sym.fwdY[i+1] - sym.fwdY[i]) * fractional;
+                        ctx.lineTo(nx, ny);
+                        
+                        const bnx = sym.bwdX[i] + (sym.bwdX[i+1] - sym.bwdX[i]) * fractional;
+                        const bny = sym.bwdY[i] + (sym.bwdY[i+1] - sym.bwdY[i]) * fractional;
+                        ctx.lineTo(bnx, bny);
+                    } else if (floorSteps < steps && fractional === 0) {
+                        ctx.lineTo(sym.bwdX[floorSteps], sym.bwdY[floorSteps]);
+                    }
+                    
+                    for (let i = floorSteps; i >= 0; i--) {
                         ctx.lineTo(sym.bwdX[i], sym.bwdY[i]);
                     }
                     
