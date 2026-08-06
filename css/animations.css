@@ -1,0 +1,301 @@
+/* ========================================
+   Oris Numen — Animations
+   ======================================== */
+
+/* --- Keyframe Definitions --- */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        text-shadow: 0 0 20px currentColor;
+    }
+    50% {
+        transform: scale(1.06);
+        opacity: 1;
+        text-shadow: 0 0 50px currentColor, 0 0 80px currentColor;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        text-shadow: 0 0 20px currentColor;
+    }
+}
+
+@keyframes invertedPulseGlow {
+    0% {
+        transform: rotate(180deg) scale(1);
+        opacity: 1;
+        text-shadow: 0 0 20px currentColor;
+    }
+    50% {
+        transform: rotate(180deg) scale(1.05);
+        opacity: 1;
+        text-shadow: 0 0 40px currentColor;
+    }
+    100% {
+        transform: rotate(180deg) scale(1);
+        opacity: 1;
+        text-shadow: 0 0 20px currentColor;
+    }
+}
+
+@keyframes breathe {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.015); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+    0% {
+        opacity: 0.5;
+        box-shadow: 0 0 0 0 transparent;
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 12px 3px currentColor;
+    }
+    100% {
+        opacity: 0.5;
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes crossFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+}
+
+
+/* --- Animation Classes --- */
+
+.breathe-anim {
+    animation: breathe 5s ease-in-out infinite;
+}
+
+.pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.shimmer-anim {
+    animation: shimmer 2.5s ease-in-out infinite;
+}
+
+
+/* --- Staggered Card Entrance --- */
+
+#home-screen.active .message-card {
+    animation: cardAppear 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--card-delay, 0s);
+    opacity: 0;
+}
+
+
+/* --- Splash Screen Animations --- */
+
+#splash-screen .splash-cross {
+    opacity: 0;
+    animation: 
+        fadeIn 0.4s ease-out 4.6s forwards,
+        crossFloat 4s ease-in-out 4.6s infinite;
+}
+
+@keyframes splashOAppearMove {
+    0% {
+        opacity: 0;
+        transform: translateX(4.0rem) scale(0.1);
+    }
+    27% {
+        opacity: 1;
+        transform: translateX(4.0rem) scale(1);
+    }
+    40% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes letterFadeIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+#splash-screen .splash-o-img {
+    opacity: 0;
+    animation: splashOAppearMove 7.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+#splash-screen .letter {
+    opacity: 0;
+    display: inline-block;
+}
+
+/* img is child 1, so letters are 2, 3, 4 */
+#splash-screen .splash-line1 .letter:nth-child(2) { animation: letterFadeIn 0.3s ease-out 2.9s forwards; }
+#splash-screen .splash-line1 .letter:nth-child(3) { animation: letterFadeIn 0.3s ease-out 3.0s forwards; }
+#splash-screen .splash-line1 .letter:nth-child(4) { animation: letterFadeIn 0.3s ease-out 3.1s forwards; }
+
+#splash-screen .splash-line2 .letter:nth-child(1) { animation: letterFadeIn 0.3s ease-out 3.3s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(2) { animation: letterFadeIn 0.3s ease-out 3.4s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(3) { animation: letterFadeIn 0.3s ease-out 3.5s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(4) { animation: letterFadeIn 0.3s ease-out 3.6s forwards; }
+#splash-screen .splash-line2 .letter:nth-child(5) { animation: letterFadeIn 0.3s ease-out 3.7s forwards; }
+
+#splash-screen .splash-subtitle {
+    opacity: 0;
+    animation: 
+        fadeIn 0.4s ease-out 4.6s forwards,
+        crossFloat 4s ease-in-out 4.6s infinite;
+}
+
+
+/* --- Screen Transitions --- */
+
+.screen {
+    will-change: opacity;
+}
+
+.screen.active {
+    animation: fadeIn 0.5s ease-out;
+}
+
+
+/* --- Card Hover Micro-animation --- */
+
+.message-card {
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                box-shadow 0.3s ease;
+}
+
+.message-card:active {
+    transform: scale(0.97) !important;
+}
+
+
+/* --- Success Screen Entry --- */
+
+#success-screen.active .success-icon {
+    animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+#success-screen.active .success-title {
+    animation: slideUp 0.8s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+#success-screen.active .success-subtitle {
+    animation: slideUp 0.8s ease-out 0.5s forwards;
+    opacity: 0;
+}
+
+#success-screen.active .btn-home {
+    animation: slideUp 0.8s ease-out 0.7s forwards;
+    opacity: 0;
+}
+
+
+/* --- Write Screen Entry --- */
+
+#write-screen.active .freq-indicator-container {
+    animation: fadeIn 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+}
+
+#write-screen.active .freq-info {
+    animation: slideUp 0.6s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+#write-screen.active #message-input {
+    animation: fadeIn 0.6s ease-out 0.4s forwards;
+    opacity: 0;
+}
+
+#write-screen.active .btn-send {
+    animation: slideUp 0.5s ease-out 0.5s forwards;
+    opacity: 0;
+}
+
+
+/* --- Channeling Screen --- */
+
+#channeling-screen.active .channeling-header {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+#channeling-screen.active .timer-display {
+    animation: fadeIn 1.2s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+#channeling-screen.active .canvas-container {
+    animation: fadeIn 1.5s ease-out 0.5s forwards;
+    opacity: 0;
+}
+
+/* --- Destruction Animation --- */
+@keyframes dissolveUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.1) skewX(2deg);
+        filter: blur(10px);
+    }
+}
+
+.dissolve-anim {
+    animation: dissolveUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+    pointer-events: none;
+}
+
+.dissolve-anim-second {
+    animation: dissolveUp 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+    pointer-events: none;
+}
+
+
+.dissolve-anim-fast {
+    animation: dissolveUp 1.0s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+    pointer-events: none;
+}
