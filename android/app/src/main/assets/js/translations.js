@@ -37,7 +37,7 @@ const Translations = {
         "card.revelatio.desc": "Confession and Sincerity",
         "card.absolutio.desc": "Forgiveness and Reconciliation",
         "card.gratia.desc": "Gratitude and Praise",
-        "home.desc": "Write your <span style='color: var(--color-freq-humilis); font-style: italic;'>prayer</span>, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confession</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>plea for forgiveness</span>, or <span style='color: var(--color-freq-gratia); font-style: italic;'>gratitude</span>, and allow it to transform into pure energy through sound waves calibrated to elevate your voice to the celestial.",
+        "home.desc": "Write your <span style='color: var(--color-freq-humilis); font-style: italic;'>prayer</span>, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confession</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>plea for forgiveness</span>, or <span style='color: var(--color-freq-gratia); font-style: italic;'>gratitude</span>, and allow it to transform into energy through sound waves calibrated to elevate your voice to the celestial.",
         
         "freq.purpose": "Purpose",
         "freq.effect": "Effect",
@@ -401,7 +401,7 @@ const Translations = {
         "card.revelatio.desc": "Confessione e Sincerità",
         "card.absolutio.desc": "Perdono e Riconciliazione",
         "card.gratia.desc": "Gratitudine e Lode",
-        "home.desc": "Scrivi la tua <span style='color: var(--color-freq-humilis); font-style: italic;'>preghiera</span>, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confessione</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>richiesta di perdono</span> o <span style='color: var(--color-freq-gratia); font-style: italic;'>gratitudine</span>, e permettile di trasformarsi in pura energia attraverso onde sonore calibrate per elevare la tua voce fino al celeste.",
+        "home.desc": "Scrivi la tua <span style='color: var(--color-freq-humilis); font-style: italic;'>preghiera</span>, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confessione</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>richiesta di perdono</span> o <span style='color: var(--color-freq-gratia); font-style: italic;'>gratitudine</span>, e permettile di trasformarsi in energia attraverso onde sonore calibrate per elevare la tua voce fino al celeste.",
         
         "freq.purpose": "Scopo",
         "freq.effect": "Effetto",
@@ -583,7 +583,7 @@ const Translations = {
         "card.revelatio.desc": "Confessio et Sinceritas",
         "card.absolutio.desc": "Remissio et Reconciliatio",
         "card.gratia.desc": "Gratitudo et Laus",
-        "home.desc": "Scribe <span style='color: var(--color-freq-humilis); font-style: italic;'>precem</span> tuam, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confessionem</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>petitionem veniae</span> vel <span style='color: var(--color-freq-gratia); font-style: italic;'>gratiarum actionem</span>, et permitte eam in energiam puram transformari per undas sonoras caligatas ad vocem tuam ad caelestia evehendam.",
+        "home.desc": "Scribe <span style='color: var(--color-freq-humilis); font-style: italic;'>precem</span> tuam, <span style='color: var(--color-freq-revelatio); font-style: italic;'>confessionem</span>, <span style='color: var(--color-freq-absolutio); font-style: italic;'>petitionem veniae</span> vel <span style='color: var(--color-freq-gratia); font-style: italic;'>gratiarum actionem</span>, et permitte eam in energiam transformari per undas sonoras caligatas ad vocem tuam ad caelestia evehendam.",
         
         "freq.purpose": "Propositum",
         "freq.effect": "Effectus",
@@ -759,7 +759,7 @@ const Translations = {
         "card.revelatio.desc": "\u5fcf\u6094\u548c\u771f\u8bda",
         "card.absolutio.desc": "\u5bbd\u6055\u548c\u548c\u89e3",
         "card.gratia.desc": "\u611f\u6069\u548c\u8d5e\u7f8e",
-        "home.desc": "\u5199\u4e0b\u4f60\u7684<span style=\"color: var(--color-freq-humilis);\">\u7948\u7977</span>\u3001<span style=\"color: var(--color-freq-revelatio);\">\u5fcf\u6094</span>\u3001<span style=\"color: var(--color-freq-absolutio);\">\u5bbd\u6055</span>\u6216<span style=\"color: var(--color-freq-gratia);\">\u611f\u6069</span>\u7684\u8bf7\u6c42\uff0c\u5e76\u8ba9\u5b83\u901a\u8fc7\u6821\u51c6\u7684\u58f0\u6ce2\u8f6c\u5316\u4e3a\u7eaf\u7cb9\u7684\u80fd\u91cf\uff0c\u5c06\u4f60\u7684\u58f0\u97f3\u63d0\u5347\u5230\u5929\u5802\u3002",
+        "home.desc": "\u5199\u4e0b\u4f60\u7684<span style=\"color: var(--color-freq-humilis);\">\u7948\u7977</span>\u3001<span style=\"color: var(--color-freq-revelatio);\">\u5fcf\u6094</span>\u3001<span style=\"color: var(--color-freq-absolutio);\">\u5bbd\u6055</span>\u6216<span style=\"color: var(--color-freq-gratia);\">\u611f\u6069</span>\u7684\u8bf7\u6c42\uff0c\u5e76\u8ba9\u5b83\u901a\u8fc7\u6821\u51c6\u7684\u58f0\u6ce2\u8f6c\u5316\u4e3a\u80fd\u91cf\uff0c\u5c06\u4f60\u7684\u58f0\u97f3\u63d0\u5347\u5230\u5929\u5802\u3002",
         "freq.purpose": "\u76ee\u7684",
         "freq.effect": "\u6548\u679c",
         "btn.write": "\u5199\u4e0b\u4fe1\u606f",
