@@ -1024,13 +1024,14 @@ const OrisApp = {
                   linkDownload.style.opacity = '0';
                   linkDownload.style.pointerEvents = 'none';
                   
-                  // Fade in the options container exactly on top
+                  // Wait 400ms for sigil fade out, then fade in options
                   if (optionsContainer) {
-                      optionsContainer.style.display = 'flex';
-                      // Wait a tiny bit for display to apply, then transition opacity
                       setTimeout(() => {
-                          optionsContainer.style.opacity = '1';
-                      }, 10);
+                          optionsContainer.style.display = 'flex';
+                          setTimeout(() => {
+                              optionsContainer.style.opacity = '1';
+                          }, 10);
+                      }, 400);
                   }
               };
               
