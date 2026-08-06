@@ -137,6 +137,23 @@ class SigilGenerator {
                 ctx.closePath();
                 ctx.fill();
                 
+                // Draw a 100% opaque, thin, homogeneous core line down the center
+                // We use globalAlpha to animate it in, but it peaks at 1.0 (100% opaque)
+                ctx.globalAlpha = Math.min(1.0, drawProgress * 1.5); 
+                ctx.lineWidth = 1 + random() * 1.5; // Fine, homogeneous line
+                
+                ctx.beginPath();
+                for (let i = 0; i <= targetSteps; i++) {
+                    const t = i / steps;
+                    const pt = this.getBezier(t, p0, p1, p2, p3);
+                    if (i === 0) ctx.moveTo(pt.x, pt.y);
+                    else ctx.lineTo(pt.x, pt.y);
+                }
+                ctx.stroke();
+                
+                // Restore transparency for the next operations
+                ctx.globalAlpha = alpha;
+                
                 ctx.restore();
             }
         }
