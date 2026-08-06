@@ -67,10 +67,14 @@ class SigilGenerator {
             const layerRadius = radius * (0.2 + (0.8 * random()));
             const shapeType = Math.floor(random() * 5);
             
-            // Base thickness for this layer
+            // Base thickness for this layer (4 to 24)
             const baseThickness = 4 + random() * 20;
             
-            ctx.globalAlpha = 0.28 * Math.min(1.0, drawProgress * 1.5);
+            // Map thickness to alpha: thinner lines = higher opacity (up to 95%), thicker = 28%
+            const thicknessRatio = (baseThickness - 4) / 20;
+            const targetAlpha = 0.95 - thicknessRatio * (0.95 - 0.28);
+            
+            ctx.globalAlpha = targetAlpha * Math.min(1.0, drawProgress * 1.5);
             
             // Phase for the sine wave thickness to make it random per layer
             const thicknessPhase = random() * Math.PI * 2;
