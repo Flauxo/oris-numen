@@ -1056,7 +1056,10 @@ const OrisApp = {
                   btnVid.onclick = (e) => {
                       e.preventDefault();
                       if (OrisAudio.playButtonSound) OrisAudio.playButtonSound();
-                      if (optionsContainer) optionsContainer.style.display = 'none';
+                      if (optionsContainer) {
+                    optionsContainer.style.display = 'none';
+                    optionsContainer.style.opacity = '';
+                }
                       if (loadingContainer) loadingContainer.style.display = 'block';
                       this.recordSigilVideo(text, freq, isEvil, activeElementsCopy);
                   };
