@@ -1006,8 +1006,8 @@ const OrisApp = {
 
       const linkDownload = document.getElementById('link-download-sigil');
 
-      // Do not show Sigil link in Evil Mode
-      if (!isEvil && text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
+      // Show Sigil link in all modes, colored by the frequency (which is red for Pazuzu)
+      if (text && text.trim().length > 0 && typeof SigilGenerator !== 'undefined') {
           if (linkDownload) {
               // Instantly reset state without transition
               linkDownload.style.transition = 'none';
