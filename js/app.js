@@ -1890,7 +1890,12 @@ const OrisApp = {
           const elapsed = (now - start) / 1000;
           
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const animProgress = Math.min(elapsed * 0.8, 1);
+          const rawProgress = Math.min(elapsed * 0.7, 1);
+          let animProgress = 1;
+          if (rawProgress < 1) {
+              const c4 = (2 * Math.PI) / 3;
+              animProgress = rawProgress === 0 ? 0 : Math.pow(2, -10 * rawProgress) * Math.sin((rawProgress * 10 - 0.75) * c4) + 1;
+          }
           
           // Just draw the waves directly on the canvas. 
           // The SVG overlay in HTML perfectly handles the 'O' shape mask.
