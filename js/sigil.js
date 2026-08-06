@@ -49,7 +49,7 @@ class SigilGenerator {
             ctx.lineWidth = lineWidth;
             
             // Transparencia del 22% exacta
-            ctx.globalAlpha = 0.22 * Math.min(1.0, drawProgress * 1.5);
+            ctx.globalAlpha = 0.30 * Math.min(1.0, drawProgress * 1.5);
             
             // For each symmetrical segment
             for (let s = 0; s < symmetry; s++) {
@@ -131,7 +131,7 @@ class SigilGenerator {
         ctx.lineWidth = 4;
         ctx.arc(cx, cy, radius * 0.08, 0, Math.PI * 2);
         if (drawProgress > 0.5) {
-            ctx.globalAlpha = 0.22 * Math.min(1.0, (drawProgress - 0.5) * 2);
+            ctx.globalAlpha = 0.30 * Math.min(1.0, (drawProgress - 0.5) * 2);
             if (random() > 0.5) ctx.fill(); else ctx.stroke();
         }
 
