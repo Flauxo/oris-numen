@@ -1535,7 +1535,7 @@ const OrisApp = {
       const explAlpha = isVideo ? Math.max(0, Math.min(1.0, (elapsed - 4.5) / 1.5)) : 1.0;
       ctx.globalAlpha = explAlpha;
       
-      let explY = yPos + 125;
+      let explY = yPos + 60;
       const explText = Translations[this.currentLang]['success.sigil_explanation'] || "";
       const regularFont = '400 36px "Inter", sans-serif';
       const boldFont = '600 36px "Inter", sans-serif';
@@ -1620,26 +1620,27 @@ const OrisApp = {
       const storeAlpha = isVideo ? Math.max(0, Math.min(1.0, (elapsed - 5.0) / 1.5)) : 1.0;
       ctx.globalAlpha = storeAlpha;
       
-      ctx.font = '400 110px "Cormorant Garamond", serif';
+      ctx.font = '400 80px "Cormorant Garamond", serif';
       ctx.textAlign = 'center';
       ctx.fillStyle = isEvil ? '#CC0000' : '#222222';
-      ctx.fillText("Oris Numen", width / 2, 1740);
+      ctx.fillText("Oris Numen", width / 2, 1750);
       
       const centerX = width / 2;
-      const iconY = 1790;
+      const iconY = 1810;
       
       // Vertical separator line
       ctx.beginPath();
       ctx.moveTo(centerX, iconY - 5);
-      ctx.lineTo(centerX, iconY + 65);
+      ctx.lineTo(centerX, iconY + 53);
       ctx.strokeStyle = isEvil ? '#CC0000' : '#222222';
       ctx.lineWidth = 2;
       ctx.stroke();
       
-      const playStartX = centerX - 60 - 40; // 40px padding from center, 60px icon width
+      const playStartX = centerX - 48 - 45; // 45px padding from center, 48px icon width
       const playStartY = iconY;
       ctx.save();
       ctx.translate(playStartX, playStartY);
+      ctx.scale(0.8, 0.8);
       
       const drawPoly = (color, points) => {
           ctx.fillStyle = color;
@@ -1661,11 +1662,11 @@ const OrisApp = {
       drawPoly('#FFC900', [[45, 23], [58, 30], [45, 37], [36, 30]]);
       ctx.restore();
       
-      const appleStartX = centerX + 40; // 40px padding from center
+      const appleStartX = centerX + 45; // 45px padding from center
       const appleStartY = iconY;
       ctx.save();
       ctx.translate(appleStartX, appleStartY);
-      ctx.scale(2.5, 2.5);
+      ctx.scale(2.0, 2.0);
       ctx.fillStyle = isEvil ? '#990000' : '#111111';
       const applePath = new Path2D("M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z");
       ctx.fill(applePath);
@@ -1832,6 +1833,11 @@ const OrisApp = {
                   } else {
                       numinosityPercentage.textContent = "";
                   }
+              }
+
+              const sunIcon = document.getElementById('numinosity-sun-icon');
+              if (sunIcon) {
+                  sunIcon.style.color = stateColor;
               }
           }
           
