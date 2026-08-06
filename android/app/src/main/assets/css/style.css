@@ -1812,20 +1812,20 @@ h3.nucleus-title {
 .guide-item {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 24px;
-    padding-bottom: 24px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
     border-bottom: 1px solid #EAE5DF;
 }
 .guide-item:last-of-type {
     border-bottom: none;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     padding-bottom: 0;
 }
 .guide-number {
     font-family: var(--font-serif);
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     font-weight: 500;
-    width: 50px;
+    width: 44px;
     flex-shrink: 0;
     text-align: center;
 }
@@ -1852,7 +1852,7 @@ h3.nucleus-title {
     font-style: italic;
     font-size: 1.3rem;
     color: #7B5EA7;
-    margin-top: 32px;
+    margin-top: 16px;
     padding: 0 16px;
 }
 
