@@ -1890,11 +1890,12 @@ const OrisApp = {
           const elapsed = (now - start) / 1000;
           
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const rawProgress = Math.min(elapsed * 0.7, 1);
+          // Use a slow 3.5s duration with a gentle 'easeOutBack' (overshoot and settle)
+          const rawProgress = Math.min(elapsed / 3.5, 1);
           let animProgress = 1;
           if (rawProgress < 1) {
-              const c4 = (2 * Math.PI) / 3;
-              animProgress = rawProgress === 0 ? 0 : Math.pow(2, -10 * rawProgress) * Math.sin((rawProgress * 10 - 0.75) * c4) + 1;
+              const p = rawProgress - 1;
+              animProgress = 1 + 2.70158 * Math.pow(p, 3) + 1.70158 * Math.pow(p, 2);
           }
           
           // Just draw the waves directly on the canvas. 
