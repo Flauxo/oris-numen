@@ -572,7 +572,10 @@ const OrisApp = {
         btnWrite.style.backgroundColor = freq.color;
         btnWrite.style.boxShadow = `0 4px 15px rgba(${freq.colorRgb}, 0.4)`;
     }
-    if (overlayHz) overlayHz.textContent = `${freq.hz} Hz`;
+    if (overlayHz) {
+        overlayHz.textContent = `${freq.hz} Hz`;
+        overlayHz.style.color = freq.color;
+    }
     if (overlayPurpose) overlayPurpose.textContent = Translations[this.currentLang][`freq.${type}.purpose`];
     if (overlayEffect) overlayEffect.textContent = Translations[this.currentLang][`freq.${type}.effect`];
 

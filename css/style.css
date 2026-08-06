@@ -1,6 +1,6 @@
 :root {
     /* Colors */
-    --color-bg-primary: #F8EFE4;
+    --color-bg-primary: #FDF8F2;
     --color-bg-card: #FAFAF5;
     --color-text-dark: #2C2C28;
     --color-text-muted: #7A7A72;
@@ -240,11 +240,10 @@ body {
 }
 
 .home-description p {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #5C4A3A;
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #7A7A7A;
 }
 
 .home-logo {
@@ -312,7 +311,7 @@ body {
     object-fit: cover;
     object-position: center;
     display: block;
-    border: 2px solid rgba(0, 0, 0, 0.06);
+    border: none;
 }
 
 .card-text {
@@ -682,7 +681,7 @@ body {
     height: 54px;
     border-radius: 50%;
     border: none;
-    background: #EFEBE5;
+    background: transparent;
     color: #8B8276;
     display: flex;
     align-items: center;
@@ -1618,3 +1617,9 @@ body.evil-mode .home-logo-circle {
 }
 
 
+
+/* Added for color consistency */
+.message-card[data-type="humilis"] .card-title, .message-card[data-type="humilis"] .card-freq { color: var(--color-freq-humilis); }
+.message-card[data-type="revelatio"] .card-title, .message-card[data-type="revelatio"] .card-freq { color: var(--color-freq-revelatio); }
+.message-card[data-type="absolutio"] .card-title, .message-card[data-type="absolutio"] .card-freq { color: var(--color-freq-absolutio); }
+.message-card[data-type="gratia"] .card-title, .message-card[data-type="gratia"] .card-freq { color: var(--color-freq-gratia); }
