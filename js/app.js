@@ -1220,10 +1220,10 @@ const OrisApp = {
       try { OrisAudio.playSplashSound(); } catch (e) { /* silent */ }
     }, 1600);
 
-    // Extended splash time for new animation (7.5 seconds)
+    // Extended splash time for new animation (6.7 seconds)
     setTimeout(() => {
       this.showScreen('home');
-    }, 7500);
+    }, 6700);
   },
   
   /**
