@@ -1409,6 +1409,274 @@ const OrisApp = {
       }
   },
 
+  renderSigilCanvas(ctx, text, freq, isEvil, activeElementsSet, elapsed = null) {
+      const width = 1080;
+      const height = 1920;
+      const isVideo = (elapsed !== null && elapsed !== undefined);
+      
+      // Background
+      ctx.fillStyle = isEvil ? '#0a0a0a' : '#FAFAF5';
+      ctx.fillRect(0, 0, width, height);
+      
+      // 1. Top Title ("Mensaje canalizado")
+      const titleAlpha = isVideo ? Math.min(1.0, elapsed / 1.5) : 1.0;
+      ctx.globalAlpha = titleAlpha;
+      ctx.fillStyle = isEvil ? '#CC0000' : '#2A2A2A';
+      ctx.font = '400 100px "Cormorant Garamond", serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'alphabetic';
+      const topTitle = (Translations[this.currentLang] && Translations[this.currentLang]['sigil.title']) || "Mensaje canalizado";
+      ctx.fillText(topTitle, width / 2, 150);
+      
+      // 2. Draw Sigil
+      let sigilRadius = 340;
+      let sigilProgress = 1.0;
+      if (isVideo) {
+          sigilProgress = Math.min(1.0, elapsed / 7.0);
+          const cycleDuration = 2.5;
+          const cycleTime = elapsed % cycleDuration;
+          const maxScale = 1.025;
+          let pulseScale = 1.0;
+          if (cycleTime < 1.5) {
+              const p = cycleTime / 1.5;
+              const ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+              pulseScale = 1.0 + ((maxScale - 1.0) * ease);
+          } else {
+              const p = (cycleTime - 1.5) / 1.0;
+              const ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+              pulseScale = maxScale - ((maxScale - 1.0) * ease);
+          }
+          sigilRadius = 340 * pulseScale;
+      }
+      ctx.globalAlpha = 1.0;
+      if (typeof SigilGenerator !== 'undefined') {
+          SigilGenerator.draw(ctx, width / 2, 575, sigilRadius, text, freq.color, isEvil, sigilProgress);
+      }
+      
+      // 3. Left-Aligned Info Section with Vertical Accent Bar
+      const dataAlpha = isVideo ? Math.max(0, Math.min(1.0, (elapsed - 0.3) / 1.0)) : 1.0;
+      ctx.globalAlpha = dataAlpha;
+      
+      let yPos = 1030;
+      const leftX = 210;
+      ctx.textAlign = 'left';
+      
+      const prayerType = (Translations[this.currentLang][`card.${this.currentFrequency}.desc`] || "Canalización Espiritual").toUpperCase();
+      ctx.font = '500 36px "Inter", sans-serif';
+      ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
+      ctx.fillText(prayerType, leftX, yPos);
+      yPos += 70;
+      
+      ctx.font = '600 62px "Inter", sans-serif';
+      ctx.fillStyle = freq.color;
+      ctx.fillText(`${freq.name} (${freq.hz || freq.audioHz} Hz)`, leftX, yPos);
+      yPos += 70;
+      
+      const elsToUse = activeElementsSet || this.activeElements;
+      const elsArray = Array.from(elsToUse);
+      if (elsArray.length > 0) {
+          const elementColors = {
+              'aire': '#7CA982',
+              'tierra': '#997A9E',
+              'agua': '#7096AB',
+              'fuego': '#CBA858'
+          };
+          let prefixStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.elements"]) || "Elementos: ";
+          let currentX = leftX;
+          
+          ctx.font = '500 36px "Inter", sans-serif';
+          ctx.fillStyle = isEvil ? '#770000' : '#555555';
+          ctx.fillText(prefixStr, currentX, yPos);
+          currentX += ctx.measureText(prefixStr).width;
+          
+          for (let i = 0; i < elsArray.length; i++) {
+              const el = elsArray[i];
+              let elText = (Translations[this.currentLang][`elements.${el}`] || el).toLowerCase();
+              ctx.font = '600 36px "Inter", sans-serif';
+              ctx.fillStyle = elementColors[el] || '#666666';
+              ctx.fillText(elText, currentX, yPos);
+              currentX += ctx.measureText(elText).width;
+              
+              if (i < elsArray.length - 1) {
+                  ctx.font = '500 36px "Inter", sans-serif';
+                  let andStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.and"]) || " y ";
+                  ctx.fillStyle = isEvil ? '#770000' : '#555555';
+                  ctx.fillText(andStr, currentX, yPos);
+                  currentX += ctx.measureText(andStr).width;
+              }
+          }
+      } else {
+          ctx.font = '500 36px "Inter", sans-serif';
+          ctx.fillStyle = isEvil ? '#770000' : '#6A6A6A';
+          let noneText = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.none"]) || "Elementos: Ninguno";
+          ctx.fillText(noneText, leftX, yPos);
+      }
+      yPos += 62;
+      
+      ctx.font = '400 34px "Inter", sans-serif';
+      ctx.fillStyle = isEvil ? '#770000' : '#6A6A6A';
+      const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
+      const dateStr = new Date().toLocaleDateString(this.currentLang);
+      let durPrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.duration"]) || "Duración";
+      let datePrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.date"]) || "Fecha";
+      ctx.fillText(`${durPrefix}: ${timeStr}   •   ${datePrefix}: ${dateStr}`, leftX, yPos);
+      
+      ctx.strokeStyle = isEvil ? '#660000' : '#2C2C28';
+      ctx.lineWidth = 5;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(170, 990);
+      ctx.lineTo(170, yPos + 8);
+      ctx.stroke();
+      
+      // 4. Explanation Text (Inter typography, respecting bold words)
+      const explAlpha = isVideo ? Math.max(0, Math.min(1.0, (elapsed - 4.5) / 1.5)) : 1.0;
+      ctx.globalAlpha = explAlpha;
+      
+      let explY = yPos + 125;
+      const explText = Translations[this.currentLang]['success.sigil_explanation'] || "";
+      const regularFont = '400 36px "Inter", sans-serif';
+      const boldFont = '600 36px "Inter", sans-serif';
+      ctx.fillStyle = isEvil ? '#770000' : '#2C2C28';
+      
+      const wrapTextJustified = (context, textStr, startX, startY, maxW, lineH) => {
+          context.textAlign = 'left';
+          const paragraphs = textStr.split('\n');
+          
+          for (const p of paragraphs) {
+              if (p.trim() === '') {
+                  startY += lineH;
+                  continue;
+              }
+              let rawParts = p.split(/(\*\*.*?\*\*)/g);
+              let wordList = [];
+              for (let part of rawParts) {
+                  if (!part) continue;
+                  let isBold = false;
+                  if (part.startsWith('**') && part.endsWith('**')) {
+                      isBold = true;
+                      part = part.substring(2, part.length - 2);
+                  }
+                  let subwords = part.split(' ');
+                  for (let w of subwords) {
+                      if (w !== '') wordList.push({ text: w, bold: isBold });
+                  }
+              }
+              
+              let lines = [];
+              let currentLine = [];
+              let currentWidth = 0;
+              context.font = regularFont;
+              const spaceW = context.measureText(' ').width;
+              
+              for (let wObj of wordList) {
+                  context.font = wObj.bold ? boldFont : regularFont;
+                  let wordW = context.measureText(wObj.text).width;
+                  if (currentLine.length > 0 && currentWidth + spaceW + wordW > maxW) {
+                      lines.push(currentLine);
+                      currentLine = [wObj];
+                      currentWidth = wordW;
+                  } else {
+                      currentLine.push(wObj);
+                      currentWidth += (currentLine.length === 1 ? 0 : spaceW) + wordW;
+                  }
+              }
+              if (currentLine.length > 0) lines.push(currentLine);
+              
+              for (let i = 0; i < lines.length; i++) {
+                  const lineWords = lines[i];
+                  const isLastLine = (i === lines.length - 1 || lineWords.length === 1);
+                  let currentX = startX;
+                  
+                  if (isLastLine) {
+                      for (let wObj of lineWords) {
+                          context.font = wObj.bold ? boldFont : regularFont;
+                          context.fillText(wObj.text, currentX, startY);
+                          currentX += context.measureText(wObj.text).width + spaceW;
+                      }
+                  } else {
+                      let totalWordsWidth = 0;
+                      for (let wObj of lineWords) {
+                          context.font = wObj.bold ? boldFont : regularFont;
+                          totalWordsWidth += context.measureText(wObj.text).width;
+                      }
+                      const spaceBetween = (maxW - totalWordsWidth) / (lineWords.length - 1);
+                      for (let wObj of lineWords) {
+                          context.font = wObj.bold ? boldFont : regularFont;
+                          context.fillText(wObj.text, currentX, startY);
+                          currentX += context.measureText(wObj.text).width + spaceBetween;
+                      }
+                  }
+                  startY += lineH;
+              }
+          }
+      };
+      
+      wrapTextJustified(ctx, explText, 120, explY, 840, 54);
+      
+      // 5. Bottom Call to Action and Store Badges
+      const storeAlpha = isVideo ? Math.max(0, Math.min(1.0, (elapsed - 5.0) / 1.5)) : 1.0;
+      ctx.globalAlpha = storeAlpha;
+      
+      ctx.font = '600 60px "Cormorant Garamond", serif';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = isEvil ? '#CC0000' : '#111111';
+      ctx.fillText("Oris Numen", width / 2, 1750);
+      
+      const playStartX = 240;
+      const playStartY = 1792;
+      ctx.save();
+      ctx.translate(playStartX, playStartY);
+      
+      const drawPoly = (color, points) => {
+          ctx.fillStyle = color;
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(points[0][0], points[0][1]);
+          for (let i = 1; i < points.length; i++) {
+              ctx.lineTo(points[i][0], points[i][1]);
+          }
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+      };
+      
+      drawPoly('#0057FF', [[2, 2], [2, 58], [36, 30]]);
+      drawPoly('#00F076', [[2, 2], [36, 30], [45, 23], [4, 0]]);
+      drawPoly('#FF3131', [[2, 58], [45, 37], [36, 30], [4, 60]]);
+      drawPoly('#FFC900', [[45, 23], [58, 30], [45, 37], [36, 30]]);
+      ctx.restore();
+      
+      ctx.textAlign = 'left';
+      ctx.fillStyle = isEvil ? '#770000' : '#333333';
+      ctx.font = '600 18px "Inter", sans-serif';
+      ctx.fillText("GET IT ON", playStartX + 78, playStartY + 18);
+      ctx.fillStyle = isEvil ? '#990000' : '#0B0B0B';
+      ctx.font = '600 34px "Inter", sans-serif';
+      ctx.fillText("Google Play", playStartX + 78, playStartY + 54);
+      
+      const appleStartX = 590;
+      const appleStartY = 1792;
+      ctx.save();
+      ctx.translate(appleStartX, appleStartY);
+      ctx.scale(2.5, 2.5);
+      ctx.fillStyle = isEvil ? '#990000' : '#0B0B0B';
+      const applePath = new Path2D("M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z");
+      ctx.fill(applePath);
+      ctx.restore();
+      
+      ctx.textAlign = 'left';
+      ctx.fillStyle = isEvil ? '#770000' : '#333333';
+      ctx.font = '600 18px "Inter", sans-serif';
+      ctx.fillText("Download on the", appleStartX + 65, playStartY + 18);
+      ctx.fillStyle = isEvil ? '#990000' : '#0B0B0B';
+      ctx.font = '600 34px "Inter", sans-serif';
+      ctx.fillText("App Store", appleStartX + 65, playStartY + 54);
+      
+      ctx.globalAlpha = 1.0;
+  },
+
   downloadSigilImage(text, freq, isEvil, activeElementsSet) {
       try {
           const canvas = document.createElement('canvas');
@@ -1416,259 +1684,7 @@ const OrisApp = {
           canvas.height = 1920; // Vertical format
           const ctx = canvas.getContext('2d');
           
-          // Background
-          ctx.fillStyle = isEvil ? '#0a0a0a' : '#FAFAF5'; // Match screen background
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          
-          // Draw geometric border frame
-          ctx.strokeStyle = freq.color;
-          ctx.lineJoin = 'round';
-          ctx.lineCap = 'round';
-          ctx.globalAlpha = isEvil ? 0.4 : 0.7;
-          
-          const drawFrame = (margin, outerPadding, lw) => {
-              ctx.lineWidth = lw;
-              ctx.beginPath();
-              const r = 40; // corner radius
-              const dipW = 80; // width of the dip
-              
-              const L = margin;
-              const R = canvas.width - margin;
-              const T = margin;
-              const B = canvas.height - margin;
-              
-              const cx = canvas.width / 2;
-              const cy = canvas.height / 2;
-              
-              // Top
-              ctx.moveTo(L + r, T);
-              ctx.lineTo(cx - dipW, T);
-              ctx.lineTo(cx, outerPadding); 
-              ctx.lineTo(cx + dipW, T);
-              ctx.lineTo(R - r, T);
-              ctx.arcTo(R, T, R, T + r, r);
-              
-              // Right
-              ctx.lineTo(R, cy - dipW);
-              ctx.lineTo(canvas.width - outerPadding, cy); 
-              ctx.lineTo(R, cy + dipW);
-              ctx.lineTo(R, B - r);
-              ctx.arcTo(R, B, R - r, B, r);
-              
-              // Bottom
-              ctx.lineTo(cx + dipW, B);
-              ctx.lineTo(cx, canvas.height - outerPadding); 
-              ctx.lineTo(cx - dipW, B);
-              ctx.lineTo(L + r, B);
-              ctx.arcTo(L, B, L, B - r, r);
-              
-              // Left
-              ctx.lineTo(L, cy + dipW);
-              ctx.lineTo(outerPadding, cy); 
-              ctx.lineTo(L, cy - dipW);
-              ctx.lineTo(L, T + r);
-              ctx.arcTo(L, T, L + r, T, r);
-              
-              ctx.stroke();
-          };
-          
-          drawFrame(45, 45, 3);
-          drawFrame(65, 45, 2);
-          drawFrame(85, 45, 1);
-          
-          ctx.globalAlpha = 1.0;
-          
-          // Oris Numen Title
-          ctx.fillStyle = isEvil ? '#cc0000' : '#2A2A2A';
-          ctx.font = '600 140px "Cormorant Garamond", serif';
-          ctx.textAlign = 'center';
-          ctx.fillText('Oris Numen', canvas.width / 2, 230);
-          
-          // Subtitle
-          ctx.font = '400 35px "Inter", sans-serif';
-          ctx.fillStyle = isEvil ? '#990000' : '#777777';
-          const canvasSubtitle = Translations[this.currentLang]['success.share_channeling'] || "Comparte tu canalización";
-          ctx.fillText(canvasSubtitle, canvas.width / 2, 300);
-          
-          // Draw Sigil
-          if (typeof SigilGenerator !== 'undefined') {
-              SigilGenerator.draw(ctx, canvas.width / 2, 670, 300, text, freq.color, isEvil);
-          }
-          
-          let yPos = 1040;
-          ctx.textAlign = 'center';
-
-          // Type of prayer (Plegaria, Perdón, Confesión, etc.)
-          const prayerType = (Translations[this.currentLang][`card.${this.currentFrequency}.desc`] || "Canalización Espiritual").toUpperCase();
-          ctx.font = '500 38px "Inter", sans-serif';
-          ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
-          ctx.fillText(prayerType, canvas.width / 2, yPos);
-          yPos += 60;
-
-          // Frequency
-          ctx.font = '700 55px "Inter", sans-serif';
-          ctx.fillStyle = freq.color;
-          ctx.fillText(`${freq.name} (${freq.hz || freq.audioHz} Hz)`, canvas.width / 2, yPos);
-          yPos += 75;
-
-          // Elements with colors
-          const elsToUse = activeElementsSet || this.activeElements;
-          if (elsToUse.size > 0) {
-              ctx.font = '700 35px "Inter", sans-serif';
-              const elementColors = {
-                  'aire': '#5CE1E6',
-                  'agua': '#0057FF',
-                  'fuego': '#FF3131',
-                  'tierra': '#7ED957'
-              };
-              const elsArray = Array.from(elsToUse);
-              let totalWidth = 0;
-              const parts = [];
-              
-              let prefixStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.elements"]) || "Elementos: ";
-              
-              const prefixW = ctx.measureText(prefixStr).width;
-              totalWidth += prefixW;
-              
-              for (let i = 0; i < elsArray.length; i++) {
-                  const el = elsArray[i];
-                  let elText = (Translations[this.currentLang][`elements.${el}`] || el).toLowerCase();
-                  if (i < elsArray.length - 1) {
-                      let andStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.and"]) || " y ";
-                      elText += andStr;
-                  }
-                  const w = ctx.measureText(elText).width;
-                  parts.push({ text: elText, color: elementColors[el] || '#666', width: w });
-                  totalWidth += w;
-              }
-              
-              let currentX = canvas.width / 2 - totalWidth / 2;
-              ctx.textAlign = 'left';
-              
-              ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
-              ctx.fillText(prefixStr, currentX, yPos);
-              currentX += prefixW;
-              
-              for (const p of parts) {
-                  ctx.fillStyle = p.color;
-                  ctx.fillText(p.text, currentX, yPos);
-                  currentX += p.width;
-              }
-              ctx.textAlign = 'center';
-          } else {
-              ctx.font = '700 35px "Inter", sans-serif';
-              ctx.fillStyle = '#6A6A6A';
-              let noneText = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.none"]) || "Elementos: Ninguno";
-              ctx.fillText(noneText, canvas.width / 2, yPos);
-          }
-          yPos += 65;
-
-          // Duration & Date
-          ctx.font = '400 35px "Inter", sans-serif';
-          ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
-          const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
-          const dateStr = new Date().toLocaleDateString(this.currentLang);
-          
-          let durPrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.duration"]) || "Duración";
-          let datePrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.date"]) || "Fecha";
-          
-          ctx.fillText(`${durPrefix}: ${timeStr}   •   ${datePrefix}: ${dateStr}`, canvas.width / 2, yPos);
-          yPos += 65;
-          
-          // Horizontal Line
-          ctx.strokeStyle = isEvil ? '#440000' : '#CCCCCC';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(canvas.width / 2 - 400, yPos);
-          ctx.lineTo(canvas.width / 2 + 400, yPos);
-          ctx.stroke();
-          
-          // Gap below line needs to account for font height because text is drawn from bottom up
-          yPos += 120;
-
-          // Explanatory Text with justified word wrapping
-          ctx.font = 'italic 50px "Cormorant Garamond", serif';
-          ctx.fillStyle = isEvil ? '#550000' : '#333333';
-          const explText = Translations[this.currentLang]['success.sigil_explanation'] || "Your prayer has been converted into a numeric seed...";
-          
-          const wrapTextJustified = (context, text, x, y, maxWidth, lineHeight) => {
-              context.textAlign = 'left';
-              const paragraphs = text.split('\n');
-              const regularFont = 'italic 50px "Cormorant Garamond", serif';
-              const boldFont = 'bold italic 50px "Cormorant Garamond", serif';
-              
-              for (const p of paragraphs) {
-                  if (p.trim() === '') {
-                      y += lineHeight;
-                      continue;
-                  }
-                  
-                  // Parse bold tags **word**
-                  let rawParts = p.split(/(\*\*.*?\*\*)/g);
-                  let wordList = [];
-                  
-                  for (let part of rawParts) {
-                      if (!part) continue;
-                      let isBold = false;
-                      if (part.startsWith('**') && part.endsWith('**')) {
-                          isBold = true;
-                          part = part.substring(2, part.length - 2);
-                      }
-                      
-                      let subwords = part.split(' ');
-                      for (let i = 0; i < subwords.length; i++) {
-                          if (subwords[i] !== '') {
-                              wordList.push({ text: subwords[i], bold: isBold });
-                          }
-                      }
-                  }
-                  
-                  let lineWords = [];
-                  let currentLineWidth = 0;
-                  context.font = regularFont;
-                  const spaceWidth = context.measureText(' ').width;
-                  
-                  for (let n = 0; n < wordList.length; n++) {
-                      let wObj = wordList[n];
-                      context.font = wObj.bold ? boldFont : regularFont;
-                      let wordWidth = context.measureText(wObj.text).width;
-                      
-                      if (lineWords.length > 0 && currentLineWidth + spaceWidth + wordWidth > maxWidth) {
-                          let totalWordWidth = 0;
-                          for (let lw of lineWords) {
-                              context.font = lw.bold ? boldFont : regularFont;
-                              totalWordWidth += context.measureText(lw.text).width;
-                          }
-                          
-                          let spaceBetween = lineWords.length > 1 ? (maxWidth - totalWordWidth) / (lineWords.length - 1) : 0;
-                          
-                          let currentX = x;
-                          for (let i = 0; i < lineWords.length; i++) {
-                              context.font = lineWords[i].bold ? boldFont : regularFont;
-                              context.fillText(lineWords[i].text, currentX, y);
-                              currentX += context.measureText(lineWords[i].text).width + spaceBetween;
-                          }
-                          
-                          lineWords = [wObj];
-                          currentLineWidth = wordWidth;
-                          y += lineHeight;
-                      } else {
-                          lineWords.push(wObj);
-                          currentLineWidth += (lineWords.length === 1 ? 0 : spaceWidth) + wordWidth;
-                      }
-                  }
-                  
-                  let currentX = x;
-                  for (let i = 0; i < lineWords.length; i++) {
-                      context.font = lineWords[i].bold ? boldFont : regularFont;
-                      context.fillText(lineWords[i].text, currentX, y);
-                      currentX += context.measureText(lineWords[i].text).width + spaceWidth;
-                  }
-                  y += lineHeight;
-              }
-              context.textAlign = 'center'; // restore
-          };
-          wrapTextJustified(ctx, explText, canvas.width / 2 - 425, yPos, 850, 60);
+          this.renderSigilCanvas(ctx, text, freq, isEvil, activeElementsSet, null);
           
           // Trigger download
           const date = new Date().toLocaleDateString('en-CA');
@@ -1998,10 +2014,10 @@ const OrisApp = {
               const htmlArr = item.elements.map(e => {
                   const translated = t[`elements.${e}`] || e.charAt(0).toUpperCase() + e.slice(1);
                   let color = '#7A7A72';
-                  if (e === 'aire') color = '#B5D8D8';
-                  if (e === 'tierra') color = '#8B7355';
-                  if (e === 'agua') color = '#5A8BB5';
-                  if (e === 'fuego') color = '#D45A5A';
+                  if (e === 'aire') color = '#7CA982';
+                  if (e === 'tierra') color = '#997A9E';
+                  if (e === 'agua') color = '#7096AB';
+                  if (e === 'fuego') color = '#CBA858';
                   return `<span style="color: ${color}; font-weight: 600;">${translated}</span>`;
               });
               htmlElementsTextValue = htmlArr.join(', ');
@@ -2275,224 +2291,7 @@ const OrisApp = {
               return;
           }
           
-          const t = elapsed / durationSec;
-          
-          ctx.fillStyle = isEvil ? '#0a0a0a' : '#FAFAF5';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          
-          let titleAlpha = Math.min(1.0, elapsed / 1.6);
-          ctx.globalAlpha = titleAlpha;
-          
-          const drawFrame = (outerPadding, r, depth) => {
-              const L = outerPadding;
-              const R = canvas.width - outerPadding;
-              const T = outerPadding;
-              const B = canvas.height - outerPadding;
-              const cx = canvas.width / 2;
-              const cy = canvas.height / 2;
-              const dipW = 80;
-              const dipD = 25;
-              
-              ctx.strokeStyle = freq.color;
-              ctx.lineWidth = depth;
-              ctx.globalAlpha = titleAlpha * (0.5 + (depth * 0.1));
-              
-              ctx.beginPath();
-              ctx.moveTo(L + r, T);
-              ctx.lineTo(cx - dipW, T);
-              ctx.lineTo(cx, T + dipD);
-              ctx.lineTo(cx + dipW, T);
-              ctx.lineTo(R - r, T);
-              ctx.arcTo(R, T, R, T + r, r);
-              ctx.lineTo(R, cy - dipW);
-              ctx.lineTo(R - dipD, cy);
-              ctx.lineTo(R, cy + dipW);
-              ctx.lineTo(R, B - r);
-              ctx.arcTo(R, B, R - r, B, r);
-              ctx.lineTo(cx + dipW, B);
-              ctx.lineTo(cx, B - dipD);
-              ctx.lineTo(cx - dipW, B);
-              ctx.lineTo(L + r, B);
-              ctx.arcTo(L, B, L, B - r, r);
-              ctx.lineTo(L, cy + dipW);
-              ctx.lineTo(L + dipD, cy); 
-              ctx.lineTo(L, cy - dipW);
-              ctx.lineTo(L, T + r);
-              ctx.arcTo(L, T, L + r, T, r);
-              
-              ctx.stroke();
-          };
-          
-          drawFrame(45, 45, 3);
-          drawFrame(65, 45, 2);
-          drawFrame(85, 45, 1);
-          
-          ctx.globalAlpha = titleAlpha;
-          
-          ctx.textAlign = 'center';
-          ctx.font = '300 120px "Cormorant Garamond", serif';
-          ctx.fillStyle = isEvil ? '#CC0000' : '#0B0B0B';
-          ctx.fillText("ORIS NUMEN", canvas.width / 2, 220);
-          
-          ctx.font = '400 35px "Inter", sans-serif';
-          ctx.fillStyle = isEvil ? '#990000' : '#777777';
-          const canvasSubtitle = Translations[this.currentLang]['success.share_channeling'] || "Comparte tu canalización";
-          ctx.fillText(canvasSubtitle, canvas.width / 2, 300);
-          ctx.globalAlpha = 1.0;
-          
-          const sigilProgress = Math.min(1.0, elapsed / 8.0);
-          
-          // Heartbeat pulse effect: grows for 1.5s, shrinks for 1.0s (2.5s cycle)
-          const cycleDuration = 2.5;
-          const cycleTime = elapsed % cycleDuration;
-          const maxScale = 1.025;
-          let pulseScale = 1.0;
-          
-          if (cycleTime < 1.5) {
-              const p = cycleTime / 1.5;
-              const ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-              pulseScale = 1.0 + ((maxScale - 1.0) * ease);
-          } else {
-              const p = (cycleTime - 1.5) / 1.0;
-              const ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-              pulseScale = maxScale - ((maxScale - 1.0) * ease);
-          }
-          
-          const pulseRadius = 300 * pulseScale;
-          
-          if (typeof SigilGenerator !== 'undefined') {
-              SigilGenerator.draw(ctx, canvas.width / 2, 670, pulseRadius, text, freq.color, isEvil, sigilProgress);
-          }
-          
-          let yPos = 1040;
-          
-          let dataAlpha = Math.max(0, Math.min(1.0, (t - 0.3) / 0.2));
-          ctx.globalAlpha = dataAlpha;
-          const prayerType = (Translations[this.currentLang][`card.${this.currentFrequency}.desc`] || "Canalización Espiritual").toUpperCase();
-          ctx.font = '500 38px "Inter", sans-serif';
-          ctx.fillStyle = isEvil ? '#990000' : '#4A4A4A';
-          ctx.fillText(prayerType, canvas.width / 2, yPos);
-          yPos += 60;
-          
-          ctx.font = '700 55px "Inter", sans-serif';
-          ctx.fillStyle = freq.color;
-          ctx.fillText(`${freq.name} (${freq.hz || freq.audioHz} Hz)`, canvas.width / 2, yPos);
-          yPos += 75;
-          
-          if (elsArray.length > 0) {
-              const elementColors = { 'aire': '#5CE1E6', 'agua': '#0057FF', 'fuego': '#FF3131', 'tierra': '#7ED957' };
-              let prefixStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.elements"]) || "Elementos: ";
-              const prefixW = ctx.measureText(prefixStr).width;
-              let totalWidth = prefixW;
-              const parts = [];
-              for (let i = 0; i < elsArray.length; i++) {
-                  const el = elsArray[i];
-                  let elText = (Translations[this.currentLang][`elements.${el}`] || el).toLowerCase();
-                  if (i < elsArray.length - 1) {
-                      let andStr = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.and"]) || " y ";
-                      elText += andStr;
-                  }
-                  const w = ctx.measureText(elText).width;
-                  parts.push({ text: elText, color: elementColors[el] || '#666', width: w });
-                  totalWidth += w;
-              }
-              let currentX = canvas.width / 2 - totalWidth / 2;
-              ctx.textAlign = 'left';
-              ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
-              ctx.fillText(prefixStr, currentX, yPos);
-              currentX += prefixW;
-              for (const p of parts) {
-                  ctx.fillStyle = p.color;
-                  ctx.fillText(p.text, currentX, yPos);
-                  currentX += p.width;
-              }
-              ctx.textAlign = 'center';
-          } else {
-              ctx.font = '700 35px "Inter", sans-serif';
-              ctx.fillStyle = '#6A6A6A';
-              let noneText = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.none"]) || "Elementos: Ninguno";
-              ctx.fillText(noneText, canvas.width / 2, yPos);
-          }
-          yPos += 65;
-          
-          ctx.font = '400 35px "Inter", sans-serif';
-          ctx.fillStyle = isEvil ? '#660000' : '#6A6A6A';
-          const timeStr = ChannelTimer.formatTime(ChannelTimer.duration);
-          const dateStr = new Date().toLocaleDateString(this.currentLang);
-          let durPrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.duration"]) || "Duración";
-          let datePrefix = (Translations[this.currentLang] && Translations[this.currentLang]["sigil.date"]) || "Fecha";
-          ctx.fillText(`${durPrefix}: ${timeStr}       ${datePrefix}: ${dateStr}`, canvas.width / 2, yPos);
-          yPos += 65;
-          
-          ctx.strokeStyle = isEvil ? '#440000' : '#CCCCCC';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(canvas.width / 2 - 400, yPos);
-          ctx.lineTo(canvas.width / 2 + 400, yPos);
-          ctx.stroke();
-          yPos += 120;
-          
-          let explAlpha = Math.max(0, Math.min(1.0, (elapsed - 5.0) / 2.0));
-          ctx.globalAlpha = explAlpha;
-          ctx.font = 'italic 50px "Cormorant Garamond", serif';
-          ctx.fillStyle = isEvil ? '#550000' : '#333333';
-          const explText = Translations[this.currentLang]['success.sigil_explanation'] || "";
-          
-          const wrapTextJustified = (context, text, x, y, maxWidth, lineHeight) => {
-              context.textAlign = 'left';
-              const paragraphs = text.split('\n');
-              const regularFont = 'italic 50px "Cormorant Garamond", serif';
-              const boldFont = 'bold italic 50px "Cormorant Garamond", serif';
-              for (const p of paragraphs) {
-                  const words = p.split(' ');
-                  const lines = [];
-                  let currentLine = [];
-                  let currentWidth = 0;
-                  for (let w of words) {
-                      let isBold = false;
-                      if (w.includes('**')) {
-                          isBold = true;
-                          w = w.replace(/\*\*/g, '');
-                      }
-                      context.font = isBold ? boldFont : regularFont;
-                      const wordWidth = context.measureText(w).width;
-                      if (currentWidth + wordWidth + (currentLine.length * 10) > maxWidth && currentLine.length > 0) {
-                          lines.push(currentLine);
-                          currentLine = [];
-                          currentWidth = 0;
-                      }
-                      currentLine.push({ text: w, bold: isBold, width: wordWidth });
-                      currentWidth += wordWidth;
-                  }
-                  if (currentLine.length > 0) lines.push(currentLine);
-                  for (let j = 0; j < lines.length; j++) {
-                      const lineWords = lines[j];
-                      if (j === lines.length - 1 || lineWords.length === 1) {
-                          let currentX = x;
-                          for (let i = 0; i < lineWords.length; i++) {
-                              context.font = lineWords[i].bold ? boldFont : regularFont;
-                              context.fillText(lineWords[i].text, currentX, y);
-                              currentX += lineWords[i].width + context.measureText(" ").width;
-                          }
-                      } else {
-                          const totalTextWidth = lineWords.reduce((sum, w) => sum + w.width, 0);
-                          const spaceRemaining = maxWidth - totalTextWidth;
-                          const spaceWidth = spaceRemaining / (lineWords.length - 1);
-                          let currentX = x;
-                          for (let i = 0; i < lineWords.length; i++) {
-                              context.font = lineWords[i].bold ? boldFont : regularFont;
-                              context.fillText(lineWords[i].text, currentX, y);
-                              currentX += lineWords[i].width + spaceWidth;
-                          }
-                      }
-                      y += lineHeight;
-                  }
-              }
-              context.textAlign = 'center';
-          };
-          wrapTextJustified(ctx, explText, canvas.width / 2 - 425, yPos, 850, 60);
-          
-          ctx.globalAlpha = 1.0;
+          this.renderSigilCanvas(ctx, text, freq, isEvil, activeElementsSet, elapsed);
           
           requestAnimationFrame(renderFrame);
       };

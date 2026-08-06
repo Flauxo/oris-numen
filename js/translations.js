@@ -182,6 +182,8 @@ const Translations = {
         "sigil.none": "Elements: None",
         "sigil.duration": "Duration",
         "sigil.date": "Date",
+        "sigil.title": "Channeled message",
+        "sigil.download_app": "DOWNLOAD ORIS NUMEN",
     },
     es: {
         "splash.subtitle": "Eleva tu voz",
@@ -366,6 +368,8 @@ const Translations = {
         "sigil.none": "Elementos: Ninguno",
         "sigil.duration": "Duración",
         "sigil.date": "Fecha",
+        "sigil.title": "Mensaje canalizado",
+        "sigil.download_app": "DESCARGA ORIS NUMEN",
     },
     it: {
         "splash.subtitle": "Eleva la tua voce",
@@ -550,6 +554,8 @@ const Translations = {
         "sigil.none": "Elementi: Nessuno",
         "sigil.duration": "Durata",
         "sigil.date": "Data",
+        "sigil.title": "Messaggio canalizzato",
+        "sigil.download_app": "SCARICA ORIS NUMEN",
     },
     la: {
         "splash.subtitle": "Tolle vocem tuam",
@@ -730,6 +736,8 @@ const Translations = {
         "sigil.none": "Elementa: Nulla",
         "sigil.duration": "Tempus",
         "sigil.date": "Dies",
+        "sigil.title": "Nuntius canalizatae",
+        "sigil.download_app": "EXCUTE ORIS NUMEN",
     }
 ,
     zh: {
@@ -843,6 +851,8 @@ const Translations = {
         "sigil.none": "元素：无",
         "sigil.duration": "持续时间",
         "sigil.date": "日期",
+        "sigil.title": "\u4f20\u5bfc\u8baf\u606f",
+        "sigil.download_app": "\u4e0b\u8f7d ORIS NUMEN",
     }
 };
 
