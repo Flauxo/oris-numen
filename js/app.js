@@ -1411,7 +1411,7 @@ const OrisApp = {
           const ctx = canvas.getContext('2d');
           
           // Background
-          ctx.fillStyle = isEvil ? '#050505' : '#F4EEE6'; // Lighter beige
+          ctx.fillStyle = isEvil ? '#0a0a0a' : '#FAFAF5'; // Match screen background
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           
           // Draw geometric border frame
@@ -2292,7 +2292,7 @@ const OrisApp = {
           
           const t = elapsed / durationSec;
           
-          ctx.fillStyle = isEvil ? '#110000' : '#F8EFE4';
+          ctx.fillStyle = isEvil ? '#0a0a0a' : '#FAFAF5';
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           
           let titleAlpha = Math.min(1.0, elapsed / 1.6);
