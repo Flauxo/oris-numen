@@ -1762,26 +1762,28 @@ const OrisApp = {
           if (typeof this.closeSidebar === 'function') this.closeSidebar();
           try { OrisAudio.playButtonSound(); } catch(e){}
           
+          let history = [];
+          try { history = JSON.parse(localStorage.getItem('oris_history') || '[]'); } catch(e){}
           let totalChannelings = parseInt(localStorage.getItem('oris_total_channelings') || '0', 10);
           
           const t = Translations[this.currentLang] || Translations['en'];
-          const countDisplay = document.getElementById('evolution-count-display');
+          
+          // Update total channelings
+          const countDisplay = document.getElementById('nucleus-count-display');
           if (countDisplay) {
-              const formatStr = t['evolution.count'] || "Número de canalizaciones: {count}";
-              countDisplay.textContent = formatStr.replace('{count}', totalChannelings);
+              countDisplay.textContent = totalChannelings;
           }
           
-          // Calculate dominant frequency for Numinosity State
-          let history = [];
-          try { history = JSON.parse(localStorage.getItem('oris_history') || '[]'); } catch(e){}
-          let freqCounts = {};
+          // Calculate percentages for 4 frequencies
+          let freqCounts = { humilis: 0, revelatio: 0, absolutio: 0, gratia: 0 };
           let maxCount = 0;
           let dominantFreq = null;
-          let totalCount = history.length;
+          let totalValid = 0;
           
           history.forEach(item => {
-              if (item.type) {
-                  freqCounts[item.type] = (freqCounts[item.type] || 0) + 1;
+              if (item.type && freqCounts[item.type] !== undefined) {
+                  freqCounts[item.type]++;
+                  totalValid++;
                   if (freqCounts[item.type] > maxCount) {
                       maxCount = freqCounts[item.type];
                   }
@@ -1795,12 +1797,13 @@ const OrisApp = {
           
           const numinosityState = document.getElementById('evolution-numinosity-state');
           const numinosityPercentage = document.getElementById('evolution-numinosity-percentage');
+          
           if (numinosityState) {
               let stateKey = 'evolution.state.default';
-              let stateColor = '#ffffff';
+              let stateColor = '#a09080';
               
               if (dominantFreq && this.FREQUENCIES && this.FREQUENCIES[dominantFreq]) {
-                  stateKey = `evolution.state.${dominantFreq}`;
+                  stateKey = `freq.${dominantFreq}.short`;
                   stateColor = this.FREQUENCIES[dominantFreq].color;
               }
               
@@ -1809,9 +1812,9 @@ const OrisApp = {
               numinosityState.style.color = stateColor;
               
               if (numinosityPercentage) {
-                  if (dominantFreq && totalCount > 0) {
-                      let percentage = Math.round((maxCount / totalCount) * 100);
-                      numinosityPercentage.textContent = ` ${percentage}%`;
+                  if (dominantFreq && totalValid > 0) {
+                      let percentage = Math.round((maxCount / totalValid) * 100);
+                      numinosityPercentage.textContent = percentage + '%';
                       numinosityPercentage.style.color = stateColor;
                   } else {
                       numinosityPercentage.textContent = "";
@@ -1819,18 +1822,21 @@ const OrisApp = {
               }
           }
           
-          const halo = document.querySelector('.evolution-glow-halo');
-          if (halo) {
-              let rgb = '138, 43, 226';
-              if (this.currentFrequency && this.FREQUENCIES && this.FREQUENCIES[this.currentFrequency]) {
-                  rgb = this.FREQUENCIES[this.currentFrequency].colorRgb;
+          // Update tabs active state
+          document.querySelectorAll('.breakdown-tab').forEach(tab => {
+              tab.classList.remove('active');
+              tab.style.backgroundColor = 'transparent';
+              
+              const f = tab.getAttribute('data-freq');
+              if (f === dominantFreq && this.FREQUENCIES && this.FREQUENCIES[f]) {
+                  tab.classList.add('active');
+                  tab.style.backgroundColor = this.FREQUENCIES[f].color;
               }
-              halo.style.boxShadow = `0 0 50px 20px rgba(${rgb}, 0.5)`;
-          }
+          });
           
-          const canvas = document.getElementById('evolution-canvas');
+          const canvas = document.getElementById('nucleus-canvas');
           if (canvas) {
-              this.drawEvolutionMandala(canvas, totalChannelings);
+              this.drawNucleusGraphic(canvas, freqCounts, totalValid);
           }
       }
   },
@@ -1847,85 +1853,79 @@ const OrisApp = {
       }
   },
 
-  drawEvolutionMandala(canvas, count) {
+  drawNucleusGraphic(canvas, freqCounts, total) {
       const ctx = canvas.getContext('2d');
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
       let start = performance.now();
       
-      // Colors from 4 frequencies: gold/beige, blue/cyan, purple/magenta, red/dark
-      const colors = ['#D4AF37', '#00FFFF', '#8A2BE2', '#FF4500', '#F8EFE4', '#4169E1', '#FF00FF', '#8B0000'];
+      const targetRatios = {
+          humilis: total > 0 ? (freqCounts.humilis / total) : 0,
+          revelatio: total > 0 ? (freqCounts.revelatio / total) : 0,
+          absolutio: total > 0 ? (freqCounts.absolutio / total) : 0,
+          gratia: total > 0 ? (freqCounts.gratia / total) : 0
+      };
       
       const draw = () => {
           const now = performance.now();
           const elapsed = (now - start) / 1000;
           
-          // Clear background
-          ctx.fillStyle = '#0a0a0a';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.globalCompositeOperation = 'source-over';
           
-          // Breathing pulse
-          const pulse = 1.0 + 0.05 * Math.sin(elapsed * 2);
+          const animProgress = Math.min(elapsed * 0.8, 1);
           
-          ctx.save();
-          ctx.translate(cx, cy);
-          ctx.scale(pulse, pulse);
-          
-          // Draw seed
-          ctx.beginPath();
-          ctx.arc(0, 0, 10, 0, Math.PI * 2);
-          ctx.fillStyle = '#FFFFFF';
-          ctx.shadowColor = '#FFFFFF';
-          ctx.shadowBlur = 20;
-          ctx.fill();
-          
-          // Draw layers based on count
-          const maxLayers = Math.min(count, 30); // Prevent infinity
-          for (let i = 1; i <= maxLayers; i++) {
-              ctx.save();
-              // Randomish but deterministic properties per layer
-              const layerColor = colors[(i * 7) % colors.length];
-              const sides = 2 + (i % 8); // 2(line), 3(tri), 4(sq), etc
-              const radius = 20 + i * 15;
-              const rotationDir = (i % 2 === 0) ? 1 : -1;
-              const rotationSpeed = 0.5 - (i * 0.01);
+          // Draw waves (will be masked)
+          Object.keys(targetRatios).forEach((freqKey, i) => {
+              const target = targetRatios[freqKey];
+              // Even if target is 0, give it a tiny base so we see a sliver if total > 0, 
+              // but if total is 0, nothing.
+              if (total === 0) return;
               
-              ctx.rotate(elapsed * rotationSpeed * rotationDir + (i * 0.5));
+              // Ensure minimum visible wave if they have at least 1 of this type
+              const ratio = Math.max(target, freqCounts[freqKey] > 0 ? 0.05 : 0) * animProgress;
+              if (ratio <= 0) return;
+              
+              const fData = this.FREQUENCIES[freqKey];
+              if (!fData) return;
+              
+              const waveHeight = canvas.height - (canvas.height * ratio);
               
               ctx.beginPath();
-              if (sides === 2) {
-                  ctx.arc(0, 0, radius, 0, Math.PI * 2);
-              } else {
-                  for (let s = 0; s < sides; s++) {
-                      const angle = (s * Math.PI * 2) / sides;
-                      const x = Math.cos(angle) * radius;
-                      const y = Math.sin(angle) * radius;
-                      if (s === 0) ctx.moveTo(x, y);
-                      else ctx.lineTo(x, y);
-                  }
-                  ctx.closePath();
+              ctx.moveTo(0, canvas.height);
+              ctx.lineTo(0, waveHeight);
+              
+              for (let x = 0; x <= canvas.width; x += 10) {
+                  const phase = elapsed * (1.2 + i * 0.2) + (i * 2.5);
+                  const y = waveHeight + Math.sin(x * 0.03 + phase) * 12;
+                  ctx.lineTo(x, y);
               }
               
-              ctx.strokeStyle = layerColor;
-              ctx.lineWidth = 1.5;
-              ctx.stroke();
+              ctx.lineTo(canvas.width, canvas.height);
+              ctx.closePath();
               
-              // Draw nodes
-              if (sides > 2) {
-                  for (let s = 0; s < sides; s++) {
-                      const angle = (s * Math.PI * 2) / sides;
-                      const x = Math.cos(angle) * radius;
-                      const y = Math.sin(angle) * radius;
-                      ctx.beginPath();
-                      ctx.arc(x, y, 3, 0, Math.PI * 2);
-                      ctx.fillStyle = layerColor;
-                      ctx.fill();
-                  }
-              }
-              ctx.restore();
-          }
+              ctx.fillStyle = fData.color;
+              ctx.globalAlpha = 0.55; // Using 55% for beautiful overlapping secondary colors
+              ctx.fill();
+          });
           
-          ctx.restore();
+          ctx.globalAlpha = 1.0;
+          
+          // Mask the waves inside the "O"
+          ctx.globalCompositeOperation = 'destination-in';
+          ctx.fillStyle = '#000';
+          ctx.font = '320px "Cormorant Garamond", serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('O', cx, cy + 25);
+          
+          // Fill the remaining background of the "O" with dark grey
+          ctx.globalCompositeOperation = 'destination-over';
+          ctx.fillStyle = '#2d2b29';
+          ctx.fillText('O', cx, cy + 25);
+          
+          ctx.globalCompositeOperation = 'source-over';
+          
           this.evolutionAnimId = requestAnimationFrame(draw);
       };
       

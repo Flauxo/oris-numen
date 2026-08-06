@@ -481,25 +481,78 @@
         <!-- Evolution Overlay -->
         <div id="evolution-overlay" class="overlay">
             <div class="overlay-backdrop" id="evolution-backdrop"></div>
-            <div class="modal-card">
-                <div class="modal-header">
-                    <h3 class="modal-title" style="color: purple;" data-i18n="evolution.title">Evolución Espiritual</h3>
-                    <button id="btn-close-evolution" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                </div>
-                <div class="modal-body" style="text-align: center; color: var(--color-text-muted); display: flex; flex-direction: column; align-items: center; gap: 16px;">
-                    <div class="evolution-glow-container">
-                        <div class="evolution-glow-halo"></div>
-                        <canvas id="evolution-canvas" width="400" height="400" style="width: 100%; height: 100%; border-radius: 50%; position: relative; z-index: 2; background-color: #0a0a0a;"></canvas>
-                    </div>
-                    <p id="evolution-explanation" data-i18n="evolution.explanation" style="font-size: 0.95rem; line-height: 1.5; padding: 0 16px; text-align: justify;">Cada vez que canalizas un mensaje, tu núcleo desarrolla un nuevo nivel geométrico, volviéndose más majestuoso e iluminado.</p>
-                    <p id="evolution-count-display" style="font-size: 1rem; font-weight: bold; color: var(--color-text);">Número de canalizaciones: 0</p>
-                    <p style="font-size: 1rem; font-weight: bold; color: var(--color-text); margin-top: 4px;">
-                        <span data-i18n="evolution.state.label">Estado de numenosidad: </span>
-                        <span id="evolution-numinosity-state" data-i18n="evolution.state.default" style="color: #ffffff;">Despertando</span>
-                        <span id="evolution-numinosity-percentage"></span>
-                    </p>
-                </div>
-            </div>
+              <div class="modal-card nucleus-modal">
+                  <div class="modal-header nucleus-header">
+                      <div class="nucleus-title-container">
+                          <h3 class="modal-title nucleus-title" data-i18n="evolution.title">Núcleo Espiritual</h3>
+                          <p class="nucleus-subtitle" data-i18n="evolution.subtitle">Tu centro evoluciona contigo</p>
+                      </div>
+                      <button id="btn-close-evolution" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                  </div>
+                  
+                  <div class="modal-body nucleus-body">
+                      <!-- 1. Graphic -->
+                      <div class="nucleus-canvas-wrapper">
+                          <canvas id="nucleus-canvas" width="220" height="250"></canvas>
+                      </div>
+                      
+                      <!-- 2. Pagination dots -->
+                      <div class="nucleus-dots">
+                          <span class="dot active"></span>
+                          <span class="dot"></span>
+                          <span class="dot"></span>
+                          <span class="dot"></span>
+                      </div>
+                      
+                      <!-- 3. Text -->
+                      <p id="evolution-explanation" class="nucleus-explanation" data-i18n="evolution.explanation">Cada vez que canalizas un mensaje, tu núcleo espiritual desarrolla un nuevo nivel, volviéndose más majestuoso e iluminado.</p>
+                      
+                      <!-- 4. Stats Grid -->
+                      <div class="nucleus-stats-grid">
+                          <div class="nucleus-stat-box">
+                              <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+                              <span class="stat-label" data-i18n="evolution.count_label">CANALIZACIONES</span>
+                              <span class="stat-value" id="nucleus-count-display">0</span>
+                          </div>
+                          <div class="nucleus-stat-box">
+                              <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></div>
+                              <span class="stat-label" data-i18n="evolution.state.label">ESTADO DE NUMENOSIDAD</span>
+                              <div class="stat-value-complex">
+                                  <span id="evolution-numinosity-state" data-i18n="evolution.state.default">Despertando</span>
+                                  <span id="evolution-numinosity-percentage" class="stat-percentage"></span>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <!-- 5. Breakdown Tabs -->
+                      <div class="nucleus-breakdown">
+                          <p class="breakdown-title" data-i18n="evolution.state.label_full">Estado de Numenosidad</p>
+                          <div class="breakdown-tabs" id="nucleus-tabs">
+                              <div class="breakdown-tab" data-freq="revelatio" id="tab-revelatio">
+                                  <svg class="tab-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                                  <span data-i18n="freq.revelatio.short">Liberado</span>
+                              </div>
+                              <div class="breakdown-tab" data-freq="gratia" id="tab-gratia">
+                                  <svg class="tab-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                  <span data-i18n="freq.gratia.short">Agradecido</span>
+                              </div>
+                              <div class="breakdown-tab" data-freq="absolutio" id="tab-absolutio">
+                                  <svg class="tab-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-2 4 4 4-4h6"></path><path d="M2 18h4l2-2 4 4 4-4h6"></path></svg>
+                                  <span data-i18n="freq.absolutio.short">Demandante</span>
+                              </div>
+                              <div class="breakdown-tab" data-freq="humilis" id="tab-humilis">
+                                  <svg class="tab-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line></svg>
+                                  <span data-i18n="freq.humilis.short">Confesado</span>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <!-- 6. Footer -->
+                      <p class="nucleus-footer">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; display: inline-block; vertical-align: middle;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                          <span data-i18n="evolution.footer">Tu núcleo es único. Cuídalo, escúchalo, ilumínalo.</span>
+                      </p>
+                  </div></div>
         </div>
 
         <!-- Evil Mode Overlay -->

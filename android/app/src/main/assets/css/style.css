@@ -1659,3 +1659,185 @@ body.evil-mode .home-logo-circle {
     animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
+
+/* ========================================
+   Nucleo Espiritual (Evolution Redesign)
+   ======================================== */
+.nucleus-modal {
+    background-color: #FAF6F0 !important;
+    border-radius: 24px !important;
+    padding: 32px 24px !important;
+    width: 92% !important;
+    max-width: 420px !important;
+    color: #333;
+}
+
+.nucleus-header {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 24px;
+    align-items: flex-start !important;
+}
+
+.nucleus-title-container {
+    text-align: center;
+    width: 100%;
+}
+
+.nucleus-title {
+    font-size: 2.2rem !important;
+    color: #222 !important;
+    margin-bottom: 4px;
+}
+
+.nucleus-subtitle {
+    font-size: 0.95rem;
+    color: #666;
+    font-family: var(--font-sans);
+}
+
+.nucleus-canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.nucleus-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.nucleus-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #e0d5c1;
+}
+
+.nucleus-dots .dot.active {
+    background-color: #d4845a; /* Default active color */
+}
+
+.nucleus-explanation {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: center;
+    color: #444;
+    margin-bottom: 32px;
+}
+
+.nucleus-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgba(240, 230, 215, 0.5);
+    border-radius: 16px;
+    padding: 20px;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.nucleus-stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.nucleus-stat-box:first-child {
+    border-right: 1px solid rgba(0,0,0,0.06);
+    padding-right: 16px;
+}
+
+.stat-icon {
+    color: #a09080;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #777;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: #222;
+    line-height: 1;
+}
+
+.stat-value-complex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#evolution-numinosity-state {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #d4845a; /* overridden dynamically */
+    line-height: 1.2;
+}
+
+.stat-percentage {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #d4845a; /* overridden dynamically */
+    margin-top: 4px;
+}
+
+.nucleus-breakdown {
+    background: rgba(240, 230, 215, 0.5);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.breakdown-title {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.breakdown-tabs {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.breakdown-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 4px;
+    border-radius: 12px;
+    background: transparent;
+    color: #555;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.breakdown-tab.active {
+    color: white;
+}
+
+.breakdown-tab .tab-icon {
+    margin-bottom: 6px;
+    opacity: 0.8;
+}
+
+.nucleus-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+}
