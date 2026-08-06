@@ -1779,6 +1779,41 @@ const OrisApp = {
 
   evolutionAnimId: null,
 
+  showGuideCard() {
+      const overlay = document.getElementById('guide-overlay');
+      if (overlay) {
+          overlay.classList.add('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
+          
+          const modal = overlay.querySelector('.guide-modal');
+          const indicator = document.getElementById('guide-scroll-indicator');
+          if (modal && indicator) {
+              setTimeout(() => {
+                  if (modal.scrollHeight > modal.clientHeight + 10) {
+                      indicator.style.opacity = '1';
+                      modal.onscroll = () => {
+                          if (modal.scrollTop + modal.clientHeight >= modal.scrollHeight - 20) {
+                              indicator.style.opacity = '0';
+                          } else {
+                              indicator.style.opacity = '1';
+                          }
+                      };
+                  } else {
+                      indicator.style.display = 'none';
+                  }
+              }, 300);
+          }
+      }
+  },
+
+  closeGuideCard() {
+      const overlay = document.getElementById('guide-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
+      }
+  },
+
   openEvolutionCard() {
       const overlay = document.getElementById('evolution-overlay');
       if (overlay) {

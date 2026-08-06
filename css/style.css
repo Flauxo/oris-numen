@@ -1832,7 +1832,7 @@ h3.nucleus-title {
 .guide-text {
     flex-grow: 1;
     padding-left: 16px;
-    border-left: 1px solid currentColor;
+    border-left: 1px solid #000;
 }
 .guide-text h4 {
     font-family: var(--font-sans);
@@ -1850,8 +1850,16 @@ h3.nucleus-title {
     text-align: center;
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 1.1rem;
-    color: #7B5EA7;
+    font-size: 1.3rem;
+    color: #D4845A;
     margin-top: 32px;
     padding: 0 16px;
+}
+
+.bounce-anim {
+    animation: bounce 1.5s infinite;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
 }
