@@ -1036,14 +1036,14 @@ const OrisApp = {
                   linkDownload.style.opacity = '0';
                   linkDownload.style.pointerEvents = 'none';
                   
-                  // Wait 200ms for sigil fade out, then fade in options
+                  // Wait 250ms for sigil fade out, then fade in options
                   if (optionsContainer) {
                       setTimeout(() => {
                           optionsContainer.style.display = 'flex';
                           setTimeout(() => {
                               optionsContainer.style.opacity = '1';
                           }, 10);
-                      }, 200);
+                      }, 250);
                   }
               };
               
@@ -1535,7 +1535,7 @@ const OrisApp = {
       const explAlpha = isVideo ? Math.max(0, Math.min(1.0, (elapsed - 4.5) / 1.5)) : 1.0;
       ctx.globalAlpha = explAlpha;
       
-      let explY = yPos + 60;
+      let explY = yPos + 90;
       const explText = Translations[this.currentLang]['success.sigil_explanation'] || "";
       const regularFont = '400 36px "Inter", sans-serif';
       const boldFont = '600 36px "Inter", sans-serif';

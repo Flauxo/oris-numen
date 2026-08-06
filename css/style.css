@@ -1587,7 +1587,7 @@ body.evil-mode .home-logo-circle {
 }
 #link-download-sigil {
   opacity: 0;
-  transition: opacity 1s ease-in;
+  transition: opacity 0.2s ease-in;
 }
 
 #link-download-sigil.show {
