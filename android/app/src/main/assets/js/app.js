@@ -1019,8 +1019,19 @@ const OrisApp = {
               linkDownload.onclick = (e) => {
                   e.preventDefault();
                   if (OrisAudio.playButtonSound) OrisAudio.playButtonSound();
-                  linkDownload.style.display = 'none';
-                  if (optionsContainer) optionsContainer.style.display = 'flex';
+                  
+                  // Fade out the download sigil button
+                  linkDownload.style.opacity = '0';
+                  linkDownload.style.pointerEvents = 'none';
+                  
+                  // Fade in the options container exactly on top
+                  if (optionsContainer) {
+                      optionsContainer.style.display = 'flex';
+                      // Wait a tiny bit for display to apply, then transition opacity
+                      setTimeout(() => {
+                          optionsContainer.style.opacity = '1';
+                      }, 10);
+                  }
               };
               
               const btnImg = document.getElementById('inline-download-image');

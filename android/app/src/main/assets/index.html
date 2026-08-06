@@ -256,12 +256,13 @@
                 </div>
                 <div style="display: flex; flex-direction: column; align-items: stretch; width: fit-content; gap: 12px; margin-top: 24px;">
                     <button id="btn-home" class="btn-home" data-i18n="btn.home">Volver al inicio</button>
-                    <button id="link-download-sigil" class="btn-cancel" data-i18n="success.download_sigil" style="display: none; font-family: var(--font-sans); font-weight: 600; padding: 12px 32px;">Descargar Sigilo</button>
-                </div>
-                
-                <div id="download-options-container" class="animate-pop-in" style="display: none; flex-direction: row; width: fit-content; gap: 16px; margin-top: 24px; margin-bottom: 24px;">
-                    <button id="inline-download-image" class="btn-cancel" data-i18n="success.download_image" style="flex: 1; flex-basis: 0; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 24px;">Imagen</button>
-                    <button id="inline-download-video" class="btn-cancel" data-i18n="success.download_video" style="flex: 1; flex-basis: 0; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 24px;">Vídeo</button>
+                    <div style="position: relative; width: 100%;">
+                        <button id="link-download-sigil" class="btn-cancel" data-i18n="success.download_sigil" style="display: none; font-family: var(--font-sans); font-weight: 600; padding: 12px 32px; width: 100%; transition: opacity 0.3s ease;">Descargar Sigilo</button>
+                        <div id="download-options-container" style="display: none; flex-direction: row; width: 100%; gap: 16px; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.3s ease;">
+                            <button id="inline-download-image" class="btn-cancel" data-i18n="success.download_image" style="flex: 1; flex-basis: 0; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 24px;">Imagen</button>
+                            <button id="inline-download-video" class="btn-cancel" data-i18n="success.download_video" style="flex: 1; flex-basis: 0; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 24px;">Vídeo</button>
+                        </div>
+                    </div>
                 </div>
                 
                 <div id="inline-loading-container" style="display: none; margin-top: 16px; margin-bottom: 24px;">
