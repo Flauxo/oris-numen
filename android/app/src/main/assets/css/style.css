@@ -369,7 +369,7 @@ body {
     cursor: pointer;
     position: absolute;
     left: 16px;
-    top: 4px;
+    top: calc(12px + env(safe-area-inset-top));
     padding: 12px;
     transition: color 0.2s ease;
     z-index: 20;
@@ -775,11 +775,11 @@ body {
     color: var(--color-bg-primary);
     border: none;
     border-radius: var(--radius-pill);
-    padding: 16px 40px;
+    padding: 12px 32px;
     font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 500;
-    width: 100%;
+    
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
 }

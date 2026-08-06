@@ -254,12 +254,14 @@
                 <div class="success-proverb-container">
                     <p id="success-proverb" class="success-proverb"></p>
                 </div>
-                <button id="btn-home" class="btn-home" data-i18n="btn.home">Volver al inicio</button>
-                <button id="link-download-sigil" class="btn-cancel" data-i18n="success.download_sigil" style="display: none; margin-top: 24px; width: 100%;  font-family: var(--font-sans); font-weight: 600;">Descargar Sigilo</button>
+                <div style="display: flex; flex-direction: column; align-items: stretch; width: fit-content; gap: 24px;">
+                    <button id="btn-home" class="btn-home" data-i18n="btn.home">Volver al inicio</button>
+                    <button id="link-download-sigil" class="btn-cancel" data-i18n="success.download_sigil" style="display: none; font-family: var(--font-sans); font-weight: 600; padding: 12px 32px;">Descargar Sigilo</button>
+                </div>
                 
-                <div id="download-options-container" class="animate-pop-in" style="display: none; justify-content: space-between; align-items: center; gap: 16px; margin-top: 24px; margin-bottom: 24px; width: 100%;">
-                    <button id="inline-download-image" class="btn-cancel" data-i18n="success.download_image" style="flex: 1; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 0;">Imagen</button>
-                    <button id="inline-download-video" class="btn-cancel" data-i18n="success.download_video" style="flex: 1; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 0;">Vídeo</button>
+                <div id="download-options-container" class="animate-pop-in" style="display: none; flex-direction: row; width: fit-content; gap: 16px; margin-top: 24px; margin-bottom: 24px;">
+                    <button id="inline-download-image" class="btn-cancel" data-i18n="success.download_image" style="flex: 1; flex-basis: 0; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 24px;">Imagen</button>
+                    <button id="inline-download-video" class="btn-cancel" data-i18n="success.download_video" style="flex: 1; flex-basis: 0; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 24px;">Vídeo</button>
                 </div>
                 
                 <div id="inline-loading-container" style="display: none; margin-top: 16px; margin-bottom: 24px;">
