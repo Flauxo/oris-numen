@@ -489,7 +489,7 @@
                   
                   <div class="modal-body nucleus-body">
                       <!-- 1. Graphic -->
-                      <div class="nucleus-canvas-wrapper" style="position: relative; width: 280px; height: 300px; margin: 0 auto 24px auto;">
+                      <div class="nucleus-canvas-wrapper" style="position: relative; width: 280px; height: 300px; margin: 0 auto 24px auto; display: flex; justify-content: center; align-items: center;">
                           <canvas id="nucleus-canvas" width="280" height="300" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
                           <svg width="280" height="300" viewBox="0 0 280 300" style="position: absolute; top: 0; left: 0; z-index: 2; pointer-events: none;">
                               <defs>
@@ -505,6 +505,7 @@
                               <rect width="280" height="300" fill="#FDF8F2" mask="url(#nucleus-mask)" />
                               <ellipse cx="140" cy="150" rx="128" ry="130" fill="#2d2b29" mask="url(#ring-mask)" />
                           </svg>
+                          <div id="evolution-numinosity-state" style="position: absolute; text-align: center; font-family: var(--font-serif); font-size: 1.8rem; font-weight: 500; z-index: 10; margin-top: -30px; pointer-events: none;" data-i18n="evolution.state.default">Despertando</div>
                       </div>
                       
                       <!-- 3. Text -->
@@ -514,16 +515,13 @@
                       <div class="nucleus-stats-grid">
                           <div class="nucleus-stat-box">
                               <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
-                              <span class="stat-label" data-i18n="evolution.count_label">CANALIZACIONES</span>
+                              <span class="stat-label" data-i18n="evolution.count_label" style="white-space: pre-wrap; text-align: center; line-height: 1.2;">CANALIZACIONES</span>
                               <span class="stat-value" id="nucleus-count-display">0</span>
                           </div>
                           <div class="nucleus-stat-box">
                               <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></div>
-                              <span class="stat-label" data-i18n="evolution.state.label">ESTADO DE NUMENOSIDAD</span>
-                              <div class="stat-value-complex">
-                                  <span id="evolution-numinosity-state" data-i18n="evolution.state.default">Despertando</span>
-                                  <span id="evolution-numinosity-percentage" class="stat-percentage"></span>
-                              </div>
+                              <span class="stat-label" data-i18n="evolution.state.label" style="white-space: pre-wrap; text-align: center; line-height: 1.2;">ESTADO DE NUMENOSIDAD</span>
+                              <span id="evolution-numinosity-percentage" class="stat-value"></span>
                           </div>
                       </div>
                       
