@@ -80,7 +80,7 @@ const Translations = {
         
         "write.confirm": "Confirm",
         
-        "about.title": "About Oris Numen",
+        "about.title": "About Oris Numen <span style='font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 300; color: #000; white-space: nowrap;'>(v 2.3.7)</span>",
         "about.p1": "Throughout history, humanity has sought countless ways to raise its voice to divinity. Oris Numen is our contribution to that search: a digital instrument designed for faith to find a new vehicle of expression.",
         "about.p2": "Our team approaches this project from a technical and impartial perspective, without subscribing to any specific faith, but with deep respect for the human need to connect with something greater. We sincerely hope this tool brings you help and comfort.",
         "about.p3": "All funds raised through paid options and upgrades have a single purpose: to keep the application alive, cover its technical development, and allow us to continue improving your experience.",
@@ -262,7 +262,7 @@ const Translations = {
         
         "write.confirm": "Confirmar",
         
-        "about.title": "Acerca de Oris Numen",
+        "about.title": "Acerca de Oris Numen <span style='font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 300; color: #000; white-space: nowrap;'>(v 2.3.7)</span>",
         "about.p1": "A lo largo de la historia, la humanidad ha buscado innumerables formas de elevar su voz hacia la divinidad. Oris Numen es nuestra aportación a esa búsqueda: un instrumento digital diseñado para que la fe encuentre un nuevo vehículo de expresión.",
         "about.p2": "Nuestro equipo aborda este proyecto desde una perspectiva técnica e imparcial, sin adscribirse a ninguna fe en concreto, pero con un profundo respeto por la necesidad humana de conectar con algo más grande. Confiamos sinceramente en que esta herramienta te sirva de ayuda y consuelo.",
         "about.p3": "Todos los fondos recaudados a través de las opciones de pago y mejoras tienen un único fin: mantener viva la aplicación, costear su desarrollo técnico y permitirnos seguir mejorando tu experiencia.",
@@ -444,7 +444,7 @@ const Translations = {
         
         "write.confirm": "Conferma",
         
-        "about.title": "Informazioni su Oris Numen",
+        "about.title": "Informazioni su Oris Numen <span style='font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 300; color: #000; white-space: nowrap;'>(v 2.3.7)</span>",
         "about.p1": "Nel corso della storia, l'umanità ha cercato innumerevoli modi per elevare la propria voce alla divinità. Oris Numen è il nostro contributo a questa ricerca: uno strumento digitale progettato affinché la fede trovi un nuovo veicolo di espressione.",
         "about.p2": "Il nostro team affronta questo progetto da una prospettiva tecnica e imparziale, senza aderire a nessuna fede specifica, ma con profondo rispetto per il bisogno umano di connettersi con qualcosa di più grande. Speriamo sinceramente che questo strumento vi porti aiuto e conforto.",
         "about.p3": "Tutti i fondi raccolti attraverso le opzioni a pagamento e i miglioramenti hanno un unico scopo: mantenere viva l'applicazione, coprire il suo sviluppo tecnico e permetterci di continuare a migliorare la tua esperienza.",
@@ -622,7 +622,7 @@ const Translations = {
         
         "write.confirm": "Confirma",
         
-        "about.title": "De Oris Numen",
+        "about.title": "De Oris Numen <span style='font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 300; color: #000; white-space: nowrap;'>(v 2.3.7)</span>",
         "about.p1": "Per totam historiam, humanitas innumeras vias quaesivit ad vocem suam ad divinitatem elevandam. Oris Numen est nostra collatio ad hanc inquisitionem: instrumentum digitale designatum ut fides novum vehiculum expressionis inveniat.",
         "about.p2": "Manipulus noster hoc opus ex perspectiva technica et aequa aggreditur, nulli certae fidei adhaerens, sed cum profunda reverentia pro necessitate humana conectendi cum aliquo maiore. Sincere speramus hoc instrumentum tibi auxilium et solatium ferre.",
         "about.p3": "Omnes pecuniae collectae per optiones solvendas et augmenta unicum finem habent: applicationem vivam servare, progressionem eius technicam sustinere et nos permittere ut experientiam tuam in melius mutemus.",
@@ -796,7 +796,7 @@ const Translations = {
         "success.download_image": "\u56fe\u50cf",
         "success.download_video": "\u89c6\u9891",
         "write.confirm": "\u786e\u8ba4",
-        "about.title": "\u5173\u4e8eOris Numen",
+        "about.title": "\u5173\u4e8eOris Numen <span style='font-family: Inter, sans-serif; font-size: 0.9rem; font-weight: 300; color: #000; white-space: nowrap;'>(v 2.3.7)</span>",
         "about.p1": "\u5728\u6574\u4e2a\u5386\u53f2\u4e2d\uff0c\u4eba\u7c7b\u4e00\u76f4\u5728\u5bfb\u627e\u5404\u79cd\u65b9\u6cd5\u6765\u5411\u795e\u5723\u63d0\u9ad8\u4ed6\u4eec\u7684\u58f0\u97f3\u3002\u8fd9\u662f\u6211\u4eec\u7684\u8d21\u732e\u3002",
         "about.p2": "\u6211\u4eec\u7684\u56e2\u961f\u4ece\u6280\u672f\u548c\u516c\u6b63\u7684\u89d2\u5ea6\u5904\u7406\u8fd9\u4e2a\u9879\u76ee\u3002",
         "about.p3": "\u901a\u8fc7\u4ed8\u8d39\u9009\u9879\u548c\u5347\u7ea7\u7b79\u96c6\u7684\u6240\u6709\u8d44\u91d1\u90fd\u6709\u4e00\u4e2a\u76ee\u7684\uff1a\u4fdd\u6301\u5e94\u7528\u7a0b\u5e8f\u7684\u6d3b\u529b\u3002",
