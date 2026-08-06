@@ -27,6 +27,7 @@ class SigilGenerator {
      * @param {string} text Text to base the sigil on
      * @param {string} color Color of the lines
      * @param {boolean} isEvil Whether to use chaotic/sharp shapes
+     * @param {number} drawProgress 0.0 to 1.0 for animation
      */
     static draw(ctx, cx, cy, radius, text, color, isEvil = false, drawProgress = 1.0) {
         if (!text || text.trim() === '') text = 'OrisNumen';
@@ -37,25 +38,33 @@ class SigilGenerator {
         ctx.save();
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
+        
+        // Parse the color to use with opacity
+        // The color passed is usually a hex like #FF0000 or similar
         ctx.strokeStyle = color;
         ctx.fillStyle = color;
 
-        // Base symmetry
-        const symmetries = isEvil ? [5, 7, 9, 11] : [6, 8, 12, 16];
+        // Base symmetry (organic forms often look great with 4, 6, or 8)
+        const symmetries = isEvil ? [3, 5, 7, 9] : [4, 6, 8, 12];
         const symmetry = symmetries[Math.floor(random() * symmetries.length)];
         
-        // Number of layers/rings of geometry
-        const layers = 7 + Math.floor(random() * 8); 
+        // Number of layers of waves/curves
+        const layers = 8 + Math.floor(random() * 12); 
 
         for (let l = 0; l < layers; l++) {
             const layerRadius = radius * (0.2 + (0.8 * random()));
             const shapeType = Math.floor(random() * 5);
-            // Use fine lines
-            const lineWidth = 1 + random() * 2;
             
+            // Thicker, transparent lines for organic overlapping effect
+            const lineWidth = 4 + random() * 20;
             ctx.lineWidth = lineWidth;
             
-            // For each symmetrical segment
+            // Random transparency for each layer to create depth
+            const alpha = 0.15 + random() * 0.4;
+            
+            // We use globalAlpha for the transparency overlapping
+            ctx.globalAlpha = alpha;
+
             for (let s = 0; s < symmetry; s++) {
                 const angle = (Math.PI * 2 / symmetry) * s;
                 ctx.save();
@@ -64,65 +73,59 @@ class SigilGenerator {
                 
                 ctx.beginPath();
                 
-                let pathLen = 100; // fallback
+                // Generous path length for lineDash animation of bezier curves
+                let pathLen = layerRadius * 4; 
                 const nextAngle = Math.PI * 2 / symmetry;
                 
+                // Generate random control points
+                const cp1x = (random() - 0.5) * layerRadius * 2;
+                const cp1y = (random() - 0.5) * layerRadius * 2;
+                const cp2x = (random() - 0.5) * layerRadius * 2;
+                const cp2y = (random() - 0.5) * layerRadius * 2;
+                
+                const endX = Math.cos(nextAngle) * layerRadius;
+                const endY = Math.sin(nextAngle) * layerRadius;
+
                 if (shapeType === 0) {
-                    // Circle segment
-                    ctx.arc(0, 0, layerRadius, 0, nextAngle);
-                    pathLen = layerRadius * nextAngle;
-                } else if (shapeType === 1) {
-                    // Polygon lines
-                    ctx.moveTo(layerRadius, 0);
-                    ctx.lineTo(Math.cos(nextAngle) * layerRadius, Math.sin(nextAngle) * layerRadius);
-                    pathLen = 2 * layerRadius * Math.sin(nextAngle / 2);
-                } else if (shapeType === 2) {
-                    // Curves / petals
+                    // S-Curve / Wave
                     ctx.moveTo(0, 0);
-                    const cpAngle = isEvil ? (Math.PI / 4) : (Math.PI / symmetry);
-                    ctx.quadraticCurveTo(
-                        Math.cos(cpAngle/2) * layerRadius * 1.5,
-                        Math.sin(cpAngle/2) * layerRadius * 1.5,
-                        Math.cos(cpAngle) * layerRadius,
-                        Math.sin(cpAngle) * layerRadius
+                    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+                } else if (shapeType === 1) {
+                    // Arching wave bridging adjacent points
+                    ctx.moveTo(layerRadius, 0);
+                    ctx.bezierCurveTo(
+                        layerRadius + cp1x * 0.5, cp1y * 0.5,
+                        endX + cp2x * 0.5, endY + cp2y * 0.5,
+                        endX, endY
                     );
-                    // Approximate curve length
-                    pathLen = layerRadius * 1.5; 
+                } else if (shapeType === 2) {
+                    // Leaf/Tear drop from center
+                    ctx.moveTo(0, 0);
+                    ctx.quadraticCurveTo(cp1x, layerRadius, endX, endY);
                 } else if (shapeType === 3) {
-                    // Inner star
-                    ctx.moveTo(layerRadius * 0.5, 0);
-                    ctx.lineTo(Math.cos(nextAngle/2) * layerRadius, Math.sin(nextAngle/2) * layerRadius);
-                    ctx.lineTo(Math.cos(nextAngle) * layerRadius * 0.5, Math.sin(nextAngle) * layerRadius * 0.5);
-                    const dx = Math.cos(nextAngle/2) * layerRadius - layerRadius * 0.5;
-                    const dy = Math.sin(nextAngle/2) * layerRadius;
-                    pathLen = 2 * Math.sqrt(dx * dx + dy * dy);
+                    // Swirl towards center
+                    ctx.moveTo(layerRadius, 0);
+                    ctx.bezierCurveTo(
+                        layerRadius * 0.5, layerRadius * 0.5,
+                        -layerRadius * 0.5, layerRadius * 0.5,
+                        0, 0
+                    );
                 } else {
-                    // Dots / runes
-                    const dotRadius = 1 + random() * 2;
-                    ctx.arc(layerRadius, 0, dotRadius, 0, Math.PI * 2);
-                    pathLen = 2 * Math.PI * dotRadius;
-                    
-                    if (drawProgress < 1.0) {
-                        ctx.globalAlpha = drawProgress;
-                        ctx.fill();
-                        ctx.globalAlpha = 1.0;
-                    } else {
-                        ctx.fill();
-                    }
-                    
-                    if (isEvil) {
-                        ctx.moveTo(layerRadius, -10);
-                        ctx.lineTo(layerRadius, 10);
-                        ctx.moveTo(layerRadius - 10, 0);
-                        ctx.lineTo(layerRadius + 10, 0);
-                        pathLen += 40;
-                    }
+                    // Continuous overlapping loops (spirograph vibe)
+                    ctx.moveTo(layerRadius * 0.5, 0);
+                    ctx.bezierCurveTo(
+                        layerRadius * 1.5, layerRadius * 0.8,
+                        -layerRadius * 0.5, layerRadius * 0.8,
+                        Math.cos(nextAngle) * layerRadius * 0.5, 
+                        Math.sin(nextAngle) * layerRadius * 0.5
+                    );
                 }
                 
                 if (drawProgress < 1.0) {
-                    const len = pathLen; 
-                    ctx.setLineDash([len, len]);
-                    ctx.lineDashOffset = len * (1 - drawProgress);
+                    // Multiply alpha by progress so it fades in while drawing
+                    ctx.globalAlpha = alpha * Math.min(1.0, drawProgress * 1.5);
+                    ctx.setLineDash([pathLen, pathLen]);
+                    ctx.lineDashOffset = pathLen * (1 - drawProgress);
                 } else {
                     ctx.setLineDash([]);
                 }
@@ -132,14 +135,27 @@ class SigilGenerator {
             }
         }
         
-        // Central core
+        // Central core spiral or dot
+        ctx.globalAlpha = Math.min(1.0, drawProgress * 2);
+        ctx.lineWidth = 2 + random() * 4;
         ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.arc(cx, cy, radius * 0.08, 0, Math.PI * 2);
-        if (drawProgress > 0.5) {
-            ctx.globalAlpha = (drawProgress - 0.5) * 2; // Fade in central core at the end
-            if (random() > 0.5) ctx.fill(); else ctx.stroke();
-            ctx.globalAlpha = 1.0;
+        const coreType = Math.floor(random() * 3);
+        if (coreType === 0) {
+            // Spiral
+            for (let i = 0; i < 40 * drawProgress; i++) {
+                const r = (radius * 0.15 * i) / 40;
+                const a = i * 0.3;
+                if (i === 0) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+            }
+            ctx.stroke();
+        } else {
+            // Concentric glowing rings
+            for(let i=0; i<3; i++) {
+                ctx.beginPath();
+                ctx.arc(cx, cy, (radius * 0.05) + (i * radius * 0.03), 0, Math.PI * 2 * drawProgress);
+                ctx.stroke();
+            }
         }
 
         ctx.restore();
