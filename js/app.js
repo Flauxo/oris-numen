@@ -961,30 +961,7 @@ const OrisApp = {
       const freq = this.FREQUENCIES[freqId];
       const isEvil = freqId === 'pazuzu';
 
-      // Color the success icon with the frequency color
-      const successIcon = document.querySelector('.success-icon');
-      const crossInner = document.querySelector('.cross-inner');
-      if (freq && successIcon && crossInner) {
-        successIcon.style.color = freq.color;
-        
-        // Ensure pulse-glow is active
-        successIcon.classList.add('pulse-glow');
-        
-        // Reset rotation state immediately
-        crossInner.style.transition = 'none';
-        crossInner.style.transform = 'rotate(0deg)';
-        void crossInner.offsetWidth; // Force reflow
-
-        if (isEvil) {
-            // Apply slow motion rotation after 1 second
-            setTimeout(() => {
-                crossInner.style.transition = 'transform 2s ease-in-out';
-                crossInner.style.transform = 'rotate(180deg)';
-            }, 1000);
-        }
-      }
-
-      // Sigil Download Link
+      // Extract text for sigil
       let text = '';
       if (isEvil) {
           const evilInput = document.getElementById('evil-input');
@@ -993,6 +970,36 @@ const OrisApp = {
           const msgInput = document.getElementById('message-input');
           text = msgInput ? msgInput.value : '';
       }
+
+      // Animate the sigil canvas
+      const successCanvas = document.getElementById('success-sigil-canvas');
+      if (freq && successCanvas) {
+          successCanvas.style.color = freq.color; // For drop-shadow and glow
+          
+          let sigilProgress = 0;
+          let startTime = null;
+          const duration = 6400; // 6.4s matching video generation speed
+          
+          const drawFrame = (currentTime) => {
+              if (!startTime) startTime = currentTime;
+              let elapsed = currentTime - startTime;
+              sigilProgress = Math.min(1.0, Math.max(0, elapsed / duration));
+              
+              const ctx = successCanvas.getContext('2d');
+              ctx.clearRect(0, 0, successCanvas.width, successCanvas.height);
+              
+              if (typeof SigilGenerator !== 'undefined') {
+                  SigilGenerator.draw(ctx, successCanvas.width / 2, successCanvas.height / 2, 280, text, freq.color, isEvil, sigilProgress);
+              }
+              
+              if (sigilProgress < 1.0) {
+                  requestAnimationFrame(drawFrame);
+              }
+          };
+          requestAnimationFrame(drawFrame);
+      }
+
+      // Sigil Download Link
 
       const linkDownload = document.getElementById('link-download-sigil');
 
