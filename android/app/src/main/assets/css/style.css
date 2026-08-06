@@ -183,6 +183,7 @@ body {
     background: none;
     border: none;
     padding: 12px;
+    width: 100%;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -274,6 +275,7 @@ body {
     display: flex;
     flex-direction: row;
     overflow: hidden;
+    width: 100%;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     height: 110px;
@@ -363,6 +365,7 @@ body {
     font-family: var(--font-sans);
     font-size: 1rem;
     color: var(--color-text-muted);
+    width: 100%;
     cursor: pointer;
     position: absolute;
     left: 16px;
@@ -472,6 +475,7 @@ body {
     font-family: var(--font-sans);
     font-size: 0.78rem;
     font-weight: 600;
+    width: 100%;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
@@ -589,6 +593,7 @@ body {
     color: var(--channeling-color, var(--color-text-muted));
     font-size: 0.95rem;
     text-decoration: none;
+    width: 100%;
     cursor: pointer;
     padding: 12px 32px;
     border-radius: 30px;
@@ -686,6 +691,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     cursor: pointer;
     padding: 0;
     position: relative;
@@ -773,6 +779,7 @@ body {
     font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 500;
+    width: 100%;
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
@@ -849,6 +856,7 @@ body {
     border: none;
     font-size: 1.6rem;
     color: var(--color-text-muted);
+    width: 100%;
     cursor: pointer;
     padding: 4px 8px;
     line-height: 1;
@@ -920,6 +928,7 @@ body {
     font-family: var(--font-sans);
     font-size: 0.78rem;
     font-weight: 600;
+    width: 100%;
     cursor: pointer;
     transition: transform 0.2s ease, filter 0.2s ease;
 }
@@ -1023,6 +1032,7 @@ body {
     font-family: var(--font-sans);
     font-size: 0.78rem;
     font-weight: 600;
+    width: 100%;
     cursor: pointer;
     transition: filter 0.2s ease, transform 0.2s ease;
     text-align: center;
@@ -1084,6 +1094,7 @@ body {
     border: none;
     font-size: 2rem;
     color: var(--color-text-muted);
+    width: 100%;
     cursor: pointer;
     line-height: 1;
 }
@@ -1200,6 +1211,7 @@ body.evil-mode .home-logo-circle {
     border: none;
     font-size: 1.8rem;
     color: var(--color-text-muted);
+    width: 100%;
     cursor: pointer;
     line-height: 1;
     padding: 0 8px;
@@ -1325,6 +1337,7 @@ body.evil-mode .home-logo-circle {
 .btn-history-action {
     background: none;
     border: none;
+    width: 100%;
     cursor: pointer;
     padding: 8px;
     transition: transform 0.2s, opacity 0.2s;
@@ -1357,6 +1370,7 @@ body.evil-mode .home-logo-circle {
     border-radius: var(--radius-sm);
     font-size: 1.1rem;
     font-weight: 600;
+    width: 100%;
     cursor: pointer;
     color: white;
 }
@@ -1388,6 +1402,7 @@ body.evil-mode .home-logo-circle {
     padding: 12px 24px;
     font-size: 1rem;
     font-weight: 500;
+    width: 100%;
     cursor: pointer;
     margin-top: 16px;
     transition: transform 0.2s ease, opacity 0.2s ease;
@@ -1484,6 +1499,7 @@ body.evil-mode .home-logo-circle {
     padding: 14px;
     font-size: 1.1rem;
     font-weight: 500;
+    width: 100%;
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 10px;
