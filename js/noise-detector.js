@@ -60,11 +60,14 @@ class NoiseDetector {
         const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
         this.analyser.getByteFrequencyData(dataArray);
         
-        let max = 0;
-        for (let i = 0; i < dataArray.length; i++) {
-            if (dataArray[i] > max) max = dataArray[i];
+        let sum = 0;
+        let count = 0;
+        // Ignorar las frecuencias más bajas (primeros bins) que capturan zumbidos eléctricos o ruido estático constante
+        for (let i = 4; i < dataArray.length; i++) {
+            sum += dataArray[i];
+            count++;
         }
-        this.currentVolume = max; // Peak amplitude 0-255
+        this.currentVolume = count > 0 ? (sum / count) : 0;
         
         this.animationId = requestAnimationFrame(() => this.monitor());
     }
@@ -86,16 +89,14 @@ class NoiseDetector {
 
     /**
      * Returns true if environment is too noisy.
-     * Threshold is very strict to ensure absolute silence.
      */
     isNoisy() {
         if (!this.isListening) {
             return false;
         }
-        console.log("Current noise peak:", this.currentVolume);
-        // The values are logarithmic (dB), so typical room noise can easily hit 100-150.
-        // We set the threshold to 230 so it only triggers on very loud noises.
-        return this.currentVolume > 230;
+        console.log("Current noise average:", this.currentVolume);
+        // Ahora usamos la media sin el ruido eléctrico. 40 es un umbral razonable para ruido alto
+        return this.currentVolume > 40;
     }
 }
 
