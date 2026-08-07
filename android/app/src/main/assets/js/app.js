@@ -1121,6 +1121,10 @@ const OrisApp = {
           }
       }
 
+      // Show universe message button for next channeling
+      const btnUniverseMsg = document.getElementById('btn-universe-message');
+      if (btnUniverseMsg) btnUniverseMsg.style.display = 'block';
+      
       OrisAudio.playSuccessSound();
       this.showScreen('success');
     }, 800);
@@ -2418,7 +2422,6 @@ const OrisApp = {
         const btnUniverseClose = document.getElementById('btn-universe-close');
         
         if (btnUniverseMessage) {
-            btnUniverseMessage.style.display = 'block'; // Make it visible when on success screen
             btnUniverseMessage.addEventListener('click', () => {
                 const introContainer = document.getElementById('universe-intro-container');
                 if (introContainer) {
