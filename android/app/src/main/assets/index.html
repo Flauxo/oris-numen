@@ -254,6 +254,7 @@
                     <p id="success-proverb" class="success-proverb"></p>
                 </div>
                 <div style="display: flex; flex-direction: column; align-items: stretch; width: fit-content; gap: 12px; margin-top: 24px;">
+                    <p id="btn-universe-message" class="universe-message-link" data-i18n="universe.send_link" style="text-decoration: underline; cursor: pointer; text-align: center; color: var(--color-text-secondary); margin-bottom: 8px; font-weight: 500; font-size: 1.1rem; opacity: 0.8; transition: opacity 0.3s ease;">Envía tu mensaje al universo</p>
                     <button id="btn-home" class="btn-home" data-i18n="btn.home">Volver al inicio</button>
                     <div style="position: relative; width: 100%; display: flex; justify-content: center;">
                         <button id="link-download-sigil" class="btn-cancel" data-i18n="success.download_sigil" style="display: none; font-family: var(--font-sans); font-weight: 600; padding: 12px 32px; width: 100%; transition: opacity 0.2s ease;">Descargar Sigilo</button>
@@ -266,6 +267,24 @@
                 
                 <div id="inline-loading-container" style="display: none; margin-top: 16px; margin-bottom: 24px;">
                     <p data-i18n="success.generating_video" class="pulse-glow" style="color: #000000; font-size: 1.1rem; text-align: center; margin: 0; font-weight: 400;">Generando ritual visual...</p>
+                </div>
+
+                <div id="universe-searching-container" style="display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: var(--color-bg-card); z-index: 10; opacity: 0; transition: opacity 1s ease;">
+                    <p id="universe-searching-text" class="pulse-glow" style="font-size: 1.8rem; font-weight: 500; font-family: var(--font-serif); color: var(--color-text-primary);" data-i18n="universe.searching">Buscando canalización...</p>
+                    <p id="universe-found-text" style="font-size: 1.8rem; font-weight: 500; font-family: var(--font-serif); color: var(--color-text-primary); display: none; opacity: 0; transition: opacity 0.5s ease;" data-i18n="universe.found">Encontrado</p>
+                </div>
+
+                <div id="universe-received-container" style="display: none; flex-direction: column; align-items: stretch; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: var(--color-bg-card); padding: 40px 24px; box-sizing: border-box; z-index: 10; opacity: 0; transition: opacity 1.5s ease; overflow-y: auto;">
+                    <div style="text-align: center; font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-text-primary); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                        <span id="universe-msg-from" data-i18n="universe.from">desde</span> <span id="universe-msg-country" style="font-weight: 600;">Japón</span>
+                        <div style="font-size: 0.95rem; margin-top: 12px; font-family: var(--font-sans); color: var(--color-text-secondary); line-height: 1.4;" id="universe-msg-details">
+                            <!-- Details populated via JS -->
+                        </div>
+                    </div>
+                    <div class="success-proverb-container" style="flex: 1; display: flex; align-items: center; justify-content: center; margin-bottom: 32px;">
+                        <p id="universe-msg-text" class="success-proverb" style="font-size: 1.6rem; text-align: left;"></p>
+                    </div>
+                    <button id="btn-universe-close" class="btn-home" style="margin-top: auto;" data-i18n="universe.close">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -592,6 +611,21 @@
                   </div></div>
         </div>
 
+        <div id="universe-modal-overlay" class="overlay">
+            <div class="overlay-backdrop"></div>
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: var(--color-text-primary);" data-i18n="universe.modal_title">Envío al Universo</h3>
+                    <button id="btn-close-universe-modal" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-body">
+                    <p data-i18n="universe.modal_text1" style="color: var(--color-text-secondary); margin-bottom: 16px; line-height: 1.5; font-size: 1.1rem;">Aceptas enviar tu mensaje al universo de forma anónima y a cambio recibir un mensaje de un usuario o de un canalizador de la aplicación.</p>
+                    <p data-i18n="universe.modal_text2" style="color: var(--color-text-primary); font-weight: bold; margin-bottom: 24px; line-height: 1.5; font-size: 1.1rem;">Por favor, este mensaje guárdalo en tu interior y no lo compartas. Te pedimos que no hagas capturas de pantalla de esta sección.</p>
+                    <button id="btn-accept-universe" class="btn-confirm-text" data-i18n="universe.btn_accept">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Evil Mode Overlay -->
         <div id="evil-overlay" class="overlay evil-overlay">
             <div class="evil-backdrop"></div>
@@ -613,6 +647,7 @@
     <script src="js/timer.js?v=2.0.95"></script>
     <script src="js/sigil.js?v=2.0.95"></script>
     <script src="js/noise-detector.js?v=2.0.95"></script>
+    <script src="js/universe-messages.js?v=2.0.95"></script>
     <script src="js/app.js?v=2.0.95"></script>
 </body>
 </html>
