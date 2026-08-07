@@ -1956,7 +1956,7 @@ const OrisApp = {
           }
           const numinosityState = document.getElementById('evolution-numinosity-state');
           if (numinosityState) {
-              if (rawProgress >= 1) {
+              if (rawProgress >= 0.5) {
                   numinosityState.style.opacity = '1';
               } else {
                   numinosityState.style.opacity = '0';
