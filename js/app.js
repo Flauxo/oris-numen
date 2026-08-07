@@ -2443,8 +2443,16 @@ const OrisApp = {
                     this.showWarning(this.getText('universe.no_internet') || "Se necesita conexión a internet.");
                     return;
                 }
-                modalUniverse.classList.remove('active');
-                this.startUniverseSearch();
+                const introContainer = document.getElementById('universe-intro-container');
+                if (introContainer) {
+                    introContainer.style.opacity = '0';
+                    setTimeout(() => {
+                        introContainer.style.display = 'none';
+                        this.startUniverseSearch();
+                    }, 300);
+                } else {
+                    this.startUniverseSearch();
+                }
             });
         }
         
@@ -2453,8 +2461,13 @@ const OrisApp = {
                 receivedContainer.style.opacity = '0';
                 setTimeout(() => {
                     receivedContainer.style.display = 'none';
-                    // Go home after closing
-                    this.goHome();
+                    // Reset for next time
+                    const introContainer = document.getElementById('universe-intro-container');
+                    if (introContainer) {
+                        introContainer.style.display = 'block';
+                        setTimeout(() => introContainer.style.opacity = '1', 50);
+                    }
+                    modalUniverse.classList.remove('active');
                 }, 500);
             });
         }
@@ -2556,7 +2569,7 @@ const OrisApp = {
         const dateStr = now.toLocaleDateString([], { day: '2-digit', month: '2-digit' });
         
         const getT = (key, fallback) => (Translations[this.currentLang] && Translations[this.currentLang][key]) || fallback;
-        const freqName = this.currentFrequency ? this.currentFrequency.name : 'Humilis';
+        const freqName = this.currentFrequency ? (this.FREQUENCIES[this.currentFrequency] ? this.FREQUENCIES[this.currentFrequency].name : 'Humilis') : 'Humilis';
         const els = [];
         if (document.getElementById('check-aire') && document.getElementById('check-aire').checked) els.push(getT('elements.aire', 'Aire'));
         if (document.getElementById('check-tierra') && document.getElementById('check-tierra').checked) els.push(getT('elements.tierra', 'Tierra'));
