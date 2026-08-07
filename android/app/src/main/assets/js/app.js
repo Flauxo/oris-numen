@@ -2500,6 +2500,11 @@ const OrisApp = {
         const msgDetails = document.getElementById('universe-msg-details');
         const msgText = document.getElementById('universe-msg-text');
         
+        if (!this.seenUniverseMessages) this.seenUniverseMessages = [];
+        if (this.seenUniverseMessages.length >= universeMessages.length) {
+            this.seenUniverseMessages = [];
+        }
+
         // Select message
         let targetLang = this.currentLang;
         if (Math.random() > 0.30) {
@@ -2511,10 +2516,17 @@ const OrisApp = {
             }
         }
         
-        const matchingMessages = universeMessages.filter(m => m.lang === targetLang);
+        let matchingMessages = universeMessages.filter(m => m.lang === targetLang && !this.seenUniverseMessages.includes(m));
+        if (matchingMessages.length === 0) {
+            // Fallback to any unseen message if no unseen messages for target language
+            matchingMessages = universeMessages.filter(m => !this.seenUniverseMessages.includes(m));
+        }
+        
         const randomMsg = matchingMessages.length > 0 
             ? matchingMessages[Math.floor(Math.random() * matchingMessages.length)]
             : universeMessages[Math.floor(Math.random() * universeMessages.length)];
+            
+        this.seenUniverseMessages.push(randomMsg);
             
         // Populate
         msgCountry.textContent = randomMsg.country || 'Desconocido';
