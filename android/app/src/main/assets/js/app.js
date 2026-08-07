@@ -2446,6 +2446,9 @@ const OrisApp = {
         if (btnCloseUniverseModal) {
             btnCloseUniverseModal.addEventListener('click', () => {
                 modalUniverse.classList.remove('active');
+                if (receivedContainer && receivedContainer.style.display !== 'none' && btnUniverseMessage) {
+                    btnUniverseMessage.style.display = 'none';
+                }
             });
         }
         
@@ -2453,6 +2456,9 @@ const OrisApp = {
         if (backdrop) {
             backdrop.addEventListener('click', () => {
                 modalUniverse.classList.remove('active');
+                if (receivedContainer && receivedContainer.style.display !== 'none' && btnUniverseMessage) {
+                    btnUniverseMessage.style.display = 'none';
+                }
             });
         }
         
