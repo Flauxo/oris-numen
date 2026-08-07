@@ -93,7 +93,8 @@ class NoiseDetector {
             return false;
         }
         console.log("Current noise peak:", this.currentVolume);
-        return this.currentVolume > 2;
+        // User requested 20% sensitivity limit (255 * 0.2 = 51)
+        return this.currentVolume > 51;
     }
 }
 

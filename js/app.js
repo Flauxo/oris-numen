@@ -1977,7 +1977,8 @@ const OrisApp = {
               const target = targetRatios[freqKey];
               if (total === 0) return;
               
-              const ratio = Math.max(target, freqCounts[freqKey] > 0 ? 0.05 : 0) * animProgress;
+              const rawRatio = Math.max(target, freqCounts[freqKey] > 0 ? 0.05 : 0) * animProgress;
+              const ratio = Math.min(rawRatio, 0.56 * animProgress);
               if (ratio <= 0) return;
               
               const fData = this.FREQUENCIES[freqKey];
