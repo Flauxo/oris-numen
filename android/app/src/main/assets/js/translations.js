@@ -1,7 +1,6 @@
 const Translations = {
     en: {
-,
-        "universe.send_link": "Send your message to the universe",
+"universe.send_link": "Send your message to the universe",
         "universe.modal_title": "Send to the Universe",
         "universe.modal_text1": "You agree to send your message to the universe anonymously and in exchange receive a message from a user or a channeler of the application.",
         "universe.modal_text2": "Please, keep this message inside you and do not share it. We ask that you do not take screenshots of this section.",
@@ -260,8 +259,7 @@ const Translations = {
         "proverb.pazuzu.9": "The price of forbidden power is always paid in fragments of the soul.",
     },
     es: {
-,
-        "universe.send_link": "Envía tu mensaje al universo",
+"universe.send_link": "Envía tu mensaje al universo",
         "universe.modal_title": "Envío al Universo",
         "universe.modal_text1": "Aceptas enviar tu mensaje al universo de forma anónima y a cambio recibir un mensaje de un usuario o de un canalizador de la aplicación.",
         "universe.modal_text2": "Por favor, este mensaje guárdalo en tu interior y no lo compartas. Te pedimos que no hagas capturas de pantalla de esta sección.",
@@ -520,8 +518,7 @@ const Translations = {
         "proverb.pazuzu.9": "El precio del poder prohibido siempre se paga en fragmentos del alma.",
     },
     it: {
-,
-        "universe.send_link": "Invia il tuo messaggio all'universo",
+"universe.send_link": "Invia il tuo messaggio all'universo",
         "universe.modal_title": "Invio all'Universo",
         "universe.modal_text1": "Accetti di inviare il tuo messaggio all'universo in modo anonimo e in cambio di ricevere un messaggio da un utente o canalizzatore.",
         "universe.modal_text2": "Per favore, conserva questo messaggio dentro di te e non condividerlo. Ti chiediamo di non fare screenshot di questa sezione.",
@@ -780,8 +777,7 @@ const Translations = {
         "proverb.pazuzu.9": "Il prezzo del potere proibito si paga sempre in frammenti di anima.",
     },
     la: {
-,
-        "universe.send_link": "Mitte nuntium tuum ad universum",
+"universe.send_link": "Mitte nuntium tuum ad universum",
         "universe.modal_title": "Missio ad Universum",
         "universe.modal_text1": "Assentiris nuntium tuum ad universum mittere occulte et vicissim accipere nuntium ab alio utente.",
         "universe.modal_text2": "Quaeso, hunc nuntium intus custodi nec eum communica. Rogamus ne imagines huius sectionis capias.",
@@ -1037,8 +1033,7 @@ const Translations = {
     }
 ,
     zh: {
-,
-        "universe.send_link": "将您的信息发送给宇宙",
+"universe.send_link": "将您的信息发送给宇宙",
         "universe.modal_title": "发送给宇宙",
         "universe.modal_text1": "您同意匿名将您的信息发送给宇宙，作为交换，您将收到来自应用程序用户或通灵者的信息。",
         "universe.modal_text2": "请将此信息保留在您的内心，不要分享它。我们要求您不要截取此部分的屏幕截图。",
