@@ -1123,7 +1123,13 @@ const OrisApp = {
 
       // Show universe message button for next channeling
       const btnUniverseMsg = document.getElementById('btn-universe-message');
-      if (btnUniverseMsg) btnUniverseMsg.style.display = 'block';
+      if (btnUniverseMsg) {
+          btnUniverseMsg.style.display = 'block';
+          btnUniverseMsg.style.opacity = '0';
+          setTimeout(() => {
+              btnUniverseMsg.style.opacity = '0.8';
+          }, 1800); // fade in after download sigil button
+      }
       
       OrisAudio.playSuccessSound();
       this.showScreen('success');
@@ -2500,14 +2506,14 @@ const OrisApp = {
         
         if (counterText) {
             counterText.style.display = 'block';
-            counterText.textContent = '1s';
+            counterText.textContent = '1sg';
         }
         if (spinner) spinner.style.display = 'block';
         
         let seconds = 1;
         const intervalId = setInterval(() => {
             seconds++;
-            if (counterText) counterText.textContent = seconds + 's';
+            if (counterText) counterText.textContent = seconds + 'sg';
         }, 1000);
         
         const randomSeconds = Math.floor(Math.random() * (37 - 5 + 1)) + 5;
@@ -2516,7 +2522,9 @@ const OrisApp = {
             clearInterval(intervalId);
             searchingText.style.opacity = '0';
             if (counterText) counterText.style.display = 'none';
-            if (spinner) spinner.style.display = 'none';
+            const spinnerWrapper = document.getElementById('universe-spinner-wrapper');
+            if (spinnerWrapper) spinnerWrapper.style.display = 'none';
+            else if (spinner) spinner.style.display = 'none';
             
             setTimeout(() => {
                 searchingText.style.display = 'none';
