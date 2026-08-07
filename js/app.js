@@ -388,20 +388,30 @@ const OrisApp = {
     const homeLogo = document.querySelector('.home-logo');
     let evilClicks = 0;
     let evilClickTimer = null;
+    let evilClickTimestamps = [];
+    let evilWarningShown = false;
     
     const handleEvilClick = (e) => {
         if (e) { e.stopPropagation(); e.preventDefault(); }
         // Only respond while in normal mode (not evil mode already)
         if (document.body.classList.contains('evil-mode')) return;
 
+        const now = Date.now();
+        evilClickTimestamps.push(now);
         evilClicks++;
+        
         if (evilClickTimer) clearTimeout(evilClickTimer);
         
         evilClickTimer = setTimeout(() => {
             evilClicks = 0;
-        }, 4000); 
+            evilClickTimestamps = [];
+            evilWarningShown = false;
+        }, 3000); 
 
-        if (evilClicks >= 6 && evilClicks < 20) {
+        evilClickTimestamps = evilClickTimestamps.filter(t => now - t <= 1700);
+
+        if (evilClickTimestamps.length >= 6 && !evilWarningShown) {
+            evilWarningShown = true;
             const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.too_many_clicks']) 
                 || 'Por favor, no pulses más veces en el símbolo.';
             this.showWarning(warningMsg, 'normal', 1300);
@@ -409,6 +419,8 @@ const OrisApp = {
         
         if (evilClicks >= 20) {
             evilClicks = 0;
+            evilClickTimestamps = [];
+            evilWarningShown = false;
             this.activateEvilMode();
         }
     };
@@ -1941,6 +1953,14 @@ const OrisApp = {
           if (rawProgress < 1) {
               const p = rawProgress - 1;
               animProgress = 1 + 2.70158 * Math.pow(p, 3) + 1.70158 * Math.pow(p, 2);
+          }
+          const numinosityState = document.getElementById('evolution-numinosity-state');
+          if (numinosityState) {
+              if (rawProgress >= 1) {
+                  numinosityState.style.opacity = '1';
+              } else {
+                  numinosityState.style.opacity = '0';
+              }
           }
           
           // Just draw the waves directly on the canvas. 
