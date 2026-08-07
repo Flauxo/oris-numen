@@ -2468,6 +2468,7 @@ const OrisApp = {
                         setTimeout(() => introContainer.style.opacity = '1', 50);
                     }
                     modalUniverse.classList.remove('active');
+                    this.goHome();
                 }, 500);
             });
         }
