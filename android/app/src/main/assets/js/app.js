@@ -2464,6 +2464,8 @@ const OrisApp = {
         const searchingContainer = document.getElementById('universe-searching-container');
         const searchingText = document.getElementById('universe-searching-text');
         const foundText = document.getElementById('universe-found-text');
+        const counterText = document.getElementById('universe-searching-counter');
+        const spinner = document.getElementById('universe-spinner');
         
         searchingContainer.style.display = 'flex';
         setTimeout(() => {
@@ -2475,10 +2477,26 @@ const OrisApp = {
         foundText.style.display = 'none';
         foundText.style.opacity = '0';
         
+        if (counterText) {
+            counterText.style.display = 'block';
+            counterText.textContent = '1s';
+        }
+        if (spinner) spinner.style.display = 'block';
+        
+        let seconds = 1;
+        const intervalId = setInterval(() => {
+            seconds++;
+            if (counterText) counterText.textContent = seconds + 's';
+        }, 1000);
+        
         const randomSeconds = Math.floor(Math.random() * (37 - 5 + 1)) + 5;
         
         setTimeout(() => {
+            clearInterval(intervalId);
             searchingText.style.opacity = '0';
+            if (counterText) counterText.style.display = 'none';
+            if (spinner) spinner.style.display = 'none';
+            
             setTimeout(() => {
                 searchingText.style.display = 'none';
                 foundText.style.display = 'block';
@@ -2537,14 +2555,15 @@ const OrisApp = {
         const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const dateStr = now.toLocaleDateString([], { day: '2-digit', month: '2-digit' });
         
+        const getT = (key, fallback) => (Translations[this.currentLang] && Translations[this.currentLang][key]) || fallback;
         const freqName = this.currentFrequency ? this.currentFrequency.name : 'Humilis';
         const els = [];
-        if (document.getElementById('check-aire') && document.getElementById('check-aire').checked) els.push(this.getText('elements.aire'));
-        if (document.getElementById('check-tierra') && document.getElementById('check-tierra').checked) els.push(this.getText('elements.tierra'));
-        if (document.getElementById('check-agua') && document.getElementById('check-agua').checked) els.push(this.getText('elements.agua'));
-        if (document.getElementById('check-fuego') && document.getElementById('check-fuego').checked) els.push(this.getText('elements.fuego'));
+        if (document.getElementById('check-aire') && document.getElementById('check-aire').checked) els.push(getT('elements.aire', 'Aire'));
+        if (document.getElementById('check-tierra') && document.getElementById('check-tierra').checked) els.push(getT('elements.tierra', 'Tierra'));
+        if (document.getElementById('check-agua') && document.getElementById('check-agua').checked) els.push(getT('elements.agua', 'Agua'));
+        if (document.getElementById('check-fuego') && document.getElementById('check-fuego').checked) els.push(getT('elements.fuego', 'Fuego'));
         
-        let elStr = els.length > 0 ? els.join(', ') : this.getText('history.none') || 'Ninguno';
+        let elStr = els.length > 0 ? els.join(', ') : getT('history.none', 'Ninguno');
         
         msgDetails.innerHTML = `Color: ${freqName} | ${elStr} | ${timeStr} ${dateStr}`;
         

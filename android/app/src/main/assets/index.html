@@ -270,8 +270,10 @@
                 </div>
 
                 <div id="universe-searching-container" style="display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: var(--color-bg-card); z-index: 10; opacity: 0; transition: opacity 1s ease;">
-                    <p id="universe-searching-text" class="pulse-glow" style="font-size: 1.8rem; font-weight: 500; font-family: var(--font-serif); color: var(--color-text-primary);" data-i18n="universe.searching">Buscando canalización...</p>
-                    <p id="universe-found-text" style="font-size: 1.8rem; font-weight: 500; font-family: var(--font-serif); color: var(--color-text-primary); display: none; opacity: 0; transition: opacity 0.5s ease;" data-i18n="universe.found">Encontrado</p>
+                    <div id="universe-spinner" style="width: 40px; height: 40px; border: 3px solid rgba(0,0,0,0.1); border-top-color: var(--color-text-primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+                    <p id="universe-searching-text" class="pulse-glow" style="font-size: 1.8rem; font-weight: 500; font-family: var(--font-serif); color: var(--color-text-primary); margin-bottom: 8px;" data-i18n="universe.searching">Buscando canalización...</p>
+                    <p id="universe-searching-counter" style="font-size: 1.2rem; font-family: var(--font-sans); color: var(--color-text-secondary);">0s</p>
+                    <p id="universe-found-text" style="font-size: 1.8rem; font-weight: 500; font-family: var(--font-serif); color: var(--color-text-primary); display: none; opacity: 0; transition: opacity 0.5s ease;" data-i18n="universe.found">Mensaje encontrado</p>
                 </div>
 
                 <div id="universe-received-container" style="display: none; flex-direction: column; align-items: stretch; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: var(--color-bg-card); padding: 40px 24px; box-sizing: border-box; z-index: 10; opacity: 0; transition: opacity 1.5s ease; overflow-y: auto;">
