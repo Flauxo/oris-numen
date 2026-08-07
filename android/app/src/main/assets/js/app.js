@@ -2420,20 +2420,20 @@ const OrisApp = {
         if (btnUniverseMessage) {
             btnUniverseMessage.style.display = 'block'; // Make it visible when on success screen
             btnUniverseMessage.addEventListener('click', () => {
-                modalUniverse.classList.add('show');
+                modalUniverse.classList.add('active');
             });
         }
         
         if (btnCloseUniverseModal) {
             btnCloseUniverseModal.addEventListener('click', () => {
-                modalUniverse.classList.remove('show');
+                modalUniverse.classList.remove('active');
             });
         }
         
         const backdrop = modalUniverse ? modalUniverse.querySelector('.overlay-backdrop') : null;
         if (backdrop) {
             backdrop.addEventListener('click', () => {
-                modalUniverse.classList.remove('show');
+                modalUniverse.classList.remove('active');
             });
         }
         
@@ -2443,7 +2443,7 @@ const OrisApp = {
                     this.showWarning(this.getText('universe.no_internet') || "Se necesita conexión a internet.");
                     return;
                 }
-                modalUniverse.classList.remove('show');
+                modalUniverse.classList.remove('active');
                 this.startUniverseSearch();
             });
         }
