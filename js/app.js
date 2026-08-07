@@ -2468,7 +2468,6 @@ const OrisApp = {
                         setTimeout(() => introContainer.style.opacity = '1', 50);
                     }
                     modalUniverse.classList.remove('active');
-                    this.goHome();
                 }, 500);
             });
         }
@@ -2566,20 +2565,27 @@ const OrisApp = {
         
         // Details
         const now = new Date();
-        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const dateStr = now.toLocaleDateString([], { day: '2-digit', month: '2-digit' });
+        const timeStr = `<strong>${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>`;
+        const dateStr = `<strong>${now.toLocaleDateString([], { day: '2-digit', month: '2-digit' })}</strong>`;
         
         const getT = (key, fallback) => (Translations[this.currentLang] && Translations[this.currentLang][key]) || fallback;
-        const freqName = this.currentFrequency ? (this.FREQUENCIES[this.currentFrequency] ? this.FREQUENCIES[this.currentFrequency].name : 'Humilis') : 'Humilis';
-        const els = [];
-        if (document.getElementById('check-aire') && document.getElementById('check-aire').checked) els.push(getT('elements.aire', 'Aire'));
-        if (document.getElementById('check-tierra') && document.getElementById('check-tierra').checked) els.push(getT('elements.tierra', 'Tierra'));
-        if (document.getElementById('check-agua') && document.getElementById('check-agua').checked) els.push(getT('elements.agua', 'Agua'));
-        if (document.getElementById('check-fuego') && document.getElementById('check-fuego').checked) els.push(getT('elements.fuego', 'Fuego'));
         
-        let elStr = els.length > 0 ? els.join(', ') : getT('history.none', 'Ninguno');
+        // Randomize frequency for the received message
+        const freqKeys = ['humilis', 'revelatio', 'absolutio', 'gratia'];
+        const randomFreqKey = freqKeys[Math.floor(Math.random() * freqKeys.length)];
+        const freqObj = this.FREQUENCIES[randomFreqKey] || this.FREQUENCIES['humilis'];
+        const freqName = freqObj.name;
         
-        msgDetails.innerHTML = `Color: ${freqName} | ${elStr} | ${timeStr} ${dateStr}`;
+        // Randomize elements (1 to 2 elements)
+        const elKeys = ['aire', 'tierra', 'agua', 'fuego'];
+        const randomElCount = Math.floor(Math.random() * 2) + 1;
+        const shuffledEls = elKeys.sort(() => 0.5 - Math.random()).slice(0, randomElCount);
+        const els = shuffledEls.map(e => getT('elements.' + e, e.charAt(0).toUpperCase() + e.slice(1)));
+        
+        let elStr = els.join(', ');
+        
+        msgDetails.innerHTML = `Color: ${freqName} <span style="color: ${freqObj.color}; font-weight: bold;">|</span> ${elStr} <span style="color: ${freqObj.color}; font-weight: bold;">|</span> ${timeStr} ${dateStr}`;
+        msgText.style.color = freqObj.color;
         
         // Show
         searchingContainer.style.opacity = '0';
