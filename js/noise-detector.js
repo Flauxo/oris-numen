@@ -93,8 +93,9 @@ class NoiseDetector {
             return false;
         }
         console.log("Current noise peak:", this.currentVolume);
-        // User requested 20% sensitivity limit (255 * 0.2 = 51)
-        return this.currentVolume > 51;
+        // The values are logarithmic (dB), so typical room noise can easily hit 100-150.
+        // We set the threshold to 180 so it only triggers on louder noises.
+        return this.currentVolume > 180;
     }
 }
 
