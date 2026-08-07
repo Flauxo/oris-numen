@@ -2420,6 +2420,16 @@ const OrisApp = {
         if (btnUniverseMessage) {
             btnUniverseMessage.style.display = 'block'; // Make it visible when on success screen
             btnUniverseMessage.addEventListener('click', () => {
+                const introContainer = document.getElementById('universe-intro-container');
+                if (introContainer) {
+                    introContainer.style.display = 'block';
+                    introContainer.style.opacity = '1';
+                }
+                const receivedContainer = document.getElementById('universe-received-container');
+                if (receivedContainer) {
+                    receivedContainer.style.display = 'none';
+                    receivedContainer.style.opacity = '0';
+                }
                 modalUniverse.classList.add('active');
             });
         }
@@ -2461,13 +2471,8 @@ const OrisApp = {
                 receivedContainer.style.opacity = '0';
                 setTimeout(() => {
                     receivedContainer.style.display = 'none';
-                    // Reset for next time
-                    const introContainer = document.getElementById('universe-intro-container');
-                    if (introContainer) {
-                        introContainer.style.display = 'block';
-                        setTimeout(() => introContainer.style.opacity = '1', 50);
-                    }
                     modalUniverse.classList.remove('active');
+                    if (btnUniverseMessage) btnUniverseMessage.style.display = 'none';
                 }, 500);
             });
         }
