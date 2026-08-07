@@ -2270,6 +2270,12 @@ const OrisApp = {
   recordSigilVideo(text, freq, isEvil, activeElementsSet) {
       try {
           const loadingContainer = document.getElementById('inline-loading-container');
+          if (loadingContainer) {
+              const loadingText = loadingContainer.querySelector('p');
+              if (loadingText) {
+                  loadingText.style.color = isEvil ? '#CC0000' : '#000000';
+              }
+          }
           const optionsContainer = document.getElementById('download-options-container');
       const canvas = document.createElement('canvas');
       canvas.width = 1080;
