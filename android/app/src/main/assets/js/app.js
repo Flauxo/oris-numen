@@ -1977,7 +1977,8 @@ const OrisApp = {
               const target = targetRatios[freqKey];
               if (total === 0) return;
               
-              const ratio = Math.max(target, freqCounts[freqKey] > 0 ? 0.05 : 0) * animProgress;
+              const rawRatio = Math.max(target, freqCounts[freqKey] > 0 ? 0.05 : 0) * animProgress;
+              const ratio = Math.min(rawRatio, 0.56 * animProgress);
               if (ratio <= 0) return;
               
               const fData = this.FREQUENCIES[freqKey];
@@ -2270,6 +2271,12 @@ const OrisApp = {
   recordSigilVideo(text, freq, isEvil, activeElementsSet) {
       try {
           const loadingContainer = document.getElementById('inline-loading-container');
+          if (loadingContainer) {
+              const loadingText = loadingContainer.querySelector('p');
+              if (loadingText) {
+                  loadingText.style.color = isEvil ? '#CC0000' : '#000000';
+              }
+          }
           const optionsContainer = document.getElementById('download-options-container');
       const canvas = document.createElement('canvas');
       canvas.width = 1080;
