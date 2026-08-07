@@ -1885,6 +1885,11 @@ const OrisApp = {
               numinosityState.setAttribute('data-i18n', stateKey);
               numinosityState.style.color = stateColor;
               
+              numinosityState.style.transition = 'none';
+              numinosityState.style.opacity = '0';
+              void numinosityState.offsetWidth;
+              numinosityState.style.transition = 'opacity 1.5s ease';
+              
               if (numinosityPercentage) {
                   if (dominantFreq && totalValid > 0) {
                       let percentage = Math.round((maxCount / totalValid) * 100);
