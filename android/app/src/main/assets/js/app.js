@@ -58,6 +58,9 @@ const OrisApp = {
 
     // Global interceptor for warning popup dismiss
     const interceptWarningClick = (e) => {
+        if (e.target && (e.target.closest('.home-logo') || e.target.closest('.home-logo-circle'))) {
+            return;
+        }
         const popup = document.getElementById('warning-popup');
         if (popup && popup.classList.contains('show')) {
             popup.classList.remove('show');
@@ -414,7 +417,7 @@ const OrisApp = {
             evilWarningShown = true;
             const warningMsg = (Translations[this.currentLang] && Translations[this.currentLang]['warning.too_many_clicks']) 
                 || 'Por favor, no pulses más veces en el símbolo.';
-            this.showWarning(warningMsg, 'normal', 1300);
+            this.showWarning(warningMsg, 'normal', 1500);
         }
         
         if (evilClicks >= 20) {
