@@ -3814,10 +3814,10 @@ h3.nucleus-title {
   100% { transform: rotate(360deg); }
 }
 /* --- Achievements --- */
-.achievements-modal { max-width: 500px; }
-.achievements-desc { text-align: center; color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 20px; }
-.achievements-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-height: 60vh; overflow-y: auto; padding: 4px; }
-.achievement-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: rgba(0,0,0,0.03); padding: 16px 8px; border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.2s ease, opacity 0.2s ease; cursor: pointer; text-align: center; box-sizing: border-box; }
+.achievements-modal { max-width: 500px; width: 95%; max-height: 96vh; padding: 12px; }
+.achievements-desc { display: none; }
+.achievements-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; max-height: 85vh; overflow-y: auto; padding: 2px; }
+.achievement-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: rgba(0,0,0,0.03); padding: 8px 4px; border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.2s ease, opacity 0.2s ease; cursor: pointer; text-align: center; box-sizing: border-box; }
 .achievement-card.locked { opacity: 0.6; filter: grayscale(100%); }
 .achievement-card.unlocked { opacity: 1; filter: grayscale(0%); background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
 .achievement-icon { width: 36px; height: 36px; flex-shrink: 0; display: flex; justify-content: center; align-items: center; }
