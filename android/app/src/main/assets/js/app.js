@@ -2486,12 +2486,8 @@ const OrisApp = {
         
         if (btnUniverseClose) {
             btnUniverseClose.addEventListener('click', () => {
-                receivedContainer.style.opacity = '0';
-                setTimeout(() => {
-                    receivedContainer.style.display = 'none';
-                    modalUniverse.classList.remove('active');
-                    if (btnUniverseMessage) btnUniverseMessage.style.display = 'none';
-                }, 500);
+                modalUniverse.classList.remove('active');
+                if (btnUniverseMessage) btnUniverseMessage.style.display = 'none';
             });
         }
     },
