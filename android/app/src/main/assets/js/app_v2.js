@@ -740,16 +740,16 @@ const OrisApp = {
                     grid.innerHTML = ''; // Clear
                     
                     const ACHIEVEMENTS_DATA = [
-                        { id: "init", icon: "", color: "#D4B85A" },
-                        { id: "early", icon: "", color: "#8E6DA3" },
-                        { id: "night", icon: "", color: "#54789B" },
-                        { id: "streak3", icon: "", color: "#C06C4C" },
-                        { id: "streak7", icon: "", color: "#A83C3C" },
-                        { id: "total10", icon: "", color: "#4E876A" },
-                        { id: "total50", icon: "", color: "#7B624A" },
-                        { id: "newmoon", icon: "", color: "#A2A2A2" },
-                        { id: "fullmoon", icon: "", color: "#D6D8D7" },
-                        { id: "eclipse", icon: "", color: "#6A457D" }
+                        { id: "init", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: "#D4B85A" },
+                        { id: "early", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>', color: "#8E6DA3" },
+                        { id: "night", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>', color: "#54789B" },
+                        { id: "fifty", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', color: "#C06C4C" },
+                        { id: "moon", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>', color: "#A2A2A2" },
+                        { id: "alchemist", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><line x1="5.52" y1="16" x2="18.48" y2="16"/></svg>', color: "#4E876A" },
+                        { id: "compassive", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>', color: "#D4B85A" },
+                        { id: "grateful", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="m17 7-5-5-5 5"/><path d="m17 17-5 5-5-5"/></svg>', color: "#8E6DA3" },
+                        { id: "sincere", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>', color: "#54789B" },
+                        { id: "humble", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>', color: "#C06C4C" }
                     ];
 
                     let unlockedStr = localStorage.getItem('oris_achievements');
@@ -761,6 +761,14 @@ const OrisApp = {
                         } catch(e) {}
                     }
 
+                    // Force grid styling using JS to bypass any cache
+                    grid.style.display = 'flex';
+                    grid.style.flexDirection = 'column';
+                    grid.style.gap = '16px';
+                    grid.style.paddingRight = '8px';
+                    grid.style.maxHeight = '65vh';
+                    grid.style.overflowY = 'auto';
+
                     ACHIEVEMENTS_DATA.forEach(ach => {
                         let isUnlocked = false;
                         if (unlockedArray.indexOf(ach.id) !== -1) isUnlocked = true;
@@ -769,16 +777,26 @@ const OrisApp = {
                         const descStr = 'achievements.' + ach.id + '.desc';
 
                         const card = document.createElement('div');
-                        card.style.padding = '10px';
-                        card.style.margin = '10px 0';
-                        card.style.border = '1px solid white';
-                        card.style.color = 'white';
-                        card.style.backgroundColor = isUnlocked ? '#333' : '#111';
+                        card.style.display = 'flex';
+                        card.style.alignItems = 'center';
+                        card.style.gap = '15px';
+                        card.style.padding = '15px';
+                        card.style.borderRadius = '12px';
+                        card.style.background = isUnlocked ? 'rgba(212, 184, 90, 0.05)' : 'rgba(0,0,0,0.03)';
+                        card.style.border = isUnlocked ? '1px solid rgba(212, 184, 90, 0.2)' : '1px solid rgba(0,0,0,0.05)';
+                        card.style.opacity = isUnlocked ? '1' : '0.6';
+                        card.style.transition = 'all 0.3s ease';
+
+                        const iconColor = isUnlocked ? ach.color : '#888888';
 
                         card.innerHTML = 
-                            '<div style="font-size: 18px; font-weight: bold;" data-i18n="' + titleStr + '">' + titleStr + '</div>' +
-                            '<div style="font-size: 14px;" data-i18n="' + descStr + '">' + descStr + '</div>' +
-                            '<div style="font-size: 12px; color: ' + (isUnlocked ? '#0f0' : '#f00') + ';">' + (isUnlocked ? 'DESBLOQUEADO' : 'BLOQUEADO') + '</div>';
+                            '<div style="color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: rgba(0,0,0,0.02); border-radius: 50%;">' +
+                                ach.icon +
+                            '</div>' +
+                            '<div style="flex: 1;">' +
+                                '<h4 style="margin: 0 0 4px 0; font-size: 1rem; color: var(--color-text); font-family: var(--font-serif);" data-i18n="' + titleStr + '">' + titleStr + '</h4>' +
+                                '<p style="margin: 0; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.3;" data-i18n="' + descStr + '">' + descStr + '</p>' +
+                            '</div>';
                         
                         grid.appendChild(card);
                     });
