@@ -3816,7 +3816,7 @@ h3.nucleus-title {
 /* --- Achievements --- */
 .achievements-modal { max-width: 500px; }
 .achievements-desc { text-align: center; color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 20px; }
-.achievements-grid { display: flex; flex-direction: column; gap: 16px; max-height: 60vh; overflow-y: auto; padding-right: 8px; }
+.achievements-grid { display: flex; flex-direction: column; gap: 12px; max-height: 60vh; overflow-y: auto; margin-left: -20px; margin-right: -20px; padding: 0 12px; overflow-x: hidden; }
 .achievement-card { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.03); padding: 12px; border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.2s ease, opacity 0.2s ease; }
 .achievement-card.locked { opacity: 0.6; filter: grayscale(100%); }
 .achievement-card.unlocked { opacity: 1; filter: grayscale(0%); background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
