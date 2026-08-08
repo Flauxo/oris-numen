@@ -1281,8 +1281,26 @@ if (typeof Translations !== 'undefined') {
     if (Translations && Translations['es']) Object.assign(Translations['es'], achEs);
     if (Translations && Translations['en']) Object.assign(Translations['en'], achEn);
     
-    // Copy English as fallback for others
-    if (Translations && Translations['it']) Object.assign(Translations['it'], achEn);
-    if (Translations && Translations['la']) Object.assign(Translations['la'], achEn);
-    if (Translations && Translations['zh']) Object.assign(Translations['zh'], achEn);
+    // Copy English as fallback but translate the notification
+    if (Translations && Translations['it']) {
+        Object.assign(Translations['it'], achEn, {
+            "menu.achievements": "Obiettivi",
+            "achievements.unlocked_title": "NUOVO OBIETTIVO!",
+            "achievements.unlocked": "Obiettivo Sbloccato"
+        });
+    }
+    if (Translations && Translations['la']) {
+        Object.assign(Translations['la'], achEn, {
+            "menu.achievements": "Merita",
+            "achievements.unlocked_title": "NOVUM MERITUM!",
+            "achievements.unlocked": "Meritum Reseratum"
+        });
+    }
+    if (Translations && Translations['zh']) {
+        Object.assign(Translations['zh'], achEn, {
+            "menu.achievements": "成就",
+            "achievements.unlocked_title": "新成就！",
+            "achievements.unlocked": "成就已解锁"
+        });
+    }
 }
