@@ -824,10 +824,7 @@ const OrisApp = {
                             '<div class="achievement-icon" style="color: ' + iconColor + ';">' +
                                 ach.icon +
                             '</div>' +
-                            '<div class="achievement-info">' +
-                                '<h4 class="achievement-title" data-i18n="' + titleStr + '">' + titleText + '</h4>' +
-                                '<p class="achievement-desc" data-i18n="' + descStr + '">' + descText + '</p>' +
-                            '</div>';
+                            '<div class="achievement-title" style="font-size: 0.8rem; margin: 0; line-height: 1.2;" data-i18n="' + titleStr + '">' + titleText + '</div>';
                         
                         // Click listener to open popup
                         card.addEventListener('click', () => {
