@@ -744,6 +744,7 @@ const OrisApp = {
                         { id: "early", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>', color: "#8E6DA3" },
                         { id: "night", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>', color: "#54789B" },
                         { id: "fifty", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', color: "#C06C4C" },
+                        { id: "moon", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>', color: "#A2A2A2" },
                         { id: "alchemist", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><line x1="5.52" y1="16" x2="18.48" y2="16"/></svg>', color: "#4E876A" },
                         { id: "compassive", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>', color: "#D4B85A" },
                         { id: "grateful", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="m17 7-5-5-5 5"/><path d="m17 17-5 5-5-5"/></svg>', color: "#8E6DA3" },
@@ -802,13 +803,13 @@ const OrisApp = {
                         });
                     }
 
-                    // Grid layout 3x3 - reduced size to fit
-                    grid.style.display = 'grid';
-                    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-                    grid.style.gap = '8px';
-                    grid.style.padding = '5px';
-                    grid.style.maxHeight = '65vh';
-                    grid.style.overflowY = 'auto';
+                    // Flexible grid to fit all 10 without scroll
+                    grid.style.display = 'flex';
+                    grid.style.flexWrap = 'wrap';
+                    grid.style.justifyContent = 'center';
+                    grid.style.gap = '6px';
+                    grid.style.padding = '0px';
+                    grid.style.width = '100%';
 
                     ACHIEVEMENTS_DATA.forEach(ach => {
                         let isUnlocked = false;
@@ -823,23 +824,25 @@ const OrisApp = {
                         card.style.display = 'flex';
                         card.style.flexDirection = 'column';
                         card.style.alignItems = 'center';
-                        card.style.justifyContent = 'center';
-                        card.style.gap = '6px';
-                        card.style.padding = '8px 2px';
+                        card.style.justifyContent = 'flex-start';
+                        card.style.gap = '4px';
+                        card.style.padding = '6px 2px';
                         card.style.borderRadius = '8px';
                         card.style.background = isUnlocked ? 'rgba(212, 184, 90, 0.08)' : 'rgba(0,0,0,0.02)';
                         card.style.border = isUnlocked ? '1px solid rgba(212, 184, 90, 0.25)' : '1px solid rgba(0,0,0,0.04)';
                         card.style.opacity = isUnlocked ? '1' : '0.5';
                         card.style.transition = 'all 0.2s ease';
                         card.style.cursor = 'pointer';
+                        card.style.width = '23%'; // Fit 4 per row
+                        card.style.boxSizing = 'border-box';
 
                         const iconColor = isUnlocked ? ach.color : '#888888';
 
                         card.innerHTML = 
-                            '<div style="color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: rgba(0,0,0,0.03); border-radius: 50%;">' +
-                                ach.icon.replace('width="32" height="32"', 'width="22" height="22"') +
+                            '<div style="color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(0,0,0,0.03); border-radius: 50%;">' +
+                                ach.icon.replace('width="32" height="32"', 'width="18" height="18"') +
                             '</div>' +
-                            '<div style="font-size: 0.65rem; text-align: center; color: var(--color-text); font-family: var(--font-sans); padding: 0 2px; line-height: 1.1; word-wrap: break-word;" data-i18n="' + titleStr + '">' + titleText + '</div>';
+                            '<div style="font-size: 0.55rem; text-align: center; color: var(--color-text); font-family: var(--font-sans); padding: 0 1px; line-height: 1.0; word-wrap: break-word; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;" data-i18n="' + titleStr + '">' + titleText + '</div>';
                         
                         // Click listener to open popup
                         card.addEventListener('click', () => {
