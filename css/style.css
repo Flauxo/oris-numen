@@ -3814,7 +3814,7 @@ h3.nucleus-title {
   100% { transform: rotate(360deg); }
 }
 /* --- Achievements --- */
-.achievements-modal { max-width: 500px; width: 95%; max-height: 98vh; padding: 16px; height: 95vh; display: flex; flex-direction: column; }
+.achievements-modal { max-width: 500px; width: 95%; max-height: 98vh; padding: 12px; height: auto; display: flex; flex-direction: column; }
 .achievements-desc { display: none !important; }
 .achievements-desc::before {
     content: '';
@@ -3826,8 +3826,8 @@ h3.nucleus-title {
     height: 1px;
     background: rgba(0,0,0,0.1);
 }
-.achievements-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-height: 88vh; overflow-y: hidden; padding: 4px; }
-.achievement-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: transparent; padding: 14px 6px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.08); transition: transform 0.2s ease, opacity 0.2s ease; cursor: pointer; text-align: center; box-sizing: border-box; position: relative; height: 100%; }
+.achievements-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; height: auto; padding: 4px; overflow: visible; }
+.achievement-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: transparent; padding: 10px 4px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.08); transition: transform 0.2s ease, opacity 0.2s ease; cursor: pointer; text-align: center; box-sizing: border-box; position: relative; }
 
 .achievement-divider {
     width: 30px;
@@ -3883,7 +3883,7 @@ h3.nucleus-title {
     pointer-events: auto;
 }
 
-.achievement-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: transparent; padding: 14px 6px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.08); transition: transform 0.2s ease, opacity 0.2s ease; cursor: pointer; text-align: center; box-sizing: border-box; position: relative; height: 100%; }
+.achievement-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: transparent; padding: 10px 4px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.08); transition: transform 0.2s ease, opacity 0.2s ease; cursor: pointer; text-align: center; box-sizing: border-box; position: relative; }
 .achievement-title { font-family: var(--font-serif); font-size: 0.85rem; color: rgba(0,0,0,0.7); font-weight: 500; margin: 0; line-height: 1.1; }
 .achievement-divider {
     width: 30px;
