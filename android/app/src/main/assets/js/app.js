@@ -2480,6 +2480,13 @@ const OrisApp = {
         
         if (btnAcceptUniverse) {
             btnAcceptUniverse.addEventListener('click', () => {
+                if (!navigator.onLine) {
+                    const errorMsg = typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang]['universe.no_internet'] 
+                                        ? Translations[this.currentLang]['universe.no_internet'] 
+                                        : "Necesitas conexión a internet";
+                    this.showWarning(errorMsg);
+                    return;
+                }
 
                 const introContainer = document.getElementById('universe-intro-container');
                 if (introContainer) {
