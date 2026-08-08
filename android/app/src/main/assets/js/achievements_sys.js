@@ -166,18 +166,16 @@ class AchievementSystem {
                 const descStr = `achievements.${ach.id}.desc`;
 
                 const card = document.createElement('div');
-                card.className = `achievement-card ${isUnlocked ? 'unlocked' : 'locked'}`;
-                
-                const iconColor = isUnlocked ? ach.color : '#888888';
+                card.style.padding = '10px';
+                card.style.margin = '10px 0';
+                card.style.border = '1px solid white';
+                card.style.color = 'white';
+                card.style.backgroundColor = isUnlocked ? '#333' : '#111';
 
                 card.innerHTML = `
-                    <div class="achievement-icon" style="color: ${iconColor};">
-                        ${ach.icon}
-                    </div>
-                    <div class="achievement-info">
-                        <h4 class="achievement-title" data-i18n="${titleStr}">${titleStr}</h4>
-                        <p class="achievement-desc" data-i18n="${descStr}">${descStr}</p>
-                    </div>
+                    <div style="font-size: 18px; font-weight: bold;" data-i18n="${titleStr}">${titleStr}</div>
+                    <div style="font-size: 14px;" data-i18n="${descStr}">${descStr}</div>
+                    <div style="font-size: 12px; color: ${isUnlocked ? '#0f0' : '#f00'};">${isUnlocked ? 'DESBLOQUEADO' : 'BLOQUEADO'}</div>
                 `;
                 grid.appendChild(card);
             });
@@ -188,7 +186,7 @@ class AchievementSystem {
         } catch (e) {
             console.error("renderAchievementsGrid error", e);
             const grid = document.getElementById('achievements-grid');
-            if (grid) grid.innerHTML = `<p style="color:red">Error: ${e.message}</p>`;
+            if (grid) grid.innerHTML = `<p style="color:red; font-size:20px; background:white;">Error: ${e.message}</p>`;
         }
     }
 
