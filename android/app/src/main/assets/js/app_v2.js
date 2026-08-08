@@ -2940,7 +2940,7 @@ window.achievementSystem = {
         
         const unlockedText = (typeof Translations !== 'undefined' && Translations[OrisApp.currentLang] && Translations[OrisApp.currentLang]['achievements.unlocked']) 
                              ? Translations[OrisApp.currentLang]['achievements.unlocked'] 
-                             : 'Logro Desbloqueado';
+                             : ((typeof Translations !== 'undefined' && Translations['en'] && Translations['en']['achievements.unlocked']) ? Translations['en']['achievements.unlocked'] : 'Achievement Unlocked');
                              
         toast.innerHTML = '<div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">' + unlockedText + '</div>' +
                           '<div style="font-size: 1.1rem; font-weight: bold; margin-top: 4px;">' + title + '</div>';

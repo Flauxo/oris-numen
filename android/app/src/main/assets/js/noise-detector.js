@@ -96,7 +96,8 @@ class NoiseDetector {
         }
         console.log("Current noise average:", this.currentVolume);
         // Ahora usamos la media sin el ruido eléctrico. 40 es un umbral razonable para ruido alto
-        return this.currentVolume > 65;
+        // Se ha incrementado a 95 para permitir un poco más de ruido ambiental.
+        return this.currentVolume > 95;
     }
 }
 
