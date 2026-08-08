@@ -2480,10 +2480,7 @@ const OrisApp = {
         
         if (btnAcceptUniverse) {
             btnAcceptUniverse.addEventListener('click', () => {
-                if (!navigator.onLine) {
-                    this.showWarning(this.getText('universe.no_internet') || "Se necesita conexión a internet.");
-                    return;
-                }
+
                 const introContainer = document.getElementById('universe-intro-container');
                 if (introContainer) {
                     introContainer.style.opacity = '0';
