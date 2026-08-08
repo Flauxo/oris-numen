@@ -828,7 +828,7 @@ const OrisApp = {
 
                         card.innerHTML = 
                             '<div class="achievement-icon">' +
-                                '<div style="-webkit-mask-image: url(\'' + ach.icon + '\'); mask-image: url(\'' + ach.icon + '\'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; background-color: ' + iconColor + '; width: 32px; height: 32px; margin: 0 auto;"></div>' +
+                                '<div style="-webkit-mask-image: url(\'' + ach.icon + '\'); mask-image: url(\'' + ach.icon + '\'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; background-color: ' + iconColor + '; width: 44px; height: 44px; margin: 0 auto;"></div>' +
                             '</div>' +
                             '<div class="achievement-title" data-i18n="' + titleStr + '">' + titleText + '</div>' +
                             '<div class="achievement-divider"></div>';
@@ -836,7 +836,7 @@ const OrisApp = {
                         // Click listener to open popup
                         card.addEventListener('click', () => {
                             const iconContainer = document.getElementById('achievement-popup-icon');
-                            iconContainer.innerHTML = '<div style="-webkit-mask-image: url(\'' + ach.icon + '\'); mask-image: url(\'' + ach.icon + '\'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; background-color: ' + iconColor + '; width: 36px; height: 36px;"></div>';
+                            iconContainer.innerHTML = '<div style="-webkit-mask-image: url(\'' + ach.icon + '\'); mask-image: url(\'' + ach.icon + '\'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; background-color: ' + iconColor + '; width: 56px; height: 56px;"></div>';
                             iconContainer.style.color = iconColor;
                             
                             const titleEl = document.getElementById('achievement-popup-title');
