@@ -2840,14 +2840,17 @@ document.addEventListener('DOMContentLoaded', () => OrisApp.init());
 
 
 window.achievementSystem = {
+    notificationQueue: [],
+    isShowingNotification: false,
+    
     check: function(historyItem, history) {
         if (!historyItem || !history) return;
         
         let date = new Date(historyItem.date);
         let hours = date.getHours();
         
-        // init: El Iniciado (first channeling)
-        if (history.length === 1) {
+        // init: El Iniciado (first channeling or just a few if it didn't trigger before)
+        if (history.length >= 1) {
             this.unlock('init');
         }
         
@@ -2862,7 +2865,7 @@ window.achievementSystem = {
         }
         
         // fifty: El Perseverante (50 channelings)
-        if (history.length === 50) {
+        if (history.length >= 50) {
             this.unlock('fifty');
         }
         
@@ -2893,8 +2896,21 @@ window.achievementSystem = {
         if (!unlockedArray.includes(id)) {
             unlockedArray.push(id);
             localStorage.setItem('oris_achievements', JSON.stringify(unlockedArray));
-            this.showUnlockNotification(id);
+            this.queueUnlockNotification(id);
         }
+    },
+    
+    queueUnlockNotification: function(id) {
+        this.notificationQueue.push(id);
+        this.processNotificationQueue();
+    },
+    
+    processNotificationQueue: function() {
+        if (this.isShowingNotification || this.notificationQueue.length === 0) return;
+        
+        this.isShowingNotification = true;
+        const id = this.notificationQueue.shift();
+        this.showUnlockNotification(id);
     },
     
     showUnlockNotification: function(id) {
@@ -2943,6 +2959,10 @@ window.achievementSystem = {
             toast.style.opacity = '0';
             setTimeout(() => {
                 if (toast.parentNode) toast.parentNode.removeChild(toast);
+                
+                // Allow next notification after completely removed
+                window.achievementSystem.isShowingNotification = false;
+                window.achievementSystem.processNotificationQueue();
             }, 500);
         }, 4000);
     }
