@@ -2480,24 +2480,52 @@ const OrisApp = {
         
         if (btnAcceptUniverse) {
             btnAcceptUniverse.addEventListener('click', () => {
-                if (!navigator.onLine) {
+                const proceed = () => {
+                    const introContainer = document.getElementById('universe-intro-container');
+                    if (introContainer) {
+                        introContainer.style.opacity = '0';
+                        setTimeout(() => {
+                            introContainer.style.display = 'none';
+                            this.startUniverseSearch();
+                        }, 300);
+                    } else {
+                        this.startUniverseSearch();
+                    }
+                };
+
+                const showError = () => {
                     const errorMsg = typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang]['universe.no_internet'] 
                                         ? Translations[this.currentLang]['universe.no_internet'] 
                                         : "Necesitas conexión a internet";
                     this.showWarning(errorMsg);
+                };
+
+                if (!navigator.onLine) {
+                    showError();
                     return;
                 }
 
-                const introContainer = document.getElementById('universe-intro-container');
-                if (introContainer) {
-                    introContainer.style.opacity = '0';
-                    setTimeout(() => {
-                        introContainer.style.display = 'none';
-                        this.startUniverseSearch();
-                    }, 300);
-                } else {
-                    this.startUniverseSearch();
-                }
+                // Robust check for WebViews since navigator.onLine often lies
+                const originalText = btnAcceptUniverse.textContent;
+                btnAcceptUniverse.textContent = "...";
+                btnAcceptUniverse.disabled = true;
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+                fetch('https://www.gstatic.com/generate_204', { mode: 'no-cors', cache: 'no-store', signal: controller.signal })
+                    .then(() => {
+                        clearTimeout(timeoutId);
+                        btnAcceptUniverse.textContent = originalText;
+                        btnAcceptUniverse.disabled = false;
+                        proceed();
+                    })
+                    .catch(() => {
+                        clearTimeout(timeoutId);
+                        btnAcceptUniverse.textContent = originalText;
+                        btnAcceptUniverse.disabled = false;
+                        showError();
+                    });
             });
         }
         
