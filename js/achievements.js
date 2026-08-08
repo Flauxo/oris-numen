@@ -65,7 +65,8 @@ class AchievementSystem {
         const saved = localStorage.getItem('oris_achievements');
         if (saved) {
             try {
-                return JSON.parse(saved);
+                const parsed = JSON.parse(saved);
+                return Array.isArray(parsed) ? parsed : [];
             } catch (e) {
                 console.error("Error parsing achievements:", e);
                 return [];
@@ -152,35 +153,42 @@ class AchievementSystem {
     }
 
     renderAchievementsGrid() {
-        const grid = document.getElementById('achievements-grid');
-        if (!grid) return;
+        try {
+            const grid = document.getElementById('achievements-grid');
+            if (!grid) return;
 
-        grid.innerHTML = ''; // Clear
+            grid.innerHTML = ''; // Clear
 
-        ACHIEVEMENTS_DATA.forEach(ach => {
-            const isUnlocked = (this.unlocked || []).includes(ach.id);
-            const titleStr = \`achievements.\${ach.id}.title\`;
-            const descStr = \`achievements.\${ach.id}.desc\`;
+            ACHIEVEMENTS_DATA.forEach(ach => {
+                const unlockedArray = Array.isArray(this.unlocked) ? this.unlocked : [];
+                const isUnlocked = unlockedArray.includes(ach.id);
+                const titleStr = `achievements.${ach.id}.title`;
+                const descStr = `achievements.${ach.id}.desc`;
 
-            const card = document.createElement('div');
-            card.className = \`achievement-card \${isUnlocked ? 'unlocked' : 'locked'}\`;
-            
-            const iconColor = isUnlocked ? ach.color : '#888888';
+                const card = document.createElement('div');
+                card.className = `achievement-card ${isUnlocked ? 'unlocked' : 'locked'}`;
+                
+                const iconColor = isUnlocked ? ach.color : '#888888';
 
-            card.innerHTML = \`
-                <div class="achievement-icon" style="color: \${iconColor};">
-                    \${ach.icon}
-                </div>
-                <div class="achievement-info">
-                    <h4 class="achievement-title" data-i18n="\${titleStr}">\${titleStr}</h4>
-                    <p class="achievement-desc" data-i18n="\${descStr}">\${descStr}</p>
-                </div>
-            \`;
-            grid.appendChild(card);
-        });
+                card.innerHTML = `
+                    <div class="achievement-icon" style="color: ${iconColor};">
+                        ${ach.icon}
+                    </div>
+                    <div class="achievement-info">
+                        <h4 class="achievement-title" data-i18n="${titleStr}">${titleStr}</h4>
+                        <p class="achievement-desc" data-i18n="${descStr}">${descStr}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
 
-        if (typeof window.translateApp === 'function') {
-            window.translateApp();
+            if (typeof OrisApp !== 'undefined' && typeof OrisApp.applyTranslations === 'function') {
+                OrisApp.applyTranslations();
+            }
+        } catch (e) {
+            console.error("renderAchievementsGrid error", e);
+            const grid = document.getElementById('achievements-grid');
+            if (grid) grid.innerHTML = `<p style="color:red">Error: ${e.message}</p>`;
         }
     }
 
