@@ -2442,6 +2442,11 @@ const OrisApp = {
                     receivedContainer.style.display = 'none';
                     receivedContainer.style.opacity = '0';
                 }
+                const searchingContainer = document.getElementById('universe-searching-container');
+                if (searchingContainer) {
+                    searchingContainer.style.display = 'none';
+                    searchingContainer.style.opacity = '0';
+                }
                 modalUniverse.classList.add('active');
             });
         }
@@ -2449,6 +2454,8 @@ const OrisApp = {
         if (btnCloseUniverseModal) {
             btnCloseUniverseModal.addEventListener('click', () => {
                 modalUniverse.classList.remove('active');
+                if (this.universeIntervalId) clearInterval(this.universeIntervalId);
+                if (this.universeTimeoutId) clearTimeout(this.universeTimeoutId);
                 if (receivedContainer && receivedContainer.style.display !== 'none' && btnUniverseMessage) {
                     btnUniverseMessage.style.display = 'none';
                 }
@@ -2459,6 +2466,8 @@ const OrisApp = {
         if (backdrop) {
             backdrop.addEventListener('click', () => {
                 modalUniverse.classList.remove('active');
+                if (this.universeIntervalId) clearInterval(this.universeIntervalId);
+                if (this.universeTimeoutId) clearTimeout(this.universeTimeoutId);
                 if (receivedContainer && receivedContainer.style.display !== 'none' && btnUniverseMessage) {
                     btnUniverseMessage.style.display = 'none';
                 }
@@ -2487,6 +2496,8 @@ const OrisApp = {
         if (btnUniverseClose) {
             btnUniverseClose.addEventListener('click', () => {
                 modalUniverse.classList.remove('active');
+                if (this.universeIntervalId) clearInterval(this.universeIntervalId);
+                if (this.universeTimeoutId) clearTimeout(this.universeTimeoutId);
                 if (btnUniverseMessage) btnUniverseMessage.style.display = 'none';
             });
         }
@@ -2516,15 +2527,15 @@ const OrisApp = {
         if (spinnerWrapper) spinnerWrapper.style.display = 'block';
         
         let seconds = 1;
-        const intervalId = setInterval(() => {
+        this.universeIntervalId = setInterval(() => {
             seconds++;
             if (counterText) counterText.textContent = seconds + 'sg';
         }, 1000);
         
         const randomSeconds = Math.floor(Math.random() * (37 - 5 + 1)) + 5;
         
-        setTimeout(() => {
-            clearInterval(intervalId);
+        this.universeTimeoutId = setTimeout(() => {
+            clearInterval(this.universeIntervalId);
             searchingContainer.style.opacity = '0';
             
             setTimeout(() => {
