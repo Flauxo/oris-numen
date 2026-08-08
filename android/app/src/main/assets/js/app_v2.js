@@ -1129,7 +1129,7 @@ const OrisApp = {
               () => this.onTimerComplete()
             );
         }, 1800);
-    }, 4000);
+    }, 2500);
   },
 
   /**
@@ -2964,6 +2964,6 @@ window.achievementSystem = {
                 window.achievementSystem.isShowingNotification = false;
                 window.achievementSystem.processNotificationQueue();
             }, 500);
-        }, 4000);
+        }, 2500);
     }
 };
