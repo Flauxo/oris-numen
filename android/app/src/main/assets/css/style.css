@@ -3815,16 +3815,7 @@ h3.nucleus-title {
 }
 /* --- Achievements --- */
 .achievements-modal { max-width: 500px; width: 95%; max-height: 96vh; padding: 12px; }
-.achievements-desc {
-    text-align: center;
-    color: rgba(0,0,0,0.5);
-    font-size: 0.85rem;
-    margin: 16px auto 24px auto;
-    font-family: var(--font-sans);
-    line-height: 1.4;
-    max-width: 80%;
-    position: relative;
-}
+.achievements-desc { display: none !important; }
 .achievements-desc::before {
     content: '';
     position: absolute;
@@ -3863,7 +3854,7 @@ h3.nucleus-title {
 .achievement-icon svg {
     width: 100%;
     height: 100%;
-    filter: url(#handdrawn);
+    
 }
 .achievement-card.locked { opacity: 0.6; filter: grayscale(100%); }
 .achievement-card.unlocked { opacity: 1; filter: grayscale(0%); background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
@@ -3949,5 +3940,5 @@ h3.nucleus-title {
 .achievement-icon svg {
     width: 100%;
     height: 100%;
-    filter: url(#handdrawn);
+    
 }
