@@ -3897,3 +3897,18 @@ h3.nucleus-title {
     height: 100%;
     
 }
+.achievement-icon-img {
+    width: 120%;
+    height: 120%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: filter 0.3s ease;
+}
+
+.locked .achievement-icon-img {
+    filter: grayscale(100%) opacity(0.2) contrast(1.5);
+}
+
+.unlocked .achievement-icon-img {
+    filter: none;
+}
