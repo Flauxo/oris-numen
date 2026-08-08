@@ -2605,14 +2605,10 @@ const OrisApp = {
         }
         
         // Show
-        searchingContainer.style.opacity = '0';
+        receivedContainer.style.display = 'flex';
         setTimeout(() => {
-            searchingContainer.style.display = 'none';
-            receivedContainer.style.display = 'flex';
-            setTimeout(() => {
-                receivedContainer.style.opacity = '1';
-            }, 50);
-        }, 1000);
+            receivedContainer.style.opacity = '1';
+        }, 50);
     }
 
 };

@@ -2510,8 +2510,6 @@ const OrisApp = {
         
         searchingText.style.display = 'block';
         searchingText.style.opacity = '1';
-        foundText.style.display = 'none';
-        foundText.style.opacity = '0';
         
         if (counterText) {
             counterText.style.display = 'block';
@@ -2531,23 +2529,12 @@ const OrisApp = {
         
         setTimeout(() => {
             clearInterval(intervalId);
-            searchingText.style.opacity = '0';
-            if (counterText) counterText.style.display = 'none';
-            const spinnerWrapper = document.getElementById('universe-spinner-wrapper');
-            if (spinnerWrapper) spinnerWrapper.style.display = 'none';
-            else if (spinner) spinner.style.display = 'none';
+            searchingContainer.style.opacity = '0';
             
             setTimeout(() => {
-                searchingText.style.display = 'none';
-                foundText.style.display = 'block';
-                setTimeout(() => {
-                    foundText.style.opacity = '1';
-                }, 50);
-                
-                setTimeout(() => {
-                    this.showUniverseMessage();
-                }, 2000);
-            }, 500);
+                searchingContainer.style.display = 'none';
+                this.showUniverseMessage();
+            }, 1000);
         }, randomSeconds * 1000);
     },
     
@@ -2618,14 +2605,10 @@ const OrisApp = {
         }
         
         // Show
-        searchingContainer.style.opacity = '0';
+        receivedContainer.style.display = 'flex';
         setTimeout(() => {
-            searchingContainer.style.display = 'none';
-            receivedContainer.style.display = 'flex';
-            setTimeout(() => {
-                receivedContainer.style.opacity = '1';
-            }, 50);
-        }, 1000);
+            receivedContainer.style.opacity = '1';
+        }, 50);
     }
 
 };
