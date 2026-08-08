@@ -745,17 +745,17 @@ const OrisApp = {
                 if (grid) {
                     grid.innerHTML = ''; // Clear
                     
-                    const ACHIEVEMENTS_DATA = [
-                        { id: "init", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="1" x2="12" y2="23"/><line x1="1" y1="12" x2="23" y2="12"/></svg>', color: "#D4B85A" },
-                        { id: "early", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><polygon points="12 3 4 17 20 17 12 3"/><circle cx="12" cy="13" r="2"/></svg>', color: "#8E6DA3" },
-                        { id: "night", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><polygon points="12 21 4 7 20 7 12 21"/><circle cx="12" cy="11" r="2"/></svg>', color: "#54789B" },
-                        { id: "fifty", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><polygon points="12 3 21 12 12 21 3 12 12 3"/><circle cx="12" cy="12" r="4"/></svg>', color: "#C06C4C" },
-                        { id: "moon", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><polygon points="12 3 4 17 20 17 12 3"/><polygon points="12 21 4 7 20 7 12 21"/></svg>', color: "#A2A2A2" },
-                        { id: "alchemist", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><rect x="6" y="6" width="12" height="12"/><polygon points="12 4 5 18 19 18 12 4"/></svg>', color: "#4E876A" },
-                        { id: "compassive", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="1" x2="12" y2="23"/></svg>', color: "#D4B85A" },
-                        { id: "grateful", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><line x1="12" y1="1" x2="12" y2="23"/><line x1="1" y1="12" x2="23" y2="12"/><line x1="4.2" y1="4.2" x2="19.8" y2="19.8"/><line x1="19.8" y1="4.2" x2="4.2" y2="19.8"/></svg>', color: "#8E6DA3" },
-                        { id: "sincere", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><path d="M3 12 Q12 2 21 12 Q12 22 3 12"/><circle cx="12" cy="12" r="3"/></svg>', color: "#54789B" },
-                        { id: "humble", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11"/><path d="M7 12 A 5 5 0 0 0 17 12"/><line x1="12" y1="12" x2="12" y2="23"/></svg>', color: "#C06C4C" }
+                                        const ACHIEVEMENTS_DATA = [
+                        { id: "init", icon: "assets/images/Iniciado.png", color: "#D4B85A" },
+                        { id: "early", icon: "assets/images/Madrugador.png", color: "#8E6DA3" },
+                        { id: "night", icon: "assets/images/Nocturno.png", color: "#54789B" },
+                        { id: "fifty", icon: "assets/images/Perseverante.png", color: "#C06C4C" },
+                        { id: "moon", icon: "assets/images/Dador.png", color: "#A2A2A2" },
+                        { id: "alchemist", icon: "assets/images/Alquimista.png", color: "#4E876A" },
+                        { id: "compassive", icon: "assets/images/Compasivo.png", color: "#D4B85A" },
+                        { id: "grateful", icon: "assets/images/Agradecido.png", color: "#8E6DA3" },
+                        { id: "sincere", icon: "assets/images/Sincero.png", color: "#54789B" },
+                        { id: "humble", icon: "assets/images/Humilde.png", color: "#C06C4C" }
                     ];
 
                     let unlockedStr = localStorage.getItem('oris_achievements');
@@ -827,9 +827,8 @@ const OrisApp = {
                         const iconColor = isUnlocked ? ach.color : '#888888';
 
                         card.innerHTML = 
-                            '<div class="achievement-icon" style="color: ' + iconColor + ';">' +
-                                ach.icon +
-                                
+                            '<div class="achievement-icon">' +
+                                '<div style="-webkit-mask-image: url(\'' + ach.icon + '\'); mask-image: url(\'' + ach.icon + '\'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; background-color: ' + iconColor + '; width: 32px; height: 32px; margin: 0 auto;"></div>' +
                             '</div>' +
                             '<div class="achievement-title" data-i18n="' + titleStr + '">' + titleText + '</div>' +
                             '<div class="achievement-divider"></div>';
@@ -837,7 +836,7 @@ const OrisApp = {
                         // Click listener to open popup
                         card.addEventListener('click', () => {
                             const iconContainer = document.getElementById('achievement-popup-icon');
-                            iconContainer.innerHTML = ach.icon.replace('width="32" height="32"', 'width="36" height="36"');
+                            iconContainer.innerHTML = '<div style="-webkit-mask-image: url(\'' + ach.icon + '\'); mask-image: url(\'' + ach.icon + '\'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; background-color: ' + iconColor + '; width: 36px; height: 36px;"></div>';
                             iconContainer.style.color = iconColor;
                             
                             const titleEl = document.getElementById('achievement-popup-title');
