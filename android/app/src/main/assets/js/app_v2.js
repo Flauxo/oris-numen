@@ -740,16 +740,15 @@ const OrisApp = {
                     grid.innerHTML = ''; // Clear
                     
                     const ACHIEVEMENTS_DATA = [
-                        { id: "init", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: "#D4B85A" },
-                        { id: "early", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>', color: "#8E6DA3" },
-                        { id: "night", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>', color: "#54789B" },
-                        { id: "fifty", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', color: "#C06C4C" },
-                        { id: "moon", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>', color: "#A2A2A2" },
-                        { id: "alchemist", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><line x1="5.52" y1="16" x2="18.48" y2="16"/></svg>', color: "#4E876A" },
-                        { id: "compassive", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>', color: "#D4B85A" },
-                        { id: "grateful", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="m17 7-5-5-5 5"/><path d="m17 17-5 5-5-5"/></svg>', color: "#8E6DA3" },
-                        { id: "sincere", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>', color: "#54789B" },
-                        { id: "humble", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>', color: "#C06C4C" }
+                        { id: "init", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', color: "#D4B85A" },
+                        { id: "early", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>', color: "#8E6DA3" },
+                        { id: "night", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>', color: "#54789B" },
+                        { id: "fifty", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', color: "#C06C4C" },
+                        { id: "alchemist", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><line x1="5.52" y1="16" x2="18.48" y2="16"/></svg>', color: "#4E876A" },
+                        { id: "compassive", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>', color: "#D4B85A" },
+                        { id: "grateful", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="m17 7-5-5-5 5"/><path d="m17 17-5 5-5-5"/></svg>', color: "#8E6DA3" },
+                        { id: "sincere", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>', color: "#54789B" },
+                        { id: "humble", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>', color: "#C06C4C" }
                     ];
 
                     let unlockedStr = localStorage.getItem('oris_achievements');
@@ -761,11 +760,53 @@ const OrisApp = {
                         } catch(e) {}
                     }
 
-                    // Force grid styling using JS to bypass any cache
-                    grid.style.display = 'flex';
-                    grid.style.flexDirection = 'column';
-                    grid.style.gap = '16px';
-                    grid.style.paddingRight = '8px';
+                    // Ensure popup container exists
+                    let popupContainer = document.getElementById('achievement-popup');
+                    if (!popupContainer) {
+                        popupContainer = document.createElement('div');
+                        popupContainer.id = 'achievement-popup';
+                        popupContainer.style.position = 'fixed';
+                        popupContainer.style.top = '0';
+                        popupContainer.style.left = '0';
+                        popupContainer.style.width = '100vw';
+                        popupContainer.style.height = '100vh';
+                        popupContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                        popupContainer.style.zIndex = '10000';
+                        popupContainer.style.display = 'none';
+                        popupContainer.style.alignItems = 'center';
+                        popupContainer.style.justifyContent = 'center';
+                        popupContainer.style.opacity = '0';
+                        popupContainer.style.transition = 'opacity 0.3s ease';
+                        
+                        popupContainer.innerHTML = 
+                            '<div style="background: var(--color-bg); padding: 30px 20px; border-radius: var(--radius-lg); width: 85%; max-width: 320px; text-align: center; position: relative; border: 1px solid rgba(212, 184, 90, 0.2);">' +
+                                '<button id="achievement-popup-close" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 24px; color: var(--color-text-secondary); cursor: pointer;">&times;</button>' +
+                                '<div id="achievement-popup-icon" style="margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; width: 70px; height: 70px; background: rgba(0,0,0,0.02); border-radius: 50%;"></div>' +
+                                '<h4 id="achievement-popup-title" style="margin: 0 0 10px 0; font-size: 1.2rem; color: var(--color-text); font-family: var(--font-serif);"></h4>' +
+                                '<p id="achievement-popup-desc" style="margin: 0 0 15px 0; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.4;"></p>' +
+                                '<div id="achievement-popup-status" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 1px;"></div>' +
+                            '</div>';
+                        
+                        document.body.appendChild(popupContainer);
+                        
+                        // Close listeners
+                        popupContainer.addEventListener('click', (e) => {
+                            if (e.target === popupContainer) {
+                                popupContainer.style.opacity = '0';
+                                setTimeout(() => popupContainer.style.display = 'none', 300);
+                            }
+                        });
+                        document.getElementById('achievement-popup-close').addEventListener('click', () => {
+                            popupContainer.style.opacity = '0';
+                            setTimeout(() => popupContainer.style.display = 'none', 300);
+                        });
+                    }
+
+                    // Grid layout 3x3
+                    grid.style.display = 'grid';
+                    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                    grid.style.gap = '15px';
+                    grid.style.padding = '5px';
                     grid.style.maxHeight = '65vh';
                     grid.style.overflowY = 'auto';
 
@@ -775,29 +816,56 @@ const OrisApp = {
                         
                         const titleStr = 'achievements.' + ach.id + '.title';
                         const descStr = 'achievements.' + ach.id + '.desc';
+                        const titleText = (typeof Translations !== 'undefined' && Translations[OrisApp.currentLang] && Translations[OrisApp.currentLang][titleStr]) ? Translations[OrisApp.currentLang][titleStr] : titleStr;
+                        const descText = (typeof Translations !== 'undefined' && Translations[OrisApp.currentLang] && Translations[OrisApp.currentLang][descStr]) ? Translations[OrisApp.currentLang][descStr] : descStr;
 
                         const card = document.createElement('div');
                         card.style.display = 'flex';
+                        card.style.flexDirection = 'column';
                         card.style.alignItems = 'center';
-                        card.style.gap = '15px';
-                        card.style.padding = '15px';
+                        card.style.justifyContent = 'center';
+                        card.style.gap = '8px';
+                        card.style.padding = '12px 5px';
                         card.style.borderRadius = '12px';
-                        card.style.background = isUnlocked ? 'rgba(212, 184, 90, 0.05)' : 'rgba(0,0,0,0.03)';
-                        card.style.border = isUnlocked ? '1px solid rgba(212, 184, 90, 0.2)' : '1px solid rgba(0,0,0,0.05)';
-                        card.style.opacity = isUnlocked ? '1' : '0.6';
-                        card.style.transition = 'all 0.3s ease';
+                        card.style.background = isUnlocked ? 'rgba(212, 184, 90, 0.05)' : 'rgba(0,0,0,0.02)';
+                        card.style.border = isUnlocked ? '1px solid rgba(212, 184, 90, 0.2)' : '1px solid rgba(0,0,0,0.04)';
+                        card.style.opacity = isUnlocked ? '1' : '0.5';
+                        card.style.transition = 'all 0.2s ease';
+                        card.style.cursor = 'pointer';
 
                         const iconColor = isUnlocked ? ach.color : '#888888';
 
                         card.innerHTML = 
-                            '<div style="color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: rgba(0,0,0,0.02); border-radius: 50%;">' +
+                            '<div style="color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; width: 55px; height: 55px; background: rgba(0,0,0,0.02); border-radius: 50%;">' +
                                 ach.icon +
                             '</div>' +
-                            '<div style="flex: 1;">' +
-                                '<h4 style="margin: 0 0 4px 0; font-size: 1rem; color: var(--color-text); font-family: var(--font-serif);" data-i18n="' + titleStr + '">' + titleStr + '</h4>' +
-                                '<p style="margin: 0; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.3;" data-i18n="' + descStr + '">' + descStr + '</p>' +
-                            '</div>';
+                            '<div style="font-size: 0.75rem; text-align: center; color: var(--color-text); font-family: var(--font-sans); padding: 0 4px; line-height: 1.1;" data-i18n="' + titleStr + '">' + titleText + '</div>';
                         
+                        // Click listener to open popup
+                        card.addEventListener('click', () => {
+                            const iconContainer = document.getElementById('achievement-popup-icon');
+                            iconContainer.innerHTML = ach.icon;
+                            iconContainer.style.color = iconColor;
+                            
+                            const titleEl = document.getElementById('achievement-popup-title');
+                            titleEl.textContent = titleText;
+                            titleEl.setAttribute('data-i18n', titleStr);
+                            
+                            const descEl = document.getElementById('achievement-popup-desc');
+                            descEl.textContent = descText;
+                            descEl.setAttribute('data-i18n', descStr);
+                            
+                            const statusEl = document.getElementById('achievement-popup-status');
+                            const lockedStr = isUnlocked ? 'DESBLOQUEADO' : 'BLOQUEADO';
+                            statusEl.textContent = lockedStr;
+                            statusEl.style.color = isUnlocked ? '#4E876A' : '#A83C3C';
+                            
+                            popupContainer.style.display = 'flex';
+                            // Trigger reflow
+                            void popupContainer.offsetWidth;
+                            popupContainer.style.opacity = '1';
+                        });
+
                         grid.appendChild(card);
                     });
 
