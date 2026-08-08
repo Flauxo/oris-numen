@@ -2772,7 +2772,7 @@ const OrisApp = {
 
         // Select message
         let targetLang = this.currentLang;
-        if (Math.random() > 0.30) {
+        if (Math.random() > 0.50) {
             // Pick a random language that is NOT the current one (if possible) or just any random
             const langs = [...new Set(universeMessages.map(m => m.lang))];
             const otherLangs = langs.filter(l => l !== targetLang);
