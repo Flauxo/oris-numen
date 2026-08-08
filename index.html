@@ -254,7 +254,7 @@
                     <p id="success-proverb" class="success-proverb"></p>
                 </div>
                 <div style="display: flex; flex-direction: column; align-items: stretch; width: fit-content; gap: 12px; margin-top: 24px;">
-                    <p id="btn-universe-message" class="universe-message-link" data-i18n="universe.send_link" style="text-decoration: underline; cursor: pointer; text-align: center; color: var(--color-text-secondary); margin-bottom: 8px; font-weight: 500; font-size: 1.1rem; opacity: 0.8;">Envía tu mensaje al universo</p>
+                    <p id="btn-universe-message" class="universe-message-link" data-i18n="universe.send_link" style="text-decoration: underline; cursor: pointer; text-align: center; color: var(--color-text-primary); margin-bottom: 8px; font-weight: 400; font-size: 1.5rem; font-family: var(--font-serif); opacity: 0.8;">Envía tu mensaje al universo</p>
                     <button id="btn-home" class="btn-home" data-i18n="btn.home">Volver al inicio</button>
                     <div style="position: relative; width: 100%; display: flex; justify-content: center;">
                         <button id="link-download-sigil" class="btn-cancel" data-i18n="success.download_sigil" style="display: none; font-family: var(--font-sans); font-weight: 600; padding: 12px 32px; width: 100%; transition: opacity 0.2s ease;">Descargar Sigilo</button>
@@ -597,7 +597,7 @@
             <div class="overlay-backdrop"></div>
             <div class="modal-card">
                 <div class="modal-header">
-                    <h3 class="modal-title" style="color: var(--color-text-primary);" data-i18n="universe.modal_title">Envío al Universo</h3>
+                    <h3 class="modal-title" style="color: var(--color-text-primary); font-family: var(--font-sans);" data-i18n="universe.modal_title">Envío al Universo</h3>
                     <button id="btn-close-universe-modal" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                 </div>
                 <div class="modal-body" id="universe-intro-container" style="display: block;">
@@ -608,9 +608,9 @@
                 <div class="modal-body" id="universe-searching-container" style="display: none; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 1s ease; padding: 20px 0;">
                     <div id="universe-spinner-wrapper" style="position: relative; width: 64px; height: 64px; margin-bottom: 32px;">
                         <div id="universe-spinner" style="width: 100%; height: 100%; border: 3px solid rgba(0,0,0,0.1); border-top-color: var(--color-text-primary); border-radius: 50%; animation: spin 1s linear infinite; box-sizing: border-box;"></div>
-                        <p id="universe-searching-counter" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.4rem; font-family: var(--font-serif); color: var(--color-text-secondary); margin: 0; line-height: 1;">0sg</p>
+                        <p id="universe-searching-counter" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.4rem; font-family: var(--font-sans); color: var(--color-text-secondary); margin: 0; line-height: 1;">0sg</p>
                     </div>
-                    <p id="universe-searching-text" style="font-size: 1.5rem; font-weight: 500; font-family: var(--font-serif); color: var(--color-text-primary); margin-bottom: 8px; text-align: center; width: 100%;" data-i18n="universe.searching">Buscando canalización...</p>
+                    <p id="universe-searching-text" style="font-size: 1.5rem; font-weight: 500; font-family: var(--font-sans); color: var(--color-text-primary); margin-bottom: 8px; text-align: center; width: 100%;" data-i18n="universe.searching">Buscando canalización...</p>
                 </div>
 
                 <div class="modal-body" id="universe-received-container" style="display: none; flex-direction: column; align-items: stretch; opacity: 0; transition: opacity 1.5s ease; max-height: 60vh; overflow-y: auto;">
