@@ -1125,7 +1125,10 @@ const OrisApp = {
       const btnUniverseMsg = document.getElementById('btn-universe-message');
       if (btnUniverseMsg) {
           btnUniverseMsg.style.display = 'block';
+          btnUniverseMsg.style.transition = 'none';
           btnUniverseMsg.style.opacity = '0';
+          void btnUniverseMsg.offsetWidth;
+          btnUniverseMsg.style.transition = 'opacity 1.5s ease';
           setTimeout(() => {
               btnUniverseMsg.style.opacity = '0.8';
           }, 1800); // fade in after download sigil button
@@ -2515,6 +2518,8 @@ const OrisApp = {
             counterText.textContent = '1sg';
         }
         if (spinner) spinner.style.display = 'block';
+        const spinnerWrapper = document.getElementById('universe-spinner-wrapper');
+        if (spinnerWrapper) spinnerWrapper.style.display = 'block';
         
         let seconds = 1;
         const intervalId = setInterval(() => {
@@ -2608,6 +2613,9 @@ const OrisApp = {
         
         msgDetails.innerHTML = `Color: ${freqName} <span style="color: ${freqObj.color}; font-weight: bold;">|</span> ${elStr} <span style="color: ${freqObj.color}; font-weight: bold;">|</span> ${timeStr} ${dateStr}`;
         msgText.style.color = freqObj.color;
+        if (msgText.parentElement && msgText.parentElement.classList.contains('success-proverb-container')) {
+            msgText.parentElement.style.color = freqObj.color;
+        }
         
         // Show
         searchingContainer.style.opacity = '0';
