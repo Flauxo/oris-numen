@@ -68,7 +68,7 @@ const Translations = {
         "freq.effect": "Effect",
         "btn.write": "Write Message",
         
-        "btn.back": "â†� Back",
+        "btn.back": "&larr; Back",
         "write.placeholder": "Write your message here...",
         "btn.send": "Channel Message",
         "btn.channeling": "Channeling...",
@@ -327,7 +327,7 @@ const Translations = {
         "freq.effect": "Efecto",
         "btn.write": "Escribir Mensaje",
         
-        "btn.back": "â†� Volver",
+        "btn.back": "&larr; Volver",
         "write.placeholder": "Escribe tu mensaje aquí...",
         "btn.send": "Canalizar Mensaje",
         "btn.channeling": "Canalizando...",
@@ -586,7 +586,7 @@ const Translations = {
         "freq.effect": "Effetto",
         "btn.write": "Scrivi Messaggio",
         
-        "btn.back": "â†� Indietro",
+        "btn.back": "&larr; Indietro",
         "write.placeholder": "Scrivi il tuo messaggio qui...",
         "btn.send": "Canalizza Messaggio",
         "btn.channeling": "Canalizzazione in corso...",
@@ -845,7 +845,7 @@ const Translations = {
         "freq.effect": "Effectus",
         "btn.write": "Scribe Nuntium",
         
-        "btn.back": "â†� Regressus",
+        "btn.back": "&larr; Regressus",
         "write.placeholder": "Scribe nuntium tuum hic...",
         "btn.send": "Nuntium Transmitte",
         "btn.channeling": "Transmittens...",
@@ -1096,7 +1096,7 @@ const Translations = {
         "freq.purpose": "\u76ee\u7684",
         "freq.effect": "\u6548\u679c",
         "btn.write": "\u5199\u4e0b\u4fe1\u606f",
-        "btn.back": "\u2190 \u8fd4\u56de",
+        "btn.back": "&larr; \u8fd4\u56de",
         "write.placeholder": "\u5728\u8fd9\u91cc\u5199\u4e0b\u4f60\u7684\u4fe1\u606f...",
         "btn.send": "\u5f15\u5bfc\u4fe1\u606f",
         "btn.channeling": "\u5f15\u5bfc\u4e2d...",
