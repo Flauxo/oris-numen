@@ -1221,3 +1221,66 @@ const Translations = {
     }
 };
 
+
+// --- Achievements Translations ---
+if (window.translations) {
+    const achEs = {
+        "menu.achievements": "Logros",
+        "achievements.desc": "Sigue el camino del devoto y desbloquea los sellos sagrados.",
+        "achievements.unlocked_title": "¡NUEVO LOGRO!",
+        "achievements.init.title": "El Iniciado",
+        "achievements.init.desc": "Por realizar tu primera canalización.",
+        "achievements.early.title": "El Madrugador",
+        "achievements.early.desc": "Por canalizar entre las 5:00 y las 6:00 de la mañana.",
+        "achievements.night.title": "El Noctámbulo",
+        "achievements.night.desc": "Por canalizar a medianoche (entre las 00:00 y las 01:00).",
+        "achievements.fifty.title": "El Perseverante",
+        "achievements.fifty.desc": "Por realizar 50 canalizaciones.",
+        "achievements.moon.title": "El Magnético",
+        "achievements.moon.desc": "Por canalizar durante la luna nueva.",
+        "achievements.alchemist.title": "El Alquimista",
+        "achievements.alchemist.desc": "Por usar los 4 elementos (Aire, Tierra, Agua, Fuego) en una canalización.",
+        "achievements.compassive.title": "El Compasivo",
+        "achievements.compassive.desc": "Por canalizar 10 veces en la frecuencia del Perdón.",
+        "achievements.grateful.title": "El Agradecido",
+        "achievements.grateful.desc": "Por canalizar 10 veces en la frecuencia de Agradecimiento.",
+        "achievements.sincere.title": "El Sincero",
+        "achievements.sincere.desc": "Por canalizar 10 veces en la frecuencia de Confesión.",
+        "achievements.humble.title": "El Humilde",
+        "achievements.humble.desc": "Por canalizar 10 veces en la frecuencia de Plegaria."
+    };
+
+    const achEn = {
+        "menu.achievements": "Achievements",
+        "achievements.desc": "Follow the path of the devotee and unlock the sacred seals.",
+        "achievements.unlocked_title": "NEW ACHIEVEMENT!",
+        "achievements.init.title": "The Initiate",
+        "achievements.init.desc": "For your first channeling.",
+        "achievements.early.title": "The Early Bird",
+        "achievements.early.desc": "For channeling between 5:00 and 6:00 AM.",
+        "achievements.night.title": "The Night Owl",
+        "achievements.night.desc": "For channeling at midnight (between 00:00 and 01:00).",
+        "achievements.fifty.title": "The Persevering",
+        "achievements.fifty.desc": "For completing 50 channelings.",
+        "achievements.moon.title": "The Magnetic",
+        "achievements.moon.desc": "For channeling during a new moon.",
+        "achievements.alchemist.title": "The Alchemist",
+        "achievements.alchemist.desc": "For using all 4 elements in a single channeling.",
+        "achievements.compassive.title": "The Compassionate",
+        "achievements.compassive.desc": "For channeling 10 times in the Forgiveness frequency.",
+        "achievements.grateful.title": "The Grateful",
+        "achievements.grateful.desc": "For channeling 10 times in the Gratitude frequency.",
+        "achievements.sincere.title": "The Sincere",
+        "achievements.sincere.desc": "For channeling 10 times in the Confession frequency.",
+        "achievements.humble.title": "The Humble",
+        "achievements.humble.desc": "For channeling 10 times in the Prayer frequency."
+    };
+
+    if (window.translations['es']) Object.assign(window.translations['es'], achEs);
+    if (window.translations['en']) Object.assign(window.translations['en'], achEn);
+    
+    // Copy English as fallback for others
+    if (window.translations['it']) Object.assign(window.translations['it'], achEn);
+    if (window.translations['la']) Object.assign(window.translations['la'], achEn);
+    if (window.translations['zh']) Object.assign(window.translations['zh'], achEn);
+}

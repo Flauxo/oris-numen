@@ -1908,3 +1908,43 @@ h3.nucleus-title {
 @keyframes spin {
   100% { transform: rotate(360deg); }
 }
+/* --- Achievements --- */
+.achievements-modal { max-width: 500px; }
+.achievements-desc { text-align: center; color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+.achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; max-height: 60vh; overflow-y: auto; padding-right: 8px; }
+.achievement-card { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.03); padding: 12px; border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.2s ease, opacity 0.2s ease; }
+.achievement-card.locked { opacity: 0.6; filter: grayscale(100%); }
+.achievement-card.unlocked { opacity: 1; filter: grayscale(0%); background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
+.achievement-icon { width: 40px; height: 40px; flex-shrink: 0; display: flex; justify-content: center; align-items: center; }
+.achievement-icon svg { width: 100%; height: 100%; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+.achievement-info { flex: 1; }
+.achievement-title { font-family: var(--font-serif); font-size: 1rem; color: var(--color-text-primary); margin: 0 0 4px 0; font-weight: 600; }
+.achievement-desc { font-family: var(--font-sans); font-size: 0.8rem; color: var(--color-text-secondary); margin: 0; line-height: 1.3; }
+
+/* Achievement Notification */
+.achievement-notification {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border: 1px solid #D4B85A;
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 24px rgba(212, 184, 90, 0.2);
+    z-index: 100;
+    animation: slideDownFade 0.5s ease-out forwards;
+}
+.achievement-notif-icon { color: #D4B85A; display: flex; align-items: center; }
+.achievement-notif-icon svg { width: 24px; height: 24px; }
+.achievement-notif-text { display: flex; flex-direction: column; }
+.achievement-notif-title { font-size: 0.75rem; color: #D4B85A; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+.achievement-notif-name { font-size: 0.9rem; color: #333; font-weight: 600; font-family: var(--font-serif); }
+
+@keyframes slideDownFade {
+    0% { opacity: 0; transform: translate(-50%, -20px); }
+    100% { opacity: 1; transform: translate(-50%, 0); }
+}

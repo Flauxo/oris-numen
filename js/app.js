@@ -1784,6 +1784,11 @@ const OrisApp = {
           let totalChannelings = parseInt(localStorage.getItem('oris_total_channelings') || '0', 10);
           totalChannelings++;
           localStorage.setItem('oris_total_channelings', totalChannelings);
+
+          // Check for achievements
+          if (window.achievementSystem) {
+              window.achievementSystem.check(historyItem, history);
+          }
       } catch (e) {
           console.error("Error saving history", e);
       }
