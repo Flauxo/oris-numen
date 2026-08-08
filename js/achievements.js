@@ -158,7 +158,7 @@ class AchievementSystem {
         grid.innerHTML = ''; // Clear
 
         ACHIEVEMENTS_DATA.forEach(ach => {
-            const isUnlocked = this.unlocked.includes(ach.id);
+            const isUnlocked = (this.unlocked || []).includes(ach.id);
             const titleStr = \`achievements.\${ach.id}.title\`;
             const descStr = \`achievements.\${ach.id}.desc\`;
 
@@ -212,35 +212,3 @@ class AchievementSystem {
 // Global instance
 window.achievementSystem = new AchievementSystem();
 
-document.addEventListener('DOMContentLoaded', () => {
-    window.achievementSystem.renderAchievementsGrid();
-    
-    // Bind overlay buttons
-    const btnOpen = document.getElementById('menu-item-achievements');
-    const btnClose = document.getElementById('btn-close-achievements');
-    const overlay = document.getElementById('achievements-overlay');
-    const backdrop = document.getElementById('achievements-backdrop');
-
-    if (btnOpen && overlay) {
-        btnOpen.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // Re-render to ensure state is fresh
-            window.achievementSystem.renderAchievementsGrid();
-
-            // Close sidebar
-            const sidebar = document.getElementById('sidebar-overlay');
-            if (sidebar) sidebar.classList.remove('active');
-
-            overlay.classList.add('active');
-        });
-    }
-
-    if (btnClose && overlay) {
-        btnClose.addEventListener('click', () => overlay.classList.remove('active'));
-    }
-    
-    if (backdrop && overlay) {
-        backdrop.addEventListener('click', () => overlay.classList.remove('active'));
-    }
-});

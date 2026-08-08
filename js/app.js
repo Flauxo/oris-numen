@@ -146,7 +146,21 @@ const OrisApp = {
         btnConfirmText.addEventListener('click', () => this.confirmWriteCard());
     }
 
-    // About Card Handlers
+    // Achievements Card Handlers
+    const btnAchievements = document.getElementById('menu-item-achievements');
+    if (btnAchievements) btnAchievements.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openAchievementsCard();
+    });\n\n    const achievementsOverlay = document.getElementById('achievements-overlay');
+    const achievementsBackdrop = achievementsOverlay ? achievementsOverlay.querySelector('.overlay-backdrop') : null;
+    if (achievementsBackdrop) {
+        achievementsBackdrop.addEventListener('click', () => this.closeAchievementsCard());
+    }
+
+    const btnCloseAchievements = document.getElementById('btn-close-achievements');
+    if (btnCloseAchievements) {
+        btnCloseAchievements.addEventListener('click', () => this.closeAchievementsCard());
+    }\n\n    // About Card Handlers
     const btnAbout = document.getElementById('menu-item-about');
     if (btnAbout) btnAbout.addEventListener('click', (e) => {
         e.preventDefault();
@@ -711,7 +725,19 @@ const OrisApp = {
   /**
    * Open the about card
    */
-  openAboutCard() {
+  openAchievementsCard() {
+        const overlay = document.getElementById('achievements-overlay');
+        if (overlay) {
+            this.closeSidebar();
+            if (window.achievementSystem) window.achievementSystem.renderAchievementsGrid();
+            overlay.classList.add('active');
+        }
+    }
+    
+    closeAchievementsCard() {
+        const overlay = document.getElementById('achievements-overlay');
+        if (overlay) overlay.classList.remove('active');
+    }\n\n    openAboutCard() {
       const aboutOverlay = document.getElementById('about-overlay');
       if (aboutOverlay) {
           aboutOverlay.classList.add('active');
