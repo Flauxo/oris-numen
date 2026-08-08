@@ -846,7 +846,11 @@ const OrisApp = {
     // Spam detection: 5 consecutive identical characters or 6 consecutive consonants
     const isSpam = /(.)\1{4,}/i.test(text) || /[bcdfghjklmnpqrstvwxyz]{6,}/i.test(text);
 
-    if (text.length < 11 || containsProfanity || isSpam) {
+    // Emoji/Icon detection
+    const emojiRegex = /[\p{Emoji_Presentation}\p{Extended_Pictographic}]/u;
+    const containsEmoji = emojiRegex.test(text);
+
+    if (text.length < 11 || containsProfanity || isSpam || containsEmoji) {
         if (messageInput) messageInput.value = '';
         const warningMsg = Translations[this.currentLang] ? Translations[this.currentLang]['warning.short_message'] : 'No malgastes la energía, escribe un mensaje más sincero.';
         this.showWarning(warningMsg, 'normal', 3000);
