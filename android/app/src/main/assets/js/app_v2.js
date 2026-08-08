@@ -770,7 +770,7 @@ const OrisApp = {
                         popupContainer.style.left = '0';
                         popupContainer.style.width = '100vw';
                         popupContainer.style.height = '100vh';
-                        popupContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                        popupContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
                         popupContainer.style.zIndex = '10000';
                         popupContainer.style.display = 'none';
                         popupContainer.style.alignItems = 'center';
@@ -779,12 +779,12 @@ const OrisApp = {
                         popupContainer.style.transition = 'opacity 0.3s ease';
                         
                         popupContainer.innerHTML = 
-                            '<div style="background: var(--color-bg); padding: 30px 20px; border-radius: var(--radius-lg); width: 85%; max-width: 320px; text-align: center; position: relative; border: 1px solid rgba(212, 184, 90, 0.2);">' +
-                                '<button id="achievement-popup-close" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 24px; color: var(--color-text-secondary); cursor: pointer;">&times;</button>' +
-                                '<div id="achievement-popup-icon" style="margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; width: 70px; height: 70px; background: rgba(0,0,0,0.02); border-radius: 50%;"></div>' +
-                                '<h4 id="achievement-popup-title" style="margin: 0 0 10px 0; font-size: 1.2rem; color: var(--color-text); font-family: var(--font-serif);"></h4>' +
-                                '<p id="achievement-popup-desc" style="margin: 0 0 15px 0; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.4;"></p>' +
-                                '<div id="achievement-popup-status" style="font-size: 0.8rem; font-weight: bold; letter-spacing: 1px;"></div>' +
+                            '<div style="background: #FAF8F5; padding: 30px 20px; border-radius: 16px; width: 85%; max-width: 320px; text-align: center; position: relative; border: 1px solid rgba(212, 184, 90, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">' +
+                                '<button id="achievement-popup-close" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 28px; color: #888; cursor: pointer; padding: 5px;">&times;</button>' +
+                                '<div id="achievement-popup-icon" style="margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; width: 70px; height: 70px; background: rgba(0,0,0,0.03); border-radius: 50%;"></div>' +
+                                '<h4 id="achievement-popup-title" style="margin: 0 0 10px 0; font-size: 1.2rem; color: #333333; font-family: serif; font-weight: bold;"></h4>' +
+                                '<p id="achievement-popup-desc" style="margin: 0 0 15px 0; font-size: 0.95rem; color: #555555; line-height: 1.4;"></p>' +
+                                '<div id="achievement-popup-status" style="font-size: 0.85rem; font-weight: bold; letter-spacing: 1px;"></div>' +
                             '</div>';
                         
                         document.body.appendChild(popupContainer);
@@ -802,10 +802,10 @@ const OrisApp = {
                         });
                     }
 
-                    // Grid layout 3x3
+                    // Grid layout 3x3 - reduced size to fit
                     grid.style.display = 'grid';
                     grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-                    grid.style.gap = '15px';
+                    grid.style.gap = '8px';
                     grid.style.padding = '5px';
                     grid.style.maxHeight = '65vh';
                     grid.style.overflowY = 'auto';
@@ -824,11 +824,11 @@ const OrisApp = {
                         card.style.flexDirection = 'column';
                         card.style.alignItems = 'center';
                         card.style.justifyContent = 'center';
-                        card.style.gap = '8px';
-                        card.style.padding = '12px 5px';
-                        card.style.borderRadius = '12px';
-                        card.style.background = isUnlocked ? 'rgba(212, 184, 90, 0.05)' : 'rgba(0,0,0,0.02)';
-                        card.style.border = isUnlocked ? '1px solid rgba(212, 184, 90, 0.2)' : '1px solid rgba(0,0,0,0.04)';
+                        card.style.gap = '6px';
+                        card.style.padding = '8px 2px';
+                        card.style.borderRadius = '8px';
+                        card.style.background = isUnlocked ? 'rgba(212, 184, 90, 0.08)' : 'rgba(0,0,0,0.02)';
+                        card.style.border = isUnlocked ? '1px solid rgba(212, 184, 90, 0.25)' : '1px solid rgba(0,0,0,0.04)';
                         card.style.opacity = isUnlocked ? '1' : '0.5';
                         card.style.transition = 'all 0.2s ease';
                         card.style.cursor = 'pointer';
@@ -836,15 +836,15 @@ const OrisApp = {
                         const iconColor = isUnlocked ? ach.color : '#888888';
 
                         card.innerHTML = 
-                            '<div style="color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; width: 55px; height: 55px; background: rgba(0,0,0,0.02); border-radius: 50%;">' +
-                                ach.icon +
+                            '<div style="color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: rgba(0,0,0,0.03); border-radius: 50%;">' +
+                                ach.icon.replace('width="32" height="32"', 'width="22" height="22"') +
                             '</div>' +
-                            '<div style="font-size: 0.75rem; text-align: center; color: var(--color-text); font-family: var(--font-sans); padding: 0 4px; line-height: 1.1;" data-i18n="' + titleStr + '">' + titleText + '</div>';
+                            '<div style="font-size: 0.65rem; text-align: center; color: var(--color-text); font-family: var(--font-sans); padding: 0 2px; line-height: 1.1; word-wrap: break-word;" data-i18n="' + titleStr + '">' + titleText + '</div>';
                         
                         // Click listener to open popup
                         card.addEventListener('click', () => {
                             const iconContainer = document.getElementById('achievement-popup-icon');
-                            iconContainer.innerHTML = ach.icon;
+                            iconContainer.innerHTML = ach.icon.replace('width="32" height="32"', 'width="36" height="36"');
                             iconContainer.style.color = iconColor;
                             
                             const titleEl = document.getElementById('achievement-popup-title');
