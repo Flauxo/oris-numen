@@ -723,21 +723,26 @@ const OrisApp = {
   },
   
   /**
-   * Open the about card
+   * Open the achievements card
    */
   openAchievementsCard() {
-        const overlay = document.getElementById('achievements-overlay');
-        if (overlay) {
-            this.closeSidebar();
-            if (window.achievementSystem) window.achievementSystem.renderAchievementsGrid();
-            overlay.classList.add('active');
-        }
-    }
+      const overlay = document.getElementById('achievements-overlay');
+      if (overlay) {
+          this.closeSidebar();
+          if (window.achievementSystem) window.achievementSystem.renderAchievementsGrid();
+          overlay.classList.add('active');
+      }
+  },
     
-    closeAchievementsCard() {
-        const overlay = document.getElementById('achievements-overlay');
-        if (overlay) overlay.classList.remove('active');
-    }\n\n    openAboutCard() {
+  closeAchievementsCard() {
+      const overlay = document.getElementById('achievements-overlay');
+      if (overlay) overlay.classList.remove('active');
+  },
+
+  /**
+   * Open the about card
+   */
+  openAboutCard() {
       const aboutOverlay = document.getElementById('about-overlay');
       if (aboutOverlay) {
           aboutOverlay.classList.add('active');
