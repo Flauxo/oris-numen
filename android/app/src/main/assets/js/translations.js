@@ -1226,7 +1226,7 @@ const Translations = {
 if (typeof Translations !== 'undefined') {
     const achEs = {
         "menu.achievements": "Logros",
-        "achievements.desc": "Sigue el camino del devoto y desbloquea los sellos sagrados.",
+        "achievements.desc": "Cada arquetipo que despiertas, te acerca más a tu esencia divina.",
         "achievements.unlocked_title": "¡NUEVO LOGRO!",
         "achievements.init.title": "El Iniciado",
         "achievements.init.desc": "Por realizar tu primera canalización.",
@@ -1252,7 +1252,7 @@ if (typeof Translations !== 'undefined') {
 
     const achEn = {
         "menu.achievements": "Achievements",
-        "achievements.desc": "Follow the path of the devotee and unlock the sacred seals.",
+        "achievements.desc": "Each archetype you awaken brings you closer to your divine essence.",
         "achievements.unlocked_title": "NEW ACHIEVEMENT!",
         "achievements.init.title": "The Initiate",
         "achievements.init.desc": "For your first channeling.",

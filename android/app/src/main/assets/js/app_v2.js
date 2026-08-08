@@ -730,6 +730,12 @@ const OrisApp = {
    * Open the achievements card
    */
     openAchievementsCard() {
+            if (!document.getElementById('handdrawn-filter')) {
+                const svgFilter = document.createElement('div');
+                svgFilter.innerHTML = '<svg width="0" height="0" id="handdrawn-filter" style="position:absolute;z-index:-1;"><filter id="handdrawn" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" result="displaced"></feDisplacementMap><feBlend in="SourceGraphic" in2="displaced" mode="multiply"></feBlend></filter></svg>';
+                document.body.appendChild(svgFilter);
+            }
+
         const overlay = document.getElementById('achievements-overlay');
         if (overlay) {
             this.closeSidebar();
@@ -823,8 +829,15 @@ const OrisApp = {
                         card.innerHTML = 
                             '<div class="achievement-icon" style="color: ' + iconColor + ';">' +
                                 ach.icon +
+                                '<!-- Sparkles -->' +
+                                '<svg style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none;" viewBox="0 0 48 48">' +
+                                    '<path d="M10,15 Q12,12 15,10 Q12,8 10,5 Q8,8 5,10 Q8,12 10,15" fill="' + iconColor + '" opacity="0.4" transform="scale(0.5) translate(5, 5)" />' +
+                                    '<path d="M38,20 Q40,17 43,15 Q40,13 38,10 Q36,13 33,15 Q36,17 38,20" fill="' + iconColor + '" opacity="0.3" transform="scale(0.4) translate(40, 20)" />' +
+                                    '<path d="M15,40 Q17,37 20,35 Q17,33 15,30 Q13,33 10,35 Q13,37 15,40" fill="' + iconColor + '" opacity="0.3" transform="scale(0.3) translate(20, 70)" />' +
+                                '</svg>' +
                             '</div>' +
-                            '<div class="achievement-title" style="font-size: 0.8rem; margin: 0; line-height: 1.2;" data-i18n="' + titleStr + '">' + titleText + '</div>';
+                            '<div class="achievement-title" data-i18n="' + titleStr + '">' + titleText + '</div>' +
+                            '<div class="achievement-divider"></div>';
                         
                         // Click listener to open popup
                         card.addEventListener('click', () => {
