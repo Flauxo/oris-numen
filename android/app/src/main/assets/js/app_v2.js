@@ -804,12 +804,7 @@ const OrisApp = {
                     }
 
                     // Flexible grid to fit all 10 without scroll
-                    grid.style.display = 'flex';
-                    grid.style.flexWrap = 'wrap';
-                    grid.style.justifyContent = 'center';
-                    grid.style.gap = '6px';
-                    grid.style.padding = '0px';
-                    grid.style.width = '100%';
+                    grid.className = 'achievements-grid';
 
                     ACHIEVEMENTS_DATA.forEach(ach => {
                         let isUnlocked = false;
@@ -821,28 +816,18 @@ const OrisApp = {
                         const descText = (typeof Translations !== 'undefined' && Translations[OrisApp.currentLang] && Translations[OrisApp.currentLang][descStr]) ? Translations[OrisApp.currentLang][descStr] : descStr;
 
                         const card = document.createElement('div');
-                        card.style.display = 'flex';
-                        card.style.flexDirection = 'column';
-                        card.style.alignItems = 'center';
-                        card.style.justifyContent = 'flex-start';
-                        card.style.gap = '4px';
-                        card.style.padding = '6px 2px';
-                        card.style.borderRadius = '8px';
-                        card.style.background = isUnlocked ? 'rgba(212, 184, 90, 0.08)' : 'rgba(0,0,0,0.02)';
-                        card.style.border = isUnlocked ? '1px solid rgba(212, 184, 90, 0.25)' : '1px solid rgba(0,0,0,0.04)';
-                        card.style.opacity = isUnlocked ? '1' : '0.5';
-                        card.style.transition = 'all 0.2s ease';
-                        card.style.cursor = 'pointer';
-                        card.style.width = '23%'; // Fit 4 per row
-                        card.style.boxSizing = 'border-box';
-
+                        card.className = 'achievement-card ' + (isUnlocked ? 'unlocked' : 'locked');
+                        
                         const iconColor = isUnlocked ? ach.color : '#888888';
 
                         card.innerHTML = 
-                            '<div style="color: ' + iconColor + '; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(0,0,0,0.03); border-radius: 50%;">' +
-                                ach.icon.replace('width="32" height="32"', 'width="18" height="18"') +
+                            '<div class="achievement-icon" style="color: ' + iconColor + ';">' +
+                                ach.icon +
                             '</div>' +
-                            '<div style="font-size: 0.55rem; text-align: center; color: var(--color-text); font-family: var(--font-sans); padding: 0 1px; line-height: 1.0; word-wrap: break-word; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;" data-i18n="' + titleStr + '">' + titleText + '</div>';
+                            '<div class="achievement-info">' +
+                                '<h4 class="achievement-title" data-i18n="' + titleStr + '">' + titleText + '</h4>' +
+                                '<p class="achievement-desc" data-i18n="' + descStr + '">' + descText + '</p>' +
+                            '</div>';
                         
                         // Click listener to open popup
                         card.addEventListener('click', () => {
