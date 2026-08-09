@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div id='achievements-grid'></div>
+    <script>
+        const OrisApp = {
+            applyTranslations: function() { console.log('translated'); }
+        };
+        // mock localstorage
+        window.localStorage = {
+            getItem: function() { return '[]'; },
+            setItem: function() {}
+        };
+    </script>
+    <script src='js/achievements.js'></script>
+    <script>
+        window.achievementSystem.renderAchievementsGrid();
+        require('fs').writeFileSync('grid_output.txt', document.getElementById('achievements-grid').innerHTML);
+    </script>
+</body>
+</html>

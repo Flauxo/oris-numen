@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Oris Numen — Canaliza tus mensajes al divino a través de frecuencias sagradas. Plegarias, confesiones, perdón y agradecimiento.">
+    <title>Oris Numen</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- Local Fonts -->
+    <link rel="stylesheet" href="css/fonts.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css?v=2.0.165">
+    <link rel="stylesheet" href="css/animations.css?v=2.0.165">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- Screen 1: Splash Screen -->
+        <div id="splash-screen" class="screen active">
+            <div class="splash-content breathe-anim">
+                <div class="splash-cross">✟</div>
+                <div class="splash-title-anim">
+                    <div class="splash-line1">
+                        <img src="Inicial.png" alt="O" class="splash-o-img"><span class="letter">R</span><span class="letter">I</span><span class="letter">S</span>
+                    </div>
+                    <div class="splash-line2">
+                        <span class="letter">N</span><span class="letter">U</span><span class="letter">M</span><span class="letter">E</span><span class="letter">N</span>
+                    </div>
+                </div>
+                <p class="splash-subtitle" data-i18n="splash.subtitle">Eleva tu voz</p>
+            </div>
+        </div>
+
+        <!-- Screen 2: Home Screen -->
+        <div id="home-screen" class="screen">
+            <header class="home-header">
+                <div class="header-content">
+                    <div class="header-titles">
+                        <h1 class="home-title">Oris Numen</h1>
+                        <p class="home-subtitle" data-i18n="home.subtitle">Canaliza tu mensaje al divino</p>
+                    </div>
+                    <button id="btn-hamburger" class="btn-hamburger" aria-label="Abrir menú">
+                        <div class="hamburger-line short-top"></div>
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line short-bottom"></div>
+                    </button>
+                </div>
+            </header>
+
+            <div class="cards-container">
+                <!-- Card 1: Plegaria / Humilis -->
+                <div class="message-card" data-type="humilis" data-freq="88" data-color="#7B5EA7" style="--card-delay: 0s;">
+                    <div class="card-accent" style="background-color: #7B5EA7;"></div>
+                    <div class="card-content">
+                        <div class="card-icon-container">
+                            <img class="card-icon" src="assets/images/humilis.jpg" alt="Plegaria">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title" id="card-humilis-title" data-i18n="freq.humilis.type">Plegaria</h3>
+                            <span class="card-freq" data-freq-card="humilis"></span>
+                            <p class="card-desc" data-i18n="card.humilis.desc">Petición y Súplica</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Confesión / Revelatio -->
+                <div class="message-card" data-type="revelatio" data-freq="555" data-color="#D4845A" style="--card-delay: 0.1s;">
+                    <div class="card-accent" style="background-color: #D4845A;"></div>
+                    <div class="card-content">
+                        <div class="card-icon-container">
+                            <img class="card-icon" src="assets/images/revelatio.jpg" alt="Confesión">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title" id="card-revelatio-title" data-i18n="freq.revelatio.type">Confesión</h3>
+                            <span class="card-freq" data-freq-card="revelatio"></span>
+                            <p class="card-desc" data-i18n="card.revelatio.desc">Confesión y Sinceridad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Perdón / Absolutio -->
+                <div class="message-card" data-type="absolutio" data-freq="777" data-color="#5A8BB5" style="--card-delay: 0.2s;">
+                    <div class="card-accent" style="background-color: #5A8BB5;"></div>
+                    <div class="card-content">
+                        <div class="card-icon-container">
+                            <img class="card-icon" src="assets/images/absolutio.jpg" alt="Perdón">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title" id="card-absolutio-title" data-i18n="freq.absolutio.type">Perdón</h3>
+                            <span class="card-freq" data-freq-card="absolutio"></span>
+                            <p class="card-desc" data-i18n="card.absolutio.desc">Perdón y Reconciliación</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Agradecimiento / Gratia -->
+                <div class="message-card" data-type="gratia" data-freq="1012" data-color="#D4B85A" style="--card-delay: 0.3s;">
+                    <div class="card-accent" style="background-color: #D4B85A;"></div>
+                    <div class="card-content">
+                        <div class="card-icon-container">
+                            <img class="card-icon" src="assets/images/gratia.jpg" alt="Agradecimiento">
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title" id="card-gratia-title" data-i18n="freq.gratia.type">Agradecimiento</h3>
+                            <span class="card-freq" data-freq-card="gratia"></span>
+                            <p class="card-desc" data-i18n="card.gratia.desc">Agradecimiento y Alabanza</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-description">
+                <p data-i18n="home.desc" data-i18n-html="true">Escribe tu plegaria, confesión, petición de perdón o agradecimiento y permítele transformarse en energía pura mediante ondas de sonido calibradas para elevar tu voz hasta lo celestial.</p>
+            </div>
+            
+            <div class="home-logo">
+                <div class="home-logo-circle">O</div>
+            </div>
+            
+        </div>
+
+        <!-- Frequency Info Overlay -->
+        <div id="freq-info-overlay" class="overlay">
+            <div class="overlay-backdrop"></div>
+            <div class="overlay-card">
+                <button id="btn-close-overlay" class="btn-close-overlay">×</button>
+                <div id="overlay-freq-dot" class="overlay-freq-dot"></div>
+                <h2 id="overlay-freq-name" class="overlay-freq-name">Frecuencia Humilis</h2>
+                <span id="overlay-freq-hz" class="overlay-freq-hz">88 Hz</span>
+                <div class="overlay-divider"></div>
+                <div class="overlay-section">
+                    <h4 class="overlay-label" data-i18n="freq.purpose">Propósito</h4>
+                    <p id="overlay-purpose" class="overlay-text"></p>
+                </div>
+                <div class="overlay-section">
+                    <h4 class="overlay-label" data-i18n="freq.effect">Efecto</h4>
+                    <p id="overlay-effect" class="overlay-text"></p>
+                </div>
+                <button id="btn-write" class="btn-write" data-i18n="btn.write">Escribir Mensaje</button>
+            </div>
+        </div>
+
+
+        <!-- Screen 3: Write Screen -->
+        <div id="write-screen" class="screen">
+            <div class="write-header">
+                <button id="btn-back" class="btn-back" data-i18n="btn.back" data-i18n-html>&larr; Volver</button>
+                                <button id="btn-guide" class="btn-back" style="left: auto; right: 16px;" data-i18n="btn.guide">Instrucciones</button>
+                <div class="freq-indicator-container">
+                    <div id="write-freq-dot" class="freq-dot shimmer-anim"></div>
+                    <div class="freq-titles">
+                        <span id="write-freq-name" class="freq-name">Frecuencia Humilis</span>
+                        <span id="write-freq-hz" class="freq-hz">88 Hz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="write-body">
+                <div class="freq-info">
+                    <p id="write-purpose" class="write-purpose">Plegaria</p>
+                    <p id="write-effect" class="write-effect">Eleva la voz del suplicante desde la humildad terrenal directamente hacia lo divino.</p>
+                </div>
+
+                <textarea id="message-input" data-i18n-attr="placeholder:write.placeholder" placeholder="Escribe tu mensaje aquí..." spellcheck="false" readonly></textarea>
+
+                <div class="write-footer">
+                    <button id="btn-send" class="btn-send" data-i18n="btn.send">Canalizar Mensaje</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Channeling Screen -->
+        <div id="channeling-screen" class="screen">
+            <div class="channeling-content">
+                <div class="channeling-header">
+                    <p id="channeling-label" class="channeling-label">Canalizando a través de la Frecuencia...</p>
+                    <p id="channeling-sublabel" class="channeling-sublabel">para su transformación en energía</p>
+                </div>
+
+                <div id="timer-display" class="timer-display">15:00</div>
+
+                <div class="canvas-container">
+                    <canvas id="waveform-canvas"></canvas>
+                </div>
+
+                <!-- Elements section -->
+                <div class="elements-section">
+                    <div class="elements-label-wrapper">
+                        <div class="elements-label-row">
+                            <span class="elements-line"></span>
+                            <p class="elements-label" data-i18n="elements.add">AÑADIR ELEMENTOS</p>
+                            <span class="elements-line"></span>
+                        </div>
+                        <div class="elements-dot-row">
+                            <span class="elements-subline"></span>
+                            <span class="elements-dot"></span>
+                            <span class="elements-subline"></span>
+                        </div>
+                    </div>
+                    <div class="elements-grid">
+                        <!-- Aire (Verde) -->
+                        <button class="element-btn" id="elem-aire" data-element="aire" data-color="#7CA982" aria-label="Aire">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
+                                <circle cx="40" cy="40" r="34" stroke="currentColor" stroke-width="1.5"/>
+                                <line x1="40" y1="12" x2="40" y2="68" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M40 20 C24 20 12 28 12 34 C24 34 36 30 40 26 M40 20 C56 20 68 28 68 34 C56 34 44 30 40 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                                <path d="M40 32 C22 34 10 44 10 50 C24 48 36 42 40 38 M40 32 C58 34 70 44 70 50 C56 48 44 42 40 38" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                                <path d="M40 44 C26 46 16 56 16 60 C26 58 36 53 40 49 M40 44 C54 46 64 56 64 60 C54 58 44 53 40 49" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                            </svg>
+                        </button>
+                        <!-- Tierra (Morado) -->
+                        <button class="element-btn" id="elem-tierra" data-element="tierra" data-color="#997A9E" aria-label="Tierra">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
+                                <circle cx="40" cy="40" r="34" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M 40 40 A 6 6 0 0 1 40 28 A 12 12 0 0 1 40 52 A 18 18 0 0 1 40 16 A 24 24 0 0 1 40 64 A 30 30 0 0 1 12 44" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                            </svg>
+                        </button>
+                        <!-- Agua (Azul) -->
+                        <button class="element-btn" id="elem-agua" data-element="agua" data-color="#7096AB" aria-label="Agua">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
+                                <circle cx="40" cy="40" r="34" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M14 28 Q 27 20 40 28 T 66 28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                                <path d="M9 38 Q 24.5 30 40 38 T 71 38" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                                <path d="M9 48 Q 24.5 40 40 48 T 71 48" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                                <path d="M14 58 Q 27 50 40 58 T 66 58" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                            </svg>
+                        </button>
+                        <!-- Fuego (Amarillo) -->
+                        <button class="element-btn" id="elem-fuego" data-element="fuego" data-color="#CBA858" aria-label="Fuego">
+                            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="element-icon">
+                                <circle cx="40" cy="40" r="34" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M40 70 C24 70 16 58 16 44 C16 30 28 20 38 10 C34 22 42 26 40 34 C44 26 52 24 54 18 C64 28 66 40 64 50 C60 64 48 70 40 70 Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <path d="M38 70 C28 66 26 56 30 48 C34 42 32 38 34 34 C40 40 46 48 44 56 C42 64 38 70 38 70 Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="channeling-footer">
+                    <p class="channeling-info" data-i18n="channeling.info">Concéntrate en tu mensaje durante la canalización. (Puedes apagar la pantalla)</p>
+                    <button id="btn-cancel" class="btn-cancel" data-i18n="btn.cancel" style="padding: 12px 16px; width: fit-content; margin: 0 auto;">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div id="success-screen" class="screen">
+            <div class="success-content">
+                <h2 class="success-title" data-i18n="success.title" data-i18n-html="true">Mensaje canalizado<br>con éxito</h2>
+                <p class="success-subtitle" data-i18n="success.subtitle.divine">Tu mensaje ha sido elevado al divino</p>
+                <div style="position: relative; width: 250px; height: 250px; margin: 30px auto 10px;">
+                    <canvas id="success-sigil-canvas" class="pulse-glow" width="600" height="600" style="width: 100%; height: 100%; display: block; filter: drop-shadow(0 0 16px currentColor); position: relative; z-index: 2;"></canvas>
+                    <svg id="sigil-orbit-container-svg" class="sigil-orbit-svg" viewBox="0 0 300 300" style="position: absolute; top: -25px; left: -25px; width: 300px; height: 300px; pointer-events: none; z-index: 1;">
+                        <path id="orbit-path" d="M 150, 150 m -130, 0 a 130,130 0 1,1 260,0 a 130,130 0 1,1 -260,0" fill="none" stroke="none" />
+                        <!-- Dynamic achievements injected here -->
+                    </svg>
+                </div>
+                <div class="success-proverb-container">
+                    <p id="success-proverb" class="success-proverb"></p>
+                </div>
+                
+                <!-- Notificación de nuevo logro desbloqueado -->
+                <div id="achievement-unlocked-notification" class="achievement-notification pulse-glow" style="display: none;">
+                    <div class="achievement-notif-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    </div>
+                    <div class="achievement-notif-text">
+                        <span class="achievement-notif-title" data-i18n="achievements.unlocked_title">¡Nuevo Logro!</span>
+                        <span id="achievement-notif-name" class="achievement-notif-name">Nombre del logro</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: stretch; width: fit-content; gap: 12px; margin-top: 12px;">
+                    <p id="btn-universe-message" class="universe-message-link" data-i18n="universe.send_link" style="text-decoration: underline; cursor: pointer; text-align: center; color: var(--color-text-muted); margin-bottom: 8px; font-weight: 400; font-size: 1rem; font-family: var(--font-sans); opacity: 0.8;">Envía tu mensaje al universo</p>
+                    <button id="btn-home" class="btn-home" data-i18n="btn.home">Volver al inicio</button>
+                    <div style="position: relative; width: 100%; display: flex; justify-content: center;">
+                        <button id="link-download-sigil" class="btn-cancel" data-i18n="success.download_sigil" style="display: none; font-family: var(--font-sans); font-weight: 600; padding: 12px 32px; width: 100%; transition: opacity 0.2s ease;">Descargar Sigilo</button>
+                        <div id="download-options-container" style="display: none; flex-direction: row; width: max-content; gap: 16px; position: absolute; top: 0; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.2s ease;">
+                            <button id="inline-download-image" class="btn-cancel" data-i18n="success.download_image" style="flex: 1; flex-basis: 0; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 16px;">Imagen</button>
+                            <button id="inline-download-video" class="btn-cancel" data-i18n="success.download_video" style="flex: 1; flex-basis: 0; text-align: center; font-family: var(--font-sans); font-weight: 600; padding: 12px 16px;">Vídeo</button>
+                        </div>
+                        <div id="inline-loading-container" style="display: none; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: max-content; padding: 12px 16px;">
+                            <p data-i18n="success.generating_video" class="pulse-glow" style="color: #000000; font-size: 1.1rem; text-align: center; margin: 0; font-weight: 400;">Generando ritual visual...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Write Card Overlay -->
+        <div id="write-card-overlay" class="overlay">
+            <div class="overlay-backdrop"></div>
+            <div class="write-card">
+                <textarea id="write-card-input" data-i18n-attr="placeholder:write.placeholder" placeholder="Escribe tu mensaje aquí..." spellcheck="false" maxlength="250"></textarea>
+                <div class="write-card-footer">
+                    <div class="char-counter-container">
+                        <span id="char-counter" class="char-counter">0/250</span>
+                    </div>
+                    <div id="write-card-line" class="write-card-line"></div>
+                </div>
+                <button id="btn-confirm-text" class="btn-confirm-text" data-i18n="write.confirm">Confirmar</button>
+            </div>
+        </div>
+
+        <!-- Warning Popup — short message -->
+        <div id="warning-popup" class="warning-popup" aria-live="assertive">
+            <div class="warning-popup-inner">
+                <div class="warning-symbol">✦</div>
+                <p id="warning-popup-text" class="warning-popup-text"></p>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu Overlay -->
+        <div id="sidebar-overlay" class="overlay sidebar-overlay">
+            <div class="overlay-backdrop"></div>
+            <div class="sidebar-drawer">
+                <div class="sidebar-header">
+                    <h2 id="sidebar-title" class="sidebar-title" data-i18n="menu.title">Menú</h2>
+                    <button id="btn-close-sidebar" class="btn-close-sidebar">×</button>
+                </div>
+                <div id="sidebar-main-menu">
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item"><a href="#" id="menu-item-lang" data-i18n="menu.language">Idioma</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-how-it-works" data-i18n="menu.how_it_works">Cómo funciona</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-achievements" data-i18n="menu.achievements">Logros</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-evolution" data-i18n="menu.evolution">Evolución espiritual</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-history" data-i18n="menu.history">Historial</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-testimonials" data-i18n="menu.testimonials">Testimonios</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-about" data-i18n="menu.about">Acerca de</a></li>
+                    </ul>
+                </div>
+                <div id="sidebar-lang-menu" class="hidden">
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item"><a href="#" data-lang="en" data-i18n="lang.en">Inglés</a></li>
+                        <li class="sidebar-item"><a href="#" data-lang="es" data-i18n="lang.es">Español</a></li>
+                        <li class="sidebar-item"><a href="#" data-lang="it" data-i18n="lang.it">Italiano</a></li>
+                        <li class="sidebar-item"><a href="#" data-lang="la" data-i18n="lang.la">Latín</a></li>
+                        <li class="sidebar-item"><a href="#" data-lang="zh" data-i18n="lang.zh">Chino</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Overlay -->
+        <div id="history-overlay" class="overlay">
+            <div class="overlay-backdrop" id="history-backdrop"></div>
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: purple;" data-i18n="history.title">Historial de Canalizaciones</h3>
+                    <button id="btn-close-history" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-content" id="history-list">
+                    <!-- History items will be injected here via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Share Overlay -->
+        <div id="share-overlay" class="overlay">
+            <div class="overlay-backdrop" id="share-backdrop"></div>
+            <div class="modal-card" style="margin: auto; max-width: 320px;">
+                <div class="modal-header">
+                    <h3 class="modal-title" data-i18n="share.title">Compartir</h3>
+                    <button id="btn-close-share" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-content" style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+                    <button id="btn-share-whatsapp" class="btn-share-social btn-share-whatsapp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        <span data-i18n="share.whatsapp">Compartir por WhatsApp</span>
+                    </button>
+                    <button id="btn-share-x" class="btn-share-social btn-share-x">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        <span data-i18n="share.x">Compartir en X</span>
+                    </button>
+                    <button id="btn-share-facebook" class="btn-share-social btn-share-facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.938 5.858-5.938 1.259 0 2.502.132 2.871.189v3.136h-1.611c-1.653 0-2.128.847-2.128 2.302v1.891h3.633l-.472 3.667h-3.161v7.98h-4.99z"/></svg>
+                        <span data-i18n="share.facebook">Compartir en Facebook</span>
+                    </button>
+                    <button id="btn-share-email" class="btn-share-social btn-share-email">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span data-i18n="share.email">Compartir por Email</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Overlay -->
+        <div id="about-overlay" class="overlay">
+            <div class="overlay-backdrop" id="about-backdrop"></div>
+            <div class="modal-card">
+                <div class="modal-header">
+                      <h3 class="modal-title title-about" data-i18n-html="true" data-i18n="about.title">Acerca de Oris Numen <span style="font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 300; color: #000; white-space: nowrap;">(v 2.3.7)</span></h3>
+                      <button id="btn-close-about" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                  </div>
+                <div class="modal-content">
+                    <p data-i18n="about.p1">A lo largo de la historia, la humanidad ha buscado innumerables formas de elevar su voz hacia la divinidad. Oris Numen es nuestra aportación a esa búsqueda: un instrumento digital diseñado para que la fe encuentre un nuevo vehículo de expresión.</p>
+                    <p data-i18n="about.p2">Nuestro equipo aborda este proyecto desde una perspectiva técnica e imparcial, sin adscribirse a ninguna fe en concreto, pero con un profundo respeto por la necesidad humana de conectar con algo más grande. Confiamos sinceramente en que esta herramienta te sirva de ayuda y consuelo.</p>
+                    <p class="modal-disclaimer" data-i18n="about.p3">Todos los fondos recaudados a través de las opciones de pago y mejoras tienen un único fin: mantener viva la aplicación, costear su desarrollo técnico y permitirnos seguir mejorando tu experiencia.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Overlay -->
+        <div id="how-it-works-overlay" class="overlay">
+            <div class="overlay-backdrop" id="how-it-works-backdrop"></div>
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3 class="modal-title title-how-it-works" data-i18n="how_it_works.title">Cómo funciona</h3>
+                    <button id="btn-close-how-it-works" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-content">
+                    <p data-i18n="how_it_works.p1" data-i18n-html="true">La <strong>ciencia</strong> y la <strong>espiritualidad</strong> encuentran un punto de <strong>unión</strong> en el <strong>sonido</strong>. <strong>Oris Numen</strong> utiliza principios de <strong>resonancia acústica</strong> y <strong>Brainwave Entrainment</strong> para potenciar la intención de tu mensaje.</p>
+                    <p data-i18n="how_it_works.p2" data-i18n-html="true">Cuando te expones a <strong>frecuencias</strong> específicas (como los tonos <strong>Solfeggio</strong>), se produce un fenómeno conocido como <em>respuesta de seguimiento de frecuencia</em>. <strong>Estudios</strong> neuroacústicos sugieren que nuestras <strong>ondas</strong> <strong>cerebrales</strong> tienden a sincronizarse con el ritmo del estímulo sonoro externo.</p>
+                    <p data-i18n="how_it_works.p3" data-i18n-html="true">Al <strong>alinear</strong> tu estado <strong>mental</strong> con <strong>frecuencias</strong> asociadas a la gratitud, el alivio o la sanación, tu mensaje se emite desde un estado de mayor coherencia electromagnética. La visualización de la onda asegura que la vibración impregne tu texto actuando como un catalizador hacia lo divino.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements Overlay -->
+        <div id="achievements-overlay" class="overlay">
+            <div class="overlay-backdrop" id="achievements-backdrop"></div>
+            <div class="modal-card achievements-modal">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: #D4B85A;" data-i18n="menu.achievements">Logros</h3>
+                    <button id="btn-close-achievements" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-content achievements-content">
+                    <p class="achievements-desc" data-i18n="achievements.desc">Sigue el camino del devoto y desbloquea los sellos sagrados.</p>
+                    <div id="achievements-grid" class="achievements-grid">
+                        <!-- Achievements will be injected here via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials Overlay -->
+        <div id="testimonials-overlay" class="overlay">
+            <div class="overlay-backdrop" id="testimonials-backdrop"></div>
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3 class="modal-title title-testimonials" data-i18n="testimonials.title">Testimonios</h3>
+                    <button id="btn-close-testimonials" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-content">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text" data-i18n="testimonials.t1">"Nunca pensé que una aplicación pudiera darme tanta paz. Escribir mis súplicas y ver cómo se transforman en frecuencias me ha ayudado a sobrellevar un momento de gran ansiedad."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l1">- Desde España</p>
+                    </div>
+                    <hr class="testimonial-divider">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★<span class="half-star">★</span></div>
+                        <p class="testimonial-text" data-i18n="testimonials.t2">"Al principio era escéptico, pero el uso continuo de la frecuencia de Gratitud ha cambiado mi forma de empezar el día. Me siento más conectado."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l2">- Desde EE.UU.</p>
+                    </div>
+                    <hr class="testimonial-divider">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text" data-i18n="testimonials.t3">"Pude canalizar un mensaje para mi abuela que estaba enferma y, de alguna forma, sentí que la energía le llegaba. Es una herramienta preciosa."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l3">- Desde Colombia</p>
+                    </div>
+                    <hr class="testimonial-divider">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text" data-i18n="testimonials.t4">"La frecuencia de Revelatio me permitió encontrar claridad en una decisión difícil. La interfaz es solemne y ayuda a la concentración."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l4">- Desde Italia</p>
+                    </div>
+                    <hr class="testimonial-divider">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★<span class="half-star">★</span></div>
+                        <p class="testimonial-text" data-i18n="testimonials.t5">"Lo utilizo como complemento a mis meditaciones diarias. El sonido es envolvente y realmente sientes una resonancia interior."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l5">- Desde Francia</p>
+                    </div>
+                    <hr class="testimonial-divider">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text" data-i18n="testimonials.t6">"Confesar mis cargas aquí antes de dormir me ha quitado un peso de encima inmenso. El anonimato y la transmutación del mensaje son liberadores."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l6">- Desde Venezuela</p>
+                    </div>
+                    <hr class="testimonial-divider">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text" data-i18n="testimonials.t7">"Una experiencia digital pero profundamente espiritual. Se nota que está hecha con mucho respeto y base sonora. Totalmente recomendada."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l7">- Desde Tailandia</p>
+                    </div>
+                    <hr class="testimonial-divider">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text" data-i18n="testimonials.t8">"Me encanta encender la app por las noches, apagar la pantalla de mi celular y usar el sonido de la canalización para conciliar el sueño. Es sumamente relajante y me da mucha paz."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l8">- Desde México</p>
+                    </div>
+                    <hr class="testimonial-divider">
+                    <div class="testimonial-item">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text" data-i18n="testimonials.t9">"Mi evolución espiritual ya va por 27 canalizaciones y subiendo. Cada vez que el mandala geométrico crece siento una paz interior inexplicable, esta herramienta se ha vuelto vital en mis mañanas."</p>
+                        <p class="testimonial-location" data-i18n="testimonials.l9">- Desde Argentina</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upgrades Overlay (Hidden for now, left as structure if needed later) -->
+        <div id="upgrades-overlay" class="overlay" style="display: none;">
+            <div class="overlay-backdrop" id="upgrades-backdrop"></div>
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: purple;" data-i18n="menu.upgrades">Mejoras</h3>
+                    <button id="btn-close-upgrades" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-body" style="text-align: center; color: var(--color-text-muted);">
+                    <p data-i18n="upgrades.premium_text">Actualiza a la versión premium para desbloquear más frecuencias, elementos interactivos y funciones exclusivas de canalización profunda.</p>
+                    <button id="btn-unlock-upgrades" class="btn-upgrade" data-i18n="btn.unlock">Desbloquear mejoras</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evolution Overlay -->
+        
+        <!-- Guide Overlay -->
+        <div id="guide-overlay" class="overlay">
+            <div class="overlay-backdrop" id="guide-backdrop"></div>
+              <div class="modal-card guide-modal">
+                  <div class="modal-header">
+                      <h3 class="modal-title" style="color: #000000; font-family: var(--font-serif); font-size: 1.8rem; font-weight: 500; text-align: left; line-height: 1.1; margin-bottom: 12px;" data-i18n="guide.title" data-i18n-html="true">Guía para la<br>Canalización</h3>
+                      <button id="btn-close-guide" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                  </div>
+                  
+                  <div class="modal-body guide-body" style="text-align: left;">
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #7B5EA7;">1.</div>
+                          <div class="guide-text">
+                              <h4 data-i18n="guide.step1.title" style="color: #333;">Crea tu santuario:</h4>
+                              <p data-i18n="guide.step1.desc" style="color: #666;">Busca un espacio en penumbra y silencio, resguardado de cualquier interferencia externa.</p>
+                          </div>
+                      </div>
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #D4845A;">2.</div>
+                          <div class="guide-text">
+                              <h4 data-i18n="guide.step2.title" style="color: #333;">Consagra el tiempo:</h4>
+                              <p data-i18n="guide.step2.desc" style="color: #666;">Reserva al menos 15 minutos de presencia plena para esta experiencia.</p>
+                          </div>
+                      </div>
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #5A8BB5;">3.</div>
+                          <div class="guide-text">
+                              <h4 data-i18n="guide.step3.title" style="color: #333;">Silencia el mundo exterior:</h4>
+                              <p data-i18n="guide.step3.desc" style="color: #666;">Activa el modo «no molestar» en tu dispositivo y desvincúlate de las distracciones cotidianas.</p>
+                          </div>
+                      </div>
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #D4B85A;">4.</div>
+                          <div class="guide-text">
+                              <h4 data-i18n="guide.step4.title" style="color: #333;">Apaga la luz de la pantalla:</h4>
+                              <p data-i18n="guide.step4.desc" style="color: #666;">Deja que la visión física se atenúe para dar paso a la percepción interior.</p>
+                          </div>
+                      </div>
+                      <div class="guide-item">
+                          <div class="guide-number" style="color: #ff3333;">5.</div>
+                          <div class="guide-text">
+                              <h4 data-i18n="guide.step5.title" style="color: #333;">Sostén la intención:</h4>
+                              <p data-i18n="guide.step5.desc" style="color: #666;">Mantén tu mente y tu espíritu enfocados en el mensaje mientras permites que la frecuencia sonora resuene y abra el canal.</p>
+                          </div>
+                      </div>
+                      
+                      <div class="guide-footer">
+                          <p data-i18n="guide.quote">"El canal se abre cuando la intención es clara y el corazón está en silencio."</p>
+                      </div>
+                      
+                      <div id="guide-scroll-indicator" style="position: sticky; bottom: -25px; margin-left: -24px; margin-right: -24px; text-align: center; color: #7B5EA7; pointer-events: none; transition: opacity 0.3s ease; opacity: 0; background: linear-gradient(to bottom, transparent 0%, var(--color-bg-card) 40%, var(--color-bg-card) 100%); padding-top: 40px; padding-bottom: 25px; margin-top: -30px; border-radius: 0 0 var(--radius-lg) var(--radius-lg);">
+                          <div class="bounce-anim" style="font-weight: bold;" data-i18n="guide.scroll">↓ Sigue leyendo ↓</div>
+                      </div>
+                  </div>
+              </div>
+        </div>
+
+        <div id="evolution-overlay" class="overlay">
+            <div class="overlay-backdrop" id="evolution-backdrop"></div>
+              <div class="modal-card nucleus-modal">
+                  <div class="modal-header nucleus-header">
+                      <h3 class="modal-title nucleus-title" style="color: #000000;" data-i18n="evolution.title">Núcleo Espiritual</h3>
+                      <button id="btn-close-evolution" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                  </div>
+                  
+                  <div class="modal-body nucleus-body">
+                      <!-- 1. Graphic -->
+                      <div class="nucleus-canvas-wrapper" style="position: relative; width: 280px; height: 300px; margin: 0 auto 24px auto; display: flex; justify-content: center; align-items: center;">
+                          <canvas id="nucleus-canvas" width="280" height="300" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
+                          <svg width="280" height="300" viewBox="0 0 280 300" style="position: absolute; top: 0; left: 0; z-index: 2; pointer-events: none;">
+                              <defs>
+                                  <mask id="nucleus-mask">
+                                      <rect width="280" height="300" fill="white" />
+                                      <ellipse cx="140" cy="150" rx="103" ry="122" fill="black" />
+                                  </mask>
+                                  <mask id="ring-mask">
+                                      <rect width="280" height="300" fill="white" />
+                                      <ellipse cx="140" cy="150" rx="103" ry="122" fill="black" />
+                                  </mask>
+                              </defs>
+                              <rect width="280" height="300" fill="#FDF8F2" mask="url(#nucleus-mask)" />
+                              <ellipse cx="140" cy="150" rx="128" ry="130" fill="#2d2b29" mask="url(#ring-mask)" />
+                          </svg>
+                          <div id="evolution-numinosity-state" style="position: absolute; top: 38%; transform: translateY(-50%); text-align: center; font-family: var(--font-serif); font-size: 1.7rem; font-weight: 700; z-index: 10; pointer-events: none; opacity: 0; transition: opacity 1.5s ease;" data-i18n="evolution.state.default">Despertando</div>
+                      </div>
+                      
+                      <!-- 3. Text -->
+                      <p id="evolution-explanation" class="nucleus-explanation" data-i18n="evolution.explanation">Cada vez que canalizas un mensaje, tu núcleo espiritual desarrolla un nuevo nivel, volviéndose más majestuoso e iluminado.</p>
+                      
+                      <!-- 4. Stats Grid -->
+                      <div class="nucleus-stats-grid">
+                          <div class="nucleus-stat-box">
+                              <div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+                              <span class="stat-label" data-i18n="evolution.count_label" style="white-space: pre-wrap; text-align: center; line-height: 1.2;">CANALIZACIONES</span>
+                              <span class="stat-value" id="nucleus-count-display">0</span>
+                          </div>
+                          <div class="nucleus-stat-box">
+                              <div class="stat-icon"><svg id="numinosity-sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></div>
+                              <span class="stat-label" data-i18n="evolution.state.label" style="white-space: pre-wrap; text-align: center; line-height: 1.2;">ESTADO DE NUMENOSIDAD</span>
+                              <span id="evolution-numinosity-percentage" class="stat-value"></span>
+                          </div>
+                      </div>
+                      
+                      <!-- 5. Footer -->
+                      <p class="nucleus-footer">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; display: inline-block; vertical-align: middle;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                          <span data-i18n="evolution.footer">Tu núcleo es único. Cuídalo, escúchalo, ilumínalo.</span>
+                      </p>
+                  </div></div>
+        </div>
+
+        <div id="universe-modal-overlay" class="overlay">
+            <div class="overlay-backdrop"></div>
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: var(--color-text-primary); font-family: var(--font-serif);" data-i18n="universe.modal_title">Envío al Universo</h3>
+                    <button id="btn-close-universe-modal" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-body" id="universe-intro-container" style="display: block;">
+                    <p data-i18n="universe.modal_text1" style="color: var(--color-text-muted); font-family: var(--font-sans); font-size: 1rem; font-weight: 400; margin-bottom: 24px; line-height: 1.5;">Aceptas enviar tu mensaje al universo de forma anónima y a cambio recibir un mensaje de un usuario o de un canalizador de la aplicación.</p>
+                    <button id="btn-accept-universe" class="btn-confirm-text" data-i18n="universe.btn_accept">Aceptar</button>
+                </div>
+                
+                <div class="modal-body" id="universe-searching-container" style="display: none; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 1s ease; padding: 20px 0;">
+                    <div id="universe-spinner-wrapper" style="position: relative; width: 64px; height: 64px; margin-bottom: 32px;">
+                        <div id="universe-spinner" style="width: 100%; height: 100%; border: 3px solid rgba(0,0,0,0.1); border-top-color: var(--color-text-primary); border-radius: 50%; animation: spin 1s linear infinite; box-sizing: border-box;"></div>
+                        <p id="universe-searching-counter" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.4rem; font-family: var(--font-serif); color: var(--color-text-secondary); margin: 0; line-height: 1;">0sg</p>
+                    </div>
+                    <p id="universe-searching-text" style="font-size: 1rem; font-weight: 400; font-family: var(--font-sans); color: var(--color-text-muted); margin-bottom: 8px; text-align: center; width: 100%;" data-i18n="universe.searching">Buscando canalización...</p>
+                </div>
+
+                <div class="modal-body" id="universe-received-container" style="display: none; flex-direction: column; align-items: stretch; opacity: 0; transition: opacity 1.5s ease; max-height: 60vh; overflow-y: auto;">
+                    <div style="text-align: center; font-family: var(--font-sans); font-size: 1rem; font-weight: 400; color: var(--color-text-primary); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                        <span id="universe-msg-from" data-i18n="universe.from">desde</span> <span id="universe-msg-country">Japón</span>
+                        <div style="font-size: 1rem; font-weight: 400; margin-top: 8px; font-family: var(--font-sans); color: var(--color-text-secondary); line-height: 1.4;" id="universe-msg-details">
+                            <!-- Details populated via JS -->
+                        </div>
+                    </div>
+                    <div class="success-proverb-container" style="display: flex; align-items: center; justify-content: center; margin-bottom: 24px; min-height: 100px;">
+                        <p id="universe-msg-text" style="font-family: var(--font-sans); font-size: 1rem; font-weight: 400; text-align: left; margin: 0;"></p>
+                    </div>
+                    <button id="btn-universe-close" class="btn-home" style="width: 100%; margin-top: 10px;" data-i18n="universe.close">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evil Mode Overlay -->
+        <div id="evil-overlay" class="overlay evil-overlay">
+            <div class="evil-backdrop"></div>
+            <div class="evil-card">
+                <h2 class="evil-title" data-i18n="evil.title">comunicación con el maligno.</h2>
+                <p class="evil-subtitle" data-i18n="evil.subtitle">(úsala bajo tu propia responsabilidad).</p>
+                <textarea id="evil-input" data-i18n-attr="placeholder:evil.placeholder" placeholder="Escribe tu mensaje aquí..." spellcheck="false"></textarea>
+                <button id="btn-evil-channel" class="btn-evil-channel" data-i18n="btn.evil">Canalizar</button>
+                <p style="text-align:center; text-decoration:underline; cursor: pointer; color: #ff3333; margin-top: 10px;" id="btn-evil-return" data-i18n="evil.return">Sal de aquí, vuelve a la luz</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/translations.js?v=2.0.165"></script>
+    <script src="js/audio.js?v=2.0.165"></script>
+    <script src="js/waveform.js?v=2.0.165"></script>
+    <script src="js/timer.js?v=2.0.165"></script>
+    <script src="js/sigil.js?v=2.0.165"></script>
+    <script src="js/noise-detector.js?v=2.0.165"></script>
+    <script src="js/universe-messages.js?v=2.0.165"></script>
+    
+    <script src="js/app_v2.js?v=3.0.0"></script>
+</body>
+</html>
