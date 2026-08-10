@@ -2680,10 +2680,9 @@ const OrisApp = {
       canvas.height = 1920;
       const ctx = canvas.getContext('2d');
 
-      const fps = 30; // 30fps to prevent hardware encoder frame drops (stuttering)
       const durationSec = 12;
-      
-      const stream = canvas.captureStream(fps);
+      // Do not specify FPS here; let it capture exactly when the canvas updates
+      const stream = canvas.captureStream(); 
       
       const destNode = OrisAudio.ctx.createMediaStreamDestination();
       const videoGain = OrisAudio.ctx.createGain();
@@ -2716,8 +2715,11 @@ const OrisApp = {
           if (OrisAudio.stopEvilAmbient) OrisAudio.stopEvilAmbient();
           if (OrisAudio.stopAllElements) OrisAudio.stopAllElements();
       }, 10000);
-      let mimeType = 'video/webm';
-      if (MediaRecorder.isTypeSupported('video/mp4')) mimeType = 'video/mp4';
+      
+      let mimeType = 'video/mp4';
+      if (!MediaRecorder.isTypeSupported(mimeType)) {
+          mimeType = 'video/webm;codecs=vp8,opus';
+      }
       
       const mediaRecorder = new MediaRecorder(stream, { mimeType: mimeType });
       const chunks = [];
@@ -2768,18 +2770,36 @@ const OrisApp = {
       mediaRecorder.start();
       
       const startTime = performance.now();
+      let lastRenderTime = startTime;
+      const targetFps = 30;
+      const fpsInterval = 1000 / targetFps;
+      let isRecording = true;
+      
       const renderFrame = (currentTime) => {
+          if (!isRecording) return;
           if (!currentTime) currentTime = performance.now();
+          
+          requestAnimationFrame(renderFrame);
+          
+          const elapsedSinceLastRender = currentTime - lastRenderTime;
+          
+          // Throttle to exactly 30fps to prevent encoder overload and frame timing aliasing
+          if (elapsedSinceLastRender < fpsInterval) {
+              return;
+          }
+          
+          // Adjust last render time accounting for drift
+          lastRenderTime = currentTime - (elapsedSinceLastRender % fpsInterval);
+          
           const elapsed = (currentTime - startTime) / 1000;
           
           if (elapsed >= durationSec) {
+              isRecording = false;
               mediaRecorder.stop();
               return;
           }
           
-          this.renderSigilCanvas(ctx, text, freq, isEvil, activeElementsSet, elapsed);
-          
-          requestAnimationFrame(renderFrame);
+          this.renderSigilCanvas(ctx, text, freq, isEvil, activeElementsSet, Math.min(elapsed, durationSec));
       };
       
       renderFrame();
