@@ -1750,35 +1750,43 @@ const OrisApp = {
       const orbitAlpha = isVideo ? Math.max(0, Math.min(1.0, (elapsed - 2.0) / 2.0)) : 1.0;
       if (orbitAlpha > 0) {
           ctx.save();
-          let unlockedArray = [];
-          try {
-              const unlockedStr = localStorage.getItem('oris_achievements');
-              if (unlockedStr) {
-                  const parsed = JSON.parse(unlockedStr);
-                  if (Array.isArray(parsed)) unlockedArray = parsed;
-              }
-          } catch(e) {}
-          
-          const ACHIEVEMENTS_DATA = [
-              { id: "init", color: "#A87C7C" }, { id: "early", color: "#7CA89B" },
-              { id: "night", color: "#5F6B8A" }, { id: "fifty", color: "#A8987C" },
-              { id: "moon", color: "#939CA9" }, { id: "alchemist", color: "#4E876A" },
-              { id: "compassive", color: "#5A8BB5" }, { id: "grateful", color: "#D4B85A" },
-              { id: "sincere", color: "#D4845A" }, { id: "humble", color: "#7B5EA7" }
-          ];
+          if (!this._cachedOrbitAchievements || this._cachedOrbitLang !== this.currentLang) {
+              let unlockedArray = [];
+              try {
+                  const unlockedStr = localStorage.getItem('oris_achievements');
+                  if (unlockedStr) {
+                      const parsed = JSON.parse(unlockedStr);
+                      if (Array.isArray(parsed)) unlockedArray = parsed;
+                  }
+              } catch(e) {}
+              
+              const ACHIEVEMENTS_DATA = [
+                  { id: "init", color: "#A87C7C" }, { id: "early", color: "#7CA89B" },
+                  { id: "night", color: "#5F6B8A" }, { id: "fifty", color: "#A8987C" },
+                  { id: "moon", color: "#939CA9" }, { id: "alchemist", color: "#4E876A" },
+                  { id: "compassive", color: "#5A8BB5" }, { id: "grateful", color: "#D4B85A" },
+                  { id: "sincere", color: "#D4845A" }, { id: "humble", color: "#7B5EA7" }
+              ];
+              
+              this._cachedOrbitAchievements = ACHIEVEMENTS_DATA.map(ach => {
+                  const isUnlocked = unlockedArray.includes(ach.id);
+                  const titleStr = 'achievements.' + ach.id + '.title';
+                  let titleText = (typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang][titleStr]) ? Translations[this.currentLang][titleStr] : titleStr;
+                  titleText = titleText.replace(/^(El |La |Los |Las |The |Il |L'|La |I |Gli |Le )/i, '');
+                  titleText = titleText.charAt(0).toUpperCase() + titleText.slice(1);
+                  return { ...ach, isUnlocked, titleText };
+              });
+              this._cachedOrbitLang = this.currentLang;
+          }
 
           const orbitRadius = 350; // Radius closely hugging the max sigil radius (340)
           const orbitCenterX = width / 2;
           const orbitCenterY = 575;
           const globalRotation = isVideo ? (elapsed / 40.0) * Math.PI * 2 : 0;
           
-          ACHIEVEMENTS_DATA.forEach((ach, index) => {
-              const isUnlocked = unlockedArray.includes(ach.id);
-              const titleStr = 'achievements.' + ach.id + '.title';
-              let titleText = (typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang][titleStr]) ? Translations[this.currentLang][titleStr] : titleStr;
-              // Strip articles for orbiting text to prevent overlapping
-              titleText = titleText.replace(/^(El |La |Los |Las |The |Il |L'|La |I |Gli |Le )/i, '');
-              titleText = titleText.charAt(0).toUpperCase() + titleText.slice(1);
+          this._cachedOrbitAchievements.forEach((ach, index) => {
+              const isUnlocked = ach.isUnlocked;
+              const titleText = ach.titleText;
               
               const baseAngle = (index * 0.1 + 0.05) * Math.PI * 2;
               const totalAngle = baseAngle + globalRotation;
