@@ -3069,6 +3069,32 @@ const OrisApp = {
         msgCountry.textContent = randomMsg.country || 'Desconocido';
         msgText.textContent = randomMsg.text;
         
+        const translateBtn = document.getElementById('btn-translate-message');
+        if (translateBtn) {
+            if (randomMsg.lang && randomMsg.lang !== this.currentLang) {
+                translateBtn.style.display = 'block';
+                translateBtn.innerText = 'Traducir mensaje';
+                translateBtn.onclick = () => {
+                    translateBtn.innerText = '...';
+                    fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(randomMsg.text)}&langpair=${randomMsg.lang}|${this.currentLang}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.responseData && data.responseData.translatedText) {
+                                msgText.textContent = data.responseData.translatedText;
+                                translateBtn.style.display = 'none';
+                            } else {
+                                translateBtn.style.display = 'none';
+                            }
+                        })
+                        .catch(() => {
+                            translateBtn.style.display = 'none';
+                        });
+                };
+            } else {
+                translateBtn.style.display = 'none';
+            }
+        }
+        
         // Details
         const now = new Date();
         const timeStr = `<strong>${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>`;
