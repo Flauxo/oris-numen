@@ -1207,13 +1207,15 @@ const OrisApp = {
               textEl.setAttribute("class", "sigil-orbit-text");
               
               if (isUnlocked) {
-                  textEl.setAttribute("fill", ach.color);
+                  const unlockedColor = isEvil ? "#CC0000" : ach.color;
+                  textEl.setAttribute("fill", unlockedColor);
                   textEl.setAttribute("font-weight", "bold");
                   textEl.setAttribute("font-size", "13px");
                   textEl.setAttribute("opacity", "1");
-                  textEl.style.filter = "drop-shadow(0px 0px 5px " + ach.color + ")";
+                  textEl.style.filter = "drop-shadow(0px 0px 5px " + unlockedColor + ")";
               } else {
-                  textEl.setAttribute("fill", "#b0b0b0");
+                  const lockedColor = isEvil ? "#8b0000" : "#b0b0b0";
+                  textEl.setAttribute("fill", lockedColor);
                   textEl.setAttribute("font-weight", "normal");
                   textEl.setAttribute("font-size", "10px");
                   textEl.setAttribute("opacity", "0.7");
@@ -1748,76 +1750,100 @@ const OrisApp = {
       const orbitAlpha = isVideo ? Math.max(0, Math.min(1.0, (elapsed - 2.0) / 2.0)) : 1.0;
       if (orbitAlpha > 0) {
           ctx.save();
-          let unlockedArray = [];
-          try {
-              const unlockedStr = localStorage.getItem('oris_achievements');
-              if (unlockedStr) {
-                  const parsed = JSON.parse(unlockedStr);
-                  if (Array.isArray(parsed)) unlockedArray = parsed;
-              }
-          } catch(e) {}
-          
-          const ACHIEVEMENTS_DATA = [
-              { id: "init", color: "#A87C7C" }, { id: "early", color: "#7CA89B" },
-              { id: "night", color: "#5F6B8A" }, { id: "fifty", color: "#A8987C" },
-              { id: "moon", color: "#939CA9" }, { id: "alchemist", color: "#4E876A" },
-              { id: "compassive", color: "#5A8BB5" }, { id: "grateful", color: "#D4B85A" },
-              { id: "sincere", color: "#D4845A" }, { id: "humble", color: "#7B5EA7" }
-          ];
+          if (!this._orbitOffscreenCanvas || this._cachedOrbitLang !== this.currentLang || this._cachedOrbitIsEvil !== isEvil) {
+              let unlockedArray = [];
+              try {
+                  const unlockedStr = localStorage.getItem('oris_achievements');
+                  if (unlockedStr) {
+                      const parsed = JSON.parse(unlockedStr);
+                      if (Array.isArray(parsed)) unlockedArray = parsed;
+                  }
+              } catch(e) {}
+              
+              const ACHIEVEMENTS_DATA = [
+                  { id: "init", color: "#A87C7C" }, { id: "early", color: "#7CA89B" },
+                  { id: "night", color: "#5F6B8A" }, { id: "fifty", color: "#A8987C" },
+                  { id: "moon", color: "#939CA9" }, { id: "alchemist", color: "#4E876A" },
+                  { id: "compassive", color: "#5A8BB5" }, { id: "grateful", color: "#D4B85A" },
+                  { id: "sincere", color: "#D4845A" }, { id: "humble", color: "#7B5EA7" }
+              ];
+              
+              this._cachedOrbitAchievements = ACHIEVEMENTS_DATA.map(ach => {
+                  const isUnlocked = unlockedArray.includes(ach.id);
+                  const titleStr = 'achievements.' + ach.id + '.title';
+                  let titleText = (typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang][titleStr]) ? Translations[this.currentLang][titleStr] : titleStr;
+                  titleText = titleText.replace(/^(El |La |Los |Las |The |Il |L'|La |I |Gli |Le )/i, '');
+                  titleText = titleText.charAt(0).toUpperCase() + titleText.slice(1);
+                  return { ...ach, isUnlocked, titleText };
+              });
+              
+              const offCanvas = document.createElement('canvas');
+              offCanvas.width = width;
+              offCanvas.height = height;
+              const offCtx = offCanvas.getContext('2d');
+              
+              const orbitRadius = 350;
+              const orbitCenterX = width / 2;
+              const orbitCenterY = 575;
+              
+              this._cachedOrbitAchievements.forEach((ach, index) => {
+                  const isUnlocked = ach.isUnlocked;
+                  const titleText = ach.titleText;
+                  
+                  const baseAngle = (index * 0.1 + 0.05) * Math.PI * 2;
+                  
+                  if (isUnlocked) {
+                      const unlockedColor = isEvil ? "#CC0000" : ach.color;
+                      offCtx.fillStyle = unlockedColor;
+                      offCtx.font = '700 37px "Cormorant Garamond", serif';
+                      offCtx.shadowColor = unlockedColor;
+                      offCtx.shadowBlur = 12;
+                  } else {
+                      const lockedColor = isEvil ? "#8b0000" : "#b0b0b0";
+                      offCtx.fillStyle = lockedColor;
+                      offCtx.font = '400 29px "Cormorant Garamond", serif';
+                      offCtx.shadowColor = "transparent";
+                      offCtx.shadowBlur = 0;
+                  }
+                  
+                  offCtx.save();
+                  offCtx.translate(orbitCenterX, orbitCenterY);
+                  offCtx.rotate(baseAngle);
+                  
+                  const textWidth = offCtx.measureText(titleText).width;
+                  const anglePerPixel = 1 / orbitRadius;
+                  offCtx.rotate(- (textWidth / 2) * anglePerPixel);
+                  
+                  for (let i = 0; i < titleText.length; i++) {
+                      const char = titleText[i];
+                      const charWidth = offCtx.measureText(char).width;
+                      
+                      offCtx.save();
+                      offCtx.translate(0, -orbitRadius);
+                      offCtx.textAlign = "center";
+                      offCtx.textBaseline = "bottom";
+                      offCtx.fillText(char, 0, 0);
+                      offCtx.restore();
+                      
+                      offCtx.rotate(charWidth * anglePerPixel);
+                  }
+                  offCtx.restore();
+              });
+              
+              this._orbitOffscreenCanvas = offCanvas;
+              this._cachedOrbitLang = this.currentLang;
+              this._cachedOrbitIsEvil = isEvil;
+          }
 
-          const orbitRadius = 350; // Radius closely hugging the max sigil radius (340)
           const orbitCenterX = width / 2;
           const orbitCenterY = 575;
           const globalRotation = isVideo ? (elapsed / 40.0) * Math.PI * 2 : 0;
           
-          ACHIEVEMENTS_DATA.forEach((ach, index) => {
-              const isUnlocked = unlockedArray.includes(ach.id);
-              const titleStr = 'achievements.' + ach.id + '.title';
-              let titleText = (typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang][titleStr]) ? Translations[this.currentLang][titleStr] : titleStr;
-              // Strip articles for orbiting text to prevent overlapping
-              titleText = titleText.replace(/^(El |La |Los |Las |The |Il |L'|La |I |Gli |Le )/i, '');
-              titleText = titleText.charAt(0).toUpperCase() + titleText.slice(1);
-              
-              const baseAngle = (index * 0.1 + 0.05) * Math.PI * 2;
-              const totalAngle = baseAngle + globalRotation;
-              
-              if (isUnlocked) {
-                  ctx.fillStyle = ach.color;
-                  ctx.font = '700 37px "Cormorant Garamond", serif';
-                  ctx.globalAlpha = orbitAlpha * 1.0;
-                  ctx.shadowColor = ach.color;
-                  ctx.shadowBlur = 12;
-              } else {
-                  ctx.fillStyle = "#b0b0b0";
-                  ctx.font = '400 29px "Cormorant Garamond", serif';
-                  ctx.globalAlpha = orbitAlpha * 0.7;
-                  ctx.shadowColor = "transparent";
-                  ctx.shadowBlur = 0;
-              }
-              
-              ctx.save();
-              ctx.translate(orbitCenterX, orbitCenterY);
-              ctx.rotate(totalAngle);
-              
-              const textWidth = ctx.measureText(titleText).width;
-              const anglePerPixel = 1 / orbitRadius;
-              ctx.rotate(- (textWidth / 2) * anglePerPixel);
-              
-              for (let i = 0; i < titleText.length; i++) {
-                  const char = titleText[i];
-                  const charWidth = ctx.measureText(char).width;
-                  
-                  ctx.save();
-                  ctx.translate(0, -orbitRadius);
-                  ctx.textAlign = "center";
-                  ctx.textBaseline = "bottom";
-                  ctx.fillText(char, 0, 0);
-                  ctx.restore();
-                  
-                  ctx.rotate(charWidth * anglePerPixel);
-              }
-              ctx.restore();
-          });
+          ctx.globalAlpha = orbitAlpha;
+          ctx.save();
+          ctx.translate(orbitCenterX, orbitCenterY);
+          ctx.rotate(globalRotation);
+          ctx.drawImage(this._orbitOffscreenCanvas, -orbitCenterX, -orbitCenterY);
           ctx.restore();
       }
       
