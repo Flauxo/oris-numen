@@ -109,7 +109,7 @@ const universeMessages = [
     {
         "lang": "es",
         "country": "España",
-        "text": "alguien sabe si mi ex me va a desbloquear o me rindo ya? 😭"
+        "text": "alguien sabe si mi ex me va a desbloquear o me rindo ya? "
     },
     {
         "lang": "es",
@@ -119,7 +119,7 @@ const universeMessages = [
     {
         "lang": "es",
         "country": "Argentina",
-        "text": "universo si escuchas esto por favor q baje el precio de la birra 🙏"
+        "text": "universo si escuchas esto por favor q baje el precio de la birra "
     },
     {
         "lang": "es",
@@ -299,7 +299,7 @@ const universeMessages = [
     {
         "lang": "fr",
         "country": "Suisse",
-        "text": "pardon maman g cassé ton vase préféré et g accusé le chat... 😭"
+        "text": "pardon maman g cassé ton vase préféré et g accusé le chat... "
     },
     {
         "lang": "fr",
@@ -344,7 +344,7 @@ const universeMessages = [
     {
         "lang": "it",
         "country": "Italia",
-        "text": "universo fammi prendere 30 al prossimo esame anche se non ho studiato un cazzo 🙏"
+        "text": "universo fammi prendere 30 al prossimo esame anche se non ho studiato un cazzo "
     },
     {
         "lang": "it",
@@ -389,7 +389,7 @@ const universeMessages = [
     {
         "lang": "pt",
         "country": "Brasil",
-        "text": "universo pq ele visualiza e nao responde??? q odioo 🤡"
+        "text": "universo pq ele visualiza e nao responde??? q odioo "
     },
     {
         "lang": "pt",
@@ -449,7 +449,7 @@ const universeMessages = [
     {
         "lang": "es",
         "country": "México",
-        "text": "no kiero ser adulto, todo es cobrar facturas y q te duela la espalda 🥲"
+        "text": "no kiero ser adulto, todo es cobrar facturas y q te duela la espalda "
     },
     {
         "lang": "es",
@@ -584,7 +584,7 @@ const universeMessages = [
     {
         "lang": "ja",
         "country": "Japan",
-        "text": "スマホ落として画面割れた…立ち直れない😭"
+        "text": "スマホ落として画面割れた…立ち直れない"
     },
     {
         "lang": "es",
