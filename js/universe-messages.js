@@ -782,4 +782,441 @@ const universeMessages = [
         "text": "sorry mom i am the one who scratched the car not the dog"
     }
 
+,
+    {
+        "lang": "es",
+        "country": "España",
+        "text": "Universo, por favor te lo pido, haz que Ivan me hable de una vez. Llevo 3 meses mirandole en la bibilioteca y no soy capaz de decirle ni hola. O sea, soy un desastre, necesito una señal divina o un empujoncito. Prometo ser buena el resto del año."
+    },
+    {
+        "lang": "en",
+        "country": "United States",
+        "text": "I confess, I accidentally ate Martha s sandwich from the fridge yesterday. In my defense, it looked delicious and she wasn't around. I hope she doesn't read this. Universe, please clear my conscience and my karma."
+    },
+    {
+        "lang": "fr",
+        "country": "Francia",
+        "text": "Cher univers, je sais que je demande beaucoup, mais si tu pouvais faire en sorte que Cristine accepte mon invitation à dîner ce vendredi, je te serais éternellement reconnaissant. J'ai même acheté de nouvelles chaussures."
+    },
+    {
+        "lang": "de",
+        "country": "Alemania",
+        "text": "Liebes Universum, warum hast du Emily so perfekt gemacht? Jedes Mal, wenn sie lächelt, vergesse ich, wie man atmet. Bitte gib mir den Mut, sie endlich nach einem Date zu fragen, bevor ich vor Aufregung platze."
+    },
+    {
+        "lang": "it",
+        "country": "Italia",
+        "text": "Universo caro, ti prego, fa che la zia Matilde smetta di chiedermi quando mi sposo ogni volta che ci vediamo a Natale. Non ne posso più, sto per inventarmi un fidanzato immaginario solo per farla stare tranquilla."
+    },
+    {
+        "lang": "sv",
+        "country": "Suecia",
+        "text": "Kära universum, om Gustav ringer mig ikväll lovar jag att städa hela lägenheten. Och kanske till och med baka något. Snälla, låt honom ringa. Jag orkar inte vänta längre på ett tecken."
+    },
+    {
+        "lang": "pt",
+        "country": "Brasil",
+        "text": "Universo, só queria dizer que a Maya tem o sorriso mais lindo que eu já vi na vida. Se você pudesse dar um jeito dos nossos caminhos se cruzarem de novo, eu prometo que dessa vez eu não vou travar e vou falar com ela."
+    },
+    {
+        "lang": "en",
+        "country": "UK",
+        "text": "Universe, please tell me why I walked into this room. I forgot entirely."
+    },
+    {
+        "lang": "es",
+        "country": "Brasil",
+        "text": "Quiero conprar una casa para mis papas."
+    },
+    {
+        "lang": "fr",
+        "country": "España",
+        "text": "Universo, alludame a tomar la decision correcta."
+    },
+    {
+        "lang": "pt",
+        "country": "United States",
+        "text": "I just want to be rich enough to not care if guacamole is extra."
+    },
+    {
+        "lang": "tr",
+        "country": "Italia",
+        "text": "Quiero ser tan feliz como alguien que acaba de encontrar 20 euros en un abrigo viejo."
+    },
+    {
+        "lang": "de",
+        "country": "España",
+        "text": "A veces lloro con los anuncios de seguros de vida."
+    },
+    {
+        "lang": "es",
+        "country": "Francia",
+        "text": "I confess, I use my dog as an excuse to leave parties early."
+    },
+    {
+        "lang": "en",
+        "country": "China",
+        "text": "Quero ser uma pessoa melhor a cada dia."
+    },
+    {
+        "lang": "ko",
+        "country": "Italia",
+        "text": "Universe, please forgive all my sines."
+    },
+    {
+        "lang": "pl",
+        "country": "Italia",
+        "text": "毎日健康で過ごせますように。"
+    },
+    {
+        "lang": "es",
+        "country": "España",
+        "text": "I wish for good health for my whole family."
+    },
+    {
+        "lang": "tr",
+        "country": "Corea",
+        "text": "Я хочу, чтобы в мире был мир."
+    },
+    {
+        "lang": "en",
+        "country": "España",
+        "text": "Quiero ser inmensamente felis, es mucho pedir?"
+    },
+    {
+        "lang": "it",
+        "country": "Italia",
+        "text": "Quiero ser una persona exsitoza en la vida."
+    },
+    {
+        "lang": "tr",
+        "country": "Alemania",
+        "text": "Deseo que mi perrito viva para ciempre."
+    },
+    {
+        "lang": "zh",
+        "country": "United States",
+        "text": "Universo, dame paciencia, porque si me das fuerza lo mato."
+    },
+    {
+        "lang": "it",
+        "country": "Italia",
+        "text": "Je souhaite trouver la paix intérieure."
+    },
+    {
+        "lang": "zh",
+        "country": "China",
+        "text": "I judge people based on their grocery cart contents."
+    },
+    {
+        "lang": "sv",
+        "country": "Mexico",
+        "text": "I secretly enjoy pineapple on pizza, please don't judge me universe."
+    },
+    {
+        "lang": "ar",
+        "country": "UK",
+        "text": "Universe, if you are listening, please delete my browser history if I die suddenly. Thanks."
+    },
+    {
+        "lang": "es",
+        "country": "Mexico",
+        "text": "Por fabor universo, escucha mis plegarias."
+    },
+    {
+        "lang": "jp",
+        "country": "Italia",
+        "text": "A veces me hago el dormido en el metro para no ceder el asiento, lo siento universo."
+    },
+    {
+        "lang": "it",
+        "country": "Mexico",
+        "text": "Si el universo es infinito, ¿por qué siempre choco con la misma pata de la cama?"
+    },
+    {
+        "lang": "fr",
+        "country": "United States",
+        "text": "Ojalá mi gato me mirara con el mismo amor con el que mira a la mosca de la pared."
+    },
+    {
+        "lang": "de",
+        "country": "Mexico",
+        "text": "Voglio viaggiare e scoprire nuove culture."
+    },
+    {
+        "lang": "tr",
+        "country": "Italia",
+        "text": "Universe, pleese give me a sign what to do next with my life."
+    },
+    {
+        "lang": "es",
+        "country": "España",
+        "text": "Le dije a mi jefe que estaba enfermo pero en realidad me quedé jugando videojuegos todo el día."
+    },
+    {
+        "lang": "nl",
+        "country": "Alemania",
+        "text": "Quiero encontrar el valor para emprender mi propio negocio."
+    },
+    {
+        "lang": "pt",
+        "country": "Corea",
+        "text": "Universo, guíame en este momento de incertidumbre."
+    },
+    {
+        "lang": "ar",
+        "country": "UK",
+        "text": "Universo, por favor ayudame a pasar el exsamen de mañana, no he estudiado nada."
+    },
+    {
+        "lang": "ko",
+        "country": "España",
+        "text": "I hope to meet people who bring out the best in me."
+    },
+    {
+        "lang": "tr",
+        "country": "España",
+        "text": "Le he estado echando la culpa a mi hermano de romper el jarrón durante 5 años."
+    },
+    {
+        "lang": "pt",
+        "country": "España",
+        "text": "Ich hoffe auf eine bessere Zukunft."
+    },
+    {
+        "lang": "en",
+        "country": "Portugal",
+        "text": "Deseo allar la paz interior que tanto busco."
+    },
+    {
+        "lang": "tr",
+        "country": "Italia",
+        "text": "Universo, dame fuersas para seguir adelante."
+    },
+    {
+        "lang": "sv",
+        "country": "Corea",
+        "text": "Le pongo agua al champú para que dure más."
+    },
+    {
+        "lang": "zh",
+        "country": "Italia",
+        "text": "I realy hope I get that job intervew tomorrow."
+    },
+    {
+        "lang": "es",
+        "country": "Corea",
+        "text": "A veces escucho reggaeton a escondidas con los auriculares puestos."
+    },
+    {
+        "lang": "tr",
+        "country": "Portugal",
+        "text": "Cher univers, fais que le chocolat ne fasse pas grossir. C est tout ce que je demande."
+    },
+    {
+        "lang": "jp",
+        "country": "Alemania",
+        "text": "Por favor universo, que inventen el teletransporte ya, estoy harto del tráfico."
+    },
+    {
+        "lang": "nl",
+        "country": "Portugal",
+        "text": "希望所有的梦想都能成真。"
+    },
+    {
+        "lang": "sv",
+        "country": "Portugal",
+        "text": "I wish I culd go back in time and change things."
+    },
+    {
+        "lang": "ko",
+        "country": "Alemania",
+        "text": "I use the same password for everything. I know it's bad."
+    },
+    {
+        "lang": "jp",
+        "country": "Corea",
+        "text": "Deseo que el café me haga el mismo efecto que a la gente de los anuncios."
+    },
+    {
+        "lang": "tr",
+        "country": "Francia",
+        "text": "Espero que todo salga vien en la operacion."
+    },
+    {
+        "lang": "pt",
+        "country": "Francia",
+        "text": "Quiero vivir una vida sin arrepentimientos."
+    },
+    {
+        "lang": "ru",
+        "country": "United States",
+        "text": "I have imaginary arguments in the shower and I always win."
+    },
+    {
+        "lang": "de",
+        "country": "España",
+        "text": "I pretend to be on a phone call when I see someone I know in public."
+    },
+    {
+        "lang": "de",
+        "country": "Brasil",
+        "text": "Universo, as que mi crush se fije en mi, porfa."
+    },
+    {
+        "lang": "de",
+        "country": "United States",
+        "text": "Universo, que hoy me toque la lotería, o por lo menos que me sobre para un kebab."
+    },
+    {
+        "lang": "it",
+        "country": "Mexico",
+        "text": "Ojala algun dia alguen me quiera como yo los quiero a ellos."
+    },
+    {
+        "lang": "sv",
+        "country": "Brasil",
+        "text": "Universo, por que las pizzas son redondas, vienen en cajas cuadradas y se comen en triángulos? Mi cerebro no puede mas."
+    },
+    {
+        "lang": "ar",
+        "country": "Italia",
+        "text": "Universo, haz que hoy no me encuentre a nadie conocido en el supermercado porfavor, voy en pijama y con unos pelos horribles."
+    },
+    {
+        "lang": "fr",
+        "country": "Japón",
+        "text": "I wish for a world without hunger or poverty."
+    },
+    {
+        "lang": "zh",
+        "country": "España",
+        "text": "Me como el queso rallado a puñados directamente de la bolsa a las 3 de la mañana."
+    },
+    {
+        "lang": "jp",
+        "country": "Alemania",
+        "text": "Universe, give me the strength to overcome this obstacle."
+    },
+    {
+        "lang": "ko",
+        "country": "Portugal",
+        "text": "Espero que mi ermano se recupere pronto de su enfermedad."
+    },
+    {
+        "lang": "sv",
+        "country": "España",
+        "text": "Universo, dale un poco de sentido comun a mi jefe, o quitale el wifi, lo que sea mas facil."
+    },
+    {
+        "lang": "tr",
+        "country": "UK",
+        "text": "I haven't washed my favorite jeans in months."
+    },
+    {
+        "lang": "nl",
+        "country": "España",
+        "text": "Quiero viajar por todo el mudo antes de morir."
+    },
+    {
+        "lang": "jp",
+        "country": "Alemania",
+        "text": "I talk to my plants and pretend they are judging me."
+    },
+    {
+        "lang": "es",
+        "country": "Brasil",
+        "text": "Ojalá que mi perro me entienda cuando le explico por qué no puedo darle de mi comida."
+    },
+    {
+        "lang": "fr",
+        "country": "Brasil",
+        "text": "Je confesse que j ai mangé le dernier biscuit et j ai accusé le chien."
+    },
+    {
+        "lang": "sv",
+        "country": "United States",
+        "text": "I pretend I know what NFTs are when people talk about them."
+    },
+    {
+        "lang": "ko",
+        "country": "UK",
+        "text": "Nesecito unas vacaciones urgente en una playa desierta."
+    },
+    {
+        "lang": "pl",
+        "country": "Alemania",
+        "text": "Confieso que me gusta el olor a gasolina."
+    },
+    {
+        "lang": "ar",
+        "country": "Mexico",
+        "text": "A veces me busco a mí mismo en Google por aburrimiento."
+    },
+    {
+        "lang": "zh",
+        "country": "UK",
+        "text": "Quiero dejar una huella positiva en el mundo."
+    },
+    {
+        "lang": "sv",
+        "country": "Francia",
+        "text": "Deseo aprender a disfrutar de las pequeñas cosas."
+    },
+    {
+        "lang": "ar",
+        "country": "España",
+        "text": "Deseo tener la confianza de un cuervo robando papas fritas en la playa."
+    },
+    {
+        "lang": "ar",
+        "country": "España",
+        "text": "Me robé un bolígrafo del banco ayer, me siento fatal."
+    },
+    {
+        "lang": "zh",
+        "country": "China",
+        "text": "Por favor universo, que hoy no me toque sentarme al lado del que ronca en el tren."
+    },
+    {
+        "lang": "fr",
+        "country": "Alemania",
+        "text": "I hope to inspire others with my art."
+    },
+    {
+        "lang": "it",
+        "country": "Brasil",
+        "text": "Universe, send me an angel to gide me."
+    },
+    {
+        "lang": "fr",
+        "country": "Mexico",
+        "text": "Deseo poder perdonar a quienes me hicieron daño."
+    },
+    {
+        "lang": "zh",
+        "country": "Francia",
+        "text": "أتمنى السعادة لجميع الناس."
+    },
+    {
+        "lang": "jp",
+        "country": "Japón",
+        "text": "Universe, help me find my true passion."
+    },
+    {
+        "lang": "ru",
+        "country": "China",
+        "text": "Universo, haz que mi WiFi sea tan fuerte como mis ganas de no hacer nada hoy."
+    },
+    {
+        "lang": "sv",
+        "country": "Portugal",
+        "text": "Universe, please make my bank account as thiccc as my thighs."
+    },
+    {
+        "lang": "pt",
+        "country": "United States",
+        "text": "Quiero que mi mayor problema en la vida sea decidir en que isla privada voy a pasar mis vacaciones."
+    }
+
 ];
