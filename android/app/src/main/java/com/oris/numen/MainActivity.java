@@ -110,7 +110,37 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
                 runOnUiThread(() -> Toast.makeText(MainActivity.this, errorMsg, Toast.LENGTH_SHORT).show());
             }
+        }        @JavascriptInterface
+        public void scheduleGratitudeNotification(String message) {
+            try {
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Eco programado para dentro de 60s", Toast.LENGTH_SHORT).show());
+                
+                android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(MainActivity.this, NotificationReceiver.class);
+                intent.putExtra("type", "gratitude");
+                intent.putExtra("message", message);
+                
+                int requestCode = 100 + new java.util.Random().nextInt(1000);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                        MainActivity.this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                
+                long triggerAtMillis = System.currentTimeMillis() + 60 * 1000;
+                
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    try {
+                        alarmManager.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
+                    } catch (SecurityException se) {
+                        alarmManager.setAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
+                    }
+                } else {
+                    alarmManager.setExact(android.app.AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        
+
         
         @JavascriptInterface
         public void triggerNativeVibration() {
@@ -134,7 +164,16 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
+            }
+        }
+        
+requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         getWindow().getDecorView().setSystemUiVisibility(
