@@ -45,7 +45,15 @@ public class NotificationReceiver extends BroadcastReceiver {
         String title = "Oris Numen";
         String desc = "Eleva tu voz al universo.";
         
-        if ("morning".equals(type)) {
+        if ("gratitude".equals(type)) {
+            title = "Oris Numen";
+            String msg = intent.getStringExtra("message");
+            if (msg != null && !msg.isEmpty()) {
+                desc = msg;
+            } else {
+                desc = "Alguien en el mundo ha encontrado consuelo en tu mensaje";
+            }
+        } else if ("morning".equals(type)) {
             String[] mTitles = { "Buen día de reflexión", "Despierta tu esencia", "Comienza con paz" };
             String[] mDescs = { 
                 "El fin de semana es perfecto para canalizar tus pensamientos.",
@@ -84,7 +92,11 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setAutoCancel(true);
 
         if (notificationManager != null) {
-            notificationManager.notify(("morning".equals(type)) ? 2 : 1, builder.build());
+            int notifId = 1;
+            if ("morning".equals(type)) notifId = 2;
+            else if ("gratitude".equals(type)) notifId = 3;
+            notificationManager.notify(notifId, builder.build());
         }
     }
 }
+
