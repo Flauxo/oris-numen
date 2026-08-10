@@ -1743,7 +1743,26 @@ const OrisApp = {
       }
       ctx.globalAlpha = 1.0;
       if (typeof SigilGenerator !== 'undefined') {
-          SigilGenerator.draw(ctx, width / 2, 575, sigilRadius, text, freq.color, isEvil, sigilProgress);
+          if (sigilProgress >= 1.0) {
+              if (!this._sigilOffscreenCanvas || this._cachedSigilText !== text || this._cachedSigilIsEvil !== isEvil) {
+                  const sCanvas = document.createElement('canvas');
+                  sCanvas.width = 800;
+                  sCanvas.height = 800;
+                  const sCtx = sCanvas.getContext('2d');
+                  SigilGenerator.draw(sCtx, 400, 400, 340, text, freq.color, isEvil, 1.0);
+                  this._sigilOffscreenCanvas = sCanvas;
+                  this._cachedSigilText = text;
+                  this._cachedSigilIsEvil = isEvil;
+              }
+              ctx.save();
+              ctx.translate(width / 2, 575);
+              const scale = sigilRadius / 340;
+              ctx.scale(scale, scale);
+              ctx.drawImage(this._sigilOffscreenCanvas, -400, -400);
+              ctx.restore();
+          } else {
+              SigilGenerator.draw(ctx, width / 2, 575, sigilRadius, text, freq.color, isEvil, sigilProgress);
+          }
       }
       
       // Orbiting Text for Achievements (Image/Video Export)
@@ -1777,16 +1796,17 @@ const OrisApp = {
                   return { ...ach, isUnlocked, titleText };
               });
               
+              const offCanvasSize = 800;
+              const scale = 1.5; // Moderate scale for smoothness without huge memory cost
               const offCanvas = document.createElement('canvas');
-              const scale = 2;
-              offCanvas.width = width * scale;
-              offCanvas.height = height * scale;
+              offCanvas.width = offCanvasSize * scale;
+              offCanvas.height = offCanvasSize * scale;
               const offCtx = offCanvas.getContext('2d');
               offCtx.scale(scale, scale);
               
               const orbitRadius = 350;
-              const orbitCenterX = width / 2;
-              const orbitCenterY = 575;
+              const orbitCenterX = offCanvasSize / 2;
+              const orbitCenterY = offCanvasSize / 2;
               
               this._cachedOrbitAchievements.forEach((ach, index) => {
                   const isUnlocked = ach.isUnlocked;
@@ -1837,17 +1857,18 @@ const OrisApp = {
               this._cachedOrbitIsEvil = isEvil;
           }
 
-          const orbitCenterX = width / 2;
-          const orbitCenterY = 575;
           const globalRotation = isVideo ? (elapsed / 40.0) * Math.PI * 2 : 0;
+          const offCanvasSize = 800;
           
           ctx.globalAlpha = orbitAlpha;
           ctx.save();
           ctx.imageSmoothingEnabled = true;
           ctx.imageSmoothingQuality = "high";
-          ctx.translate(orbitCenterX, orbitCenterY);
+          // Translate to the center of the sigil on the main canvas
+          ctx.translate(width / 2, 575);
           ctx.rotate(globalRotation);
-          ctx.drawImage(this._orbitOffscreenCanvas, 0, 0, width * 2, height * 2, -orbitCenterX, -orbitCenterY, width, height);
+          // Draw the offscreen canvas centered around 0,0
+          ctx.drawImage(this._orbitOffscreenCanvas, 0, 0, offCanvasSize * 1.5, offCanvasSize * 1.5, -offCanvasSize / 2, -offCanvasSize / 2, offCanvasSize, offCanvasSize);
           ctx.restore();
       }
       
@@ -2659,7 +2680,7 @@ const OrisApp = {
       canvas.height = 1920;
       const ctx = canvas.getContext('2d');
 
-      const fps = 60; // 60fps to prevent stuttering in rotation animation
+      const fps = 30; // 30fps to prevent hardware encoder frame drops (stuttering)
       const durationSec = 12;
       
       const stream = canvas.captureStream(fps);
