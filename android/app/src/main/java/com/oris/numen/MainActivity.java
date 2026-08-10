@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
         }        @JavascriptInterface
         public void scheduleGratitudeNotification(String message) {
             try {
-                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Eco programado para dentro de 60s", Toast.LENGTH_SHORT).show());
+
                 
                 android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 Intent intent = new Intent(MainActivity.this, NotificationReceiver.class);
@@ -164,14 +164,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
-                Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                intent.setData(Uri.parse("package:" + getPackageName()));
-                startActivity(intent);
-            }
-        }
+        
         
 requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
