@@ -1834,21 +1834,24 @@ const OrisApp = {
                   
                   const textWidth = offCtx.measureText(titleText).width;
                   const anglePerPixel = 1 / orbitRadius;
-                  offCtx.rotate(- (textWidth / 2) * anglePerPixel);
                   
                   for (let i = 0; i < titleText.length; i++) {
                       const char = titleText[i];
-                      const charWidth = offCtx.measureText(char).width;
+                      const widthBefore = offCtx.measureText(titleText.substring(0, i)).width;
+                      const widthAfter = offCtx.measureText(titleText.substring(0, i + 1)).width;
+                      const charCenter = (widthBefore + widthAfter) / 2;
+                      
+                      const charAngle = (charCenter - textWidth / 2) * anglePerPixel;
                       
                       offCtx.save();
+                      offCtx.rotate(charAngle);
                       offCtx.translate(0, -orbitRadius);
                       offCtx.textAlign = "center";
                       offCtx.textBaseline = "bottom";
                       offCtx.fillText(char, 0, 0);
                       offCtx.restore();
-                      
-                      offCtx.rotate(charWidth * anglePerPixel);
                   }
+                  
                   offCtx.restore();
               });
               
