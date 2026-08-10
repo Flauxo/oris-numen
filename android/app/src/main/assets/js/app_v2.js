@@ -2970,7 +2970,7 @@ const OrisApp = {
         const spinner = document.getElementById('universe-spinner');
         
 
-        if (Math.random() < 0.15) {
+        if (Math.random() <= 1.0) { // TEST MODE: 100% probability
             const countries = ["Japón", "Corea del Sur", "Australia", "Italia", "Canadá", "Francia", "Reino Unido", "Alemania", "España", "México", "Colombia", "Brasil", "Argentina", "Chile", "Uruguay", "Perú", "Bolivia", "Ecuador", "Estados Unidos", "Nueva Zelanda"];
             const randomCountry = countries[Math.floor(Math.random() * countries.length)];
             let msg = (typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang]['universe.push_notification']) || "Alguien en {country} ha encontrado consuelo en tu mensaje";
