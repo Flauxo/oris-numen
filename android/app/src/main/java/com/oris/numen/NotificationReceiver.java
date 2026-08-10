@@ -85,7 +85,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             BootReceiver.scheduleNightNotification(context, 2);
         }
 
-        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(title)
                 .setContentText(desc)
                 .setContentIntent(pendingIntent)
