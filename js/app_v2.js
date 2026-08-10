@@ -1778,9 +1778,11 @@ const OrisApp = {
               });
               
               const offCanvas = document.createElement('canvas');
-              offCanvas.width = width;
-              offCanvas.height = height;
+              const scale = 2;
+              offCanvas.width = width * scale;
+              offCanvas.height = height * scale;
               const offCtx = offCanvas.getContext('2d');
+              offCtx.scale(scale, scale);
               
               const orbitRadius = 350;
               const orbitCenterX = width / 2;
@@ -1841,9 +1843,11 @@ const OrisApp = {
           
           ctx.globalAlpha = orbitAlpha;
           ctx.save();
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = "high";
           ctx.translate(orbitCenterX, orbitCenterY);
           ctx.rotate(globalRotation);
-          ctx.drawImage(this._orbitOffscreenCanvas, -orbitCenterX, -orbitCenterY);
+          ctx.drawImage(this._orbitOffscreenCanvas, 0, 0, width * 2, height * 2, -orbitCenterX, -orbitCenterY, width, height);
           ctx.restore();
       }
       
