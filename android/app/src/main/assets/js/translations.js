@@ -267,7 +267,7 @@ const Translations = {
         "universe.push_notification": "Alguien en {country} ha encontrado consuelo en tu mensaje",
 "universe.send_link": "Envía tu mensaje al universo",
         "universe.modal_title": "Envío al Universo",
-        "universe.modal_text1": "Aceptas enviar tu mensaje al universo de forma anónima y a cambio recibir un mensaje de un usuario o de un canalizador de la aplicación. Por favor, este mensaje guárdalo en tu interior y no lo compartas.",
+        "universe.modal_text1": "Al liberar tu mensaje, su energía fluirá hacia el universo de forma anónima. A cambio, el eco cósmico te devolverá la canalización de otra alma. Atesora estas palabras en tu interior y protégelas en silencio.",
         "universe.modal_text2": "Por favor, este mensaje guárdalo en tu interior y no lo compartas. Te pedimos que no hagas capturas de pantalla de esta sección.",
         "universe.btn_accept": "Aceptar",
         "universe.searching": "Buscando canalización...",
