@@ -2879,6 +2879,16 @@ const OrisApp = {
             });
         }
         
+        
+        const btnSendGratitude = document.getElementById('btn-send-gratitude');
+        const textGratitudeSent = document.getElementById('text-gratitude-sent');
+        if (btnSendGratitude && textGratitudeSent) {
+            btnSendGratitude.addEventListener('click', () => {
+                btnSendGratitude.style.display = 'none';
+                textGratitudeSent.style.display = 'block';
+            });
+        }
+
         if (btnAcceptUniverse) {
             btnAcceptUniverse.addEventListener('click', () => {
                 const proceed = () => {
@@ -2887,7 +2897,33 @@ const OrisApp = {
                         introContainer.style.opacity = '0';
                         setTimeout(() => {
                             introContainer.style.display = 'none';
-                            this.startUniverseSearch();
+                            this.
+    showSimulatedPushNotification() {
+        const pushUI = document.getElementById('simulated-push-notification');
+        const pushText = document.getElementById('push-notification-text');
+        if (!pushUI || !pushText) return;
+        
+        // Random country
+        const countries = ["Japón", "Corea del Sur", "Australia", "Italia", "Canadá", "Francia", "Reino Unido", "Alemania", "España", "México", "Colombia", "Brasil", "Argentina", "Chile", "Uruguay", "Perú", "Bolivia", "Ecuador", "Estados Unidos", "Nueva Zelanda"];
+        const randomCountry = countries[Math.floor(Math.random() * countries.length)];
+        
+        let msg = (typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang]['universe.push_notification']) || "Alguien en {country} ha encontrado consuelo en tu mensaje";
+        msg = msg.replace("{country}", randomCountry);
+        
+        pushText.textContent = msg;
+        
+        // Show push
+        pushUI.style.top = '20px';
+        pushUI.style.opacity = '1';
+        
+        // Hide push after 5 seconds
+        setTimeout(() => {
+            pushUI.style.top = '-100px';
+            pushUI.style.opacity = '0';
+        }, 5000);
+    },
+    
+    startUniverseSearch();
                         }, 300);
                     } else {
                         this.startUniverseSearch();
@@ -2947,7 +2983,15 @@ const OrisApp = {
         const counterText = document.getElementById('universe-searching-counter');
         const spinner = document.getElementById('universe-spinner');
         
+        
+        setTimeout(() => {
+            if (Math.random() < 0.15) {
+                this.showSimulatedPushNotification();
+            }
+        }, 20000);
+        
         searchingContainer.style.display = 'flex';
+
         setTimeout(() => {
             searchingContainer.style.opacity = '1';
         }, 10);
@@ -2989,7 +3033,14 @@ const OrisApp = {
         const msgDetails = document.getElementById('universe-msg-details');
         const msgText = document.getElementById('universe-msg-text');
         
+        
+        const btnSendGratitude = document.getElementById('btn-send-gratitude');
+        const textGratitudeSent = document.getElementById('text-gratitude-sent');
+        if (btnSendGratitude) btnSendGratitude.style.display = 'block';
+        if (textGratitudeSent) textGratitudeSent.style.display = 'none';
+        
         if (!this.seenUniverseMessages) this.seenUniverseMessages = [];
+
         if (this.seenUniverseMessages.length >= universeMessages.length) {
             this.seenUniverseMessages = [];
         }

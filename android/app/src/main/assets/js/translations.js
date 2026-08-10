@@ -1,5 +1,8 @@
 const Translations = {
     en: {
+        "universe.send_gratitude": "Send Gratitude",
+        "universe.gratitude_sent": "Gratitude sent",
+        "universe.push_notification": "Someone in {country} found comfort in your message",
 "universe.send_link": "Send your message to the universe",
         "universe.modal_title": "Send to the Universe",
         "universe.modal_text1": "You agree to send your message to the universe anonymously and in exchange receive a message from a user or a channeler of the application. Please, keep this message inside you and do not share it.",
@@ -259,6 +262,9 @@ const Translations = {
         "proverb.pazuzu.9": "The price of forbidden power is always paid in fragments of the soul.",
     },
     es: {
+        "universe.send_gratitude": "Enviar Gratitud",
+        "universe.gratitude_sent": "Gratitud enviada",
+        "universe.push_notification": "Alguien en {country} ha encontrado consuelo en tu mensaje",
 "universe.send_link": "Envía tu mensaje al universo",
         "universe.modal_title": "Envío al Universo",
         "universe.modal_text1": "Aceptas enviar tu mensaje al universo de forma anónima y a cambio recibir un mensaje de un usuario o de un canalizador de la aplicación. Por favor, este mensaje guárdalo en tu interior y no lo compartas.",
@@ -518,6 +524,9 @@ const Translations = {
         "proverb.pazuzu.9": "El precio del poder prohibido siempre se paga en fragmentos del alma.",
     },
     it: {
+        "universe.send_gratitude": "Invia Gratitudine",
+        "universe.gratitude_sent": "Gratitudine inviata",
+        "universe.push_notification": "Qualcuno in {country} ha trovato conforto nel tuo messaggio",
 "universe.send_link": "Invia il tuo messaggio all'universo",
         "universe.modal_title": "Invio all'Universo",
         "universe.modal_text1": "Accetti di inviare il tuo messaggio all'universo in modo anonimo e in cambio di ricevere un messaggio da un utente o canalizzatore. Per favore, conserva questo messaggio dentro di te e non condividerlo.",
@@ -777,6 +786,9 @@ const Translations = {
         "proverb.pazuzu.9": "Il prezzo del potere proibito si paga sempre in frammenti di anima.",
     },
     la: {
+        "universe.send_gratitude": "Mitte Gratiam",
+        "universe.gratitude_sent": "Gratia missa",
+        "universe.push_notification": "Aliqui in {country} solatium in nuntio tuo invenit",
 "universe.send_link": "Mitte nuntium tuum ad universum",
         "universe.modal_title": "Missio ad Universum",
         "universe.modal_text1": "Assentiris nuntium tuum ad universum mittere occulte et vicissim accipere nuntium ab alio utente. Quaeso, hunc nuntium intus custodi nec eum communica.",
@@ -1033,6 +1045,9 @@ const Translations = {
     }
 ,
     zh: {
+        "universe.send_gratitude": "发送感谢",
+        "universe.gratitude_sent": "感谢已发送",
+        "universe.push_notification": "{country} 的某个人在您的信息中找到了安慰",
 "universe.send_link": "å°†æ‚¨çš„ä¿¡æ�¯å�‘é€�ç»™å®‡å®™",
         "universe.modal_title": "å�‘é€�ç»™å®‡å®™",
         "universe.modal_text1": "æ‚¨å�Œæ„�åŒ¿å��å°†æ‚¨çš„ä¿¡æ�¯å�‘é€�ç»™å®‡å®™ï¼Œä½œä¸ºäº¤æ�¢ï¼Œæ‚¨å°†æ”¶åˆ°æ�¥è‡ªåº”ç”¨ç¨‹åº�ç”¨æˆ·æˆ–é€šç�µè€…çš„ä¿¡æ�¯ã€‚ è¯·å°†è¿™æ�¡ä¿¡æ�¯ä¿�å­˜åœ¨æ‚¨å†…å¿ƒï¼Œä¸�è¦�åˆ†äº«ã€‚",
