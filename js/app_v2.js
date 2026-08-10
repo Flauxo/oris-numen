@@ -2879,7 +2879,7 @@ const OrisApp = {
             });
         }
         
-        
+
         const btnSendGratitude = document.getElementById('btn-send-gratitude');
         const textGratitudeSent = document.getElementById('text-gratitude-sent');
         if (btnSendGratitude && textGratitudeSent) {
@@ -2897,33 +2897,7 @@ const OrisApp = {
                         introContainer.style.opacity = '0';
                         setTimeout(() => {
                             introContainer.style.display = 'none';
-                            this.
-    showSimulatedPushNotification() {
-        const pushUI = document.getElementById('simulated-push-notification');
-        const pushText = document.getElementById('push-notification-text');
-        if (!pushUI || !pushText) return;
-        
-        // Random country
-        const countries = ["Japón", "Corea del Sur", "Australia", "Italia", "Canadá", "Francia", "Reino Unido", "Alemania", "España", "México", "Colombia", "Brasil", "Argentina", "Chile", "Uruguay", "Perú", "Bolivia", "Ecuador", "Estados Unidos", "Nueva Zelanda"];
-        const randomCountry = countries[Math.floor(Math.random() * countries.length)];
-        
-        let msg = (typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang]['universe.push_notification']) || "Alguien en {country} ha encontrado consuelo en tu mensaje";
-        msg = msg.replace("{country}", randomCountry);
-        
-        pushText.textContent = msg;
-        
-        // Show push
-        pushUI.style.top = '20px';
-        pushUI.style.opacity = '1';
-        
-        // Hide push after 5 seconds
-        setTimeout(() => {
-            pushUI.style.top = '-100px';
-            pushUI.style.opacity = '0';
-        }, 5000);
-    },
-    
-    startUniverseSearch();
+                            this.startUniverseSearch();
                         }, 300);
                     } else {
                         this.startUniverseSearch();
@@ -2976,6 +2950,32 @@ const OrisApp = {
         }
     },
     
+
+    showSimulatedPushNotification() {
+        const pushUI = document.getElementById('simulated-push-notification');
+        const pushText = document.getElementById('push-notification-text');
+        if (!pushUI || !pushText) return;
+        
+        // Random country
+        const countries = ["Japón", "Corea del Sur", "Australia", "Italia", "Canadá", "Francia", "Reino Unido", "Alemania", "España", "México", "Colombia", "Brasil", "Argentina", "Chile", "Uruguay", "Perú", "Bolivia", "Ecuador", "Estados Unidos", "Nueva Zelanda"];
+        const randomCountry = countries[Math.floor(Math.random() * countries.length)];
+        
+        let msg = (typeof Translations !== 'undefined' && Translations[this.currentLang] && Translations[this.currentLang]['universe.push_notification']) || "Alguien en {country} ha encontrado consuelo en tu mensaje";
+        msg = msg.replace("{country}", randomCountry);
+        
+        pushText.textContent = msg;
+        
+        // Show push
+        pushUI.style.top = '20px';
+        pushUI.style.opacity = '1';
+        
+        // Hide push after 5 seconds
+        setTimeout(() => {
+            pushUI.style.top = '-100px';
+            pushUI.style.opacity = '0';
+        }, 5000);
+    },
+    
     startUniverseSearch() {
         const searchingContainer = document.getElementById('universe-searching-container');
         const searchingText = document.getElementById('universe-searching-text');
@@ -2983,7 +2983,7 @@ const OrisApp = {
         const counterText = document.getElementById('universe-searching-counter');
         const spinner = document.getElementById('universe-spinner');
         
-        
+
         setTimeout(() => {
             if (Math.random() < 0.15) {
                 this.showSimulatedPushNotification();
@@ -3033,7 +3033,7 @@ const OrisApp = {
         const msgDetails = document.getElementById('universe-msg-details');
         const msgText = document.getElementById('universe-msg-text');
         
-        
+
         const btnSendGratitude = document.getElementById('btn-send-gratitude');
         const textGratitudeSent = document.getElementById('text-gratitude-sent');
         if (btnSendGratitude) btnSendGratitude.style.display = 'block';
