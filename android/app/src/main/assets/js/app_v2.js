@@ -2884,7 +2884,8 @@ const OrisApp = {
         const textGratitudeSent = document.getElementById('text-gratitude-sent');
         if (btnSendGratitude && textGratitudeSent) {
             btnSendGratitude.addEventListener('click', () => {
-                btnSendGratitude.style.display = 'none';
+                btnSendGratitude.style.opacity = '0';
+                btnSendGratitude.style.pointerEvents = 'none';
                 textGratitudeSent.style.display = 'block';
                 // Trigger reflow
                 void textGratitudeSent.offsetWidth;
@@ -3026,7 +3027,10 @@ const OrisApp = {
 
         const btnSendGratitude = document.getElementById('btn-send-gratitude');
         const textGratitudeSent = document.getElementById('text-gratitude-sent');
-        if (btnSendGratitude) btnSendGratitude.style.display = 'block';
+        if (btnSendGratitude) {
+            btnSendGratitude.style.opacity = '1';
+            btnSendGratitude.style.pointerEvents = 'auto';
+        }
         if (textGratitudeSent) {
             textGratitudeSent.style.opacity = '0';
             textGratitudeSent.style.display = 'none';
