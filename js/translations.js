@@ -1,4 +1,4 @@
-const Translations = {
+﻿const Translations = {
     en: {
         "universe.send_gratitude": "Send Gratitude",
         "universe.gratitude_sent": "Gratitude sent",
@@ -92,7 +92,7 @@ const Translations = {
         "warning.noise": "Find a quieter place for a proper channeling.",
         "warning.too_many_clicks": "Please do not tap the symbol any more times.",
         
-        "success.title": "Message channeled<br>successfully",
+        "success.title": "Message channeled successfully",
         "success.subtitle.divine": "Your message has been elevated to the divine",
         "success.subtitle.evil": "Your message has been elevated to the evil one",
         "btn.home": "Back to start",
