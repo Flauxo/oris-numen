@@ -1207,13 +1207,15 @@ const OrisApp = {
               textEl.setAttribute("class", "sigil-orbit-text");
               
               if (isUnlocked) {
-                  textEl.setAttribute("fill", ach.color);
+                  const unlockedColor = isEvil ? "#ff6666" : ach.color;
+                  textEl.setAttribute("fill", unlockedColor);
                   textEl.setAttribute("font-weight", "bold");
                   textEl.setAttribute("font-size", "13px");
                   textEl.setAttribute("opacity", "1");
-                  textEl.style.filter = "drop-shadow(0px 0px 5px " + ach.color + ")";
+                  textEl.style.filter = "drop-shadow(0px 0px 5px " + unlockedColor + ")";
               } else {
-                  textEl.setAttribute("fill", "#b0b0b0");
+                  const lockedColor = isEvil ? "#8b0000" : "#b0b0b0";
+                  textEl.setAttribute("fill", lockedColor);
                   textEl.setAttribute("font-weight", "normal");
                   textEl.setAttribute("font-size", "10px");
                   textEl.setAttribute("opacity", "0.7");
@@ -1782,13 +1784,15 @@ const OrisApp = {
               const totalAngle = baseAngle + globalRotation;
               
               if (isUnlocked) {
-                  ctx.fillStyle = ach.color;
+                  const unlockedColor = isEvil ? "#ff6666" : ach.color;
+                  ctx.fillStyle = unlockedColor;
                   ctx.font = '700 37px "Cormorant Garamond", serif';
                   ctx.globalAlpha = orbitAlpha * 1.0;
-                  ctx.shadowColor = ach.color;
+                  ctx.shadowColor = unlockedColor;
                   ctx.shadowBlur = 12;
               } else {
-                  ctx.fillStyle = "#b0b0b0";
+                  const lockedColor = isEvil ? "#8b0000" : "#b0b0b0";
+                  ctx.fillStyle = lockedColor;
                   ctx.font = '400 29px "Cormorant Garamond", serif';
                   ctx.globalAlpha = orbitAlpha * 0.7;
                   ctx.shadowColor = "transparent";
