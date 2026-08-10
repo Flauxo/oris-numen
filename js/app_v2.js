@@ -3004,7 +3004,7 @@ const OrisApp = {
             if (counterText) counterText.textContent = seconds + 'sg';
         }, 1000);
         
-        const randomSeconds = Math.floor(Math.random() * (37 - 5 + 1)) + 5;
+        const randomSeconds = Math.floor(Math.random() * (27 - 5 + 1)) + 5;
         
         this.universeTimeoutId = setTimeout(() => {
             clearInterval(this.universeIntervalId);
@@ -3012,7 +3012,17 @@ const OrisApp = {
             
             setTimeout(() => {
                 searchingContainer.style.display = 'none';
-                this.showUniverseMessage();
+                if (randomSeconds === 27) {
+                    const noMsgs = (Translations[this.currentLang] && Translations[this.currentLang]['universe.no_messages']) || 'No hemos encontrado mensajes disponibles';
+                    alert(noMsgs);
+                    const universeModal = document.getElementById('universe-modal');
+                    if (universeModal) {
+                        universeModal.style.opacity = '0';
+                        setTimeout(() => universeModal.style.display = 'none', 500);
+                    }
+                } else {
+                    this.showUniverseMessage();
+                }
             }, 1000);
         }, randomSeconds * 1000);
     },
