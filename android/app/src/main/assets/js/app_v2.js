@@ -1212,7 +1212,7 @@ const OrisApp = {
                   textEl.setAttribute("font-weight", "bold");
                   textEl.setAttribute("font-size", "13px");
                   textEl.setAttribute("opacity", "1");
-                  textEl.style.filter = "drop-shadow(0px 0px 5px " + unlockedColor + ")";
+                  textEl.style.filter = "none";
               } else {
                   const lockedColor = isEvil ? "#8b0000" : "#b0b0b0";
                   textEl.setAttribute("fill", lockedColor);
@@ -1818,8 +1818,8 @@ const OrisApp = {
                       const unlockedColor = isEvil ? "#CC0000" : ach.color;
                       offCtx.fillStyle = unlockedColor;
                       offCtx.font = '700 37px "Cormorant Garamond", serif';
-                      offCtx.shadowColor = unlockedColor;
-                      offCtx.shadowBlur = 12;
+                      offCtx.shadowColor = "transparent";
+                      offCtx.shadowBlur = 0;
                   } else {
                       const lockedColor = isEvil ? "#8b0000" : "#b0b0b0";
                       offCtx.fillStyle = lockedColor;
