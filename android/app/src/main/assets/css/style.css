@@ -3446,7 +3446,7 @@ h3.nucleus-title {
 
     display: flex;
 
-    grid-template-columns: 1fr 1fr;
+    justify-content: center;
 
     background: var(--color-bg-primary);
 
@@ -3465,6 +3465,8 @@ h3.nucleus-title {
 .nucleus-stat-box {
 
     display: flex;
+
+    flex: 1;
 
     flex-direction: column;
 
