@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="css/fonts.css">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=2.0.165">
-    <link rel="stylesheet" href="css/animations.css?v=2.0.165">
+    <link rel="stylesheet" href="css/style.css?v=2.0.263">
+    <link rel="stylesheet" href="css/animations.css?v=2.0.263">
 </head>
 <body>
     <div class="app-container">
@@ -256,7 +256,7 @@
                         <!-- Dynamic achievements injected here -->
                     </svg>
                 </div>
-                <div class="success-proverb-container" style="margin-top: 15px; margin-bottom: 20px;">
+                <div class="success-proverb-container" style="margin-top: 15px;">
                     <p id="success-proverb" class="success-proverb"></p>
                 </div>
                 
@@ -327,6 +327,7 @@
                         <li class="sidebar-item"><a href="#" id="menu-item-evolution" data-i18n="menu.evolution">Evolución espiritual</a></li>
                         <li class="sidebar-item"><a href="#" id="menu-item-history" data-i18n="menu.history">Historial</a></li>
                         <li class="sidebar-item"><a href="#" id="menu-item-testimonials" data-i18n="menu.testimonials">Testimonios</a></li>
+                        <li class="sidebar-item"><a href="#" id="menu-item-streak" data-i18n="menu.streak">Días de sintonía</a></li>
                         <li class="sidebar-item"><a href="#" id="menu-item-about" data-i18n="menu.about">Acerca de</a></li>
                     </ul>
                 </div>
@@ -381,6 +382,31 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                         <span data-i18n="share.email">Compartir por Email</span>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Streak Overlay -->
+        <div id="streak-overlay" class="overlay">
+            <div class="overlay-backdrop" id="streak-backdrop"></div>
+            <div class="modal-card streak-modal">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: #000000; font-family: var(--font-serif);" data-i18n="streak.title">Días de sintonía</h3>
+                    <button id="btn-close-streak" class="btn-close-modal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+                <div class="modal-body streak-body">
+                    <p class="streak-you-are" data-i18n="streak.you_are">Eres</p>
+                    <p id="streak-rank-title" class="streak-rank-title">Buscador silencioso</p>
+                    <div class="streak-days-container">
+                        <svg class="streak-flame-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.97 0 8-3.03 8-8 0-2.52-1.17-5.15-2.91-7.44a15.55 15.55 0 0 0-3.02-3.2.5.5 0 0 0-.78.37c-.16 1.52-.76 3.24-1.81 4.38C10.47 9.2 9.1 9.56 8 9.2a.5.5 0 0 0-.64.55c.24 1.63-.23 3.56-1.42 4.97C4.74 16.12 4 17.78 4 19.5 4 19.5 5.03 22 12 22z"></path><path d="M10 15c0 1.1.9 2 2 2s2-.9 2-2c0-1.1-1-2.5-2-3.5-1 1-2 2.4-2 3.5z"></path></svg>
+                        <span id="streak-days-count" class="streak-days-count">0</span>
+                        <span id="streak-days-label" class="streak-days-label" data-i18n="streak.days_label">días canalizando</span>
+                    </div>
+                    <div class="streak-progress-bar-container">
+                        <div id="streak-progress-bar" class="streak-progress-bar" style="width: 0%"></div>
+                    </div>
+                    <p id="streak-next-rank" class="streak-next-rank" data-i18n="streak.next_rank">Siguiente título en X días</p>
+                    <p class="streak-explanation" data-i18n="streak.explanation">Esta es tu racha de días consecutivos realizando una o más canalizaciones. Cada cierto número de días alcanzarás un nuevo título espiritual.</p>
                 </div>
             </div>
         </div>
@@ -659,14 +685,11 @@
                         <p id="universe-msg-text" style="font-family: var(--font-sans); font-size: 1rem; font-weight: 400; text-align: left; margin: 0;"></p>
                     </div>
                     
-                    <div style="display: flex; flex-direction: column; align-items: stretch; width: 100%; gap: 12px; margin-top: 12px;">
-                        <div style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                            <span id="btn-translate-message" style="text-decoration: underline; cursor: pointer; display: none; margin-bottom: 12px; font-family: var(--font-sans); color: var(--color-text-primary); font-size: 0.9rem;">Traducir mensaje</span>
-                            <button id="btn-send-gratitude" class="btn-cancel" data-i18n="universe.send_gratitude" style="font-family: var(--font-sans); font-weight: 600; padding: 12px 32px; width: 100%; transition: opacity 0.5s ease; color: #000; border: 1px solid #000; background: transparent;">Enviar Gratitud</button>
-                            <p id="text-gratitude-sent" style="position: absolute; bottom: 12px; display: none; opacity: 0; transition: opacity 0.5s ease; font-family: var(--font-sans); font-size: 1.1rem; color: var(--color-text-primary); margin: 0; pointer-events: none;" data-i18n="universe.gratitude_sent">Gratitud enviada</p>
-                        </div>
-                        <button id="btn-universe-close" class="btn-home" data-i18n="universe.close">Cerrar</button>
+                    <div style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 15px; margin-top: 5px;">
+                        <button id="btn-send-gratitude" class="btn-cancel" data-i18n="universe.send_gratitude" style="font-family: var(--font-sans); font-weight: 600; padding: 12px 32px; width: 100%; transition: opacity 0.2s ease; margin-bottom: 15px;">Enviar Gratitud</button>
+                        <p id="text-gratitude-sent" style="display: none; font-family: var(--font-sans); font-size: 0.9rem; color: var(--color-text-muted); margin: 0; margin-bottom: 5px;" data-i18n="universe.gratitude_sent">Gratitud enviada</p>
                     </div>
+                    <button id="btn-universe-close" class="btn-home" style="width: 100%; margin-top: 10px;" data-i18n="universe.close">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -687,14 +710,14 @@
 
 
     <!-- Scripts -->
-    <script src="js/translations.js?v=2.0.165"></script>
-    <script src="js/audio.js?v=2.0.165"></script>
-    <script src="js/waveform.js?v=2.0.165"></script>
-    <script src="js/timer.js?v=2.0.165"></script>
-    <script src="js/sigil.js?v=2.0.165"></script>
-    <script src="js/noise-detector.js?v=2.0.165"></script>
-    <script src="js/universe-messages.js?v=2.0.165"></script>
+    <script src="js/translations.js?v=2.0.263"></script>
+    <script src="js/audio.js?v=2.0.263"></script>
+    <script src="js/waveform.js?v=2.0.263"></script>
+    <script src="js/timer.js?v=2.0.263"></script>
+    <script src="js/sigil.js?v=2.0.263"></script>
+    <script src="js/noise-detector.js?v=2.0.263"></script>
+    <script src="js/universe-messages.js?v=2.0.263"></script>
     
-    <script src="js/app_v2.js?v=3.0.1"></script>
+    <script src="js/app_v2.js?v=2.0.263"></script>
 </body>
 </html>
