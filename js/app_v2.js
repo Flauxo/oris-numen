@@ -3192,11 +3192,10 @@ const OrisApp = {
                 searchingContainer.style.display = 'none';
                 if (randomSeconds === 27) {
                     const noMsgs = (Translations[this.currentLang] && Translations[this.currentLang]['universe.no_messages']) || 'No hemos encontrado mensajes disponibles';
-                    alert(noMsgs);
-                    const universeModal = document.getElementById('universe-modal');
-                    if (universeModal) {
-                        universeModal.style.opacity = '0';
-                        setTimeout(() => universeModal.style.display = 'none', 500);
+                    this.showWarning(noMsgs);
+                    const modalUniverse = document.getElementById('universe-modal-overlay');
+                    if (modalUniverse) {
+                        modalUniverse.classList.remove('active');
                     }
                 } else {
                     this.showUniverseMessage();
