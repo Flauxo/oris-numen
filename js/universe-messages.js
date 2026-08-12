@@ -1084,8 +1084,8 @@ const universeMessages = [
         "text": "Universo, haz que hoy no me encuentre a nadie conocido en el supermercado porfavor, voy en pijama y con unos pelos horribles."
     },
     {
-        "lang": "fr",
-        "country": "Japón",
+        "lang": "en",
+        "country": "USA",
         "text": "I wish for a world without hunger or poverty."
     },
     {
@@ -1199,8 +1199,8 @@ const universeMessages = [
         "text": "أتمنى السعادة لجميع الناس."
     },
     {
-        "lang": "jp",
-        "country": "Japón",
+        "lang": "en",
+        "country": "Canada",
         "text": "Universe, help me find my true passion."
     },
     {
@@ -1527,7 +1527,7 @@ const universeMessages = [
     },
     {
         "lang": "fr",
-        "country": "Japón",
+        "country": "Francia",
         "text": "Pardonne-moi, univers, d'avoir coupé les ponts avec ma mère par orgueil. Maintenant que sa mémoire s'efface à cause de la maladie, je réalise le temps que j'ai gâché. Accorde-lui la paix dans ses moments d'égarement."
     },
     {
@@ -1562,7 +1562,7 @@ const universeMessages = [
     },
     {
         "lang": "es",
-        "country": "Japón",
+        "country": "España",
         "text": "Perdóname, universo, por haber cortado la relación con mi madre por orgullo. Ahora que su memoria se desvanece por la enfermedad, me doy cuenta del tiempo que desperdicié. Te pido que le des paz en sus momentos de confusión."
     },
     {
@@ -1602,7 +1602,7 @@ const universeMessages = [
     },
     {
         "lang": "it",
-        "country": "Japón",
+        "country": "Italia",
         "text": "Perdonami, universo, per aver interrotto i rapporti con mia madre per orgoglio. Ora che la malattia le cancella la memoria, capisco il tempo che ho sprecato. Ti prego di donarle pace nei suoi momenti di confusione."
     },
     {
