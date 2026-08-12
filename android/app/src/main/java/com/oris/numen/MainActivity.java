@@ -227,7 +227,7 @@ requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         webView.addJavascriptInterface(new WebAppInterface(), "AndroidInterface");
 
-        webView.loadUrl("file:///android_asset/index_v2.html");
+        webView.loadUrl("file:///android_asset/index.html");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED ||
