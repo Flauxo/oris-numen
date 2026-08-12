@@ -227,6 +227,24 @@ const OrisApp = {
         evolutionBackdrop.addEventListener('click', () => this.closeEvolutionCard());
     }
 
+    // Streak Card Handlers
+    const btnStreak = document.getElementById('menu-item-streak');
+    if (btnStreak) btnStreak.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openStreakCard();
+    });
+
+    const streakOverlay = document.getElementById('streak-overlay');
+    const streakBackdrop = streakOverlay ? streakOverlay.querySelector('.overlay-backdrop') : null;
+    if (streakBackdrop) {
+        streakBackdrop.addEventListener('click', () => this.closeStreakCard());
+    }
+
+    const btnCloseStreak = document.getElementById('btn-close-streak');
+    if (btnCloseStreak) {
+        btnCloseStreak.addEventListener('click', () => this.closeStreakCard());
+    }
+
     const testimonialsOverlay = document.getElementById('testimonials-overlay');
     const testimonialsBackdrop = testimonialsOverlay ? testimonialsOverlay.querySelector('.overlay-backdrop') : null;
     if (testimonialsBackdrop) {
@@ -905,6 +923,166 @@ const OrisApp = {
           aboutOverlay.classList.remove('active');
           OrisAudio.playButtonSound();
       }
+  },
+
+  /**
+   * Calculate consecutive day streak from channeling history
+   */
+  calculateStreak() {
+      let history = [];
+      try { history = JSON.parse(localStorage.getItem('oris_history') || '[]'); } catch(e){}
+      
+      if (history.length === 0) return 0;
+      
+      // Get unique days (YYYY-MM-DD) from history
+      const days = new Set();
+      history.forEach(item => {
+          if (item.date) {
+              const d = new Date(item.date);
+              days.add(d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'));
+          }
+      });
+      
+      const sortedDays = Array.from(days).sort().reverse(); // most recent first
+      if (sortedDays.length === 0) return 0;
+      
+      // Check if most recent day is today or yesterday
+      const today = new Date();
+      const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.getFullYear() + '-' + String(yesterday.getMonth()+1).padStart(2,'0') + '-' + String(yesterday.getDate()).padStart(2,'0');
+      
+      if (sortedDays[0] !== todayStr && sortedDays[0] !== yesterdayStr) return 0;
+      
+      // Count consecutive days backwards
+      let streak = 1;
+      for (let i = 1; i < sortedDays.length; i++) {
+          const prev = new Date(sortedDays[i-1]);
+          const curr = new Date(sortedDays[i]);
+          const diffMs = prev.getTime() - curr.getTime();
+          const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+          if (diffDays === 1) {
+              streak++;
+          } else {
+              break;
+          }
+      }
+      return streak;
+  },
+
+  /**
+   * Get streak rank based on number of consecutive days
+   * Returns { rank, nextAt, color }
+   */
+  getStreakRank(days) {
+      const t = Translations[this.currentLang] || Translations['en'];
+      const ranks = [
+          { min: 0,   key: 'streak.rank.0',  color: '#a09080' },
+          { min: 3,   key: 'streak.rank.3',  color: '#7B5EA7' },
+          { min: 7,   key: 'streak.rank.7',  color: '#5A8BB5' },
+          { min: 14,  key: 'streak.rank.14', color: '#D4845A' },
+          { min: 21,  key: 'streak.rank.21', color: '#8B6F47' },
+          { min: 30,  key: 'streak.rank.30', color: '#D4B85A' },
+          { min: 50,  key: 'streak.rank.50', color: '#C0392B' },
+          { min: 75,  key: 'streak.rank.75', color: '#2E86C1' },
+          { min: 100, key: 'streak.rank.100', color: '#7D3C98' },
+          { min: 150, key: 'streak.rank.150', color: '#D4AF37' },
+          { min: 365, key: 'streak.rank.365', color: '#FFD700' },
+      ];
+      let current = ranks[0];
+      let nextRank = ranks[1];
+      for (let i = ranks.length - 1; i >= 0; i--) {
+          if (days >= ranks[i].min) {
+              current = ranks[i];
+              nextRank = (i < ranks.length - 1) ? ranks[i + 1] : null;
+              break;
+          }
+      }
+      return {
+          name: t[current.key] || current.key,
+          color: current.color,
+          nextAt: nextRank ? nextRank.min : null,
+          nextName: nextRank ? (t[nextRank.key] || nextRank.key) : null,
+          currentMin: current.min,
+      };
+  },
+
+  /**
+   * Open the streak card
+   */
+  openStreakCard() {
+      const overlay = document.getElementById('streak-overlay');
+      if (overlay) {
+          overlay.classList.add('active');
+          if (typeof this.closeSidebar === 'function') this.closeSidebar();
+          try { OrisAudio.playButtonSound(); } catch(e){}
+          
+          const t = Translations[this.currentLang] || Translations['en'];
+          const streak = this.calculateStreak();
+          const rank = this.getStreakRank(streak);
+          
+          const rankTitle = document.getElementById('streak-rank-title');
+          if (rankTitle) {
+              rankTitle.textContent = rank.name;
+              rankTitle.style.background = `linear-gradient(135deg, ${rank.color}, ${rank.color}88)`;
+              rankTitle.style.webkitBackgroundClip = 'text';
+              rankTitle.style.webkitTextFillColor = 'transparent';
+              rankTitle.style.backgroundClip = 'text';
+          }
+          
+          const daysCount = document.getElementById('streak-days-count');
+          if (daysCount) daysCount.textContent = streak;
+          
+          const daysLabel = document.getElementById('streak-days-label');
+          if (daysLabel) {
+              const labelTemplate = t['streak.days_channeling'] || '{count} días canalizando';
+              daysLabel.textContent = labelTemplate.replace('{count}', '');
+          }
+          
+          const flameIcon = document.querySelector('.streak-flame-icon');
+          if (flameIcon) flameIcon.style.color = rank.color;
+          
+          // Progress bar
+          const progressBar = document.getElementById('streak-progress-bar');
+          if (progressBar && rank.nextAt) {
+              const progress = ((streak - rank.currentMin) / (rank.nextAt - rank.currentMin)) * 100;
+              setTimeout(() => { progressBar.style.width = Math.min(progress, 100) + '%'; }, 100);
+              progressBar.style.background = `linear-gradient(90deg, ${rank.color}, ${rank.color}88)`;
+          } else if (progressBar) {
+              setTimeout(() => { progressBar.style.width = '100%'; }, 100);
+              progressBar.style.background = `linear-gradient(90deg, ${rank.color}, ${rank.color}88)`;
+          }
+          
+          // Next rank text
+          const nextRankEl = document.getElementById('streak-next-rank');
+          if (nextRankEl) {
+              if (rank.nextAt) {
+                  const remaining = rank.nextAt - streak;
+                  const template = t['streak.next_in'] || 'Siguiente título en {count} días';
+                  nextRankEl.textContent = template.replace('{count}', remaining);
+                  nextRankEl.style.display = 'block';
+              } else {
+                  const maxText = t['streak.max_rank'] || '¡Has alcanzado el título supremo!';
+                  nextRankEl.textContent = maxText;
+                  nextRankEl.style.display = 'block';
+              }
+          }
+      }
+  },
+
+  /**
+   * Close the streak card
+   */
+  closeStreakCard() {
+      const overlay = document.getElementById('streak-overlay');
+      if (overlay) {
+          overlay.classList.remove('active');
+          try { OrisAudio.playButtonSound(); } catch(e){}
+      }
+      // Reset progress bar for next open animation
+      const progressBar = document.getElementById('streak-progress-bar');
+      if (progressBar) progressBar.style.width = '0%';
   },
 
   /**

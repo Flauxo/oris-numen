@@ -2346,7 +2346,9 @@ body.evil-mode .home-logo-circle {
 
 #universe-modal-overlay.active .modal-card,
 
-#evolution-overlay.active .modal-card {
+#evolution-overlay.active .modal-card,
+
+#streak-overlay.active .modal-card {
 
     opacity: 1;
 
@@ -3910,3 +3912,108 @@ h3.nucleus-title {
 @keyframes orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes orbit-fade-in { from { opacity: 0; } to { opacity: 1; } }
 .sigil-orbit-text { font-family: var(--font-serif); font-weight: 500; text-transform: capitalize; letter-spacing: 0.5px; }
+
+/* Streak Card Styles */
+
+.streak-modal {
+    text-align: center;
+}
+
+.streak-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.streak-you-are {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    margin: 0 0 4px 0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.streak-rank-title {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #7B5EA7, #D4845A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.streak-days-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.streak-flame-icon {
+    color: #D4845A;
+    animation: flamePulse 2s ease-in-out infinite;
+}
+
+@keyframes flamePulse {
+    0%, 100% { transform: scale(1); opacity: 0.85; }
+    50% { transform: scale(1.12); opacity: 1; }
+}
+
+.streak-days-count {
+    font-family: var(--font-serif);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    line-height: 1;
+}
+
+.streak-days-label {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+}
+
+.streak-progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 3px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.streak-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #7B5EA7, #D4845A);
+    border-radius: 3px;
+    transition: width 1s ease;
+}
+
+.streak-next-rank {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    margin: 0 0 16px 0;
+    font-style: italic;
+}
+
+.streak-explanation {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}

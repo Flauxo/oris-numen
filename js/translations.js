@@ -1,4 +1,4 @@
-﻿const Translations = {
+const Translations = {
     en: {
         "universe.send_gratitude": "Send Gratitude",
         "universe.gratitude_sent": "Gratitude sent",
@@ -1399,3 +1399,118 @@ if (typeof Translations !== 'undefined') {
         });
     }
 }
+
+// === Streak / Tuning Days Translations ===
+(function() {
+    const streakEn = {
+        "menu.streak": "Tuning days",
+        "streak.title": "Tuning Days",
+        "streak.you_are": "You are",
+        "streak.days_label": "days channeling",
+        "streak.days_channeling": "{count} days channeling",
+        "streak.next_in": "Next title in {count} days",
+        "streak.max_rank": "You have reached the supreme title!",
+        "streak.explanation": "This is your streak of consecutive days performing one or more channelings. Every certain number of days you will achieve a new spiritual title.",
+        "streak.rank.0": "Silent Seeker",
+        "streak.rank.3": "Awakening Pilgrim",
+        "streak.rank.7": "Devoted Resonator",
+        "streak.rank.14": "Keeper of the Flame",
+        "streak.rank.21": "Spiritual Weaver",
+        "streak.rank.30": "Enlightened Channeler",
+        "streak.rank.50": "Sacred Vessel",
+        "streak.rank.75": "Celestial Architect",
+        "streak.rank.100": "Master Channeler",
+        "streak.rank.150": "Oracle of Light",
+        "streak.rank.365": "Eternal Luminary"
+    };
+    const streakEs = {
+        "menu.streak": "Días de sintonía",
+        "streak.title": "Días de sintonía",
+        "streak.you_are": "Eres",
+        "streak.days_label": "días canalizando",
+        "streak.days_channeling": "{count} días canalizando",
+        "streak.next_in": "Siguiente título en {count} días",
+        "streak.max_rank": "¡Has alcanzado el título supremo!",
+        "streak.explanation": "Esta es tu racha de días consecutivos realizando una o más canalizaciones. Cada cierto número de días alcanzarás un nuevo título espiritual.",
+        "streak.rank.0": "Buscador silencioso",
+        "streak.rank.3": "Peregrino en despertar",
+        "streak.rank.7": "Resonador devoto",
+        "streak.rank.14": "Guardián de la llama",
+        "streak.rank.21": "Tejedor espiritual",
+        "streak.rank.30": "Canalizador iluminado",
+        "streak.rank.50": "Vasija sagrada",
+        "streak.rank.75": "Arquitecto celestial",
+        "streak.rank.100": "Maestro canalizador",
+        "streak.rank.150": "Oráculo de luz",
+        "streak.rank.365": "Luminario eterno"
+    };
+    const streakIt = {
+        "menu.streak": "Giorni di sintonia",
+        "streak.title": "Giorni di sintonia",
+        "streak.you_are": "Sei",
+        "streak.days_label": "giorni di canalizzazione",
+        "streak.days_channeling": "{count} giorni di canalizzazione",
+        "streak.next_in": "Prossimo titolo tra {count} giorni",
+        "streak.max_rank": "Hai raggiunto il titolo supremo!",
+        "streak.explanation": "Questa è la tua serie di giorni consecutivi in cui hai eseguito una o più canalizzazioni. Ogni tot giorni raggiungerai un nuovo titolo spirituale.",
+        "streak.rank.0": "Cercatore silenzioso",
+        "streak.rank.3": "Pellegrino in risveglio",
+        "streak.rank.7": "Risonatore devoto",
+        "streak.rank.14": "Custode della fiamma",
+        "streak.rank.21": "Tessitore spirituale",
+        "streak.rank.30": "Canalizzatore illuminato",
+        "streak.rank.50": "Vaso sacro",
+        "streak.rank.75": "Architetto celeste",
+        "streak.rank.100": "Maestro canalizzatore",
+        "streak.rank.150": "Oracolo di luce",
+        "streak.rank.365": "Luminare eterno"
+    };
+    const streakLa = {
+        "menu.streak": "Dies consonantiae",
+        "streak.title": "Dies Consonantiae",
+        "streak.you_are": "Es",
+        "streak.days_label": "dies transmissionis",
+        "streak.days_channeling": "{count} dies transmissionis",
+        "streak.next_in": "Proximus titulus in {count} diebus",
+        "streak.max_rank": "Titulum supremum adeptus es!",
+        "streak.explanation": "Haec est series dierum continuorum quibus unam vel plures transmissiones fecisti. Post certum numerum dierum novum titulum spiritualem consequēris.",
+        "streak.rank.0": "Quaesitor silens",
+        "streak.rank.3": "Peregrinus evigilans",
+        "streak.rank.7": "Resonator devotus",
+        "streak.rank.14": "Custos flammae",
+        "streak.rank.21": "Textor spiritualis",
+        "streak.rank.30": "Transmissor illuminatus",
+        "streak.rank.50": "Vas sacrum",
+        "streak.rank.75": "Architectus caelestis",
+        "streak.rank.100": "Magister transmissionis",
+        "streak.rank.150": "Oraculum lucis",
+        "streak.rank.365": "Luminare aeternum"
+    };
+    const streakZh = {
+        "menu.streak": "\u8c03\u8c10\u4e4b\u65e5",
+        "streak.title": "\u8c03\u8c10\u4e4b\u65e5",
+        "streak.you_are": "\u4f60\u662f",
+        "streak.days_label": "\u5929\u901a\u7075",
+        "streak.days_channeling": "{count} \u5929\u901a\u7075",
+        "streak.next_in": "\u4e0b\u4e00\u4e2a\u79f0\u53f7\u8fd8\u6709 {count} \u5929",
+        "streak.max_rank": "\u4f60\u5df2\u8fbe\u5230\u81f3\u9ad8\u79f0\u53f7\uff01",
+        "streak.explanation": "\u8fd9\u662f\u4f60\u8fde\u7eed\u8fdb\u884c\u4e00\u6b21\u6216\u591a\u6b21\u901a\u7075\u7684\u5929\u6570\u3002\u6bcf\u9694\u4e00\u5b9a\u5929\u6570\uff0c\u4f60\u5c06\u83b7\u5f97\u65b0\u7684\u7cbe\u795e\u79f0\u53f7\u3002",
+        "streak.rank.0": "\u65e0\u58f0\u7684\u6c42\u9053\u8005",
+        "streak.rank.3": "\u89c9\u9192\u7684\u671d\u5723\u8005",
+        "streak.rank.7": "\u8654\u8bda\u7684\u5171\u9e23\u8005",
+        "streak.rank.14": "\u706b\u7130\u5b88\u62a4\u8005",
+        "streak.rank.21": "\u7cbe\u795e\u7f16\u7ec7\u8005",
+        "streak.rank.30": "\u5f00\u609f\u7684\u901a\u7075\u8005",
+        "streak.rank.50": "\u795e\u5723\u4e4b\u5668",
+        "streak.rank.75": "\u5929\u754c\u5efa\u7b51\u5e08",
+        "streak.rank.100": "\u901a\u7075\u5927\u5e08",
+        "streak.rank.150": "\u5149\u660e\u795e\u8c15",
+        "streak.rank.365": "\u6c38\u6052\u7684\u5149\u8f89"
+    };
+
+    if (Translations && Translations['en']) Object.assign(Translations['en'], streakEn);
+    if (Translations && Translations['es']) Object.assign(Translations['es'], streakEs);
+    if (Translations && Translations['it']) Object.assign(Translations['it'], streakIt);
+    if (Translations && Translations['la']) Object.assign(Translations['la'], streakLa);
+    if (Translations && Translations['zh']) Object.assign(Translations['zh'], streakZh);
+})();
