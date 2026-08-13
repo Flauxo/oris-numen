@@ -3359,13 +3359,13 @@ window.achievementSystem = {
             this.unlock('init');
         }
         
-        // early: El Madrugador (5 AM - 8 AM)
-        if (hours >= 5 && hours < 8) {
+        // early: El Madrugador (5 AM - 6 AM)
+        if (hours === 5) {
             this.unlock('early');
         }
         
-        // night: El Noctámbulo (11 PM - 3 AM)
-        if (hours >= 23 || hours < 3) {
+        // night: El Noctámbulo (00:00 - 01:00)
+        if (hours === 0) {
             this.unlock('night');
         }
         
