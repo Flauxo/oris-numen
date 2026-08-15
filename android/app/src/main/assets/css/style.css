@@ -2736,36 +2736,56 @@ body.evil-mode .home-logo-circle {
 
     gap: 2px;
 
-    padding: 12px;
-
-    border: none;
-
-    border-radius: var(--radius-sm);
-
-    font-size: 1.1rem;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    font-size: 1rem;
     font-weight: 600;
-
     cursor: pointer;
-
-    color: white;
-
+    background-color: transparent;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
+.btn-share-whatsapp {
+    background-color: transparent;
+    border: 1.5px solid #25D366;
+    color: #25D366;
+}
+.btn-share-whatsapp:hover, .btn-share-whatsapp:active {
+    background-color: rgba(37, 211, 102, 0.08);
+}
 
+.btn-share-x {
+    background-color: transparent;
+    border: 1.5px solid #000000;
+    color: #000000;
+}
+.btn-share-x:hover, .btn-share-x:active {
+    background-color: rgba(0, 0, 0, 0.06);
+}
 
-.btn-share-whatsapp { background-color: #25D366; }
+.btn-share-facebook {
+    background-color: transparent;
+    border: 1.5px solid #1877F2;
+    color: #1877F2;
+}
+.btn-share-facebook:hover, .btn-share-facebook:active {
+    background-color: rgba(24, 119, 242, 0.08);
+}
 
-.btn-share-x { background-color: #000000; }
-
-.btn-share-facebook { background-color: #1877F2; }
-
-.btn-share-email { background-color: #666666; }
-
-
+.btn-share-email {
+    background-color: transparent;
+    border: 1.5px solid #666666;
+    color: #666666;
+}
+.btn-share-email:hover, .btn-share-email:active {
+    background-color: rgba(102, 102, 102, 0.08);
+}
 
 .history-empty {
-
     text-align: center;
 
     color: var(--color-text-muted);
