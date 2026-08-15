@@ -60,6 +60,9 @@ const Translations = {
 
         "share.title": "Share",
         "share.whatsapp": "Share on WhatsApp",
+        "share.x": "Share on X",
+        "share.facebook": "Share on Facebook",
+        "share.email": "Share via Email",
         "share.promo": "If you want to channel your messages, join Oris Numen. Search for the app in your store.",
 
         "card.humilis.desc": "Petition and Supplication",
@@ -324,6 +327,9 @@ const Translations = {
 
         "share.title": "Compartir",
         "share.whatsapp": "Compartir por WhatsApp",
+        "share.x": "Compartir en X",
+        "share.facebook": "Compartir en Facebook",
+        "share.email": "Compartir por Email",
         "share.promo": "Si quieres canalizar tus mensajes únete a Oris Numen. Busca la app en tu store.",
         
         "card.humilis.desc": "Petición y Súplica",
@@ -588,6 +594,9 @@ const Translations = {
 
         "share.title": "Condividi",
         "share.whatsapp": "Condividi su WhatsApp",
+        "share.x": "Condividi su X",
+        "share.facebook": "Condividi su Facebook",
+        "share.email": "Condividi via Email",
         "share.promo": "Se vuoi canalizzare i tuoi messaggi unisciti a Oris Numen. Cerca l'app nel tuo store.",
         
         "card.humilis.desc": "Petizione e Supplica",
@@ -852,6 +861,9 @@ const Translations = {
 
         "share.title": "Communicare",
         "share.whatsapp": "Communicare in WhatsApp",
+        "share.x": "Communicare in X",
+        "share.facebook": "Communicare in Facebook",
+        "share.email": "Communicare per Litteras",
         "share.promo": "Si vis nuntia tua canalizare, iunge Oris Numen. Quaere app in theca tua.",
         
         "card.humilis.desc": "Petitio et Supplicatio",
@@ -1111,6 +1123,9 @@ const Translations = {
         "history.none": "\u65e0",
         "share.title": "\u5206\u4eab",
         "share.whatsapp": "\u5728WhatsApp\u4e0a\u5206\u4eab",
+        "share.x": "\u5728X\u4e0a\u5206\u4eab",
+        "share.facebook": "\u5728Facebook\u4e0a\u5206\u4eab",
+        "share.email": "\u901a\u8fc7\u7535\u5b50\u9025\u4ef6\u5206\u4eab",
         "share.promo": "\u5982\u679c\u4f60\u60f3\u5f15\u5bfc\u4f60\u7684\u4fe1\u606f\uff0c\u8bf7\u52a0\u5165Oris Numen\u3002\u5728\u4f60\u7684\u5e94\u7528\u5546\u5e97\u641c\u7d22\u8be5\u5e94\u7528\u3002",
         "card.humilis.desc": "\u8bf7\u613f\u548c\u6073\u6c42",
         "card.revelatio.desc": "\u5fcf\u6094\u548c\u771f\u8bda",
