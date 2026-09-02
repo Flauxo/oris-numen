@@ -972,6 +972,51 @@ const OrisApp = {
   },
 
   /**
+   * Calculate highest consecutive day streak ever achieved
+   */
+  calculateMaxStreak() {
+      let history = [];
+      try { history = JSON.parse(localStorage.getItem('oris_history') || '[]'); } catch(e){}
+      
+      let maxStreak = parseInt(localStorage.getItem('oris_max_streak') || '0', 10);
+      const currentStreak = this.calculateStreak();
+      maxStreak = Math.max(maxStreak, currentStreak);
+      
+      if (history.length > 0) {
+          const days = new Set();
+          history.forEach(item => {
+              if (item.date) {
+                  const d = new Date(item.date);
+                  days.add(d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'));
+              }
+          });
+          const sortedDays = Array.from(days).sort();
+          if (sortedDays.length > 0) {
+              let consecutive = 1;
+              let bestInHistory = 1;
+              for (let i = 1; i < sortedDays.length; i++) {
+                  const prev = new Date(sortedDays[i-1]);
+                  const curr = new Date(sortedDays[i]);
+                  const diffMs = curr.getTime() - prev.getTime();
+                  const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+                  if (diffDays === 1) {
+                      consecutive++;
+                  } else {
+                      consecutive = 1;
+                  }
+                  if (consecutive > bestInHistory) {
+                      bestInHistory = consecutive;
+                  }
+              }
+              maxStreak = Math.max(maxStreak, bestInHistory);
+          }
+      }
+      
+      try { localStorage.setItem('oris_max_streak', maxStreak.toString()); } catch(e){}
+      return maxStreak;
+  },
+
+  /**
    * Get streak rank based on number of consecutive days
    * Returns { rank, nextAt, color }
    */
@@ -1067,6 +1112,22 @@ const OrisApp = {
                   nextRankEl.textContent = maxText;
                   nextRankEl.style.display = 'block';
               }
+          }
+
+          // Highest streak card
+          const maxStreak = this.calculateMaxStreak();
+          const maxRank = this.getStreakRank(maxStreak);
+          
+          const maxTitleEl = document.getElementById('streak-max-title');
+          if (maxTitleEl) {
+              maxTitleEl.textContent = maxRank.name;
+              maxTitleEl.style.color = maxRank.color;
+          }
+          
+          const maxDaysEl = document.getElementById('streak-max-days');
+          if (maxDaysEl) {
+              const maxTemplate = t['streak.max_days_suffix'] || '{count} días consecutivos';
+              maxDaysEl.textContent = maxTemplate.replace('{count}', maxStreak);
           }
       }
   },

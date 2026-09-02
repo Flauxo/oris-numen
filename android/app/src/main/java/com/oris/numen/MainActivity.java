@@ -120,7 +120,7 @@ public class MainActivity extends Activity {
                 intent.putExtra("type", "gratitude");
                 intent.putExtra("message", message);
                 
-                int requestCode = 100 + new java.util.Random().nextInt(1000);
+                int requestCode = 3;
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(
                         MainActivity.this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
                 

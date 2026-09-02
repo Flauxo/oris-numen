@@ -1436,7 +1436,9 @@ if (typeof Translations !== 'undefined') {
         "streak.rank.75": "Celestial Architect",
         "streak.rank.100": "Master Channeler",
         "streak.rank.150": "Oracle of Light",
-        "streak.rank.365": "Eternal Luminary"
+        "streak.rank.365": "Eternal Luminary",
+        "streak.max_label": "Highest Streak",
+        "streak.max_days_suffix": "{count} consecutive days"
     };
     const streakEs = {
         "menu.streak": "Días de sintonía",
@@ -1457,7 +1459,9 @@ if (typeof Translations !== 'undefined') {
         "streak.rank.75": "Arquitecto celestial",
         "streak.rank.100": "Maestro canalizador",
         "streak.rank.150": "Oráculo de luz",
-        "streak.rank.365": "Luminario eterno"
+        "streak.rank.365": "Luminario eterno",
+        "streak.max_label": "Racha más alta",
+        "streak.max_days_suffix": "{count} días consecutivos"
     };
     const streakIt = {
         "menu.streak": "Giorni di sintonia",
@@ -1478,7 +1482,9 @@ if (typeof Translations !== 'undefined') {
         "streak.rank.75": "Architetto celeste",
         "streak.rank.100": "Maestro canalizzatore",
         "streak.rank.150": "Oracolo di luce",
-        "streak.rank.365": "Luminare eterno"
+        "streak.rank.365": "Luminare eterno",
+        "streak.max_label": "Record personale",
+        "streak.max_days_suffix": "{count} giorni consecutivi"
     };
     const streakLa = {
         "menu.streak": "Dies consonantiae",
@@ -1499,7 +1505,9 @@ if (typeof Translations !== 'undefined') {
         "streak.rank.75": "Architectus caelestis",
         "streak.rank.100": "Magister transmissionis",
         "streak.rank.150": "Oraculum lucis",
-        "streak.rank.365": "Luminare aeternum"
+        "streak.rank.365": "Luminare aeternum",
+        "streak.max_label": "Recordatio Maxima",
+        "streak.max_days_suffix": "{count} dies continui"
     };
     const streakZh = {
         "menu.streak": "\u8c03\u8c10\u4e4b\u65e5",
@@ -1520,7 +1528,9 @@ if (typeof Translations !== 'undefined') {
         "streak.rank.75": "\u5929\u754c\u5efa\u7b51\u5e08",
         "streak.rank.100": "\u901a\u7075\u5927\u5e08",
         "streak.rank.150": "\u5149\u660e\u795e\u8c15",
-        "streak.rank.365": "\u6c38\u6052\u7684\u5149\u8f89"
+        "streak.rank.365": "\u6c38\u6052\u7684\u5149\u8f89",
+        "streak.max_label": "\u6700\u9ad8\u8fde\u80dc\u7eaa\u5f55",
+        "streak.max_days_suffix": "\u8fde\u7eed {count} \u5929"
     };
 
     if (Translations && Translations['en']) Object.assign(Translations['en'], streakEn);
