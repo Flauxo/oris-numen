@@ -189,29 +189,24 @@ body {
 /* Screen 1: Splash Screen */
 
 #splash-screen {
-
+    display: flex;
     justify-content: center;
-
     align-items: center;
-
     background-color: var(--color-bg-primary);
-
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100%;
 }
 
-
-
 .splash-content {
-
     text-align: center;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
+    justify-content: center;
     gap: 16px;
-
+    margin: auto;
+    padding: 0;
 }
 
 
