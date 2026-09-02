@@ -63,7 +63,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             int r = new java.util.Random().nextInt(mTitles.length);
             title = mTitles[r];
             desc = mDescs[r];
-            BootReceiver.scheduleWeekendNotification(context);
+            BootReceiver.scheduleWeekendNotification(context, true);
         } else {
             String[] titles = {
                 "Tu canal está abierto",

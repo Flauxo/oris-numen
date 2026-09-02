@@ -48,6 +48,10 @@ public class BootReceiver extends BroadcastReceiver {
     }
 
     public static void scheduleWeekendNotification(Context context) {
+        scheduleWeekendNotification(context, false);
+    }
+
+    public static void scheduleWeekendNotification(Context context, boolean fromNotificationFire) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificationReceiver.class);
         intent.putExtra("type", "morning");
@@ -56,38 +60,51 @@ public class BootReceiver extends BroadcastReceiver {
 
         Calendar calendar = Calendar.getInstance();
         
+        // If a notification just fired, skip to tomorrow first so we don't reschedule on the same morning
+        if (fromNotificationFire) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
         // Find next Saturday or Sunday
         while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY && calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
         }
-        
-        // If it's already the weekend but past 11 AM, move to next day
-        if ((calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) && calendar.get(Calendar.HOUR_OF_DAY) >= 11) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
-            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-                calendar.add(Calendar.DAY_OF_YEAR, 5); // Jump to Saturday
-            }
-        }
 
-        // Random time between 10:00 and 11:00
+        // Random time between 10:00 and 11:00 AM
         calendar.set(Calendar.HOUR_OF_DAY, 10);
         int randomMinute = new java.util.Random().nextInt(60); 
         calendar.set(Calendar.MINUTE, randomMinute);
         calendar.set(Calendar.SECOND, 0);
+
+        // If calculated time is in the past or right now, advance to the next weekend day
+        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY && calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+            }
+            calendar.set(Calendar.HOUR_OF_DAY, 10);
+            randomMinute = new java.util.Random().nextInt(60); 
+            calendar.set(Calendar.MINUTE, randomMinute);
+            calendar.set(Calendar.SECOND, 0);
+        }
 
         setAlarm(alarmManager, calendar, pendingIntent);
     }
 
     private static void setAlarm(AlarmManager alarmManager, Calendar calendar, PendingIntent pendingIntent) {
         if (alarmManager != null) {
+            long triggerAt = calendar.getTimeInMillis();
+            if (triggerAt <= System.currentTimeMillis()) {
+                return; // Safety guard: never trigger alarms in the past
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 try {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent);
                 } catch (SecurityException se) {
-                    alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent);
                 }
             } else {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent);
             }
         }
     }
